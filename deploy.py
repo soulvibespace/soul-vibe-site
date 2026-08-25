@@ -12,7 +12,8 @@ import json
 import os
 import subprocess
 import sys
-import urllib.request
+
+import requests
 
 SITE = "5160c45c-80d9-4a82-9a3d-068717d5fdc2"
 API = "https://api.netlify.com/api/v1"
@@ -23,20 +24,18 @@ SKIP_DIRS = {".git", ".github", "node_modules"}
 
 
 def req(method, url, body=None):
-    data = json.dumps(body).encode() if body is not None else None
-    r = urllib.request.Request(url, data=data, method=method,
-                               headers={"Content-Type": "application/json",
-                                        "Accept": "application/json"})
-    return json.loads(urllib.request.urlopen(r, timeout=120).read() or b"{}")
+    r = requests.request(method, url, json=body, timeout=180,
+                         headers={"Accept": "application/json"})
+    r.raise_for_status()
+    return r.json() if r.content else {}
 
 
 def put_file(deploy_id, path, local):
     with open(local, "rb") as f:
         blob = f.read()
-    r = urllib.request.Request(f"{API}/deploys/{deploy_id}/files{path}", data=blob,
-                               method="PUT",
-                               headers={"Content-Type": "application/octet-stream"})
-    urllib.request.urlopen(r, timeout=300).read()
+    r = requests.put(f"{API}/deploys/{deploy_id}/files{path}", data=blob, timeout=300,
+                     headers={"Content-Type": "application/octet-stream"})
+    r.raise_for_status()
 
 
 def sha1(p):
