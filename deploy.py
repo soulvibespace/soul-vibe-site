@@ -15,6 +15,11 @@ import sys
 
 import requests
 
+# Песочница ходит наружу через HTTPS-прокси с собственным корневым сертификатом.
+_CA = os.environ.get("SSL_CERT_FILE") or True
+S = requests.Session()
+S.verify = _CA
+
 SITE = "5160c45c-80d9-4a82-9a3d-068717d5fdc2"
 API = "https://api.netlify.com/api/v1"
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -24,8 +29,8 @@ SKIP_DIRS = {".git", ".github", "node_modules"}
 
 
 def req(method, url, body=None):
-    r = requests.request(method, url, json=body, timeout=180,
-                         headers={"Accept": "application/json"})
+    r = S.request(method, url, json=body, timeout=180,
+                  headers={"Accept": "application/json"})
     r.raise_for_status()
     return r.json() if r.content else {}
 
@@ -33,8 +38,8 @@ def req(method, url, body=None):
 def put_file(deploy_id, path, local):
     with open(local, "rb") as f:
         blob = f.read()
-    r = requests.put(f"{API}/deploys/{deploy_id}/files{path}", data=blob, timeout=300,
-                     headers={"Content-Type": "application/octet-stream"})
+    r = S.put(f"{API}/deploys/{deploy_id}/files{path}", data=blob, timeout=300,
+              headers={"Content-Type": "application/octet-stream"})
     r.raise_for_status()
 
 
