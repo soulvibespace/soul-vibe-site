@@ -16,6 +16,8 @@ rsync -a ./ dist/ \
   --exclude 'README.md' \
   --exclude 'netlify.toml' \
   --exclude '.gitignore' \
+  --exclude '__pycache__/' \
+  --exclude '*.pyc' \
   --exclude '.DS_Store'
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"

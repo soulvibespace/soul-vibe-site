@@ -3,3 +3,5 @@ Thumbs.db
 node_modules/
 *.zip
 dist/
+__pycache__/
+*.pyc
