@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Публикация сайта на Netlify напрямую из этой папки.
 
-Загружает файлы через API (без сборки на стороне Netlify), поэтому не зависит от
-тарифа Netlify и от правил про git-контрибьюторов. Источник истины — репозиторий.
+Резервный путь публикации: собирает dist/ через build.sh и заливает его через API,
+минуя сборку на стороне Netlify. Обычно не нужен — сайт публикуется сам при пуше
+в main. Пригодится, если автодеплой не сработал.
 
 Запуск:
     bash с api_credentials=["custom-cred:api.netlify.com"]
@@ -18,9 +19,9 @@ import time
 SITE = "5160c45c-80d9-4a82-9a3d-068717d5fdc2"
 API = "https://api.netlify.com/api/v1"
 ROOT = os.path.dirname(os.path.abspath(__file__))
-# Файлы, которые не должны попадать на сайт
-SKIP_NAMES = {"deploy.py", "README.md", ".gitignore", ".DS_Store"}
-SKIP_DIRS = {".git", ".github", "node_modules"}
+DIST = os.path.join(ROOT, "dist")
+SKIP_NAMES = {".DS_Store"}
+SKIP_DIRS = set()
 
 
 def curl(args, timeout=600):
@@ -59,13 +60,13 @@ def sha1(p):
 
 def collect():
     out = {}
-    for base, dirs, files in os.walk(ROOT):
+    for base, dirs, files in os.walk(DIST):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         for fn in files:
             if fn in SKIP_NAMES:
                 continue
             full = os.path.join(base, fn)
-            rel = "/" + os.path.relpath(full, ROOT).replace(os.sep, "/")
+            rel = "/" + os.path.relpath(full, DIST).replace(os.sep, "/")
             out[rel] = (full, sha1(full))
     return out
 
@@ -75,6 +76,8 @@ def git(*a):
 
 
 def main():
+    subprocess.run(["bash", os.path.join(ROOT, "build.sh")], cwd=ROOT, check=True,
+                   stdout=subprocess.DEVNULL)
     files = collect()
     print(f"файлов к публикации: {len(files)}")
 

@@ -1,7 +1,7 @@
-# Static site — no build step. Netlify publishes the repo root as-is.
+# Статики без фреймворка: build.sh собирает dist/ только из файлов сайта.
 [build]
-  publish = "."
-  command = ""
+  publish = "dist"
+  command = "bash build.sh"
 
 # Long cache for immutable assets, short for HTML so content updates appear fast.
 [[headers]]
