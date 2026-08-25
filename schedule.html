@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule | Soul Vibe Space</title>
+  <meta name="description" content="Weekly class schedule at Soul Vibe Space — yoga, meditation, ecstatic dance and sound healing in Limassol, Cyprus." />
+  <meta property="og:title" content="Schedule | Soul Vibe Space" />
+  <meta property="og:description" content="Weekly class schedule at Soul Vibe Space — yoga, meditation, ecstatic dance and sound healing in Limassol, Cyprus." />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/schedule" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://soulvibespace.com/images/hero.webp" />
+  <link rel="canonical" href="https://soulvibespace.com/schedule" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/schedule" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/schedule" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/schedule" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/schedule" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Page layout ── */
+    .schedule-page { padding: 100px 0 80px; min-height: 100vh; }
+    .schedule-page .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .schedule-page .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+    .schedule-page .page-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    /* ── Week nav ── */
+    .week-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .week-nav-arrows {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .week-arrow {
+      width: 44px; height: 44px;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, background .2s;
+    }
+    .week-arrow:hover { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .week-label {
+      font-family: var(--font-sans);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 180px;
+      text-align: center;
+    }
+    .week-today-btn {
+      font-family: var(--font-sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .week-today-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Filters row ── */
+    .schedule-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      align-items: center;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-label {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .filter-pills::-webkit-scrollbar { display: none; }
+    @media (max-width: 480px) {
+      .filter-pills { flex-wrap: nowrap; }
+      .filter-pill { font-size: .72rem; padding: 4px 10px; }
+    }
+    .filter-pill {
+      font-family: var(--font-sans);
+      font-size: .8rem;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .18s;
+      white-space: nowrap;
+    }
+    .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Instructor dropdown */
+    .filter-select {
+      font-family: var(--font-sans);
+      font-size: .82rem;
+      font-weight: 500;
+      padding: 6px 32px 6px 12px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color .18s;
+    }
+    .filter-select:hover, .filter-select:focus { border-color: var(--accent); outline: none; }
+    [data-theme="dark"] .filter-select {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    /* ── Schedule grid ── */
+    .schedule-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Day column */
+    .schedule-day {}
+    .schedule-day-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .day-name {
+      font-family: var(--font-sans);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .day-date {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--text-primary);
+    }
+    .day-today-badge {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .day-slots {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .day-empty {
+      font-size: .88rem;
+      color: var(--text-secondary);
+      padding: 12px 0 4px;
+      font-style: italic;
+    }
+
+    /* ── Class card ── */
+    .class-card {
+      display: grid;
+      grid-template-columns: 72px 1fr auto;
+      gap: 0 16px;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      transition: border-color .2s, box-shadow .2s, transform .15s;
+      cursor: default;
+    }
+    .class-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(110,72,170,.10);
+      transform: translateY(-1px);
+    }
+
+    /* Time column */
+    .card-time {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    .card-time-start {
+      font-family: var(--font-sans);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .card-time-end {
+      font-size: .75rem;
+      color: var(--text-secondary);
+      line-height: 1;
+    }
+    .card-time-dur {
+      font-size: .68rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 4px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      padding: 1px 6px;
+      border-radius: 8px;
+    }
+
+    /* Info column */
+    .card-info { min-width: 0; }
+    .card-name {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .card-instructor {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .8rem;
+      color: var(--text-secondary);
+    }
+    .card-instructor-pic {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .card-instructor-pic-placeholder {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .card-category-badge {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      color: var(--accent);
+    }
+
+    /* CTA column */
+    .card-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card-price {
+      font-family: var(--font-sans);
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .card-price.free { color: #22a06b; }
+    .card-book-btn {
+      font-family: var(--font-sans);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      padding: 0 18px;
+      min-height: 44px;
+      line-height: 44px;
+      border-radius: 22px;
+      background: #6b4fa0;
+      color: #fff !important;
+      border: none;
+      cursor: pointer;
+      transition: background .18s, transform .15s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .card-book-btn:hover { background: #5a3f8a; transform: scale(1.03); }
+    .card-book-btn:disabled {
+      background: #d0ccd8;
+      color: #888 !important;
+      cursor: default;
+      transform: none;
+    }
+
+    /* ── Loading / empty states ── */
+    .schedule-loading {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 8px 0;
+    }
+    .skel-day { height: 16px; width: 120px; border-radius: 8px; }
+    .skel-card { height: 72px; border-radius: 14px; }
+    .skel-day, .skel-card {
+      background: linear-gradient(90deg, var(--bg-secondary) 25%, color-mix(in srgb, var(--bg-secondary) 70%, var(--bg-primary)) 50%, var(--bg-secondary) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0 } 100% { background-position: -200% 0 } }
+
+    .schedule-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+    .schedule-empty svg { opacity: .3; margin-bottom: 16px; }
+    .schedule-empty p { font-size: 1rem; }
+    .schedule-empty small { font-size: .85rem; }
+
+    /* ── Results count ── */
+    .schedule-meta {
+      font-size: .82rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .schedule-meta strong { color: var(--text-primary); }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .class-card {
+        grid-template-columns: 60px 1fr;
+        grid-template-rows: auto auto;
+      }
+      .card-cta {
+        grid-column: 2;
+        grid-row: 2;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 8px;
+      }
+      .card-name { font-size: .92rem; }
+      .filter-label { display: none; }
+      .schedule-filters { gap: 8px; }
+    }
+  
+    /* ── Price asterisk tooltip ── */
+    .price-asterisk {
+      font-size: .65em;
+      vertical-align: super;
+      cursor: pointer;
+      color: var(--color-primary, #7b6fca);
+      text-decoration: none;
+      margin-left: 1px;
+      position: relative;
+    }
+    .price-asterisk:hover::after,
+    .price-asterisk:focus::after {
+      content: attr(title);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30,24,50,.92);
+      color: #fff;
+      font-size: .78rem;
+      font-family: var(--font-sans, 'Work Sans', sans-serif);
+      font-weight: 400;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 10;
+      letter-spacing: 0;
+    }
+    .price-asterisk:hover::before,
+    .price-asterisk:focus::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 1px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(30,24,50,.92);
+      pointer-events: none;
+      z-index: 10;
+    }
+    /* mobile: show on tap */
+    @media (hover: none) {
+      .price-asterisk:active::after,
+      .price-asterisk:active::before { display: block; }
+    }
+</style></head>
+<body>
+
+  <!-- ═══ HEADER (identical to index.html) ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class='nav-link' data-i18n='nav_about' href='/#about'>About</a>
+        <a href="/schedule" class="nav-link nav-link--active" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a class='nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+        <a class='nav-link' data-i18n='nav_contact' href='/#contact'>Contact</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+          <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a class='mobile-nav-link' data-i18n='nav_about' href='/#about'>About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a class='mobile-nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+      <a class='mobile-nav-link' data-i18n='nav_contact' href='/#contact'>Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ SCHEDULE PAGE ═══ -->
+  <main class="schedule-page">
+    <div class="container">
+
+      <p class="page-eyebrow" data-i18n="schedule_eyebrow">Live Schedule</p>
+      <h1 class="page-title" data-i18n="schedule_title">Weekly Classes</h1>
+      <p class="page-subtitle" data-i18n="schedule_subtitle">Real-time from our studio — updated automatically.</p>
+
+      <!-- Week navigation -->
+      <div class="week-nav">
+        <div class="week-nav-arrows">
+          <button class="week-arrow" id="weekPrev" aria-label="Previous week">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="week-arrow" id="weekNext" aria-label="Next week">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+        <span class="week-label" id="weekLabel">—</span>
+        <button class="week-today-btn" id="weekToday" data-i18n="schedule_today">Today</button>
+      </div>
+
+      <!-- Filters -->
+      <div class="schedule-filters" id="scheduleFilters">
+        <!-- Category pills -->
+        <div class="filter-group">
+          <span class="filter-label" data-i18n="schedule_filter_cat">Category</span>
+          <div class="filter-pills" id="catPills">
+            <button class="filter-pill active" data-cat="">All</button>
+          </div>
+        </div>
+
+        <!-- Instructor dropdown -->
+        <div class="filter-group">
+          <span class="filter-label" data-i18n="schedule_filter_inst">Instructor</span>
+          <select class="filter-select" id="instructorSelect" aria-label="Filter by instructor">
+            <option value="">All instructors</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Result count -->
+      <p class="schedule-meta" id="scheduleMeta"></p>
+
+      <!-- Grid -->
+      <div class="schedule-grid" id="scheduleGrid">
+        <!-- Skeleton loader -->
+        <div class="schedule-loading" id="scheduleSkeleton">
+          <div class="skel-day"></div>
+          <div class="skel-card"></div>
+          <div class="skel-card"></div>
+          <div class="skel-day" style="margin-top:8px"></div>
+          <div class="skel-card"></div>
+          <div class="skel-card"></div>
+          <div class="skel-card"></div>
+          <div class="skel-day" style="margin-top:8px"></div>
+          <div class="skel-card"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a data-i18n='footer_about' href='/#about'>About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a data-i18n='footer_coworking' href='/#space'>Co-working</a>
+          <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
+    <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
+    <div class="booking-modal-panel auth-modal-panel">
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="authModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="auth-modal-body">
+        <div class="auth-tabs" role="tablist" id="authTabs">
+          <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
+          <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
+        </div>
+        <div class="google-signin-wrap">
+          <div id="g_id_onload" data-client_id="201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com" data-callback="handleGoogleSignIn" data-auto_prompt="false"></div>
+          <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="continue_with" data-size="large" data-logo_alignment="left" data-width="360"></div>
+          <div class="auth-divider"><span data-i18n="auth_or">or</span></div>
+        </div>
+        <div class="auth-error" id="authModalError" role="alert"></div>
+        <div class="auth-success" id="authModalSuccess" role="status"></div>
+        <form class="auth-form" id="authLoginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authLoginEmail">Email</label>
+            <input class="form-input" type="email" id="authLoginEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authLoginPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authLoginPassword" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="authLoginBtn" data-i18n="acc_tab_login">Sign In</button>
+        </form>
+        <form class="auth-form" id="authRegisterForm" style="display:none" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authRegName" data-i18n="auth_name">Full Name</label>
+            <input class="form-input" type="text" id="authRegName" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegEmail">Email</label>
+            <input class="form-input" type="email" id="authRegEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPhone" data-i18n="auth_phone">Phone</label>
+            <input class="form-input" type="tel" id="authRegPhone" placeholder="+357 ..." autocomplete="tel" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authRegPassword" placeholder="Create a password" autocomplete="new-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="authRegBtn" data-i18n="acc_tab_register">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+
+  <script>
+  (() => {
+    const API_BASE = window.SVS_API_BASE || 'https://soul-vibe-api.onrender.com';
+
+    // ── Date helpers ─────────────────────────────────────────────
+    function toISO(date) {
+      return date.toISOString().slice(0, 10);
+    }
+    function addDays(date, n) {
+      const d = new Date(date);
+      d.setDate(d.getDate() + n);
+      return d;
+    }
+    // Monday of the week containing `date`
+    function weekStart(date) {
+      const d = new Date(date);
+      const day = d.getDay(); // 0=Sun
+      const diff = day === 0 ? -6 : 1 - day;
+      d.setDate(d.getDate() + diff);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    const DAY_NAMES = {
+      en: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+      ru: ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'],
+      el: ['Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο','Κυριακή'],
+    };
+    const MONTH_NAMES = {
+      en: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      ru: ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'],
+      el: ['Ιαν','Φεβ','Μαρ','Απρ','Μάι','Ιούν','Ιούλ','Αύγ','Σεπ','Οκτ','Νοε','Δεκ'],
+    };
+
+    // ── State ────────────────────────────────────────────────────
+    let _weekOffset = 0;   // 0 = current week
+    let _activeCat  = '';  // '' = all
+    let _activeUnit = '';  // '' = all
+    let _allSlots   = [];  // raw from API
+    let _categories = [];
+    let _lang       = () => (window.SVS_I18N?.currentLang?.() || localStorage.getItem('svs_lang') || 'en');
+
+    // ── DOM refs ─────────────────────────────────────────────────
+    const grid       = document.getElementById('scheduleGrid');
+    const skeleton   = document.getElementById('scheduleSkeleton');
+    const weekLabel  = document.getElementById('weekLabel');
+    const meta       = document.getElementById('scheduleMeta');
+    const catPills   = document.getElementById('catPills');
+    const instSelect = document.getElementById('instructorSelect');
+
+    // ── Week range ───────────────────────────────────────────────
+    function currentFrom() {
+      if (_weekOffset === 0) {
+        // Start from today so user sees upcoming classes immediately
+        const d = new Date();
+        d.setHours(0, 0, 0, 0);
+        return d;
+      }
+      return weekStart(addDays(new Date(), _weekOffset * 7));
+    }
+    function currentTo() {
+      if (_weekOffset === 0) {
+        return addDays(currentFrom(), 6);
+      }
+      return addDays(weekStart(addDays(new Date(), _weekOffset * 7)), 6);
+    }
+
+    function updateWeekLabel() {
+      const from = currentFrom();
+      const to   = currentTo();
+      const lang = _lang();
+      const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
+      const fromStr = `${from.getDate()} ${months[from.getMonth()]}`;
+      const toStr   = `${to.getDate()} ${months[to.getMonth()]} ${to.getFullYear()}`;
+      weekLabel.textContent = `${fromStr} – ${toStr}`;
+    }
+
+    // ── Fetch with retry (handles Render cold start ~20s) ───────
+    async function fetchWithRetry(url, retries = 3, delayMs = 7000) {
+      for (let i = 0; i < retries; i++) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return await res.json();
+        } catch (e) {
+          if (i < retries - 1) {
+            await new Promise(r => setTimeout(r, delayMs));
+          } else {
+            throw e;
+          }
+        }
+      }
+    }
+
+    // ── Fetch schedule ───────────────────────────────────────────
+    async function fetchSchedule() {
+      showSkeleton();
+      const from = toISO(currentFrom());
+      const to   = toISO(currentTo());
+
+      try {
+        // Parallel: schedule + instructors for this week
+        const [schedRes, instRes] = await Promise.all([
+          fetchWithRetry(`${API_BASE}/api/schedule?from=${from}&to=${to}`),
+          fetchWithRetry(`${API_BASE}/api/instructors?active_only=true&from=${from}&to=${to}`),
+        ]);
+
+        _allSlots = schedRes.ok ? schedRes.schedule : [];
+
+        // Rebuild instructor dropdown for this week's actual instructors
+        populateInstructorSelect(instRes.ok ? instRes.instructors : []);
+
+        render();
+      } catch (e) {
+        console.error('Schedule fetch error:', e);
+        showError();
+      }
+    }
+
+    // ── Populate instructor dropdown ─────────────────────────────
+    function populateInstructorSelect(instructors) {
+      const lang   = _lang();
+      const prev   = instSelect.value;
+
+      // Keep only instructors who have slots this week
+      const activeIds = new Set(_allSlots.map(s => String(s.unit_id)).filter(Boolean));
+      // Also add ids from unit_ids array
+      _allSlots.forEach(s => (s.unit_ids || []).forEach(uid => activeIds.add(String(uid))));
+
+      const active = instructors.filter(u => activeIds.has(String(u.id)));
+
+      // Sort alphabetically
+      active.sort((a, b) => a.name.localeCompare(b.name));
+
+      const allLabel = { en: 'All instructors', ru: 'Все преподаватели', el: 'Όλοι' };
+      instSelect.innerHTML = `<option value="">${allLabel[lang] || allLabel.en}</option>`;
+
+      for (const u of active) {
+        const opt = document.createElement('option');
+        opt.value = u.id;
+        opt.textContent = u.name;
+        instSelect.appendChild(opt);
+      }
+
+      // Restore previous selection if still valid
+      if (prev && active.find(u => String(u.id) === prev)) {
+        instSelect.value = prev;
+        _activeUnit = prev;
+      } else {
+        _activeUnit = '';
+      }
+    }
+
+    // ── Fetch & render categories (once) ────────────────────────
+    async function initCategories() {
+      try {
+        const res = await fetch(`${API_BASE}/api/categories`).then(r => r.json());
+        _categories = res.ok ? res.categories : [];
+        rebuildCatPills();
+      } catch {}
+    }
+
+    function rebuildCatPills() {
+      const lang = _lang();
+      const labelKey = `label_${lang}`;
+
+      catPills.innerHTML = '';
+
+      // "All" pill
+      const allBtn = document.createElement('button');
+      allBtn.className = 'filter-pill' + (_activeCat === '' ? ' active' : '');
+      allBtn.dataset.cat = '';
+      allBtn.textContent = { en: 'All', ru: 'Все', el: 'Όλα' }[lang] || 'All';
+      allBtn.addEventListener('click', () => { _activeCat = ''; updateCatPills(); render(); });
+      catPills.appendChild(allBtn);
+
+      for (const cat of _categories) {
+        const btn = document.createElement('button');
+        btn.className = 'filter-pill' + (_activeCat === cat.key ? ' active' : '');
+        btn.dataset.cat = cat.key;
+        btn.textContent = cat[labelKey] || cat.label_en;
+        btn.addEventListener('click', () => { _activeCat = cat.key; updateCatPills(); render(); });
+        catPills.appendChild(btn);
+      }
+    }
+
+    function updateCatPills() {
+      catPills.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === _activeCat);
+      });
+    }
+
+    // ── Render ───────────────────────────────────────────────────
+    function render() {
+      hideSkeleton();
+
+      const lang   = _lang();
+      const today  = toISO(new Date());
+      let slots    = _allSlots;
+
+      // Apply category filter client-side
+      if (_activeCat) {
+        const cat = _categories.find(c => c.key === _activeCat);
+        if (cat) {
+          slots = slots.filter(s =>
+            s.category_ids && s.category_ids.some(cid => cat.category_ids.includes(String(cid)))
+          );
+        }
+      }
+
+      // Apply instructor filter client-side
+      if (_activeUnit) {
+        slots = slots.filter(s =>
+          String(s.unit_id) === _activeUnit ||
+          (Array.isArray(s.unit_ids) && s.unit_ids.map(String).includes(_activeUnit))
+        );
+      }
+
+      // Update meta count
+      const countLabel = {
+        en: n => `${n} class${n !== 1 ? 'es' : ''} found`,
+        ru: n => `Найдено: ${n} ${n === 1 ? 'занятие' : n < 5 ? 'занятия' : 'занятий'}`,
+        el: n => `${n} μαθήματα`,
+      };
+      meta.textContent = (countLabel[lang] || countLabel.en)(slots.length);
+
+      if (!slots.length) {
+        grid.innerHTML = `
+          <div class="schedule-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <p>${{ en: 'No classes this week', ru: 'На этой неделе занятий нет', el: 'Δεν υπάρχουν μαθήματα' }[lang]}</p>
+            <small>${{ en: 'Try changing the filters or pick another week', ru: 'Попробуйте сменить фильтр или выбрать другую неделю', el: 'Δοκιμάστε άλλα φίλτρα' }[lang]}</small>
+          </div>`;
+        return;
+      }
+
+      // Group by date
+      const byDate = {};
+      for (const s of slots) {
+        if (!byDate[s.date]) byDate[s.date] = [];
+        byDate[s.date].push(s);
+      }
+
+      const days = DAY_NAMES[lang] || DAY_NAMES.en;
+      const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
+
+      let html = '';
+      for (const [date, daySlots] of Object.entries(byDate).sort()) {
+        const d = new Date(date + 'T00:00:00');
+        const dayIdx = (d.getDay() + 6) % 7; // 0=Mon
+        const dayName = days[dayIdx];
+        const dateStr = `${d.getDate()} ${months[d.getMonth()]}`;
+        const isToday = date === today;
+
+        html += `
+          <div class="schedule-day">
+            <div class="schedule-day-header">
+              <span class="day-name">${dayName}</span>
+              <span class="day-date">${dateStr}</span>
+              ${isToday ? `<span class="day-today-badge">${{en:'Today',ru:'Сегодня',el:'Σήμερα'}[lang]}</span>` : ''}
+            </div>
+            <div class="day-slots">
+              ${daySlots.map(s => renderCard(s, lang, today)).join('')}
+            </div>
+          </div>`;
+      }
+
+      grid.innerHTML = html;
+
+      // Attach book button listeners
+      grid.querySelectorAll('.card-book-btn[data-service]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const serviceId = btn.dataset.service;
+          const date      = btn.dataset.date;
+          const time      = btn.dataset.time;
+          BookingModal.open(serviceId, date, time);
+        });
+      });
+    }
+
+    function renderCard(s, lang, today) {
+      const isPast = s.date < today || (s.date === today && s.time < new Date().toTimeString().slice(0, 8));
+
+      // Time display
+      const timeStart = s.time.slice(0, 5);
+      const timeEnd   = s.end_time ? s.end_time.slice(0, 5) : '';
+      const durLabel  = `${s.duration} ${lang === 'ru' ? 'мин' : lang === 'el' ? 'λεπ' : 'min'}`;
+
+      // Instructor avatar
+      let avatarHtml = '';
+      if (s.unit_picture) {
+        avatarHtml = `<img class="card-instructor-pic" src="${s.unit_picture}" alt="${s.unit_name || ''}" loading="lazy" onerror="this.style.display='none'">`;
+      } else {
+        avatarHtml = `<span class="card-instructor-pic-placeholder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>`;
+      }
+
+      // Category badge — find name
+      let catLabel = '';
+      if (s.category_ids && s.category_ids.length && _categories.length) {
+        const cat = _categories.find(c =>
+          s.category_ids.some(cid => c.category_ids.includes(String(cid)))
+        );
+        if (cat) catLabel = cat[`label_${lang}`] || cat.label_en;
+      }
+
+      // Price
+      const passTooltip = {
+        en: 'Pass holders pay less. See pricing.',
+        ru: 'По абонементу дешевле. Смотреть цены.',
+        el: 'Με πάσο φθηνότερα. Δείτε τιμές.'
+      }[lang];
+      const priceLabel = s.price > 0
+        ? `€${s.price}`
+        : `€20<sup class="price-asterisk" title="${passTooltip}" aria-label="${passTooltip}" onclick="event.stopPropagation();window.location='/pricing'" tabindex="0">*</sup>`;
+      const priceClass = s.price > 0 ? '' : 'drop-in';
+
+      // Book button
+      const bookLabel = isPast
+        ? { en: 'Past', ru: 'Прошло', el: 'Πέρασε' }[lang]
+        : { en: 'Book', ru: 'Записаться', el: 'Κράτηση' }[lang];
+
+      return `
+        <div class="class-card">
+          <div class="card-time">
+            <span class="card-time-start">${timeStart}</span>
+            ${timeEnd ? `<span class="card-time-end">${timeEnd}</span>` : ''}
+            <span class="card-time-dur">${durLabel}</span>
+          </div>
+          <div class="card-info">
+            <div class="card-name" title="${s.service_name}">${s.service_name}</div>
+            <div class="card-meta">
+              ${s.unit_name ? `<span class="card-instructor">${avatarHtml}${s.unit_name}</span>` : ''}
+              ${catLabel ? `<span class="card-category-badge">${catLabel}</span>` : ''}
+            </div>
+          </div>
+          <div class="card-cta">
+            <span class="card-price ${priceClass}">${priceLabel}</span>
+            <button class="card-book-btn"
+              ${isPast ? 'disabled' : ''}
+              data-service="${s.service_id}"
+              data-date="${s.date}"
+              data-time="${s.time}"
+              aria-label="Book ${s.service_name}">
+              ${bookLabel}
+            </button>
+          </div>
+        </div>`;
+    }
+
+    // ── Skeleton / error ─────────────────────────────────────────
+    function showSkeleton() {
+      if (skeleton) skeleton.style.display = '';
+      // Remove previous real content but keep skeleton
+      grid.querySelectorAll('.schedule-day, .schedule-empty, .schedule-error').forEach(el => el.remove());
+    }
+    function hideSkeleton() {
+      if (skeleton) skeleton.style.display = 'none';
+    }
+    function showError() {
+      hideSkeleton();
+      const lang = _lang();
+      const msg = {en:'Could not load schedule.',ru:'Не удалось загрузить расписание.',el:'Σφάλμα φόρτωσης.'}[lang];
+      const retry = {en:'Try again',ru:'Повторить',el:'Δοκιμάστε ξανά'}[lang];
+      grid.innerHTML = `<div class="schedule-empty schedule-error">
+        <p style="margin-bottom:12px">${msg}</p>
+        <button onclick="fetchSchedule()" style="padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font-sans);font-size:.9rem;font-weight:600;cursor:pointer">${retry}</button>
+      </div>`;
+    }
+
+    // ── Event listeners ──────────────────────────────────────────
+    document.getElementById('weekPrev').addEventListener('click', () => {
+      _weekOffset--;
+      updateWeekLabel();
+      fetchSchedule();
+    });
+    document.getElementById('weekNext').addEventListener('click', () => {
+      _weekOffset++;
+      updateWeekLabel();
+      fetchSchedule();
+    });
+    document.getElementById('weekToday').addEventListener('click', () => {
+      _weekOffset = 0;
+      updateWeekLabel();
+      fetchSchedule();
+    });
+
+    instSelect.addEventListener('change', () => {
+      _activeUnit = instSelect.value;
+      render();
+    });
+
+    // Re-render on language change
+    document.addEventListener('svs:langChange', () => {
+      rebuildCatPills();
+      render();
+    });
+
+    // ── Init ─────────────────────────────────────────────────────
+    updateWeekLabel();
+    initCategories().then(() => fetchSchedule());
+
+    // Auth header label
+    const token = localStorage.getItem('svs_token');
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.exp * 1000 > Date.now()) {
+          const firstName = (payload.name || '').split(' ')[0];
+          const el = document.getElementById('headerAccountLabel');
+          if (el && firstName) el.textContent = firstName;
+        }
+      } catch {}
+    }
+  })();
+  </script>
+
+  <script>
+  // Mobile menu toggle (same as index.html)
+  (function() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('mobileNav');
+    if (!btn || !nav) return;
+    btn.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      nav.setAttribute('aria-hidden', !open);
+    });
+
+    // Theme toggle
+    document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('svs_theme', next);
+      });
+    });
+    const saved = localStorage.getItem('svs_theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+  </script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

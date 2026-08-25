@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Soul Vibe Space</title>
+  <meta name="description" content="Soul Vibe Space — yoga and wellness studio in Limassol, Cyprus. Meet our teachers, learn our story." />
+  <meta property="og:title" content="About | Soul Vibe Space" />
+  <meta property="og:description" content="Soul Vibe Space — yoga and wellness studio in Limassol, Cyprus. Meet our teachers, learn our story." />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/about" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://soulvibespace.com/images/hero.webp" />
+  <link rel="canonical" href="https://soulvibespace.com/about" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/about" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/about" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/about" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/about" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Page ── */
+    .about-page { padding: 100px 0 80px; min-height: 100vh; }
+    .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .page-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 0;
+    }
+
+    /* ── Studio story section ── */
+    .about-story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-story-text h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .about-story-text p {
+      font-size: .97rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .about-story-text p:last-child { margin-bottom: 0; }
+    .about-story-img {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .about-story-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Stats bar ── */
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin: 48px 0;
+      overflow: hidden;
+    }
+    .stat-item {
+      padding: 28px 24px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: .8rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ── Team section ── */
+    .about-team-header {
+      padding: 64px 0 40px;
+    }
+    .about-team-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .about-team-header p {
+      font-size: .97rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+      padding-bottom: 64px;
+    }
+
+    /* ── Instructor card ── */
+    .instructor-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .instructor-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.08);
+    }
+    .instructor-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      background: var(--surface-alt, #f3f0eb);
+    }
+    .instructor-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, var(--surface-alt,#f3f0eb) 0%, var(--border) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .instructor-photo-placeholder svg { opacity: .25; }
+    .instructor-body {
+      padding: 16px 18px 18px;
+    }
+    .instructor-name {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .instructor-specialty {
+      font-size: .8rem;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: .04em;
+    }
+
+    /* ── Skeleton ── */
+    .team-skeleton {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+      padding-bottom: 64px;
+    }
+    .skel-instructor {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .skel-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--border);
+      animation: skelpulse 1.5s infinite;
+    }
+    .skel-inst-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+    .skel-iline {
+      height: 11px;
+      border-radius: 6px;
+      background: var(--border);
+      animation: skelpulse 1.5s infinite;
+    }
+    @keyframes skelpulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .45; }
+    }
+
+    /* ── Values section ── */
+    .about-values {
+      border-top: 1px solid var(--border);
+      padding: 64px 0;
+    }
+    .about-values h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 40px;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .value-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .value-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--surface-alt, #f3f0eb);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+    .value-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .value-text {
+      font-size: .88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ── CTA banner ── */
+    .about-cta-band {
+      background: var(--accent);
+      border-radius: 20px;
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 64px;
+      flex-wrap: wrap;
+    }
+    .about-cta-band h3 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .about-cta-band p {
+      font-size: .9rem;
+      color: rgba(255,255,255,.8);
+    }
+    .about-cta-band .btn-white {
+      background: #fff;
+      color: var(--accent);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-family: var(--font-sans);
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity .2s;
+    }
+    .about-cta-band .btn-white:hover { opacity: .9; }
+
+    @media (max-width: 900px) {
+      .about-story { grid-template-columns: 1fr; gap: 32px; }
+      .about-story-img { order: -1; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      .about-stats .stat-item:nth-child(2) { border-right: none; }
+      .about-stats .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .about-stats .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .about-page { padding: 90px 0 60px; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr; }
+      .about-cta-band { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+      .team-grid, .team-skeleton { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    }
+  </style></head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/about" class="nav-link nav-link--active" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a class='nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+          <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a class='mobile-nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ ABOUT PAGE ═══ -->
+  <main class="about-page">
+    <div class="container">
+
+      <!-- Hero header -->
+      <p class="page-eyebrow" data-i18n="about_eyebrow">Who we are</p>
+      <h1 class="page-title" data-i18n="about_title_full">About Soul Vibe Space</h1>
+      <p class="page-lead" data-i18n="about_p1">Soul Vibe Space is a yoga and wellness studio in Limassol offering yoga classes, meditation, ecstatic dance and sound healing.</p>
+
+      <!-- Story section -->
+      <div class="about-story">
+        <div class="about-story-text">
+          <h2 data-i18n="about_story_title">A space born from intention</h2>
+          <p data-i18n="about_story_p1">We created Soul Vibe Space as a response to the need for a truly multifunctional wellness space in Limassol — a place that brings together diverse practices, teachers, and communities under one roof.</p>
+          <p data-i18n="about_story_p2">From gentle morning yoga to ecstatic dance, from sound healing sessions to mindful co-working — everything at Soul Vibe Space is designed to help you feel more present, connected, and alive.</p>
+          <p data-i18n="about_story_p3">Located at 50 Agia Zonis, Limassol, our studio is open every day from 9 am to 10 pm. We welcome beginners and experienced practitioners alike.</p>
+        </div>
+        <div class="about-story-img">
+          <img src="images/about-studio.webp"
+               onerror="this.parentNode.style.background='linear-gradient(135deg,#f3f0eb,#e5e0d8)';this.style.display='none'"
+               alt="Soul Vibe Space studio interior"
+               srcset="images/about-studio.webp 700w, images/about-studio.webp 350w"
+               sizes="(max-width:768px) 100vw, 50vw" loading="lazy"/>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="about-stats">
+        <div class="stat-item">
+          <p class="stat-num" data-i18n="about_badge_num">500+</p>
+          <p class="stat-label" data-i18n="stat_practitioners">Happy practitioners</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-num" data-i18n="stat_classes_num">7</p>
+          <p class="stat-label" data-i18n="stat_classes_label">Days a week</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-num" data-i18n="stat_teachers_num">19</p>
+          <p class="stat-label" data-i18n="stat_teachers_label">Teachers</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-num" data-i18n="stat_since_num">2022</p>
+          <p class="stat-label" data-i18n="stat_since_label">Founded</p>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div class="about-values">
+        <h2 data-i18n="about_values_title">What we stand for</h2>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 class="value-title" data-i18n="value1_title">Daily practice</h3>
+            <p class="value-text" data-i18n="value1_text">We believe wellness is a daily commitment, not a weekend luxury. That's why we're open 7 days a week with a rich schedule of classes for every level.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="value-title" data-i18n="value2_title">Community first</h3>
+            <p class="value-text" data-i18n="value2_text">A studio is only as vibrant as its people. We cultivate a warm, inclusive community where every practitioner — from beginner to advanced — feels at home.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="value-title" data-i18n="value3_title">Intentional space</h3>
+            <p class="value-text" data-i18n="value3_text">Every detail of our studio — from the lighting to the layout — is designed to support your practice, creativity, and inner calm.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA band -->
+      <div class="about-cta-band">
+        <div>
+          <h3 data-i18n="about_cta_band_title">Ready to join us?</h3>
+          <p data-i18n="about_cta_band_sub">Book your first class today — no experience needed.</p>
+        </div>
+        <button class="btn-white" onclick="ClassModal.open(null,null,null)" data-i18n="btn_book_now">Book Now</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a data-i18n='footer_coworking' href='/#space'>Co-working</a>
+          <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+
+  <script>
+  (() => {
+    const API_BASE = window.SVS_API_BASE || 'https://soul-vibe-api.onrender.com';
+    const SB_CDN   = 'https://simplybook.me';
+
+    const SKIP_IDS = new Set([10]); // SoulVibeSpace LTD technical account
+
+    function photoURL(inst) {
+      const p = inst.picture_path || inst.picture || '';
+      if (!p) return null;
+      if (p.startsWith('http')) return p;
+      // Instructor preview path
+      return SB_CDN + '/uploads/soulvibespace/image_files/preview/' + p.replace(/^.*\//, '');
+    }
+
+    function renderTeam(instructors) {
+      const container = document.getElementById('teamContainer');
+      const skel = document.getElementById('teamSkeleton');
+      if (skel) skel.remove();
+
+      const visible = instructors.filter(i => !SKIP_IDS.has(Number(i.id)));
+
+      if (!visible.length) {
+        container.innerHTML = '<p style="color:var(--text-secondary);padding:32px 0">No instructors found.</p>';
+        return;
+      }
+
+      const grid = document.createElement('div');
+      grid.className = 'team-grid';
+      grid.innerHTML = visible.map(inst => {
+        const photo = photoURL(inst);
+        const imgHTML = photo
+          ? `<img class="instructor-photo lazy" data-src="${photo}" src="" alt="${escapeHtml(inst.name)}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\'instructor-photo-placeholder\'><svg width=60 height=60 viewBox=\'0 0 24 24\' fill=none stroke=currentColor stroke-width=1.2><circle cx=12 cy=8 r=4/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg></div>'" />`
+          : `<div class="instructor-photo-placeholder"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>`;
+
+        return `<div class="instructor-card">
+          ${imgHTML}
+          <div class="instructor-body">
+            <p class="instructor-name">${escapeHtml(inst.name)}</p>
+            ${inst.position ? `<p class="instructor-specialty">${escapeHtml(inst.position)}</p>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+
+      container.appendChild(grid);
+
+      // Lazy load
+      if ('IntersectionObserver' in window) {
+        grid.querySelectorAll('img.lazy').forEach(img => {
+          const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) { img.src = img.dataset.src; img.classList.remove('lazy'); obs.disconnect(); }
+            });
+          }, { rootMargin: '200px' });
+          obs.observe(img);
+        });
+      } else {
+        grid.querySelectorAll('img.lazy').forEach(img => { img.src = img.dataset.src; });
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    async function init() {
+      try {
+        const resp = await fetch(`${API_BASE}/api/instructors`);
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        const instructors = Array.isArray(data) ? data : (data.instructors || []);
+        renderTeam(instructors);
+      } catch (err) {
+        const skel = document.getElementById('teamSkeleton');
+        if (skel) skel.innerHTML = '<p style="color:var(--text-secondary);padding:32px 0">Could not load instructors.</p>';
+        console.error('Instructors load error:', err);
+      }
+    }
+
+    // Header auth
+    function updateHeaderAuth() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const user = token ? JSON.parse(localStorage.getItem('svs_user') || 'null') : null;
+        const label = document.getElementById('headerAccountLabel');
+        if (label && user) label.textContent = user.name ? user.name.split(' ')[0] : SVS_I18N.t('nav_account');
+      } catch {}
+    }
+
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', open);
+        mobileNav.setAttribute('aria-hidden', !open);
+      });
+    }
+
+    // Theme
+    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('svs_theme', next); } catch {}
+    });
+    try { const t = localStorage.getItem('svs_theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch {}
+
+    // Scroll header
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { header?.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SVS_I18N) { const s = localStorage.getItem('svs_lang') || 'en'; SVS_I18N.setLang(s); }
+      updateHeaderAuth();
+      init();
+    });
+  })();
+  </script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

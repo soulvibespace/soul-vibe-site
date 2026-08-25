@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Soul Vibe Space</title>
+  <meta name="description" content="Get in touch with Soul Vibe Space in Limassol, Cyprus. Book a class, ask a question, or find us on the map." />
+  <meta property="og:title" content="Contact | Soul Vibe Space" />
+  <meta property="og:description" content="Get in touch with Soul Vibe Space in Limassol, Cyprus. Book a class, ask a question, or find us on the map." />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/contact" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://soulvibespace.com/images/hero.webp" />
+  <link rel="canonical" href="https://soulvibespace.com/contact" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/contact" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/contact" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/contact" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/contact" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Page layout ── */
+    .contact-page { padding: 100px 0 80px; min-height: 100vh; }
+    .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+    .page-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      max-width: 500px;
+    }
+
+    /* ── Two-column layout ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* ── Contact info column ── */
+    .contact-info { display: flex; flex-direction: column; gap: 32px; }
+
+    .contact-block h3 {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .contact-block p, .contact-block a {
+      font-size: .93rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      display: block;
+      text-decoration: none;
+    }
+    .contact-block a:hover { color: var(--accent); }
+
+    .contact-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .contact-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: .9rem;
+      font-weight: 500;
+      transition: all .2s;
+      cursor: pointer;
+      font-family: var(--font-sans);
+    }
+    .contact-action-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .contact-action-btn svg { flex-shrink: 0; }
+
+    .contact-hours {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+    }
+    .contact-hours h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: .87rem;
+      color: var(--text-secondary);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ── Map ── */
+    .contact-map-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 4/3;
+    }
+    .contact-map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+    }
+
+    /* ── Form section ── */
+    .contact-form-section {
+      margin-top: 64px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-form-intro h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .contact-form-intro p {
+      font-size: .93rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── Form ── */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: .92rem;
+      outline: none;
+      transition: border-color .2s;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+    }
+    .form-group textarea { min-height: 120px; }
+    .form-submit { margin-top: 4px; }
+    .form-submit .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 14px;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text-secondary);
+      font-size: .93rem;
+    }
+    .form-success.visible { display: block; }
+    .form-success svg { color: #4caf50; margin-bottom: 12px; }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-form-section { grid-template-columns: 1fr; gap: 32px; }
+      .contact-map-wrap { aspect-ratio: 16/9; }
+    }
+    @media (max-width: 600px) {
+      .contact-page { padding: 90px 0 60px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style></head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a class='nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+        <a href="/contact" class="nav-link nav-link--active" data-i18n="nav_contact">Contact</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+          <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a class='mobile-nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ CONTACT PAGE ═══ -->
+  <main class="contact-page">
+    <div class="container">
+
+      <p class="page-eyebrow" data-i18n="contact_eyebrow">Get in touch</p>
+      <h1 class="page-title" data-i18n="contact_title">Ready to begin?</h1>
+      <p class="page-subtitle" data-i18n="contact_p">Book a class, ask a question, or just say hello. We'd love to hear from you.</p>
+
+      <!-- Main contact grid -->
+      <div class="contact-grid">
+
+        <!-- Left: info + actions -->
+        <div class="contact-info">
+
+          <div class="contact-block">
+            <h3 data-i18n="contact_block_address">Address</h3>
+            <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" data-i18n="contact_address">50 Agia Zonis, Limassol, Cyprus 3095</a>
+          </div>
+
+          <div class="contact-actions">
+            <a href="tel:+35795642888" class="contact-action-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.38 2 2 0 0 1 3.54 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.36a16 16 0 0 0 5.94 5.94l1.72-1.88a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +357 95 642 888
+            </a>
+            <a href="mailto:soulvibespace@gmail.com" class="contact-action-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              soulvibespace@gmail.com
+            </a>
+            <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="contact-action-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              <span data-i18n="contact_whatsapp">WhatsApp</span>
+            </a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="contact-action-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+              @soul.vibe.space_cyprus
+            </a>
+          </div>
+
+          <div class="contact-hours">
+            <h3 data-i18n="contact_hours_title">Opening hours</h3>
+            <div class="hours-row"><strong data-i18n="contact_hours_days">Monday – Sunday</strong><span>9:00 – 22:00</span></div>
+          </div>
+
+          <div>
+            <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:12px" data-i18n="contact_book_p">Book directly via our booking platform:</p>
+            <button class="btn btn-primary" onclick="ClassModal.open(null,null,null)" data-i18n="contact_book_btn">Book a class →</button>
+          </div>
+
+        </div>
+
+        <!-- Right: map -->
+        <div>
+          <div class="contact-map-wrap">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3272.5!2d33.0360!3d34.6823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14e73319c26a06db%3A0x9c2c19f8b0e9b4f5!2sSoul%20Vibe%20Space!5e0!3m2!1sen!2scy!4v1716900000000!5m2!1sen!2scy"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Soul Vibe Space location">
+            </iframe>
+          </div>
+          <p style="margin-top:12px;font-size:.8rem;color:var(--text-secondary)">
+            <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" style="color:var(--accent)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-i18n="contact_open_maps">Open in Google Maps</span>
+            </a>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Contact form -->
+      <div class="contact-form-section">
+        <div class="contact-form-intro">
+          <h2 data-i18n="form_title">Send us a message</h2>
+          <p data-i18n="form_intro_p">Have a question about a class, pricing, or anything else? Fill in the form and we'll get back to you within 24 hours.</p>
+        </div>
+
+        <div>
+          <form class="contact-form" id="contactForm" name="contact" data-netlify="true" novalidate>
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf_firstname" data-i18n="form_firstname">First Name</label>
+                <input type="text" id="cf_firstname" name="firstname" data-i18n-placeholder="ph_firstname" placeholder="Anna" autocomplete="given-name" required />
+              </div>
+              <div class="form-group">
+                <label for="cf_lastname" data-i18n="form_lastname">Last Name</label>
+                <input type="text" id="cf_lastname" name="lastname" data-i18n-placeholder="ph_lastname" placeholder="Smith" autocomplete="family-name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf_email" data-i18n="form_email">Email</label>
+              <input type="email" id="cf_email" name="email" data-i18n-placeholder="ph_email" placeholder="anna@example.com" autocomplete="email" required />
+            </div>
+            <div class="form-group">
+              <label for="cf_message" data-i18n="form_message">Message</label>
+              <textarea id="cf_message" name="message" data-i18n-placeholder="ph_message" placeholder="I'd like to join a yoga class..." required></textarea>
+            </div>
+            <div class="form-submit">
+              <button type="submit" class="btn btn-primary" id="formSubmitBtn">
+                <span id="formBtnText" data-i18n="form_submit">Send message</span>
+              </button>
+            </div>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <p id="formSuccessMsg" data-i18n="form_success_msg">Your message has been sent. We'll be in touch soon!</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a data-i18n='footer_coworking' href='/#space'>Co-working</a>
+          <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+
+  <script>
+  (() => {
+    // ── Form submit ────────────────────────────────────────────────
+    const form = document.getElementById('contactForm');
+    const successBox = document.getElementById('formSuccess');
+    const submitBtn = document.getElementById('formSubmitBtn');
+    const btnText = document.getElementById('formBtnText');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = form.cf_email.value.trim();
+        const message = form.cf_message.value.trim();
+        if (!email || !message) return;
+
+        submitBtn.disabled = true;
+        const l = (() => { try { return localStorage.getItem('svs_lang') || 'en'; } catch { return 'en'; } })();
+        btnText.textContent = l === 'ru' ? 'Отправка...' : l === 'el' ? 'Αποστολή...' : 'Sending...';
+
+        // Simulate send (replace with real endpoint if needed)
+        await new Promise(r => setTimeout(r, 800));
+
+        form.style.display = 'none';
+        successBox.classList.add('visible');
+      });
+    }
+
+    // ── Header auth ────────────────────────────────────────────────
+    function updateHeaderAuth() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const user = token ? JSON.parse(localStorage.getItem('svs_user') || 'null') : null;
+        const label = document.getElementById('headerAccountLabel');
+        if (label && user) label.textContent = user.name ? user.name.split(' ')[0] : SVS_I18N.t('nav_account');
+      } catch {}
+    }
+
+    // ── Mobile menu ────────────────────────────────────────────────
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', open);
+        mobileNav.setAttribute('aria-hidden', !open);
+      });
+    }
+
+    // ── Theme ──────────────────────────────────────────────────────
+    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('svs_theme', next); } catch {}
+    });
+    try { const t = localStorage.getItem('svs_theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch {}
+
+    // ── Scroll header ──────────────────────────────────────────────
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { header?.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SVS_I18N) { const s = localStorage.getItem('svs_lang') || 'en'; SVS_I18N.setLang(s); }
+      updateHeaderAuth();
+    });
+  })();
+  </script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

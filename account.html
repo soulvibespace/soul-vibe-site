@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account | Soul Vibe Space</title>
+  <meta name="description" content="Sign in or create your Soul Vibe Space account to manage your bookings." />
+  <meta property="og:title" content="My Account | Soul Vibe Space" />
+  <meta property="og:description" content="Sign in or create your Soul Vibe Space account to manage your bookings." />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/account" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://soulvibespace.com/images/hero.webp" />
+  <link rel="canonical" href="https://soulvibespace.com/account" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/account" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/account" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/account" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/account" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+  /* ═══════════════════════════════════════════════════════
+     ACCOUNT PAGE — FULL REDESIGN
+  ═══════════════════════════════════════════════════════ */
+
+  /* ── Page layout ── */
+  .acc-page {
+    min-height: 100vh;
+    padding-top: 76px;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .acc-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 76px);
+  }
+
+  /* ── Left hero panel ── */
+  .acc-hero {
+    position: relative;
+    overflow: hidden;
+    background: #1a1025;
+  }
+
+  .acc-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.45;
+    filter: saturate(0.7);
+  }
+
+  .acc-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(107,79,160,0.55) 0%, rgba(15,10,25,0.75) 100%);
+  }
+
+  .acc-hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 3rem;
+  }
+
+  .acc-hero-logo {
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
+  }
+
+  .acc-hero-logo img {
+    height: 44px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  .acc-hero-tagline {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1rem;
+  }
+
+  .acc-hero-title {
+    font-family: 'Zodiak', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .acc-hero-title em {
+    font-style: italic;
+    color: rgba(200,180,255,0.9);
+  }
+
+  .acc-hero-desc {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+    max-width: 320px;
+    margin-bottom: 2.5rem;
+  }
+
+  .acc-hero-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .acc-hero-perk {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .acc-hero-perk-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(180,155,255,0.7);
+    flex-shrink: 0;
+  }
+
+  /* ── Right panel ── */
+  .acc-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 2rem;
+    background: var(--bg);
+    overflow-y: auto;
+  }
+
+  .acc-right-inner {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* ── Auth section ── */
+  .acc-auth-title {
+    font-family: 'Zodiak', serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+
+  .acc-auth-sub {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .acc-tabs {
+    display: flex;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+  }
+
+  .acc-tab {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .acc-tab.active {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  /* Google */
+  .acc-google-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .acc-google-wrap .g_id_signin {
+    width: 100% !important;
+  }
+
+  .acc-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    color: var(--text-muted);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.8rem;
+  }
+
+  .acc-divider::before,
+  .acc-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Form */
+  .acc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .acc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .acc-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .acc-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  .acc-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(107,79,160,0.1);
+  }
+
+  .acc-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
+  }
+
+  .acc-input-wrap {
+    position: relative;
+  }
+
+  .acc-input-wrap .acc-input {
+    padding-right: 2.8rem;
+  }
+
+  .acc-pw-toggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+
+  .acc-pw-toggle:hover { color: var(--text); }
+
+  .acc-btn-submit {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--color-primary);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .acc-btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+  .acc-btn-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+  .acc-msg-error {
+    display: none;
+    padding: 0.75rem 1rem;
+    background: rgba(220,53,69,0.07);
+    border: 1px solid rgba(220,53,69,0.2);
+    border-radius: 8px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.875rem;
+    color: #c0392b;
+    margin-bottom: 0.5rem;
+  }
+
+  .acc-msg-error.visible { display: block; }
+
+  .acc-msg-success {
+    display: none;
+    padding: 0.75rem 1rem;
+    background: rgba(61,90,46,0.07);
+    border: 1px solid rgba(61,90,46,0.18);
+    border-radius: 8px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.875rem;
+    color: #3d5a2e;
+    margin-bottom: 0.5rem;
+  }
+
+  .acc-msg-success.visible { display: block; }
+
+  /* Spinner */
+  .acc-spinner {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: accSpin 0.65s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes accSpin { to { transform: rotate(360deg); } }
+
+  /* ═══════════════════════════════
+     DASHBOARD
+  ═══════════════════════════════ */
+  #accDashboard {
+    display: none;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  #accDashboard.visible { display: block; }
+
+  /* Profile strip */
+  .dash-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dash-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #9b6fd4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Zodiak', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .dash-name {
+    font-family: 'Zodiak', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .dash-email {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .dash-logout {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.45rem 0.9rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .dash-logout:hover { border-color: #c0392b; color: #c0392b; }
+
+  /* Quick actions */
+  .dash-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .dash-action {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  }
+
+  .dash-action:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 20px rgba(107,79,160,0.1);
+    transform: translateY(-2px);
+  }
+
+  .dash-action-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(107,79,160,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+  }
+
+  .dash-action-label {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Bookings section */
+  .dash-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .dash-section-title {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+
+  .dash-filter-wrap {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .dash-filter-btn {
+    padding: 0.3rem 0.85rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .dash-filter-btn.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+
+  /* Booking cards */
+  .bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .booking-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .booking-card:hover {
+    border-color: rgba(107,79,160,0.25);
+  }
+
+  .booking-date-badge {
+    min-width: 50px;
+    text-align: center;
+    background: rgba(107,79,160,0.07);
+    border-radius: 10px;
+    padding: 0.55rem 0.5rem 0.45rem;
+    border: 1px solid rgba(107,79,160,0.12);
+    flex-shrink: 0;
+  }
+
+  .booking-date-badge.booking-date-past {
+    background: var(--surface);
+    border-color: var(--border);
+  }
+
+  .booking-date-badge.booking-date-past .booking-date-day,
+  .booking-date-badge.booking-date-past .booking-date-month {
+    color: var(--text-muted);
+  }
+
+  .booking-date-day {
+    font-family: 'Zodiak', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1;
+  }
+
+  .booking-date-month {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.1rem;
+  }
+
+  .booking-date-weekday {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 0.1rem;
+  }
+
+  .booking-info { flex: 1; min-width: 0; }
+
+  .booking-service {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.15rem;
+  }
+
+  .booking-time {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .booking-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .booking-status {
+    display: inline-block;
+    padding: 0.18rem 0.55rem;
+    border-radius: 20px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .status-confirmed {
+    background: rgba(61,90,46,0.1);
+    color: #3d5a2e;
+  }
+
+  .status-cancelled, .status-canceled {
+    background: rgba(220,53,69,0.07);
+    color: #c0392b;
+  }
+
+  .status-past {
+    background: var(--surface);
+    color: var(--text-muted);
+  }
+
+  .booking-code {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* Cancel button */
+  .booking-cancel-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .booking-cancel-btn:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+    background: rgba(192,57,43,0.05);
+  }
+
+  .booking-cancel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Empty / loading states */
+  /* Month separator */
+  .bookings-month-sep {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9b8ec4;
+    padding: 16px 0 8px;
+    margin-top: 4px;
+    border-bottom: 1px solid rgba(107,79,160,0.12);
+    margin-bottom: 8px;
+  }
+  .bookings-month-sep:first-child { padding-top: 4px; }
+
+  /* Counter + load more */
+  .bookings-count-info {
+    text-align: center;
+    font-size: 12px;
+    color: #b0a8c8;
+    padding: 12px 0 4px;
+  }
+  .bookings-load-more {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    background: rgba(107,79,160,0.08);
+    border: 1px solid rgba(107,79,160,0.2);
+    border-radius: 10px;
+    color: #6b4fa0;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+  .bookings-load-more:hover { background: rgba(107,79,160,0.15); }
+
+  .bookings-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+  }
+
+  .bookings-empty svg {
+    opacity: 0.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .bookings-empty-cta {
+    margin-top: 1rem;
+    padding: 0.6rem 1.4rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: rgba(107,79,160,0.08);
+    border: 1px solid rgba(107,79,160,0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .bookings-empty-cta:hover { background: rgba(107,79,160,0.14); }
+
+  .bookings-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .skeleton {
+    background: var(--border);
+    border-radius: 16px;
+    height: 80px;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .acc-body {
+      grid-template-columns: 1fr;
+    }
+
+    /* On mobile: hero goes BELOW the form (order trick) so form is first */
+    .acc-hero {
+      order: 2;
+      min-height: 160px;
+      max-height: 200px;
+    }
+
+    .acc-right {
+      order: 1;
+      padding: 2rem 1.25rem 2rem;
+      justify-content: flex-start;
+    }
+
+    .acc-hero-content {
+      padding: 1.25rem;
+      justify-content: flex-end;
+    }
+
+    .acc-hero-logo {
+      top: 1.25rem;
+      left: 1.25rem;
+    }
+
+    .acc-hero-logo img { height: 32px; }
+
+    .acc-hero-title { font-size: 1.4rem; margin-bottom: 0; }
+    .acc-hero-desc, .acc-hero-perks, .acc-hero-tagline { display: none; }
+
+    .dash-actions {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    /* On small phones: hide hero entirely — form is all that matters */
+    .acc-hero { display: none; }
+    .acc-right {
+      padding: 1.5rem 1rem 2rem;
+      min-height: calc(100vh - 76px);
+    }
+    /* Slightly compact form */
+    .acc-auth-title { font-size: 1.5rem; }
+    .acc-auth-sub { margin-bottom: 1.25rem; }
+  }
+
+  @media (max-width: 480px) {
+    .dash-profile { flex-wrap: wrap; }
+    .dash-logout { margin-left: 0; width: 100%; justify-content: center; }
+    .booking-service { font-size: 0.85rem; }
+    .dash-actions { gap: 0.5rem; }
+    .dash-action { padding: 0.9rem 0.5rem; }
+  }
+  /* ── Consent checkboxes ── */
+  .acc-consent {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 4px 0 8px;
+  }
+  .acc-consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-muted, #666);
+  }
+  .acc-checkbox {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin-top: 2px;
+    accent-color: var(--color-primary, #6B4FA0);
+    cursor: pointer;
+  }
+  .acc-consent-link {
+    color: var(--color-primary, #6B4FA0);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .acc-consent-link:hover { opacity: 0.75; }
+  </style></head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+          <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault(); BookingModal && BookingModal.open()" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/account" class="mobile-nav-link active" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════ MAIN ═══════════════ -->
+  <main class="acc-page">
+    <div class="acc-body">
+
+      <!-- LEFT: Hero -->
+      <div class="acc-hero">
+        <img src="images/about-studio.webp" alt="Soul Vibe Space studio" class="acc-hero-img"
+               srcset="images/about-studio.webp 700w, images/about-studio.webp 350w"
+               sizes="(max-width:768px) 100vw, 50vw" loading="lazy"/>
+        <div class="acc-hero-overlay"></div>
+        <div class="acc-hero-content">
+          <a href="/" class="acc-hero-logo">
+            <img src="images/logo.png" alt="Soul Vibe Space" />
+          </a>
+          <p class="acc-hero-tagline">Your Wellness Journey</p>
+          <h1 class="acc-hero-title">Move. Breathe.<br><em>Come back.</em></h1>
+          <p class="acc-hero-desc">Sign in to manage your bookings, view your practice history, and reserve your next class — all in one place.</p>
+          <div class="acc-hero-perks">
+            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span>View and manage upcoming bookings</div>
+            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span>Cancel with one click</div>
+            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span>Quick access to the full schedule</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Auth / Dashboard -->
+      <div class="acc-right" id="accRight">
+
+        <!-- ── AUTH SECTION ── -->
+        <div class="acc-right-inner" id="accAuth">
+          <p class="acc-auth-title" id="accAuthTitle" data-i18n="acc_login_title">Welcome back</p>
+          <p class="acc-auth-sub" id="accAuthSub" data-i18n="acc_login_sub">Sign in to your Soul Vibe Space account</p>
+
+          <!-- Tabs -->
+          <div class="acc-tabs" role="tablist">
+            <button class="acc-tab active" id="loginTabBtn" role="tab" onclick="switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
+            <button class="acc-tab" id="registerTabBtn" role="tab" onclick="switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
+          </div>
+
+          <!-- Google -->
+          <div class="acc-google-wrap">
+            <div id="g_id_onload"
+              data-client_id="201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com"
+              data-callback="handleGoogleSignIn"
+              data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+              data-type="standard"
+              data-shape="rectangular"
+              data-theme="outline"
+              data-text="continue_with"
+              data-size="large"
+              data-logo_alignment="left"
+              data-width="420">
+            </div>
+            <div class="acc-divider"><span data-i18n="auth_or">or</span></div>
+          </div>
+
+          <!-- Messages -->
+          <div class="acc-msg-error" id="authError" role="alert"></div>
+          <div class="acc-msg-success" id="authSuccess" role="status"></div>
+
+          <!-- Login form -->
+          <form class="acc-form" id="loginForm" novalidate>
+            <div class="acc-field">
+              <label class="acc-label" for="loginEmail" data-i18n="acc_label_email">Email</label>
+              <input class="acc-input" type="email" id="loginEmail" name="email" autocomplete="email" required data-i18n-placeholder="acc_ph_email" placeholder="your@email.com" />
+            </div>
+            <div class="acc-field">
+              <label class="acc-label" for="loginPassword" data-i18n="acc_label_password">Password</label>
+              <div class="acc-input-wrap">
+                <input class="acc-input" type="password" id="loginPassword" name="password" autocomplete="current-password" required data-i18n-placeholder="acc_ph_password" placeholder="Your password" />
+                <button type="button" class="acc-pw-toggle" onclick="togglePw('loginPassword',this)" aria-label="Show password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <button type="submit" class="acc-btn-submit" id="loginBtn" data-label-key="acc_btn_login">Sign In</button>
+          </form>
+
+          <!-- Register form -->
+          <form class="acc-form" id="registerForm" style="display:none" novalidate>
+            <div class="acc-field">
+              <label class="acc-label" for="regName" data-i18n="acc_label_name">Full Name</label>
+              <input class="acc-input" type="text" id="regName" name="name" autocomplete="name" required data-i18n-placeholder="acc_ph_name" placeholder="Your name" />
+            </div>
+            <div class="acc-field">
+              <label class="acc-label" for="regEmail" data-i18n="acc_label_email">Email</label>
+              <input class="acc-input" type="email" id="regEmail" name="email" autocomplete="email" required data-i18n-placeholder="acc_ph_email" placeholder="your@email.com" />
+            </div>
+            <div class="acc-field">
+              <label class="acc-label" for="regPhone" data-i18n="acc_label_phone">Phone</label>
+              <input class="acc-input" type="tel" id="regPhone" name="phone" autocomplete="tel" required data-i18n-placeholder="acc_ph_phone" placeholder="+357 ..." />
+            </div>
+            <div class="acc-field">
+              <label class="acc-label" for="regPassword" data-i18n="acc_label_password">Password</label>
+              <div class="acc-input-wrap">
+                <input class="acc-input" type="password" id="regPassword" name="password" autocomplete="new-password" required data-i18n-placeholder="acc_ph_newpassword" placeholder="Create a password" />
+                <button type="button" class="acc-pw-toggle" onclick="togglePw('regPassword',this)" aria-label="Show password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <!-- Consent checkboxes -->
+            <div class="auth-consent acc-consent">
+              <label class="auth-consent-label acc-consent-label">
+                <input type="checkbox" id="regTerms" class="auth-checkbox acc-checkbox" required />
+                <span data-i18n="consent_terms" data-i18n-html="true">I have read and agree to the <a class="auth-consent-link acc-consent-link" href="/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a> and acknowledge the <a class="auth-consent-link acc-consent-link" href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>. <span class="req">*</span></span>
+              </label>
+              <label class="auth-consent-label acc-consent-label">
+                <input type="checkbox" id="regNewsletter" class="auth-checkbox acc-checkbox" />
+                <span data-i18n="consent_newsletter">I agree to receive news, offers and updates from Soul Vibe Space by email.</span>
+              </label>
+            </div>
+            <button type="submit" class="acc-btn-submit" id="registerBtn" data-label-key="acc_btn_register">Create Account</button>
+          </form>
+        </div>
+
+        <!-- ── DASHBOARD ── -->
+        <div id="accDashboard">
+
+          <!-- Profile strip -->
+          <div class="dash-profile">
+            <div class="dash-avatar" id="dashAvatar">?</div>
+            <div>
+              <div class="dash-name" id="dashName">—</div>
+              <div class="dash-email" id="dashEmail">—</div>
+            </div>
+            <button class="dash-logout" onclick="logout()" data-action="logout">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span data-i18n="acc_signout">Sign Out</span>
+            </button>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="dash-actions">
+            <a href="#" onclick="event.preventDefault(); BookingModal && BookingModal.open()" class="dash-action">
+              <div class="dash-action-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <span class="dash-action-label" data-i18n="acc_action_bookclass">Book a Class</span>
+            </a>
+            <a href="/schedule" class="dash-action">
+              <div class="dash-action-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              </div>
+              <span class="dash-action-label" data-i18n="nav_schedule">Schedule</span>
+            </a>
+            <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="dash-action">
+              <div class="dash-action-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              </div>
+              <span class="dash-action-label" data-i18n="acc_action_contact">Contact Us</span>
+            </a>
+          </div>
+
+          <!-- Bookings -->
+          <div class="dash-section-head">
+            <p class="dash-section-title" data-i18n="acc_section_bookings">My Bookings</p>
+            <div class="dash-filter-wrap">
+              <button class="dash-filter-btn active" id="filterUpcoming" onclick="loadBookings(true)" data-i18n="acc_upcoming">Upcoming</button>
+              <button class="dash-filter-btn" id="filterAll" onclick="loadBookings(false)" data-i18n="acc_all">All bookings</button>
+            </div>
+          </div>
+
+          <div id="bookingsContainer">
+            <div class="bookings-loading">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+          </div>
+
+        </div><!-- /accDashboard -->
+      </div><!-- /acc-right -->
+    </div><!-- /acc-body -->
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer">
+    <div class="footer-inner container">
+      <a href="/" class="footer-logo" aria-label="Soul Vibe Space">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" style="height:48px;width:auto;" />
+      </a>
+      <p class="footer-tagline">Movement, mindfulness and community.</p>
+      <div class="footer-links">
+        <a href="/about" class="footer-link" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="footer-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="footer-link" data-i18n="nav_classes">Classes</a>
+        <a href="/contact" class="footer-link" data-i18n="nav_contact">Contact</a>
+      </div>
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+    </div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="app.js"></script>
+  <script defer src="account.js"></script>
+
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

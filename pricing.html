@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-title="pricing_page_title">Pricing | Soul Vibe Space Limassol</title>
+  <meta name="description" content="Yoga class pricing in Limassol — Starter Packs for newcomers, Multi-Pass for regular practice. From €15." />
+  <meta property="og:title" content="Pricing | Soul Vibe Space" />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/pricing" />
+  <link rel="canonical" href="https://soulvibespace.com/pricing" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/pricing" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/pricing" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/pricing" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/pricing" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Page layout ── */
+    .pricing-page {
+      padding: 100px 0 80px;
+      min-height: 100vh;
+    }
+
+    /* ── Page header ── */
+    .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .page-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── Section title ── */
+    .pricing-section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .pricing-section-sub {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* ── Divider ── */
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 56px 0;
+    }
+
+    /* ── Drop-in row ── */
+    .dropin-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 32px 40px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+    .dropin-left { flex: 1; }
+    .dropin-label {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary, var(--text-secondary));
+      margin-bottom: 6px;
+    }
+    .dropin-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .dropin-desc {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .dropin-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-shrink: 0;
+    }
+    .price-big {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .price-big sup {
+      font-size: 1.3rem;
+      vertical-align: super;
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
+    /* ── Pass cards grid ── */
+    .pass-grid {
+      display: grid;
+      gap: 16px;
+    }
+    .pass-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .pass-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+    .pass-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .pass-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,0,0,.07);
+    }
+    .pass-card--featured {
+      border-color: var(--accent);
+      background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 5%, var(--surface)), var(--surface));
+    }
+
+    .pass-classes {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .pass-classes span {
+      font-family: var(--font-sans);
+      font-size: .8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-left: 4px;
+      text-transform: lowercase;
+    }
+
+    .pass-price {
+      font-family: var(--font-sans);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .pass-price sup {
+      font-size: .9rem;
+      font-weight: 500;
+      vertical-align: super;
+    }
+
+    .pass-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .pass-validity {
+      font-size: .8rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .pass-per-class {
+      font-size: .8rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .pass-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      width: fit-content;
+    }
+    .pass-badge--new {
+      background: color-mix(in srgb, #2a9d8f 12%, transparent);
+      color: #1a7a6e;
+    }
+
+    .pass-book-btn {
+      width: 100%;
+      padding: 11px 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-sans);
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: opacity .18s;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+    .pass-book-btn:hover { opacity: .85; }
+
+    /* ── Events note ── */
+    .events-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .events-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .events-note h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .events-note p {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .events-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── How it works ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 32px;
+    }
+    .how-step { }
+    .how-num {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: .55;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .how-title {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .how-desc {
+      font-size: .9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .how-note {
+      margin-top: 32px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border-radius: 10px;
+      font-size: .85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      border-left: 3px solid var(--accent);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .pass-grid--3 { grid-template-columns: 1fr 1fr; }
+      .pass-grid--4 { grid-template-columns: 1fr 1fr; }
+      .how-grid { grid-template-columns: 1fr; gap: 24px; }
+      .dropin-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .dropin-right { width: 100%; justify-content: space-between; }
+      .events-note { flex-direction: column; gap: 16px; padding: 24px; }
+    }
+    @media (max-width: 540px) {
+      .pass-grid--3 { grid-template-columns: 1fr; }
+      .pass-grid--4 { grid-template-columns: 1fr; }
+      .dropin-row { padding: 24px; }
+      .price-big { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/" class="nav-link" data-i18n="nav_home">Home</a>
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a href="/pricing" class="nav-link nav-link--active" data-i18n="nav_pricing">Pricing</a>
+        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+        <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/" class="mobile-nav-link" data-i18n="nav_home">Home</a>
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a href="/pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="pricing-page">
+    <div class="container">
+
+      <!-- Page header -->
+      <div style="margin-bottom: 56px;">
+        <p class="page-eyebrow" data-i18n="pricing_eyebrow">Passes & Pricing</p>
+        <h1 class="page-title" data-i18n="pricing_h1">Classes & Passes</h1>
+        <p class="page-lead" data-i18n="pricing_lead">Choose the option that fits your rhythm — from a single class to a monthly practice.</p>
+      </div>
+
+      <!-- ── 1. SINGLE CLASS ── -->
+      <div class="dropin-row">
+        <div class="dropin-left">
+          <p class="dropin-label" data-i18n="pricing_drop_label">Drop-in</p>
+          <p class="dropin-name" data-i18n="pricing_drop_name">Single Class</p>
+          <p class="dropin-desc" data-i18n="pricing_drop_desc">Any class, any day. No commitment needed.</p>
+        </div>
+        <div class="dropin-right">
+          <p class="price-big"><sup>€</sup>20</p>
+          <a href="/schedule" class="btn btn-primary" data-i18n="btn_view_schedule">View Schedule</a>
+        </div>
+      </div>
+
+      <hr class="pricing-divider">
+
+      <!-- ── 2. STARTER PACK ── -->
+      <div style="margin-bottom: 32px;">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px;">
+          <h2 class="pricing-section-title" data-i18n="pricing_starter_title">Starter Pack</h2>
+          <span class="pass-badge pass-badge--new" data-i18n="pricing_starter_badge">New students only</span>
+        </div>
+        <p class="pricing-section-sub" data-i18n="pricing_starter_sub">One-time offer for your first classes at Soul Vibe Space.</p>
+      </div>
+      <div class="pass-grid pass-grid--3">
+
+        <!-- 1 class -->
+        <div class="pass-card">
+          <div>
+            <p class="pass-classes">1 <span data-i18n="pricing_class_word">class</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>15</p>
+            <p class="pass-per-class" data-i18n="pricing_s1_saving">Save €5 vs drop-in</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+        <!-- 2 classes -->
+        <div class="pass-card pass-card--featured">
+          <div>
+            <p class="pass-classes">2 <span data-i18n="pricing_classes_word">classes</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>20</p>
+            <p class="pass-per-class" data-i18n="pricing_s2_saving">Save €20 vs drop-in</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+        <!-- 4 classes -->
+        <div class="pass-card">
+          <div>
+            <p class="pass-classes">4 <span data-i18n="pricing_classes_word">classes</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>40</p>
+            <p class="pass-per-class" data-i18n="pricing_s4_saving">Save €40 vs drop-in</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+      </div>
+
+      <hr class="pricing-divider">
+
+      <!-- ── 3. MULTI PASS ── -->
+      <div style="margin-bottom: 32px;">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px;">
+          <h2 class="pricing-section-title" data-i18n="pricing_multi_title">Multi Pass</h2>
+          <span class="pass-badge" data-i18n="pricing_multi_badge">Best value</span>
+        </div>
+        <p class="pricing-section-sub" data-i18n="pricing_multi_sub">For regular practitioners. Valid for all weekly classes.</p>
+      </div>
+      <div class="pass-grid pass-grid--4">
+
+        <!-- 4 classes -->
+        <div class="pass-card">
+          <div>
+            <p class="pass-classes">4 <span data-i18n="pricing_classes_word">classes</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>70</p>
+            <p class="pass-validity">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+              <span data-i18n="pricing_m4_validity">Valid 1 month</span>
+            </p>
+            <p class="pass-per-class" data-i18n="pricing_m4_saving">€17.50 / class</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+        <!-- 8 classes -->
+        <div class="pass-card pass-card--featured">
+          <div>
+            <p class="pass-classes">8 <span data-i18n="pricing_classes_word">classes</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>130</p>
+            <p class="pass-validity">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+              <span data-i18n="pricing_m8_validity">Valid 2 months</span>
+            </p>
+            <p class="pass-per-class" data-i18n="pricing_m8_saving">€16.25 / class</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+        <!-- 12 classes -->
+        <div class="pass-card pass-card--featured">
+          <div>
+            <p class="pass-classes">12 <span data-i18n="pricing_classes_word">classes</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>190</p>
+            <p class="pass-validity">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+              <span data-i18n="pricing_m12_validity">Valid 2 months</span>
+            </p>
+            <p class="pass-per-class" data-i18n="pricing_m12_saving">€15.83 / class</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+        <!-- 20 classes -->
+        <div class="pass-card">
+          <div>
+            <p class="pass-classes">20 <span data-i18n="pricing_classes_word">classes</span></p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-price"><sup>€</sup>300</p>
+            <p class="pass-validity">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+              <span data-i18n="pricing_m20_validity">Valid 3 months</span>
+            </p>
+            <p class="pass-per-class" data-i18n="pricing_m20_saving">€15 / class</p>
+          </div>
+          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
+        </div>
+
+      </div>
+
+      <hr class="pricing-divider">
+
+      <!-- ── 4. EVENTS ── -->
+      <div class="events-note">
+        <div class="events-icon">🎶</div>
+        <div>
+          <h3 data-i18n="pricing_events_title">Workshops & Special Events</h3>
+          <p data-i18n="pricing_events_desc">Workshops, sound healing and special events are priced individually. Check the schedule or contact us for details.</p>
+          <div class="events-links">
+            <a href="/schedule" class="btn btn-outline btn-sm" data-i18n="nav_schedule">Schedule</a>
+            <a href="/contact" class="btn btn-outline btn-sm" data-i18n="nav_contact">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="pricing-divider">
+
+      <!-- ── 5. HOW IT WORKS ── -->
+      <div>
+        <h2 class="pricing-section-title" data-i18n="pricing_how_title">How It Works</h2>
+        <div class="how-grid">
+          <div class="how-step">
+            <p class="how-num">01</p>
+            <p class="how-title" data-i18n="pricing_how1_title">Choose a Class</p>
+            <p class="how-desc" data-i18n="pricing_how1_desc">Browse the schedule and pick a session that speaks to you.</p>
+          </div>
+          <div class="how-step">
+            <p class="how-num">02</p>
+            <p class="how-title" data-i18n="pricing_how2_title">Book Your Spot</p>
+            <p class="how-desc" data-i18n="pricing_how2_desc">Sign in and reserve your place — no redirects, no extra steps.</p>
+          </div>
+          <div class="how-step">
+            <p class="how-num">03</p>
+            <p class="how-title" data-i18n="pricing_how3_title">Show Up & Practice</p>
+            <p class="how-desc" data-i18n="pricing_how3_desc">Arrive 5–10 min early. Your mat is waiting.</p>
+          </div>
+        </div>
+        <p class="how-note" data-i18n="pricing_how_note">Passes are personal and non-transferable. Cancellations accepted up to 3 hours before class.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="/space" data-i18n="footer_coworking">Co-working</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth modal -->
+  <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
+    <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
+    <div class="booking-modal-panel" style="max-width:420px">
+      <div class="booking-modal-header">
+        <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        <button class="booking-modal-close" id="authModalClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="auth-modal-body">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
+          <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
+        </div>
+        <div id="authModalError" class="auth-error" style="display:none"></div>
+        <div id="authModalSuccess" class="auth-success" style="display:none"></div>
+        <form id="loginForm" class="auth-form" onsubmit="AuthModal.login(event)">
+          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authLoginEmail" required autocomplete="email"/></div>
+          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authLoginPassword" required autocomplete="current-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_login">Sign In</button>
+        </form>
+        <form id="registerForm" class="auth-form" style="display:none" onsubmit="AuthModal.register(event)">
+          <div class="form-group"><label data-i18n="acc_name">Full Name</label><input type="text" id="authRegName" required autocomplete="name"/></div>
+          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authRegEmail" required autocomplete="email"/></div>
+          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authRegPassword" required autocomplete="new-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_register">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script defer src="auth-modal.js"></script>
+  <script src="/cookie-banner.js" defer></script>
+
+  <script>
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        mobileNav.setAttribute('aria-hidden', String(!open));
+      });
+    }
+    // Check auth on load
+    (function() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const label = document.getElementById('headerAccountLabel');
+        if (token && label) {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          if (payload && payload.exp * 1000 > Date.now() && payload.name) {
+            label.removeAttribute('data-i18n');
+            label.textContent = payload.name.split(' ')[0];
+            const btn = document.getElementById('headerAccountBtn');
+            if (btn) btn.href = 'account.html';
+          }
+        }
+      } catch(_) {}
+    })();
+  </script>
+</body>
+</html>

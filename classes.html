@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classes | Soul Vibe Space</title>
+  <meta name="description" content="Yoga, meditation, ecstatic dance, sound healing and more at Soul Vibe Space in Limassol, Cyprus. Browse all classes and book your spot." />
+  <meta property="og:title" content="Classes | Soul Vibe Space" />
+  <meta property="og:description" content="Yoga, meditation, ecstatic dance, sound healing and more at Soul Vibe Space in Limassol, Cyprus. Browse all classes and book your spot." />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/classes" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://soulvibespace.com/images/hero.webp" />
+  <link rel="canonical" href="https://soulvibespace.com/classes" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/classes" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/classes" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/classes" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/classes" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Page layout ── */
+    .classes-page { padding: 100px 0 80px; min-height: 100vh; }
+    .classes-page .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .classes-page .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+    .classes-page .page-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 540px;
+    }
+
+    /* ── Category filter ── */
+    .classes-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .cat-pill {
+      padding: 7px 18px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .cat-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .cat-pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Grid ── */
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    /* ── Class card ── */
+    .class-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .class-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.1);
+    }
+    .class-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: var(--surface-alt, #f3f0eb);
+      display: block;
+    }
+    .class-card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--surface-alt, #f3f0eb) 0%, var(--border) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary, #aaa);
+    }
+    .class-card-body {
+      padding: 20px 22px 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .class-card-cat {
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .class-card-name {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+    .class-card-instructor {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .class-card-instructor svg { flex-shrink: 0; opacity: .6; }
+    .class-card-desc {
+      font-size: .88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .class-card-desc.is-clamped {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .class-read-more-btn {
+      background: none;
+      border: none;
+      padding: 10px 0;
+      margin-top: 0;
+      font-size: .82rem;
+      color: var(--color-primary, #7c5cbf);
+      cursor: pointer;
+      font-family: var(--font-sans, sans-serif);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      display: inline-block;
+      line-height: 1.2;
+    }
+    .class-read-more-btn:hover { opacity: .75; }
+    .class-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .class-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .8rem;
+      color: var(--text-secondary);
+    }
+    .class-meta-item svg { opacity: .55; flex-shrink: 0; }
+    .class-card-actions {
+      display: flex;
+      gap: 8px;
+      padding-top: 14px;
+      margin-top: auto;
+    }
+    .class-card-actions .btn {
+      flex: 1;
+      text-align: center;
+      font-size: .85rem;
+      padding: 10px 14px;
+    }
+
+    /* ── Skeleton ── */
+    .classes-skeleton {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .skel-class-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .skel-class-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--border);
+      animation: skelpulse 1.5s infinite;
+    }
+    .skel-class-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+    .skel-line {
+      height: 12px;
+      border-radius: 6px;
+      background: var(--border);
+      animation: skelpulse 1.5s infinite;
+    }
+    @keyframes skelpulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .45; }
+    }
+
+    /* ── Empty / error state ── */
+    .classes-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 64px 0;
+      color: var(--text-secondary);
+      font-size: .95rem;
+    }
+    .classes-empty svg { opacity: .3; margin-bottom: 16px; }
+
+    /* ── Results meta ── */
+    .classes-meta {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    /* ── Detail modal expansion (read more) ── */
+    .class-desc-full {
+      font-size: .88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .class-read-more {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: .8rem;
+      color: var(--accent);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media (max-width: 600px) {
+      .classes-grid, .classes-skeleton { grid-template-columns: 1fr; gap: 18px; }
+      .classes-page { padding: 90px 0 60px; }
+    }
+  </style></head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class='nav-link' data-i18n='nav_about' href='/#about'>About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link nav-link--active" data-i18n="nav_classes">Classes</a>
+        <a class='nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+        <a class='nav-link' data-i18n='nav_contact' href='/#contact'>Contact</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+          <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a class='mobile-nav-link' data-i18n='nav_about' href='/#about'>About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a class='mobile-nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+      <a class='mobile-nav-link' data-i18n='nav_contact' href='/#contact'>Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ CLASSES PAGE ═══ -->
+  <main class="classes-page">
+    <div class="container">
+
+      <p class="page-eyebrow" data-i18n="classes_eyebrow">What we offer</p>
+      <h1 class="page-title" data-i18n="classes_title">Classes at Soul Vibe Space</h1>
+      <p class="page-subtitle" data-i18n="classes_lead">Yoga, sound healing, ecstatic dance and more — all classes come directly from our studio schedule.</p>
+
+      <!-- Category filter pills -->
+      <div class="classes-filters" id="classesFilters">
+        <button class="cat-pill active" data-cat="">All</button>
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Result count -->
+      <p class="classes-meta" id="classesMeta"></p>
+
+      <!-- Grid -->
+      <div id="classesContainer">
+        <!-- Skeleton -->
+        <div class="classes-skeleton" id="classesSkeleton">
+          <div class="skel-class-card">
+            <div class="skel-class-img"></div>
+            <div class="skel-class-body">
+              <div class="skel-line" style="width:40%"></div>
+              <div class="skel-line" style="width:75%"></div>
+              <div class="skel-line" style="width:55%"></div>
+              <div class="skel-line" style="width:90%"></div>
+              <div class="skel-line" style="width:60%"></div>
+            </div>
+          </div>
+          <div class="skel-class-card">
+            <div class="skel-class-img"></div>
+            <div class="skel-class-body">
+              <div class="skel-line" style="width:35%"></div>
+              <div class="skel-line" style="width:80%"></div>
+              <div class="skel-line" style="width:50%"></div>
+              <div class="skel-line" style="width:85%"></div>
+              <div class="skel-line" style="width:65%"></div>
+            </div>
+          </div>
+          <div class="skel-class-card">
+            <div class="skel-class-img"></div>
+            <div class="skel-class-body">
+              <div class="skel-line" style="width:45%"></div>
+              <div class="skel-line" style="width:70%"></div>
+              <div class="skel-line" style="width:60%"></div>
+              <div class="skel-line" style="width:80%"></div>
+              <div class="skel-line" style="width:55%"></div>
+            </div>
+          </div>
+          <div class="skel-class-card">
+            <div class="skel-class-img"></div>
+            <div class="skel-class-body">
+              <div class="skel-line" style="width:38%"></div>
+              <div class="skel-line" style="width:72%"></div>
+              <div class="skel-line" style="width:65%"></div>
+              <div class="skel-line" style="width:88%"></div>
+              <div class="skel-line" style="width:50%"></div>
+            </div>
+          </div>
+          <div class="skel-class-card">
+            <div class="skel-class-img"></div>
+            <div class="skel-class-body">
+              <div class="skel-line" style="width:42%"></div>
+              <div class="skel-line" style="width:68%"></div>
+              <div class="skel-line" style="width:58%"></div>
+              <div class="skel-line" style="width:82%"></div>
+              <div class="skel-line" style="width:47%"></div>
+            </div>
+          </div>
+          <div class="skel-class-card">
+            <div class="skel-class-img"></div>
+            <div class="skel-class-body">
+              <div class="skel-line" style="width:36%"></div>
+              <div class="skel-line" style="width:76%"></div>
+              <div class="skel-line" style="width:62%"></div>
+              <div class="skel-line" style="width:85%"></div>
+              <div class="skel-line" style="width:53%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a data-i18n='footer_about' href='/#about'>About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a data-i18n='footer_coworking' href='/#space'>Co-working</a>
+          <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
+    <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
+    <div class="booking-modal-panel auth-modal-panel">
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="authModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="auth-modal-body">
+        <div class="auth-tabs" role="tablist" id="authTabs">
+          <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
+          <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
+        </div>
+        <div class="google-signin-wrap">
+          <div id="g_id_onload" data-client_id="201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com" data-callback="handleGoogleSignIn" data-auto_prompt="false"></div>
+          <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="continue_with" data-size="large" data-logo_alignment="left" data-width="360"></div>
+          <div class="auth-divider"><span data-i18n="auth_or">or</span></div>
+        </div>
+        <div class="auth-error" id="authModalError" role="alert"></div>
+        <div class="auth-success" id="authModalSuccess" role="status"></div>
+        <form class="auth-form" id="authLoginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authLoginEmail">Email</label>
+            <input class="form-input" type="email" id="authLoginEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authLoginPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authLoginPassword" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="authLoginBtn" data-i18n="acc_tab_login">Sign In</button>
+        </form>
+        <form class="auth-form" id="authRegisterForm" style="display:none" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authRegName" data-i18n="auth_name">Full Name</label>
+            <input class="form-input" type="text" id="authRegName" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegEmail">Email</label>
+            <input class="form-input" type="email" id="authRegEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPhone" data-i18n="auth_phone">Phone</label>
+            <input class="form-input" type="tel" id="authRegPhone" placeholder="+357 ..." autocomplete="tel" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authRegPassword" placeholder="Create a password" autocomplete="new-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="authRegBtn" data-i18n="acc_tab_register">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+
+  <script>
+  (() => {
+    const API_BASE = window.SVS_API_BASE || 'https://soul-vibe-api.onrender.com';
+    const SB_CDN   = 'https://simplybook.me';
+
+    // Category label maps
+    const CAT_LABELS = {
+      yoga:     { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
+      spirit:   { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές Πρακτικές' },
+      dance:    { en: 'Dance & Movement', ru: 'Танец и движение', el: 'Χορός & Κίνηση' },
+      events:   { en: 'Events', ru: 'События', el: 'Εκδηλώσεις' },
+    };
+
+    // Simplybook category_id → our group key
+    // 47, 48 = Coworking — NOT shown in Classes (Space page only)
+    const CAT_MAP = {
+      // Yoga
+      2:'yoga',4:'yoga',16:'yoga',17:'yoga',19:'yoga',22:'yoga',23:'yoga',24:'yoga',
+      25:'yoga',26:'yoga',31:'yoga',38:'yoga',29:'yoga',
+      // Spiritual & Healing
+      20:'spirit',30:'spirit',41:'spirit',42:'spirit',
+      // Dance & Movement
+      34:'dance',35:'dance',36:'dance',45:'dance',
+      // Events
+      43:'events',44:'events',46:'events',32:'events',37:'events',
+      // Coworking — excluded from Classes, maps to null to skip
+      47:null, 48:null,
+    };
+
+    let _allServices = [];
+    let _activeCat = '';
+
+    // ── Resolve category group for a service ──────────────────────
+    function serviceGroup(svc) {
+      const cats = svc.category_ids || [];
+      for (const cid of cats) {
+        const g = CAT_MAP[Number(cid)];
+        if (g) return g;
+      }
+      return null; // skip if no known category
+    }
+
+    // ── Photo URL ──────────────────────────────────────────────────
+    function photoURL(svc) {
+      if (svc.picture_path) {
+        const path = svc.picture_path;
+        if (path.startsWith('http')) return path;
+        return SB_CDN + '/uploads/soulvibespace/image_files/preview/' +
+          path.replace(/^.*\//, '');
+      }
+      if (svc.picture) {
+        if (svc.picture.startsWith('http')) return svc.picture;
+        return SB_CDN + svc.picture;
+      }
+      return null;
+    }
+
+    // ── Get current lang ──────────────────────────────────────────
+    function lang() {
+      try { return localStorage.getItem('svs_lang') || 'en'; } catch { return 'en'; }
+    }
+
+    // ── Category label ────────────────────────────────────────────
+    function catLabel(key) {
+      const l = lang();
+      return (CAT_LABELS[key] && CAT_LABELS[key][l]) || key;
+    }
+
+    // ── Build category filter pills ───────────────────────────────
+    function buildCatPills(groups) {
+      const wrap = document.getElementById('classesFilters');
+      // remove old dynamic pills
+      wrap.querySelectorAll('.cat-pill:not([data-cat=""])').forEach(p => p.remove());
+
+      const order = ['yoga','spirit','dance','events'];
+      order.filter(g => groups.has(g)).forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'cat-pill';
+        btn.dataset.cat = g;
+        btn.textContent = catLabel(g);
+        btn.addEventListener('click', () => setFilter(g));
+        wrap.appendChild(btn);
+      });
+
+      // translate "All" pill
+      const allBtn = wrap.querySelector('[data-cat=""]');
+      if (allBtn) {
+        const t = SVS_I18N && SVS_I18N.t ? SVS_I18N.t('classes_cat_all') : null;
+        allBtn.textContent = t || (lang() === 'ru' ? 'Все' : lang() === 'el' ? 'Όλα' : 'All');
+      }
+    }
+
+    // ── Set category filter ───────────────────────────────────────
+    function setFilter(cat) {
+      _activeCat = cat;
+      document.querySelectorAll('.cat-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.cat === cat);
+      });
+      renderCards();
+    }
+
+    // ── Render cards ──────────────────────────────────────────────
+    function renderCards() {
+      const container = document.getElementById('classesContainer');
+      const meta = document.getElementById('classesMeta');
+
+      // Filter
+      let visible = _allServices.filter(svc => {
+        if (!_activeCat) return true;
+        return serviceGroup(svc) === _activeCat;
+      });
+
+      // Build grid
+      let grid = document.getElementById('classesGrid');
+      if (!grid) {
+        grid = document.createElement('div');
+        grid.id = 'classesGrid';
+        grid.className = 'classes-grid';
+        container.appendChild(grid);
+      }
+
+      // Meta count
+      const l = lang();
+      if (meta) {
+        meta.textContent = l === 'ru' ? `${visible.length} занятий` :
+                           l === 'el' ? `${visible.length} μαθήματα` :
+                           `${visible.length} classes`;
+      }
+
+      if (visible.length === 0) {
+        grid.innerHTML = `<div class="classes-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M8 13s1.5 3 4 3 4-3 4-3"/></svg>
+          <p>${l === 'ru' ? 'Нет занятий в этой категории' : l === 'el' ? 'Δεν υπάρχουν μαθήματα σε αυτήν την κατηγορία' : 'No classes in this category'}</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = visible.map(svc => renderCard(svc)).join('');
+
+      // Attach Book button handlers
+      grid.querySelectorAll('[data-book-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sid = btn.dataset.bookId;
+          BookingModal.open(sid, null, null);
+        });
+      });
+
+      // Lazy-load images
+      if ('IntersectionObserver' in window) {
+        grid.querySelectorAll('img.lazy').forEach(img => {
+          const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                obs.disconnect();
+              }
+            });
+          }, { rootMargin: '200px' });
+          obs.observe(img);
+        });
+      } else {
+        grid.querySelectorAll('img.lazy').forEach(img => {
+          img.src = img.dataset.src;
+        });
+      }
+    }
+
+    function renderCard(svc) {
+      const group = serviceGroup(svc);
+      const photo = photoURL(svc);
+      const l = lang();
+      const catLbl = group ? catLabel(group) : '';
+      const instructor = svc.instructor_name || '';
+      const duration = svc.duration ? `${svc.duration} min` : '';
+      const desc = (() => {
+        const raw = (svc.description || '').replace(/<[^>]+>/g, '').trim();
+        const tmp = document.createElement('textarea');
+        tmp.innerHTML = raw;
+        return tmp.value.trim();
+      })();
+      const bookLabel = l === 'ru' ? 'Записаться' : l === 'el' ? 'Κράτηση' : 'Book a Spot';
+      const schedLabel = l === 'ru' ? 'Расписание' : l === 'el' ? 'Πρόγραμμα' : 'Schedule';
+
+      const imgHTML = photo
+        ? `<img class="class-card-img lazy" data-src="${photo}" src="" alt="${escapeHtml(svc.name)}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\'class-card-img-placeholder\'><svg width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.2\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg></div>'" />`
+        : `<div class="class-card-img-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>`;
+
+      const metaItems = [];
+      if (duration) metaItems.push(`<span class="class-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>${duration}</span>`);
+
+      return `
+        <div class="class-card" data-service-id="${svc.id}">
+          ${imgHTML}
+          <div class="class-card-body">
+            ${catLbl ? `<p class="class-card-cat">${escapeHtml(catLbl)}</p>` : ''}
+            <h2 class="class-card-name">${escapeHtml(svc.name)}</h2>
+            ${instructor ? `<p class="class-card-instructor">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              ${escapeHtml(instructor)}</p>` : ''}
+            ${desc ? (() => {
+              const LIMIT = 220;
+              const labelMore = l === 'ru' ? 'Читать далее ↓' : l === 'el' ? 'Διαβάστε περισσότερα ↓' : 'Read more ↓';
+              const labelLess = l === 'ru' ? 'Свернуть ↑' : l === 'el' ? 'Λιγότερα ↑' : 'Show less ↑';
+              const short = desc.length > LIMIT ? desc.slice(0, LIMIT).trimEnd() + '…' : desc;
+              const id = 'desc-' + svc.id;
+              return desc.length > LIMIT
+                ? `<div class="class-desc-wrap">
+                    <p class="class-card-desc" id="${id}" data-full="${escapeHtml(desc)}" data-short="${escapeHtml(short)}">${escapeHtml(short)}</p>
+                    <button class="class-read-more-btn" onclick="(function(btn){var p=document.getElementById('${id}');var expanded=p.dataset.expanded==='1';p.textContent=expanded?p.dataset.short:p.dataset.full;p.dataset.expanded=expanded?'0':'1';btn.textContent=expanded?'${labelMore}':'${labelLess}';})  (this)">${labelMore}</button>
+                  </div>`
+                : `<p class="class-card-desc">${escapeHtml(desc)}</p>`;
+            })() : ''}
+            ${metaItems.length ? `<div class="class-card-meta">${metaItems.join('')}</div>` : ''}
+            <div class="class-card-actions">
+              <button class="btn btn-primary" data-book-id="${svc.id}">${bookLabel}</button>
+              <a href="/schedule" class="btn btn-outline">${schedLabel}</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;');
+    }
+
+    // ── Init ──────────────────────────────────────────────────────
+    async function init() {
+      try {
+        const resp = await fetch(`${API_BASE}/api/booking/services`);
+        if (!resp.ok) throw new Error(resp.status);
+        const data = await resp.json();
+        const services = Array.isArray(data) ? data : (data.services || []);
+
+        // Filter by Simplybook visibility (CRM eye toggle) + known category groups
+        const visibleServices = (typeof SvsFilter !== 'undefined')
+          ? await SvsFilter.filterVisibleServices(services)
+          : services;
+        _allServices = visibleServices.filter(s => serviceGroup(s) !== null);
+
+        // Gather available groups
+        const groups = new Set(_allServices.map(s => serviceGroup(s)).filter(Boolean));
+
+        // Remove skeleton
+        const skel = document.getElementById('classesSkeleton');
+        if (skel) skel.remove();
+
+        // Build filter pills
+        buildCatPills(groups);
+
+        // Wire "All" pill
+        document.querySelector('.cat-pill[data-cat=""]').addEventListener('click', () => setFilter(''));
+
+        // Render all
+        renderCards();
+
+      } catch (err) {
+        const skel = document.getElementById('classesSkeleton');
+        if (skel) {
+          const l = lang();
+          skel.innerHTML = `<div class="classes-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p>${l === 'ru' ? 'Не удалось загрузить занятия. Попробуйте позже.' : l === 'el' ? 'Δεν ήταν δυνατή η φόρτωση μαθημάτων.' : 'Could not load classes. Please try again later.'}</p>
+          </div>`;
+        }
+        console.error('Classes load error:', err);
+      }
+    }
+
+    // ── Language change ────────────────────────────────────────────
+    window.addEventListener('svs:langchange', () => {
+      // Rebuild pills labels + re-render cards
+      if (_allServices.length) {
+        const groups = new Set(_allServices.map(s => serviceGroup(s)).filter(Boolean));
+        buildCatPills(groups);
+        // Restore active pill
+        document.querySelectorAll('.cat-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.cat === _activeCat);
+        });
+        // Re-wire all pill
+        const allPill = document.querySelector('.cat-pill[data-cat=""]');
+        if (allPill) allPill.addEventListener('click', () => setFilter(''));
+        document.querySelectorAll('.cat-pill:not([data-cat=""])').forEach(p => {
+          p.addEventListener('click', () => setFilter(p.dataset.cat));
+        });
+        renderCards();
+      }
+    });
+
+    // ── Header auth state ──────────────────────────────────────────
+    function updateHeaderAuth() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const user = token ? JSON.parse(localStorage.getItem('svs_user') || 'null') : null;
+        const label = document.getElementById('headerAccountLabel');
+        if (label && user) {
+          label.textContent = user.name ? user.name.split(' ')[0] : (SVS_I18N.t('nav_account'));
+        }
+      } catch {}
+    }
+
+    // ── Mobile menu toggle ─────────────────────────────────────────
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', open);
+        mobileNav.setAttribute('aria-hidden', !open);
+      });
+    }
+
+    // ── Theme toggle ───────────────────────────────────────────────
+    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('svs_theme', next); } catch {}
+    });
+    try {
+      const saved = localStorage.getItem('svs_theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    } catch {}
+
+    // ── Header scroll ──────────────────────────────────────────────
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header?.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Init i18n ──────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SVS_I18N) {
+        const saved = localStorage.getItem('svs_lang') || 'en';
+        SVS_I18N.setLang(saved);
+      }
+      updateHeaderAuth();
+      init();
+    });
+
+  })();
+  </script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>

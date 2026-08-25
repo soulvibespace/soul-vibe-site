@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Space | Soul Vibe Space</title>
+  <meta name="description" content="Explore Soul Vibe Space — yoga studio, co-working, and wellness center in Limassol, Cyprus. Gallery, amenities and facilities." />
+  <meta property="og:title" content="Our Space | Soul Vibe Space" />
+  <meta property="og:description" content="Explore Soul Vibe Space — yoga studio, co-working, and wellness center in Limassol, Cyprus. Gallery, amenities and facilities." />
+  <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/space" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://soulvibespace.com/images/hero.webp" />
+  <link rel="canonical" href="https://soulvibespace.com/space" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/space" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/space" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/space" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/space" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .space-page { padding: 100px 0 80px; min-height: 100vh; }
+    .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+    .page-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      max-width: 520px;
+    }
+
+    /* ── Photo gallery ── */
+    .space-gallery {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 260px 260px;
+      gap: 12px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 64px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item:first-child {
+      grid-row: 1 / 3;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .45s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--surface-alt, #f3f0eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: .8rem;
+    }
+
+    /* ── Studio + co-working sections ── */
+    .space-section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      padding: 64px 0;
+      border-top: 1px solid var(--border);
+    }
+    .space-section-grid.reverse { direction: rtl; }
+    .space-section-grid.reverse > * { direction: ltr; }
+    .space-section-text h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .space-section-text p {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .space-section-img {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .space-section-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Amenities grid ── */
+    .amenities-section { padding: 64px 0; border-top: 1px solid var(--border); }
+    .amenities-section h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 40px;
+    }
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .amenity-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .amenity-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.07);
+    }
+    .amenity-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--surface-alt, #f3f0eb);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+    .amenity-title {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .amenity-text {
+      font-size: .83rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Hours band ── */
+    .space-hours-band {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 64px;
+      flex-wrap: wrap;
+    }
+    .space-hours-band h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .space-hours-band p {
+      font-size: .9rem;
+      color: var(--text-secondary);
+    }
+    .space-hours-badge {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-family: var(--font-sans);
+      font-size: .88rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ── CTA ── */
+    .space-cta {
+      text-align: center;
+      padding: 64px 0 0;
+      border-top: 1px solid var(--border);
+    }
+    .space-cta h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .space-cta p {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .space-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .space-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
+      .space-gallery .gallery-item:first-child { grid-row: 1; grid-column: 1 / 3; }
+      .space-section-grid, .space-section-grid.reverse { grid-template-columns: 1fr; gap: 32px; direction: ltr; }
+      .space-section-img { order: -1; }
+    }
+    @media (max-width: 600px) {
+      .space-page { padding: 90px 0 60px; }
+      .space-gallery { grid-template-columns: 1fr; grid-template-rows: 220px 180px 180px 180px 180px; }
+      .space-gallery .gallery-item:first-child { grid-row: 1; grid-column: 1; }
+      .amenities-grid { grid-template-columns: 1fr 1fr; }
+      .space-hours-band { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
+    }
+  </style></head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a href="/space" class="nav-link nav-link--active" data-i18n="nav_space">Space</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+          <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ SPACE PAGE ═══ -->
+  <main class="space-page">
+    <div class="container">
+
+      <p class="page-eyebrow" data-i18n="space_eyebrow">More than yoga</p>
+      <h1 class="page-title" data-i18n="space_title">A space for<br>work &amp; creativity</h1>
+      <p class="page-subtitle" data-i18n="space_p">Soul Vibe Space also includes a creative co-working area where guests can work, relax and connect with a mindful community.</p>
+
+      <!-- Photo gallery -->
+      <div class="space-gallery">
+        <div class="gallery-item">
+          <img src="images/hero.webp"
+               srcset="images/hero.webp 1400w"
+               sizes="100vw"
+               loading="lazy"
+               onerror="this.parentNode.innerHTML='<div class='gallery-placeholder'><svg width=40 height=40 viewBox='0 0 24 24' fill=none stroke=currentColor stroke-width=1.2 opacity=.3><rect x=3 y=3 width=18 height=18 rx=2/><circle cx=8.5 cy=8.5 r=1.5/><polyline points='21 15 16 10 5 21'/></svg></div>'"
+               alt="Soul Vibe Space main hall" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/about-studio.webp"
+               srcset="images/about-studio.webp 700w"
+               sizes="(max-width:768px) 100vw, 50vw"
+               loading="lazy"
+               onerror="this.parentNode.innerHTML='<div class='gallery-placeholder'></div>'"
+               alt="Soul Vibe Space yoga studio" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/sound-healing.webp"
+               srcset="images/sound-healing.webp 1400w"
+               sizes="100vw"
+               loading="lazy"
+               onerror="this.parentNode.innerHTML='<div class='gallery-placeholder'></div>'"
+               alt="Sound healing session" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/coworking.webp"
+               srcset="images/coworking.webp 700w"
+               sizes="(max-width:768px) 100vw, 50vw"
+               loading="lazy"
+               onerror="this.parentNode.innerHTML='<div class='gallery-placeholder'></div>'"
+               alt="Co-working area" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/hero.webp"
+               srcset="images/hero.webp 1400w"
+               sizes="100vw"
+               loading="lazy"
+               onerror="this.parentNode.innerHTML='<div class='gallery-placeholder'></div>'"
+               alt="Soul Vibe Space entrance" />
+        </div>
+      </div>
+
+      <!-- Studio section -->
+      <div class="space-section-grid">
+        <div class="space-section-text">
+          <p class="page-eyebrow" data-i18n="space_studio_eyebrow">The studio</p>
+          <h2 data-i18n="space_studio_title">Where practice comes alive</h2>
+          <p data-i18n="space_studio_p1">Our main studio space is designed to support a wide range of movement and mindfulness practices — from quiet morning yoga to energetic ecstatic dance and immersive sound baths.</p>
+          <p data-i18n="space_studio_p2">High ceilings, natural light, and quality flooring create the perfect environment for your practice. The space can accommodate group classes, private sessions, and special events.</p>
+        </div>
+        <div class="space-section-img">
+          <img src="images/about-studio.webp"
+               onerror="this.style.display='none'"
+               alt="Soul Vibe Space yoga studio interior"
+               srcset="images/about-studio.webp 700w, images/about-studio.webp 350w"
+               sizes="(max-width:768px) 100vw, 50vw" loading="lazy"/>
+        </div>
+      </div>
+
+      <!-- Co-working section -->
+      <div class="space-section-grid reverse">
+        <div class="space-section-text">
+          <p class="page-eyebrow" data-i18n="space_cowork_eyebrow">Co-working</p>
+          <h2 data-i18n="space_cowork_title">Work mindfully</h2>
+          <p data-i18n="space_cowork_p1">Between classes, our co-working area offers a calm, inspiring environment to focus, create, or connect with others in the community.</p>
+          <p data-i18n="space_cowork_p2">With a coffee point, SMART TV, and fast Wi-Fi, it's everything you need to be productive — in a space that feels completely different from a regular office.</p>
+        </div>
+        <div class="space-section-img">
+          <img src="images/coworking.webp"
+               onerror="this.style.display='none'"
+               alt="Soul Vibe Space co-working area"
+               srcset="images/coworking.webp 700w, images/coworking.webp 350w"
+               sizes="(max-width:768px) 100vw, 50vw" loading="lazy"/>
+        </div>
+      </div>
+
+      <!-- Amenities -->
+      <div class="amenities-section">
+        <h2 data-i18n="amenities_title">Facilities &amp; amenities</h2>
+        <div class="amenities-grid">
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat1_title">Coffee Point</h3>
+            <p class="amenity-text" data-i18n="space_feat1_text">Self-service coffee and tea</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat2_title">SMART TV</h3>
+            <p class="amenity-text" data-i18n="space_feat2_text">For presentations or group sessions</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"/><path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat3_title">Changing Rooms &amp; Showers</h3>
+            <p class="amenity-text" data-i18n="space_feat3_text">Refresh after your practice</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat4_title">Premises for Rent</h3>
+            <p class="amenity-text" data-i18n="space_feat4_text">Workshops, meetings and events</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="6" width="22" height="13" rx="2"/><path d="M1 10h22"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat5_title">Yoga Props</h3>
+            <p class="amenity-text" data-i18n="space_feat5_text">Mats, blocks and straps provided</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat6_title">Free Wi-Fi</h3>
+            <p class="amenity-text" data-i18n="space_feat6_text">High-speed internet throughout</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat7_title">Open Daily</h3>
+            <p class="amenity-text" data-i18n="space_hours">Open every day, 9:00 am – 10:00 pm</p>
+          </div>
+
+          <div class="amenity-card">
+            <div class="amenity-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3 class="amenity-title" data-i18n="space_feat8_title">Central Location</h3>
+            <p class="amenity-text" data-i18n="space_feat8_text">50 Agia Zonis, Limassol</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Hours band -->
+      <div class="space-hours-band">
+        <div>
+          <h3 data-i18n="contact_hours_title">Opening hours</h3>
+          <p data-i18n="space_hours_detail">Monday – Sunday · 9:00 am – 10:00 pm</p>
+        </div>
+        <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" class="space-hours-badge" data-i18n="contact_open_maps">Open in Google Maps</a>
+      </div>
+
+      <!-- CTA -->
+      <div class="space-cta">
+        <h2 data-i18n="space_cta_title">Ready to experience it yourself?</h2>
+        <p data-i18n="space_cta_sub">Book a class and come see the space for yourself.</p>
+        <div class="space-cta-btns">
+          <button class="btn btn-primary" onclick="ClassModal.open(null,null,null)" data-i18n="btn_book_now">Book Now</button>
+          <a href="/contact" class="btn btn-outline" data-i18n="nav_contact">Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/space" data-i18n="footer_coworking">Co-working</a>
+          <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+
+  <script>
+  (() => {
+    function updateHeaderAuth() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const user = token ? JSON.parse(localStorage.getItem('svs_user') || 'null') : null;
+        const label = document.getElementById('headerAccountLabel');
+        if (label && user) label.textContent = user.name ? user.name.split(' ')[0] : SVS_I18N.t('nav_account');
+      } catch {}
+    }
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', open);
+        mobileNav.setAttribute('aria-hidden', !open);
+      });
+    }
+    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('svs_theme', next); } catch {}
+    });
+    try { const t = localStorage.getItem('svs_theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch {}
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { header?.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SVS_I18N) { const s = localStorage.getItem('svs_lang') || 'en'; SVS_I18N.setLang(s); }
+      updateHeaderAuth();
+    });
+  })();
+  </script>
+<script src="/cookie-banner.js" defer></script>
+</body>
+</html>
