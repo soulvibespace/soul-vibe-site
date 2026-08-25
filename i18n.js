@@ -985,6 +985,64 @@ Object.assign(SVS_TRANSLATIONS.el, {
   btn_view_schedule:    'Πρόγραμμα',
 });
 
+// ── Extra Services / Venue Rental page strings ─────────────────────────────────
+Object.assign(SVS_TRANSLATIONS.en, {
+  nav_pricelist:            'Extra Services',
+  nav_rental:               'Venue Rental',
+  pricelist_page_title:     'Extra Services & Pricing | Soul Vibe Space Limassol',
+  rental_page_title:        'Studio & Venue Rental | Soul Vibe Space Limassol',
+
+  rental_rooms_title:       'Rooms & Rates',
+  rental_rooms_sub:         'Clear hourly rates for a studio, a floor or the whole building.',
+  rental_setups_title:      'Choose the Setup for Your Event',
+  rental_setups_sub:        'Six ready-made layouts, or ask us to build a custom one.',
+  rental_included_title:    'Everything You Need — Already Included',
+  rental_included_sub:      'No hidden add-ons for the basics. Everything below comes with the room.',
+  rental_addons_title:      'Optional Add-Ons',
+  rental_addons_sub:        'Extras that make your event even more comfortable — available at additional charge, please pre-order.',
+  rental_addons_onrequest:  'On Request',
+  rental_addons_equipment:  'Equipment',
+  rental_addons_food:       'Food',
+});
+
+Object.assign(SVS_TRANSLATIONS.ru, {
+  nav_pricelist:            'Доп. услуги',
+  nav_rental:               'Аренда',
+  pricelist_page_title:     'Дополнительные услуги и цены | Soul Vibe Space Лимасол',
+  rental_page_title:        'Аренда студии и пространства | Soul Vibe Space Лимасол',
+
+  rental_rooms_title:       'Залы и тарифы',
+  rental_rooms_sub:         'Чёткие почасовые тарифы на студию, этаж или всё здание.',
+  rental_setups_title:      'Выберите расстановку для вашего события',
+  rental_setups_sub:        'Шесть готовых вариантов расстановки — или закажите индивидуальную.',
+  rental_included_title:    'Всё необходимое уже включено',
+  rental_included_sub:      'Никаких скрытых доплат за базовые вещи. Всё ниже входит в стоимость аренды.',
+  rental_addons_title:      'Дополнительные опции',
+  rental_addons_sub:        'Опции, которые сделают ваше событие ещё комфортнее — за дополнительную плату, по предзаказу.',
+  rental_addons_onrequest:  'По запросу',
+  rental_addons_equipment:  'Оборудование',
+  rental_addons_food:       'Еда и напитки',
+});
+
+Object.assign(SVS_TRANSLATIONS.el, {
+  nav_pricelist:            'Πρόσθετες Υπηρεσίες',
+  nav_rental:               'Ενοικίαση',
+  pricelist_page_title:     'Πρόσθετες Υπηρεσίες & Τιμές | Soul Vibe Space Λεμεσός',
+  rental_page_title:        'Ενοικίαση Studio & Χώρου | Soul Vibe Space Λεμεσός',
+
+  rental_rooms_title:       'Αίθουσες & Τιμές',
+  rental_rooms_sub:         'Ξεκάθαρες ωριαίες τιμές για studio, όροφο ή όλο το κτίριο.',
+  rental_setups_title:      'Διάλεξε τη Διάταξη για την Εκδήλωσή σου',
+  rental_setups_sub:        'Έξι έτοιμες διατάξεις, ή ζήτησέ μας μια προσαρμοσμένη.',
+  rental_included_title:    'Όλα Όσα Χρειάζεσαι — Ήδη Περιλαμβάνονται',
+  rental_included_sub:      'Χωρίς κρυφές χρεώσεις για τα βασικά. Όλα τα παρακάτω περιλαμβάνονται στην αίθουσα.',
+  rental_addons_title:      'Προαιρετικές Προσθήκες',
+  rental_addons_sub:        'Επιλογές που κάνουν την εκδήλωσή σου πιο άνετη — με επιπλέον χρέωση, κατόπιν παραγγελίας.',
+  rental_addons_onrequest:  'Κατόπιν Αιτήματος',
+  rental_addons_equipment:  'Εξοπλισμός',
+  rental_addons_food:       'Φαγητό',
+});
+
 // Auto-init after DOM ready — must run after all Object.assign blocks
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', SVS_I18N.init);
