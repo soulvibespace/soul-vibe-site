@@ -41,3 +41,5 @@ git push origin main   # Netlify подхватит и опубликует са
 
 Домен `soulvibespace.com` пока указывает на старый сайт на Squarespace. Перенос —
 отдельная задача после того как новый сайт будет доделан.
+
+<!-- deploy pipeline verified 2026-08-25T17:55Z -->
