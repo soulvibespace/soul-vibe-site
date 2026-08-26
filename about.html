@@ -556,8 +556,8 @@
       grid.innerHTML = visible.map(inst => {
         const photo = photoURL(inst);
         const imgHTML = photo
-          ? `<img class="instructor-photo lazy" data-src="${photo}" src="" alt="${escapeHtml(inst.name)}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\'instructor-photo-placeholder\'><svg width=60 height=60 viewBox=\'0 0 24 24\' fill=none stroke=currentColor stroke-width=1.2><circle cx=12 cy=8 r=4/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg></div>'" />`
-          : `<div class="instructor-photo-placeholder"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>`;
+          ? `<img class="instructor-photo lazy" data-src="${escapeHtml(photo)}" alt="${escapeHtml(inst.name)}" loading="lazy" />`
+          : INSTRUCTOR_PLACEHOLDER;
 
         return `<div class="instructor-card">
           ${imgHTML}
@@ -570,9 +570,19 @@
 
       container.appendChild(grid);
 
-      // Lazy load
+      // Lazy load. The broken-image fallback lives here rather than in an inline
+      // onerror attribute, where the quoting silently collapsed and threw.
+      const lazyImgs = grid.querySelectorAll('img.lazy');
+
+      lazyImgs.forEach(img => {
+        img.addEventListener('error', () => {
+          const holder = img.parentNode;
+          if (holder) holder.innerHTML = INSTRUCTOR_PLACEHOLDER;
+        }, { once: true });
+      });
+
       if ('IntersectionObserver' in window) {
-        grid.querySelectorAll('img.lazy').forEach(img => {
+        lazyImgs.forEach(img => {
           const obs = new IntersectionObserver(entries => {
             entries.forEach(e => {
               if (e.isIntersecting) { img.src = img.dataset.src; img.classList.remove('lazy'); obs.disconnect(); }
@@ -581,9 +591,16 @@
           obs.observe(img);
         });
       } else {
-        grid.querySelectorAll('img.lazy').forEach(img => { img.src = img.dataset.src; });
+        lazyImgs.forEach(img => { img.src = img.dataset.src; });
       }
     }
+
+    // Shown when an instructor has no photo, and when a photo fails to load.
+    const INSTRUCTOR_PLACEHOLDER = '<div class="instructor-photo-placeholder">'
+      + '<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">'
+      + '<circle cx="12" cy="8" r="4"/>'
+      + '<path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>'
+      + '</svg></div>';
 
     function escapeHtml(str) {
       return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');

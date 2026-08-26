@@ -717,9 +717,20 @@
         });
       });
 
-      // Lazy-load images
+      // Lazy-load images. The broken-image fallback is attached here rather than
+      // in an inline onerror attribute: quoting the placeholder markup inside a
+      // template literal silently ate the escaping and made every card throw.
+      const lazyImgs = grid.querySelectorAll('img.lazy');
+
+      lazyImgs.forEach(img => {
+        img.addEventListener('error', () => {
+          const holder = img.parentNode;
+          if (holder) holder.innerHTML = IMG_PLACEHOLDER;
+        }, { once: true });
+      });
+
       if ('IntersectionObserver' in window) {
-        grid.querySelectorAll('img.lazy').forEach(img => {
+        lazyImgs.forEach(img => {
           const obs = new IntersectionObserver(entries => {
             entries.forEach(e => {
               if (e.isIntersecting) {
@@ -732,11 +743,18 @@
           obs.observe(img);
         });
       } else {
-        grid.querySelectorAll('img.lazy').forEach(img => {
+        lazyImgs.forEach(img => {
           img.src = img.dataset.src;
         });
       }
     }
+
+    // Shown when a class has no photo, and swapped in when a photo fails to load.
+    const IMG_PLACEHOLDER = '<div class="class-card-img-placeholder">'
+      + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">'
+      + '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'
+      + '<polyline points="9 22 9 12 15 12 15 22"/>'
+      + '</svg></div>';
 
     function renderCard(svc) {
       const group = serviceGroup(svc);
@@ -755,8 +773,8 @@
       const schedLabel = l === 'ru' ? 'Расписание' : l === 'el' ? 'Πρόγραμμα' : 'Schedule';
 
       const imgHTML = photo
-        ? `<img class="class-card-img lazy" data-src="${photo}" src="" alt="${escapeHtml(svc.name)}" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\'class-card-img-placeholder\'><svg width=\'40\' height=\'40\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.2\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg></div>'" />`
-        : `<div class="class-card-img-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>`;
+        ? `<img class="class-card-img lazy" data-src="${escapeHtml(photo)}" alt="${escapeHtml(svc.name)}" loading="lazy" />`
+        : IMG_PLACEHOLDER;
 
       const metaItems = [];
       if (duration) metaItems.push(`<span class="class-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>${duration}</span>`);
