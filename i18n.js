@@ -861,6 +861,11 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pricing_events_title: 'Workshops & Special Events',
   pricing_events_desc:  'Workshops, sound healing sessions and special events are priced individually. Check the schedule or contact us for details.',
 
+  // Extra services / rental cross-link
+  pricing_extras_title: 'Looking for something else?',
+  pricing_extras_desc:  'Individual programs, coworking and venue rental for outside instructors are priced separately.',
+  pricing_extras_link:  'See Extra Services & Pricing',
+
   // How to book
   pricing_how_title:    'How It Works',
   pricing_how1_title:   'Choose a Class',
@@ -917,6 +922,10 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_events_title: 'Воркшопы и события',
   pricing_events_desc:  'Воркшопы, звуковые практики и специальные события имеют индивидуальные цены. Смотри афишу или напиши нам.',
 
+  pricing_extras_title: 'Ищешь что-то другое?',
+  pricing_extras_desc:  'Индивидуальные программы, коворкинг и аренда помещения для приглашённых инструкторов оплачиваются отдельно.',
+  pricing_extras_link:  'Смотреть доп. услуги и цены',
+
   pricing_how_title:    'Как это работает',
   pricing_how1_title:   'Выбери класс',
   pricing_how1_desc:    'Просмотри расписание и выбери занятие, которое тебя вдохновляет.',
@@ -971,6 +980,10 @@ Object.assign(SVS_TRANSLATIONS.el, {
 
   pricing_events_title: 'Εργαστήρια & Ειδικές Εκδηλώσεις',
   pricing_events_desc:  'Τα εργαστήρια και οι ειδικές εκδηλώσεις έχουν ατομικές τιμές. Δείτε το πρόγραμμα ή επικοινωνήστε μαζί μας.',
+
+  pricing_extras_title: 'Ψάχνεις κάτι άλλο;',
+  pricing_extras_desc:  'Ατομικά προγράμματα, coworking και ενοικίαση χώρου για εξωτερικούς εκπαιδευτές τιμολογούνται ξεχωριστά.',
+  pricing_extras_link:  'Δείτε Πρόσθετες Υπηρεσίες & Τιμές',
 
   pricing_how_title:    'Πώς Λειτουργεί',
   pricing_how1_title:   'Διάλεξε Μάθημα',
