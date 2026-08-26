@@ -11,6 +11,31 @@ var API_BASE = window.SVS_API_BASE
 
 // ── BookingModal ───────────────────────────────────────────────────
 const BookingModal = (() => {
+  // How many months of availability to request in one go. SimplyBook classes
+  // often run out of slots late in the current month, so a single-month window
+  // made the calendar look completely empty. Always look ahead.
+  const HORIZON_MONTHS = 3;
+  // SimplyBook rejects long ranges outright ("Period too long", ~31 days max) and
+  // starts timing out around 30 days, so the horizon is fetched as several short
+  // chunks in parallel instead of one long request.
+  const CHUNK_DAYS = 21;
+
+  const MONTH_NAMES = {
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ru: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+    el: ['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος']
+  };
+  const MONTH_NAMES_IN = {
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ru: ['январе','феврале','марте','апреле','мае','июне','июле','августе','сентябре','октябре','ноябре','декабре'],
+    el: ['Ιανουάριο','Φεβρουάριο','Μάρτιο','Απρίλιο','Μάιο','Ιούνιο','Ιούλιο','Αύγουστο','Σεπτέμβριο','Οκτώβριο','Νοέμβριο','Δεκέμβριο']
+  };
+  const DAY_NAMES = {
+    en: ['Mo','Tu','We','Th','Fr','Sa','Su'],
+    ru: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
+    el: ['Δε','Τρ','Τε','Πε','Πα','Σα','Κυ']
+  };
+
   // State
   let _services = null;
   let _selectedService = null;
@@ -19,11 +44,66 @@ const BookingModal = (() => {
   let _slots = {};
   let _currentMonth = new Date();
   let _loading = false;
+  // Availability-loading state
+  let _slotsError = false;
+  let _slotsLoading = false;
+  let _loadedFrom = null;   // ISO date string of the currently cached window
+  let _loadedTo = null;
 
   // DOM refs
   let _modal, _backdrop;
 
   function _el(id) { return document.getElementById(id); }
+
+  function _lang() { return document.documentElement.lang || 'en'; }
+
+  function _t(dict) {
+    const l = _lang();
+    return dict[l] || dict.en;
+  }
+
+  function _fmtISO(d) {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  function _todayMidnight() {
+    const t = new Date(); t.setHours(0,0,0,0); return t;
+  }
+
+  function _resetSlotState() {
+    _slots = {};
+    _slotsError = false;
+    _slotsLoading = false;
+    _loadedFrom = null;
+    _loadedTo = null;
+  }
+
+  // All future dates (today onwards) that actually have slots, sorted ascending
+  function _futureSlotDates() {
+    const today = _todayMidnight();
+    return Object.keys(_slots)
+      .filter(k => _slots[k] && _slots[k].length > 0 && new Date(k + 'T00:00:00') >= today)
+      .sort();
+  }
+
+  function _monthPrefix(date) {
+    return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
+  }
+
+  // Split [start, end] into consecutive chunks of at most CHUNK_DAYS days.
+  function _splitRange(start, end) {
+    const chunks = [];
+    let cur = new Date(start);
+    while (cur <= end) {
+      const chunkEnd = new Date(cur);
+      chunkEnd.setDate(chunkEnd.getDate() + CHUNK_DAYS - 1);
+      if (chunkEnd > end) chunkEnd.setTime(end.getTime());
+      chunks.push([_fmtISO(cur), _fmtISO(chunkEnd)]);
+      cur = new Date(chunkEnd);
+      cur.setDate(cur.getDate() + 1);
+    }
+    return chunks;
+  }
 
   // ── Open / Close ──────────────────────────────────────────────
   async function open(serviceId = null, date = null, time = null) {
@@ -35,6 +115,7 @@ const BookingModal = (() => {
     _selectedDate = date || null;
     _selectedSlot = time || null;
     _currentMonth = date ? new Date(date + 'T00:00:00') : new Date();
+    _resetSlotState();
 
     _modal.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -223,7 +304,8 @@ const BookingModal = (() => {
     _selectedService = serviceId;
     _selectedDate = null;
     _selectedSlot = null;
-    _slots = {};
+    _currentMonth = new Date();
+    _resetSlotState();
     _renderStep('schedule');
   }
 
@@ -254,7 +336,9 @@ const BookingModal = (() => {
       </div>`;
 
     _renderCalendar();
-    _loadSlotsForMonth();
+    // Allow auto-advance here: if the current month has no availability we jump
+    // straight to the first month that does, instead of showing an all-grey grid.
+    _loadSlotsForMonth(true);
   }
 
   function _renderCalendar() {
@@ -263,21 +347,10 @@ const BookingModal = (() => {
 
     const year  = _currentMonth.getFullYear();
     const month = _currentMonth.getMonth();
-    const lang  = document.documentElement.lang || 'en';
+    const lang  = _lang();
 
-    const monthNames = {
-      en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
-      ru: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-      el: ['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος']
-    };
-    const dayNames = {
-      en: ['Mo','Tu','We','Th','Fr','Sa','Su'],
-      ru: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
-      el: ['Δε','Τρ','Τε','Πε','Πα','Σα','Κυ']
-    };
-
-    const mNames = monthNames[lang] || monthNames.en;
-    const dNames = dayNames[lang] || dayNames.en;
+    const mNames = MONTH_NAMES[lang] || MONTH_NAMES.en;
+    const dNames = DAY_NAMES[lang] || DAY_NAMES.en;
 
     const firstDay  = new Date(year, month, 1);
     const lastDay   = new Date(year, month + 1, 0);
@@ -327,42 +400,192 @@ const BookingModal = (() => {
     cal.innerHTML = html;
   }
 
-  async function _loadSlotsForMonth() {
-    const year  = _currentMonth.getFullYear();
-    const month = _currentMonth.getMonth();
-    const from  = `${year}-${String(month+1).padStart(2,'0')}-01`;
-    const to    = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
-
-    // Show loading
-    const slotEl = _el('bmSlots');
-    if (slotEl) slotEl.innerHTML = `<div class="bm-loading-small"><div class="bm-spinner bm-spinner-sm"></div></div>`;
-
-    try {
-      const res  = await fetch(`${API_BASE}/api/booking/slots?service_id=${_selectedService}&from=${from}&to=${to}`);
-      const data = await res.json();
-
-      // Clear existing slots for this month
-      for (const [k] of Object.entries(_slots)) {
-        if (k.startsWith(from.slice(0,7))) delete _slots[k];
+  // Fetch one availability window, retrying on transient failures (Render cold
+  // start can take ~30s on the first request after idle).
+  async function _fetchSlotsRange(from, to, retries = 3, delayMs = 4000) {
+    let lastErr;
+    for (let i = 0; i < retries; i++) {
+      try {
+        const url = `${API_BASE}/api/booking/slots`
+          + `?service_id=${encodeURIComponent(_selectedService)}`
+          + `&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data && data.error) throw new Error(String(data.error));
+        if (!data || !Array.isArray(data.slots)) throw new Error('Malformed response: no slots array');
+        return data.slots;
+      } catch (e) {
+        lastErr = e;
+        if (i < retries - 1) await new Promise(r => setTimeout(r, delayMs));
       }
+    }
+    throw lastErr;
+  }
 
-      // Populate
-      for (const slot of (data.slots || [])) {
-        if (!_slots[slot.date]) _slots[slot.date] = [];
-        if (!_slots[slot.date].includes(slot.time)) {
-          _slots[slot.date].push(slot.time);
+  // Loads a rolling HORIZON_MONTHS window anchored on the displayed month.
+  // Previously this requested a single calendar month, so a class whose next
+  // session was in the following month rendered an entirely grey calendar.
+  async function _loadSlotsForMonth(allowAutoAdvance = false) {
+    const anchor = new Date(_currentMonth.getFullYear(), _currentMonth.getMonth(), 1);
+    const today  = _todayMidnight();
+    const start  = anchor < today ? today : anchor;
+    // Last day of (anchor month + HORIZON_MONTHS - 1)
+    const end    = new Date(anchor.getFullYear(), anchor.getMonth() + HORIZON_MONTHS, 0);
+
+    const from = _fmtISO(start);
+    const to   = _fmtISO(end);
+
+    // Already covered by the cached window? Just re-render.
+    if (!_slotsError && _loadedFrom && _loadedTo && from >= _loadedFrom && to <= _loadedTo) {
+      _renderCalendar();
+      _refreshSlotsPanel();
+      return;
+    }
+
+    _slotsError = false;
+    _slotsLoading = true;
+
+    const slotEl = _el('bmSlots');
+    if (slotEl) {
+      const loadingLabel = _t({
+        ru: 'Загружаем расписание…',
+        el: 'Φόρτωση διαθεσιμότητας…',
+        en: 'Loading availability…'
+      });
+      slotEl.innerHTML = `<div class="bm-loading-small">`
+        + `<div class="bm-spinner bm-spinner-sm"></div>`
+        + `<div class="bm-slots-placeholder">${loadingLabel}</div></div>`;
+    }
+
+    const chunks = _splitRange(start, end);
+    const results = await Promise.all(chunks.map(async ([f, t]) => {
+      try {
+        return { from: f, to: t, slots: await _fetchSlotsRange(f, t) };
+      } catch (e) {
+        console.error('[BookingModal] Availability chunk failed',
+          { service_id: _selectedService, from: f, to: t }, e);
+        return { from: f, to: t, slots: null };
+      }
+    }));
+
+    const ok = results.filter(r => r.slots !== null);
+
+    if (!ok.length) {
+      _slotsError = true;
+      _loadedFrom = null;
+      _loadedTo   = null;
+    } else {
+      // Replace the whole cache — the new window fully defines what we know.
+      _slots = {};
+      for (const r of ok) {
+        for (const slot of r.slots) {
+          if (!slot || !slot.date || !slot.time) continue;
+          if (!_slots[slot.date]) _slots[slot.date] = [];
+          if (!_slots[slot.date].includes(slot.time)) _slots[slot.date].push(slot.time);
         }
       }
-    } catch { }
+      // Only cache the contiguous span that actually loaded, so a failed chunk
+      // never gets remembered as "no availability".
+      let coveredTo = null;
+      for (const r of results) {
+        if (r.slots === null) break;
+        coveredTo = r.to;
+      }
+      _loadedFrom = coveredTo ? from : null;
+      _loadedTo   = coveredTo;
+    }
+
+    _slotsLoading = false;
+
+    // If the displayed month has nothing but a later month does, go there.
+    if (!_slotsError && allowAutoAdvance && !_selectedDate) {
+      const prefix = _monthPrefix(_currentMonth);
+      const future = _futureSlotDates();
+      if (future.length && !future.some(k => k.startsWith(prefix))) {
+        const first = new Date(future[0] + 'T00:00:00');
+        _currentMonth = new Date(first.getFullYear(), first.getMonth(), 1);
+      }
+    }
 
     _renderCalendar();
-    if (_selectedDate && _slots[_selectedDate]) {
+    _refreshSlotsPanel();
+  }
+
+  // Renders the right-hand panel based on the current availability state.
+  // Replaces the old unconditional "Pick a date" placeholder, which gave users
+  // no way to tell "no classes this month" apart from "loading failed".
+  function _refreshSlotsPanel() {
+    const slotEl = _el('bmSlots');
+    if (!slotEl) return;
+
+    if (_selectedDate && _slots[_selectedDate] && _slots[_selectedDate].length) {
       _renderSlots(_selectedDate);
-    } else if (slotEl) {
-      const lang = document.documentElement.lang || 'en';
-      const hint = lang === 'ru' ? 'Выбери дату в календаре' : lang === 'el' ? 'Επέλεξε ημέρα' : 'Pick a date';
-      slotEl.innerHTML = `<div class="bm-slots-placeholder">${hint}</div>`;
+      return;
     }
+
+    if (_slotsError) {
+      const msg = _t({
+        ru: 'Не удалось загрузить расписание',
+        el: 'Αποτυχία φόρτωσης διαθεσιμότητας',
+        en: "Couldn't load availability"
+      });
+      const retry = _t({ ru: 'Попробовать снова', el: 'Δοκιμάστε ξανά', en: 'Try again' });
+      slotEl.innerHTML = `<div class="bm-slots-error">${msg}</div>`
+        + `<button class="bm-continue-btn" onclick="BookingModal._retryLoadSlots()">${retry}</button>`;
+      return;
+    }
+
+    const future = _futureSlotDates();
+
+    if (!future.length) {
+      slotEl.innerHTML = `<div class="bm-slots-empty">${_t({
+        ru: 'Для этого класса пока нет запланированных занятий. Напишите нам — подскажем ближайшую дату.',
+        el: 'Δεν υπάρχουν προγραμματισμένα μαθήματα ακόμα. Επικοινωνήστε μαζί μας.',
+        en: 'No classes scheduled for this class yet. Contact us and we\u2019ll tell you the next date.'
+      })}</div>`;
+      return;
+    }
+
+    // Availability exists, just not in the month currently on screen.
+    const prefix = _monthPrefix(_currentMonth);
+    if (!future.some(k => k.startsWith(prefix))) {
+      const first  = new Date(future[0] + 'T00:00:00');
+      const lang   = _lang();
+      const mIn    = (MONTH_NAMES_IN[lang] || MONTH_NAMES_IN.en)[first.getMonth()];
+      const msg    = _t({
+        ru: `В этом месяце занятий нет. Ближайшие — в ${mIn}.`,
+        el: `Δεν υπάρχουν μαθήματα αυτόν τον μήνα. Τα επόμενα — Τον ${mIn}.`,
+        en: `No classes this month. The next ones are in ${mIn}.`
+      });
+      const go = _t({ ru: 'Показать →', el: 'Εμφάνιση →', en: 'Show →' });
+      slotEl.innerHTML = `<div class="bm-slots-empty">${msg}</div>`
+        + `<button class="bm-continue-btn" onclick="BookingModal._jumpToFirstAvailable()">${go}</button>`;
+      return;
+    }
+
+    slotEl.innerHTML = `<div class="bm-slots-placeholder">${_t({
+      ru: 'Выбери дату в календаре',
+      el: 'Επέλεξε ημέρα',
+      en: 'Pick a date'
+    })}</div>`;
+  }
+
+  function _retryLoadSlots() {
+    _resetSlotState();
+    _renderCalendar();
+    _loadSlotsForMonth(true);
+  }
+
+  function _jumpToFirstAvailable() {
+    const future = _futureSlotDates();
+    if (!future.length) return;
+    const first = new Date(future[0] + 'T00:00:00');
+    _currentMonth = new Date(first.getFullYear(), first.getMonth(), 1);
+    _selectedDate = null;
+    _selectedSlot = null;
+    _renderCalendar();
+    _loadSlotsForMonth(false);
   }
 
   function _pickDate(dateStr) {
@@ -937,7 +1160,7 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn };
+  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn };
 })();
 
 // Expose as ClassModal alias for backward compatibility
