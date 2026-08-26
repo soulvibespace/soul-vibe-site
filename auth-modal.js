@@ -242,20 +242,21 @@ async function handleGoogleSignIn(response) {
     email = p.email || '';
   } catch {}
 
-  const errEl = document.getElementById('authModalError');
-
-  // Read consents if user is on the register tab (Google = new account possibility)
+  // Read consents only if the auth modal is actually on screen showing the
+  // register tab. Without the visibility check a Google sign-in started from the
+  // booking modal was treated as a registration, then blocked on an unchecked
+  // terms box whose error message was written into the hidden auth modal — so
+  // nothing at all appeared to happen.
+  const authModalEl  = document.getElementById('authModal');
+  const authVisible  = !!(authModalEl && !authModalEl.hidden);
   const termsEl      = document.getElementById('authRegTerms');
   const newsletterEl = document.getElementById('authRegNewsletter');
   const registerForm = document.getElementById('authRegisterForm');
-  const isRegister   = registerForm && registerForm.style.display !== 'none';
+  const isRegister   = authVisible && registerForm && registerForm.style.display !== 'none';
 
   if (isRegister && termsEl && !termsEl.checked) {
-    if (errEl) {
-      errEl.textContent = (window.SVS_I18N ? SVS_I18N.t('err_terms_required') : null)
-        || 'Please agree to the Terms & Conditions and Privacy Policy to continue.';
-      errEl.classList.add('visible');
-    }
+    _showGoogleError((window.SVS_I18N ? SVS_I18N.t('err_terms_required') : null)
+      || 'Please agree to the Terms & Conditions and Privacy Policy to continue.');
     return;
   }
 
@@ -273,9 +274,10 @@ async function handleGoogleSignIn(response) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id_token: idToken, ...consentPayload })
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
 
-    if (!res.ok || !data.token) throw new Error(data.error || 'Google sign-in failed');
+    if (res.status === 409) throw new Error(_googleMsg('exists', data.error));
+    if (!res.ok || !data.token) throw new Error(data.error || _googleMsg('failed'));
 
     saveToken(data.token);
     const clientName = data.client?.name || name;
@@ -294,11 +296,64 @@ async function handleGoogleSignIn(response) {
     }, 300);
 
   } catch (err) {
-    if (errEl) {
-      errEl.textContent = err.message;
-      errEl.classList.add('visible');
-    }
+    // A network or CORS failure surfaces as the terse "Failed to fetch".
+    const msg = /failed to fetch|networkerror|load failed/i.test(err.message || '')
+      ? _googleMsg('network')
+      : (err.message || _googleMsg('failed'));
+    _showGoogleError(msg);
   }
+}
+
+// ── Google sign-in messages ──────────────────────────────────────
+function _googleMsg(kind, fallback) {
+  const lang = document.documentElement.getAttribute('lang')
+    || document.documentElement.getAttribute('data-lang') || 'en';
+  const M = {
+    en: {
+      exists:  'An account with this email already exists. Please sign in with your email and password, or message the studio and we will link Google to your account.',
+      network: 'Could not reach the studio server. Please check your connection and try again.',
+      failed:  'Google sign-in did not go through. Please try again, or sign in with your email and password.'
+    },
+    ru: {
+      exists:  'Аккаунт с этим email уже зарегистрирован. Войдите по email и паролю или напишите нам — мы привяжем Google к вашему аккаунту.',
+      network: 'Не удалось связаться с сервером студии. Проверьте интернет и попробуйте снова.',
+      failed:  'Войти через Google не получилось. Попробуйте ещё раз или войдите по email и паролю.'
+    },
+    el: {
+      exists:  'Ισχύει ήδη λογαριασμός με αυτό το email. Συνδεθείτε με email και κωδικό ή επικοινωνήστε μαζί μας.',
+      network: 'Δεν ήταν δυνατή η σύνδεση με τον διακομιστή. Δοκιμάστε ξανά.',
+      failed:  'Η σύνδεση με Google δεν ολοκληρώθηκε. Δοκιμάστε ξανά ή χρησιμοποιήστε email και κωδικό.'
+    }
+  };
+  return (M[lang] || M.en)[kind] || fallback || (M.en[kind]);
+}
+
+// Show a sign-in error where the visitor is actually looking. The Google button
+// can be triggered from the booking modal as well as from the auth modal, and
+// writing into a hidden container is what made failures look like "nothing
+// happens".
+function _showGoogleError(msg) {
+  const bookingEl = document.getElementById('bookingModal');
+  const authEl    = document.getElementById('authModal');
+
+  let target = null;
+  if (bookingEl && !bookingEl.hidden) {
+    target = document.getElementById('bmGoogleErr') || document.getElementById('bmIaLoginErr');
+  }
+  if (!target && authEl && !authEl.hidden) {
+    target = document.getElementById('authModalError');
+  }
+  if (!target) {
+    // Neither modal is on screen — open the auth modal so the message is seen.
+    if (typeof AuthModal !== 'undefined') AuthModal.open('login');
+    target = document.getElementById('authModalError');
+  }
+  if (!target) { alert(msg); return; }
+
+  target.textContent = msg;
+  target.classList.add('visible');
+  target.style.display = 'block';
+  try { target.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (_) {}
 }
 
 // ── Header button update ─────────────────────────────────────────

@@ -2477,7 +2477,17 @@ button { cursor: pointer; background: none; border: none; }
   color: #fff;
 }
 
-/* Google button */
+/* Google button — Google renders its own button into this slot */
+.bm-google-slot {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.bm-google-slot > div {
+  max-width: 100%;
+}
+
 .bm-google-btn {
   display: flex;
   align-items: center;
@@ -2565,6 +2575,11 @@ button { cursor: pointer; background: none; border: none; }
 .bm-ia-input:focus {
   border-color: var(--color-primary, #6B4FA0);
   box-shadow: 0 0 0 3px rgba(107,79,160,0.12);
+}
+
+.bm-ia-error:not(:empty) {
+  margin-top: 10px;
+  line-height: 1.45;
 }
 
 .bm-ia-error {
