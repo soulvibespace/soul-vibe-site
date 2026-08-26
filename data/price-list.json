@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "eyebrow": { "en": "PROGRAMS & SERVICES", "ru": "ПРОГРАММЫ И УСЛУГИ", "el": "ΠΡΟΓΡΑΜΜΑΤΑ & ΥΠΗΡΕΣΙΕΣ" },
+    "title": { "en": "Extra Services & Pricing", "ru": "Дополнительные услуги и цены", "el": "Πρόσθετες Υπηρεσίες & Τιμές" },
+    "lead": {
+      "en": "Beyond regular classes — personal programs, coworking and private events. For class passes, see the Pricing page.",
+      "ru": "Помимо регулярных занятий — индивидуальные программы, коворкинг и частные события. Абонементы на занятия — на странице «Цены».",
+      "el": "Πέρα από τα κανονικά μαθήματα — προσωπικά προγράμματα, coworking και ιδιωτικές εκδηλώσεις. Για πακέτα μαθημάτων δείτε τη σελίδα Τιμές."
+    }
+  },
+  "personal": {
+    "label": { "en": "PERSONAL & ONLINE", "ru": "ИНДИВИДУАЛЬНО", "el": "ΠΡΟΣΩΠΙΚΟ & ONLINE" },
+    "title": { "en": "Individual Monthly Program", "ru": "Индивидуальная месячная программа", "el": "Ατομικό Μηνιαίο Πρόγραμμα" },
+    "desc": {
+      "en": "A personalised monthly mix of practices tailored to your needs and schedule. Programs may combine studio and online sessions. Final price depends on the selected practices and number of sessions.",
+      "ru": "Персональная месячная программа практик, подобранная под ваши задачи и график. Может сочетать занятия в студии и онлайн. Итоговая цена зависит от выбранных практик и количества сессий.",
+      "el": "Ένας εξατομικευμένος μηνιαίος συνδυασμός πρακτικών προσαρμοσμένος στις ανάγκες και το πρόγραμμά σου. Τα προγράμματα μπορούν να συνδυάζουν συνεδρίες στο στούντιο και online. Η τελική τιμή εξαρτάται από τις επιλεγμένες πρακτικές και τον αριθμό συνεδριών."
+    },
+    "price_label": { "en": "Custom Price", "ru": "Индивидуальная цена", "el": "Κατόπιν Συμφωνίας" }
+  },
+  "coworking": {
+    "label": { "en": "COWORKING", "ru": "КОВОРКИНГ", "el": "COWORKING" },
+    "title": { "en": "Coworking Space", "ru": "Коворкинг", "el": "Χώρος Coworking" },
+    "desc": {
+      "en": "Open workspace on the ground floor — Wi-Fi, tea & coffee included. Hourly rate per person, cheaper in a group.",
+      "ru": "Открытое рабочее пространство на первом этаже — Wi-Fi, чай и кофе включены. Почасовая ставка на человека, в группе дешевле.",
+      "el": "Ανοιχτός χώρος εργασίας στο ισόγειο — Wi-Fi, τσάι & καφές περιλαμβάνονται. Ωριαία χρέωση ανά άτομο, φθηνότερα σε ομάδα."
+    },
+    "col_guests": { "en": "Guests", "ru": "Гостей", "el": "Άτομα" },
+    "col_h1": { "en": "1 hour", "ru": "1 час", "el": "1 ώρα" },
+    "col_h2": { "en": "2 hours", "ru": "2 часа", "el": "2 ώρες" },
+    "col_h3": { "en": "3 hours", "ru": "3 часа", "el": "3 ώρες" },
+    "per_person_note": { "en": "pp", "ru": "с чел.", "el": "ανά άτομο" },
+    "tiers": [
+      { "guests": { "en": "1 person", "ru": "1 человек", "el": "1 άτομο" }, "h1": 7, "h2": 12, "h3": 16, "per_person": false },
+      { "guests": { "en": "2 people", "ru": "2 человека", "el": "2 άτομα" }, "h1": 5, "h2": 9, "h3": 14, "per_person": true },
+      { "guests": { "en": "3–4 people", "ru": "3–4 человека", "el": "3–4 άτομα" }, "h1": 4, "h2": 6, "h3": 10, "per_person": true },
+      { "guests": { "en": "5–6 people", "ru": "5–6 человек", "el": "5–6 άτομα" }, "h1": 3, "h2": 4, "h3": 7, "per_person": true },
+      { "guests": { "en": "7+ people", "ru": "7+ человек", "el": "7+ άτομα" }, "h1": 2, "h2": 3, "h3": 5, "per_person": true }
+    ]
+  },
+  "events": {
+    "label": { "en": "PRIVATE & CORPORATE", "ru": "ЧАСТНЫЕ И КОРПОРАТИВНЫЕ", "el": "ΙΔΙΩΤΙΚΑ & ΕΤΑΙΡΙΚΑ" },
+    "title": { "en": "Private & Corporate Events", "ru": "Частные и корпоративные мероприятия", "el": "Ιδιωτικές & Εταιρικές Εκδηλώσεις" },
+    "desc": {
+      "en": "Custom quotes for yoga & wellness events, workshops, lectures, masterclasses, birthdays, creative events, photo/video shoots, podcasts and corporate wellness programs. Final pricing depends on duration, number of guests, location, required space, equipment and event format.",
+      "ru": "Индивидуальные цены на йога- и wellness-события, воркшопы, лекции, мастер-классы, дни рождения, творческие мероприятия, фото- и видеосъёмки, подкасты и корпоративные wellness-программы. Итоговая цена зависит от продолжительности, числа гостей, локации, нужного пространства, оборудования и формата.",
+      "el": "Προσφορές κατόπιν συμφωνίας για εκδηλώσεις yoga & wellness, εργαστήρια, διαλέξεις, masterclasses, γενέθλια, δημιουργικές εκδηλώσεις, φωτο/βίντεο λήψεις, podcasts και εταιρικά προγράμματα wellness. Η τελική τιμή εξαρτάται από τη διάρκεια, τον αριθμό ατόμων, την τοποθεσία, τον απαιτούμενο χώρο, τον εξοπλισμό και τη μορφή της εκδήλωσης."
+    },
+    "items": [
+      {
+        "name": { "en": "Sound Healing (60 / 90 min)", "ru": "Звуковые практики (60 / 90 мин)", "el": "Sound Healing (60 / 90 λεπτά)" },
+        "price": { "en": "Custom quote", "ru": "По запросу", "el": "Κατόπιν συμφωνίας" }
+      },
+      {
+        "name": { "en": "Ecstatic Dance — private / corporate", "ru": "Ecstatic Dance — частное / корпоративное", "el": "Ecstatic Dance — ιδιωτικό / εταιρικό" },
+        "price": { "en": "€30–50 / person", "ru": "€30–50 / чел.", "el": "€30–50 / άτομο" }
+      },
+      {
+        "name": { "en": "Other private & corporate events", "ru": "Другие частные и корпоративные мероприятия", "el": "Άλλες ιδιωτικές & εταιρικές εκδηλώσεις" },
+        "price": { "en": "Custom quote", "ru": "По запросу", "el": "Κατόπιν συμφωνίας" }
+      }
+    ]
+  },
+  "cta": {
+    "title": { "en": "Have a custom request?", "ru": "Есть индивидуальный запрос?", "el": "Έχεις ένα ιδιαίτερο αίτημα;" },
+    "desc": {
+      "en": "Tell us about your program, group size or event and we'll prepare a tailored offer.",
+      "ru": "Расскажите о вашей программе, размере группы или мероприятии — подготовим индивидуальное предложение.",
+      "el": "Πες μας για το πρόγραμμα, το μέγεθος της ομάδας ή την εκδήλωσή σου και θα ετοιμάσουμε μια προσφορά προσαρμοσμένη σε εσένα."
+    }
+  }
+}

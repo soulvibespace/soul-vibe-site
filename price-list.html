@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-title="pricelist_page_title">Extra Services & Pricing | Soul Vibe Space Limassol</title>
+  <meta name="description" content="Personal programs, coworking and private & corporate event pricing at Soul Vibe Space, Limassol." />
+  <meta property="og:title" content="Extra Services & Pricing | Soul Vibe Space" />
+  <meta property="og:image" content="https://soulvibespace.com/images/coworking.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/price-list" />
+  <link rel="canonical" href="https://soulvibespace.com/price-list" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/price-list" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/price-list" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/price-list" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/price-list" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .pricing-page { padding: 100px 0 80px; min-height: 100vh; }
+    .page-eyebrow {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400;
+      color: var(--text-primary); margin-bottom: 16px; line-height: 1.15;
+    }
+    .page-lead { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 620px; }
+    .pricing-section-title {
+      font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 400;
+      color: var(--text-primary); margin-bottom: 6px;
+    }
+    .pricing-section-sub { font-size: .95rem; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.6; max-width: 700px; }
+    .pricing-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+    .service-label {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+
+    /* Personal program row */
+    .dropin-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 32px 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    }
+    .dropin-left { flex: 1; }
+    .dropin-name { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
+    .dropin-desc { font-size: .92rem; color: var(--text-secondary); line-height: 1.6; max-width: 560px; }
+    .dropin-right { display: flex; align-items: center; gap: 24px; flex-shrink: 0; }
+    .price-tag {
+      font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* Coworking table */
+    .cw-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; }
+    table.cw-table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 480px; }
+    table.cw-table th, table.cw-table td {
+      padding: 16px 20px; text-align: left; font-size: .92rem; border-bottom: 1px solid var(--border);
+    }
+    table.cw-table th {
+      font-family: var(--font-sans); font-size: .74rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-secondary); background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+    }
+    table.cw-table td:not(:first-child) { font-family: var(--font-serif); font-size: 1.05rem; color: var(--text-primary); }
+    table.cw-table td .pp-note { font-family: var(--font-sans); font-size: .68rem; color: var(--text-secondary); margin-left: 3px; }
+    table.cw-table tr:last-child td { border-bottom: none; }
+    table.cw-table td:first-child { font-family: var(--font-sans); font-weight: 500; color: var(--text-primary); }
+
+    /* Events list */
+    .event-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 20px 0; border-bottom: 1px solid var(--border);
+    }
+    .event-row:last-child { border-bottom: none; }
+    .event-name { font-size: 1rem; color: var(--text-primary); font-weight: 500; }
+    .event-price { font-family: var(--font-serif); font-size: 1.15rem; color: var(--accent); white-space: nowrap; }
+
+    /* CTA */
+    .events-note {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 32px 40px; display: flex; align-items: flex-start; gap: 24px;
+    }
+    .events-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
+    .events-note h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
+    .events-note p { font-size: .95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+    .events-links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .plist-skeleton { padding: 24px 0; color: var(--text-secondary); font-size: .9rem; }
+
+    @media (max-width: 900px) {
+      .dropin-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .dropin-right { width: 100%; justify-content: flex-start; }
+      .events-note { flex-direction: column; gap: 16px; padding: 24px; }
+    }
+    @media (max-width: 540px) {
+      .dropin-row { padding: 24px; }
+      .event-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/" class="nav-link" data-i18n="nav_home">Home</a>
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+        <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/" class="mobile-nav-link" data-i18n="nav_home">Home</a>
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a href="/pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a>
+      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
+      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rental">Venue Rental</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <div class="mobile-lang">
+        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
+        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
+        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="pricing-page">
+    <div class="container" id="plistRoot">
+      <div class="plist-skeleton">Loading…</div>
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
+          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
+          <a href="/space" data-i18n="footer_coworking">Co-working</a>
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agia Zonis<br>Limassol, Cyprus 3095</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours" data-i18n="footer_hours">Mon – Sun · 9:00 am – 10:00 pm</p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth modal -->
+  <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
+    <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
+    <div class="booking-modal-panel" style="max-width:420px">
+      <div class="booking-modal-header">
+        <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        <button class="booking-modal-close" id="authModalClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="auth-modal-body">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
+          <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
+        </div>
+        <div id="authModalError" class="auth-error" style="display:none"></div>
+        <div id="authModalSuccess" class="auth-success" style="display:none"></div>
+        <form id="loginForm" class="auth-form" onsubmit="AuthModal.login(event)">
+          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authLoginEmail" required autocomplete="email"/></div>
+          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authLoginPassword" required autocomplete="current-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_login">Sign In</button>
+        </form>
+        <form id="registerForm" class="auth-form" style="display:none" onsubmit="AuthModal.register(event)">
+          <div class="form-group"><label data-i18n="acc_name">Full Name</label><input type="text" id="authRegName" required autocomplete="name"/></div>
+          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authRegEmail" required autocomplete="email"/></div>
+          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authRegPassword" required autocomplete="new-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_register">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script defer src="auth-modal.js"></script>
+  <script src="/cookie-banner.js" defer></script>
+
+  <script>
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('is-open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        mobileNav.setAttribute('aria-hidden', String(!open));
+      });
+    }
+    // Check auth on load
+    (function() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const label = document.getElementById('headerAccountLabel');
+        if (token && label) {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          if (payload && payload.exp * 1000 > Date.now() && payload.name) {
+            label.removeAttribute('data-i18n');
+            label.textContent = payload.name.split(' ')[0];
+            const btn = document.getElementById('headerAccountBtn');
+            if (btn) btn.href = 'account.html';
+          }
+        }
+      } catch(_) {}
+    })();
+  </script>
+
+  <!-- Price-list content: data-driven, editable via /admin -->
+  <script>
+    (function () {
+      let DATA = null;
+
+      function lang() {
+        return (SVS_I18N && SVS_I18N.getLang) ? SVS_I18N.getLang() : 'en';
+      }
+      function tr(field) {
+        if (!field) return '';
+        const l = lang();
+        return field[l] || field.en || '';
+      }
+      function euro(n) { return '€' + n; }
+
+      function render() {
+        const root = document.getElementById('plistRoot');
+        if (!DATA || !root) return;
+        const d = DATA;
+
+        const cwRows = d.coworking.tiers.map(t => `
+          <tr>
+            <td>${tr(t.guests)}</td>
+            <td>${euro(t.h1)}${t.per_person ? `<span class="pp-note">${tr(d.coworking.per_person_note)}</span>` : ''}</td>
+            <td>${euro(t.h2)}${t.per_person ? `<span class="pp-note">${tr(d.coworking.per_person_note)}</span>` : ''}</td>
+            <td>${euro(t.h3)}${t.per_person ? `<span class="pp-note">${tr(d.coworking.per_person_note)}</span>` : ''}</td>
+          </tr>`).join('');
+
+        const eventRows = d.events.items.map(it => `
+          <div class="event-row">
+            <span class="event-name">${tr(it.name)}</span>
+            <span class="event-price">${tr(it.price)}</span>
+          </div>`).join('');
+
+        root.innerHTML = `
+          <div style="margin-bottom: 56px;">
+            <p class="page-eyebrow">${tr(d.meta.eyebrow)}</p>
+            <h1 class="page-title">${tr(d.meta.title)}</h1>
+            <p class="page-lead">${tr(d.meta.lead)}</p>
+          </div>
+
+          <div class="dropin-row">
+            <div class="dropin-left">
+              <p class="service-label">${tr(d.personal.label)}</p>
+              <p class="dropin-name">${tr(d.personal.title)}</p>
+              <p class="dropin-desc">${tr(d.personal.desc)}</p>
+            </div>
+            <div class="dropin-right">
+              <p class="price-tag">${tr(d.personal.price_label)}</p>
+              <a href="/contact" class="btn btn-primary" data-i18n="nav_contact">Contact</a>
+            </div>
+          </div>
+
+          <hr class="pricing-divider">
+
+          <div style="margin-bottom: 24px;">
+            <p class="service-label">${tr(d.coworking.label)}</p>
+            <h2 class="pricing-section-title">${tr(d.coworking.title)}</h2>
+            <p class="pricing-section-sub">${tr(d.coworking.desc)}</p>
+          </div>
+          <div class="cw-table-wrap">
+            <table class="cw-table">
+              <thead>
+                <tr>
+                  <th>${tr(d.coworking.col_guests)}</th>
+                  <th>${tr(d.coworking.col_h1)}</th>
+                  <th>${tr(d.coworking.col_h2)}</th>
+                  <th>${tr(d.coworking.col_h3)}</th>
+                </tr>
+              </thead>
+              <tbody>${cwRows}</tbody>
+            </table>
+          </div>
+
+          <hr class="pricing-divider">
+
+          <div style="margin-bottom: 24px;">
+            <p class="service-label">${tr(d.events.label)}</p>
+            <h2 class="pricing-section-title">${tr(d.events.title)}</h2>
+            <p class="pricing-section-sub">${tr(d.events.desc)}</p>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding: 8px 32px;">
+            ${eventRows}
+          </div>
+
+          <hr class="pricing-divider">
+
+          <div class="events-note">
+            <div class="events-icon">✨</div>
+            <div>
+              <h3>${tr(d.cta.title)}</h3>
+              <p>${tr(d.cta.desc)}</p>
+              <div class="events-links">
+                <a href="/contact" class="btn btn-outline btn-sm" data-i18n="nav_contact">Contact</a>
+                <a href="/rental" class="btn btn-outline btn-sm" data-i18n="nav_rental">Venue Rental</a>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      fetch('/data/price-list.json', { cache: 'no-store' })
+        .then(r => r.json())
+        .then(json => { DATA = json; render(); })
+        .catch(() => {
+          const root = document.getElementById('plistRoot');
+          if (root) root.innerHTML = '<p class="plist-skeleton">Could not load pricing data. Please try again later.</p>';
+        });
+
+      window.addEventListener('svs:langchange', render);
+    })();
+  </script>
+</body>
+</html>

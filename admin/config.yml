@@ -1,0 +1,387 @@
+backend:
+  name: github
+  repo: soulvibespace/soul-vibe-site
+  branch: main
+  auth_methods: [token]
+
+# No media library needed for these two collections — all imagery is referenced
+# from the existing /images folder, not uploaded through the CMS.
+media_folder: images
+public_folder: /images
+
+# Every translatable string in the JSON files below is stored inline as
+# { en, ru, el } — so each one is an "object" widget with three text children
+# rather than Sveltia's built-in i18n mechanism (which is not used here).
+
+collections:
+  - name: price_list
+    label: "Extra Services & Pricing (/price-list)"
+    files:
+      - name: price_list
+        label: "Extra Services & Pricing"
+        file: data/price-list.json
+        fields:
+          - label: "Page intro"
+            name: meta
+            widget: object
+            fields:
+              - label: Eyebrow
+                name: eyebrow
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Lead
+                name: lead
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+          - label: "Personal & Online Programs"
+            name: personal
+            widget: object
+            fields:
+              - label: "Section label"
+                name: label
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+              - label: "Price label"
+                name: price_label
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+
+          - label: Coworking
+            name: coworking
+            widget: object
+            fields:
+              - label: "Section label"
+                name: label
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+              - label: "Column: Guests"
+                name: col_guests
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Column: 1 hour"
+                name: col_h1
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Column: 2 hours"
+                name: col_h2
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Column: 3 hours"
+                name: col_h3
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Per-person note"
+                name: per_person_note
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Pricing tiers"
+                name: tiers
+                widget: list
+                fields:
+                  - label: "Guest count label"
+                    name: guests
+                    widget: object
+                    fields:
+                      - { label: EN, name: en, widget: string }
+                      - { label: RU, name: ru, widget: string }
+                      - { label: EL, name: el, widget: string }
+                  - { label: "Price / 1 hour (€)", name: h1, widget: number, value_type: int }
+                  - { label: "Price / 2 hours (€)", name: h2, widget: number, value_type: int }
+                  - { label: "Price / 3 hours (€)", name: h3, widget: number, value_type: int }
+                  - { label: "Show 'per person'", name: per_person, widget: boolean, default: true }
+
+          - label: "Private & Corporate Events"
+            name: events
+            widget: object
+            fields:
+              - label: "Section label"
+                name: label
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+              - label: "Event items"
+                name: items
+                widget: list
+                fields:
+                  - label: Name
+                    name: name
+                    widget: object
+                    fields:
+                      - { label: EN, name: en, widget: string }
+                      - { label: RU, name: ru, widget: string }
+                      - { label: EL, name: el, widget: string }
+                  - label: Price
+                    name: price
+                    widget: object
+                    fields:
+                      - { label: EN, name: en, widget: string }
+                      - { label: RU, name: ru, widget: string }
+                      - { label: EL, name: el, widget: string }
+
+          - label: "Bottom CTA"
+            name: cta
+            widget: object
+            fields:
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+  - name: rental
+    label: "Studio & Venue Rental (/rental)"
+    files:
+      - name: rental
+        label: "Studio & Venue Rental"
+        file: data/rental.json
+        fields:
+          - label: "Page intro"
+            name: meta
+            widget: object
+            fields:
+              - label: Eyebrow
+                name: eyebrow
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Lead
+                name: lead
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+          - label: "Rooms"
+            name: rooms
+            widget: list
+            summary: "{{fields.name.en}}"
+            fields:
+              - { label: "Internal key", name: key, widget: string }
+              - label: Name
+                name: name
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - { label: "Size (m²)", name: size_m2, widget: number, value_type: int }
+              - { label: "Price per hour (€)", name: price_hour, widget: number, value_type: int }
+              - label: "Guest capacity label"
+                name: guests
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Extra note (optional)"
+                name: extra
+                widget: object
+                required: false
+                fields:
+                  - { label: EN, name: en, widget: string, required: false }
+                  - { label: RU, name: ru, widget: string, required: false }
+                  - { label: EL, name: el, widget: string, required: false }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+          - label: "Setup types"
+            name: setups
+            widget: list
+            summary: "{{fields.name.en}}"
+            fields:
+              - label: Name
+                name: name
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Guest count label"
+                name: guests
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+          - label: "Included amenities"
+            name: included
+            widget: list
+            fields:
+              - { label: EN, name: en, widget: string }
+              - { label: RU, name: ru, widget: string }
+              - { label: EL, name: el, widget: string }
+
+          - label: "Yoga & Wellness Kit"
+            name: kit
+            widget: list
+            fields:
+              - { label: EN, name: en, widget: string }
+              - { label: RU, name: ru, widget: string }
+              - { label: EL, name: el, widget: string }
+
+          - label: "Optional add-ons"
+            name: addons
+            widget: object
+            fields:
+              - label: "On request"
+                name: on_request
+                widget: list
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Equipment
+                name: equipment
+                widget: list
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Food
+                name: food
+                widget: list
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+
+          - label: "Note (recurring partners)"
+            name: note
+            widget: object
+            fields:
+              - { label: EN, name: en, widget: text }
+              - { label: RU, name: ru, widget: text }
+              - { label: EL, name: el, widget: text }
+
+          - label: "Bottom CTA"
+            name: cta
+            widget: object
+            fields:
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Description
+                name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
