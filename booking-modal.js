@@ -1037,6 +1037,7 @@ const BookingModal = (() => {
   // This has to be rendered by Google itself: the button Google puts on the page
   // lives in a cross-origin iframe, so it can never be clicked from our code.
   let _gidReady = false;
+  let _needInit = false;
 
   function _mountGoogleButton() {
     const slot     = document.getElementById('bmGoogleSlot');
@@ -1056,17 +1057,22 @@ const BookingModal = (() => {
       const gid = window.google && window.google.accounts && window.google.accounts.id;
       if (gid) {
         try {
-          // Initialise once per page load; re-initialising on every re-render can
-          // reset Google's internal state.
+          // The pages carry a #g_id_onload element, so Google's own script has
+          // already initialised itself with the same client id and the same
+          // handleGoogleSignIn callback. Initialising a second time only causes
+          // "initialize() is called multiple times", so only do it when that
+          // element is missing — or when rendering has already failed once.
           if (!_gidReady) {
-            gid.initialize({
-              client_id: _googleClientId(),
-              callback: (response) => {
-                if (typeof window.handleGoogleSignIn === 'function') {
-                  window.handleGoogleSignIn(response);
+            if (_needInit || !document.getElementById('g_id_onload')) {
+              gid.initialize({
+                client_id: _googleClientId(),
+                callback: (response) => {
+                  if (typeof window.handleGoogleSignIn === 'function') {
+                    window.handleGoogleSignIn(response);
+                  }
                 }
-              }
-            });
+              });
+            }
             _gidReady = true;
           }
           gid.renderButton(slot, {
@@ -1076,10 +1082,17 @@ const BookingModal = (() => {
             text: 'continue_with',
             shape: 'rectangular',
             logo_alignment: 'left',
-            width: Math.min(Math.max(slot.offsetWidth || 320, 200), 400)
+            width: Math.min(Math.max(slot.offsetWidth || 320, 200), 400),
+            // Ask Google to label its own button in the visitor's language.
+            locale: document.documentElement.getAttribute('lang')
+              || document.documentElement.getAttribute('data-lang') || 'en'
           });
           return;
-        } catch (_) { /* fall through to the fallback button below */ }
+        } catch (_) {
+          // Retry on the next tick, this time initialising explicitly.
+          _needInit  = true;
+          _gidReady  = false;
+        }
       }
 
       waited += STEP;

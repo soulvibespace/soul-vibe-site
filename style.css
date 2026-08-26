@@ -2488,6 +2488,12 @@ button { cursor: pointer; background: none; border: none; }
   max-width: 100%;
 }
 
+/* display:flex below would otherwise defeat the hidden attribute on the
+   fallback button, showing two Google buttons at once. */
+.bm-google-btn[hidden] {
+  display: none;
+}
+
 .bm-google-btn {
   display: flex;
   align-items: center;
