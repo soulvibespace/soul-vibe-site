@@ -403,10 +403,10 @@
           <p data-i18n="about_story_p3">Located at 50 Agia Zonis, Limassol, our studio is open every day from 9 am to 10 pm. We welcome beginners and experienced practitioners alike.</p>
         </div>
         <div class="about-story-img">
-          <img src="images/about-studio.webp"
+          <img src="images/studio-entrance.webp"
                onerror="this.parentNode.style.background='linear-gradient(135deg,#f3f0eb,#e5e0d8)';this.style.display='none'"
                alt="Soul Vibe Space studio interior"
-               srcset="images/about-studio.webp 700w, images/about-studio.webp 350w"
+               srcset="images/studio-entrance.webp 700w, images/studio-entrance.webp 350w"
                sizes="(max-width:768px) 100vw, 50vw" loading="lazy"/>
         </div>
       </div>
@@ -430,6 +430,22 @@
           <p class="stat-label" data-i18n="stat_since_label">Founded</p>
         </div>
       </div>
+
+      <!-- Team -->
+      <div class="about-team-header">
+        <p class="page-eyebrow" data-i18n="team_eyebrow">Our teachers</p>
+        <h2 data-i18n="team_title">Meet the instructors</h2>
+        <p data-i18n="team_lead">Our team of experienced practitioners brings heart, expertise and dedication to every class.</p>
+      </div>
+
+      <div class="team-skeleton" id="teamSkeleton">
+        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
+        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
+        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
+        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
+      </div>
+
+      <div id="teamContainer"></div>
 
       <!-- Values -->
       <div class="about-values">
@@ -542,6 +558,11 @@
     function renderTeam(instructors) {
       const container = document.getElementById('teamContainer');
       const skel = document.getElementById('teamSkeleton');
+      if (!container) {
+        console.error('[about] #teamContainer is missing from the page — team section cannot render');
+        if (skel) skel.remove();
+        return;
+      }
       if (skel) skel.remove();
 
       const visible = instructors.filter(i => !SKIP_IDS.has(Number(i.id)));
