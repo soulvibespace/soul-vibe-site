@@ -304,7 +304,96 @@ async function handleGoogleSignIn(response) {
   }
 }
 
+// ── Google Identity Services setup ──────────────────────────────
+// Google is initialised from JavaScript rather than from a #g_id_onload element
+// so that an error_callback can be attached. Without it, failures inside Google's
+// own code — a blocked popup window above all, which is the default setting in
+// Safari on iPhone — are completely silent: the sign-in callback simply never
+// runs and the visitor sees nothing happen at all.
+function svsGoogleClientId() {
+  const el = document.getElementById('svsGoogleConfig') || document.getElementById('g_id_onload');
+  return (el && el.getAttribute('data-client_id'))
+    || '201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com';
+}
+
+function svsInitGoogle() {
+  const gid = window.google && window.google.accounts && window.google.accounts.id;
+  if (!gid) return false;
+  if (window.__svsGoogleInit) return true;
+
+  gid.initialize({
+    client_id: svsGoogleClientId(),
+    callback: (response) => handleGoogleSignIn(response),
+    error_callback: (err) => {
+      const type = (err && err.type) || 'unknown';
+      _showGoogleError(_googleErrMsg(type));
+    },
+    auto_select: false,
+    cancel_on_tap_outside: true
+  });
+
+  window.__svsGoogleInit = true;
+  return true;
+}
+
+// Render Google's own button into every slot the page provides.
+function svsRenderGoogleButtons() {
+  const gid = window.google && window.google.accounts && window.google.accounts.id;
+  if (!gid || !svsInitGoogle()) return;
+
+  document.querySelectorAll('.g_id_signin').forEach(slot => {
+    if (slot.dataset.svsRendered === '1') return;
+    try {
+      gid.renderButton(slot, {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+        shape: 'rectangular',
+        logo_alignment: 'left',
+        width: 360,
+        locale: document.documentElement.getAttribute('lang') || 'en'
+      });
+      slot.dataset.svsRendered = '1';
+    } catch (_) {}
+  });
+}
+
 // ── Google sign-in messages ──────────────────────────────────────
+// Messages for failures reported by Google itself, before our own code runs.
+function _googleErrMsg(type) {
+  const lang = document.documentElement.getAttribute('lang')
+    || document.documentElement.getAttribute('data-lang') || 'en';
+  const M = {
+    en: {
+      popup_failed_to_open: 'Your browser blocked the Google window. Allow pop-ups for this site (on iPhone: Settings → Apps → Safari → turn off Block Pop-ups), then try again — or just register with your email below.',
+      popup_closed: 'The Google window was closed before sign-in finished. Please try again.',
+      unregistered_origin: 'Google sign-in is not enabled for this address yet. Please register with your email below.',
+      opt_out_or_no_session: 'You are not signed in to Google in this browser. Sign in to Google first, or register with your email below.',
+      suppressed_by_user: 'Google sign-in was dismissed. Please try again, or register with your email below.',
+      unknown: 'Google sign-in could not be completed. Please register with your email below — it works the same way.'
+    },
+    ru: {
+      popup_failed_to_open: 'Браузер заблокировал окно Google. Разрешите всплывающие окна для сайта (на iPhone: Настройки → Приложения → Safari → выключите «Блокировать всплывающие окна») и попробуйте снова — или зарегистрируйтесь по email ниже.',
+      popup_closed: 'Окно Google закрылось до завершения входа. Попробуйте ещё раз.',
+      unregistered_origin: 'Вход через Google для этого адреса пока не включён. Пожалуйста, зарегистрируйтесь по email ниже.',
+      opt_out_or_no_session: 'В этом браузере вы не вошли в Google. Сначала войдите в аккаунт Google или зарегистрируйтесь по email ниже.',
+      suppressed_by_user: 'Вход через Google был отклонён. Попробуйте снова или зарегистрируйтесь по email ниже.',
+      unknown: 'Завершить вход через Google не удалось. Зарегистрируйтесь по email ниже — результат будет таким же.'
+    },
+    el: {
+      popup_failed_to_open: 'Ο περιηγητής μπλόκαρε το παράθυρο της Google. Επιτρέψτε τα αναδυόμενα παράθυρα και δοκιμάστε ξανά — ή εγγραφείτε με email παρακάτω.',
+      popup_closed: 'Το παράθυρο της Google έκλεισε πριν ολοκληρωθεί η σύνδεση. Δοκιμάστε ξανά.',
+      unregistered_origin: 'Η σύνδεση με Google δεν είναι ενεργή για αυτή τη διεύθυνση. Εγγραφείτε με email παρακάτω.',
+      opt_out_or_no_session: 'Δεν έχετε συνδεθεί στη Google σε αυτόν τον περιηγητή. Συνδεθείτε πρώτα ή εγγραφείτε με email.',
+      suppressed_by_user: 'Η σύνδεση με Google ακυρώθηκε. Δοκιμάστε ξανά ή εγγραφείτε με email.',
+      unknown: 'Η σύνδεση με Google δεν ολοκληρώθηκε. Εγγραφείτε με email παρακάτω.'
+    }
+  };
+  const set = M[lang] || M.en;
+  return set[type] || set.unknown;
+}
+
 function _googleMsg(kind, fallback) {
   const lang = document.documentElement.getAttribute('lang')
     || document.documentElement.getAttribute('data-lang') || 'en';
@@ -396,11 +485,17 @@ function _updateHeaderBtn(name, loggedIn) {
 
 // ── Wire Sign In button in header ────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  // Load Google GSI script
+  // Load Google GSI script, then initialise it ourselves and render the buttons.
   const gsiScript = document.createElement('script');
   gsiScript.src = 'https://accounts.google.com/gsi/client';
   gsiScript.async = true;
+  gsiScript.onload = () => svsRenderGoogleButtons();
   document.head.appendChild(gsiScript);
+
+  // The script may already be present (account.html loads it with its own tag).
+  if (window.google && window.google.accounts && window.google.accounts.id) {
+    svsRenderGoogleButtons();
+  }
 
   const headerBtn = document.getElementById('headerAccountBtn');
   const token     = getToken();

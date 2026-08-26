@@ -1018,7 +1018,7 @@ const BookingModal = (() => {
   // The Google client id lives in the page markup so it stays in one place;
   // the production value is kept here only as a safety net.
   function _googleClientId() {
-    const el = document.getElementById('g_id_onload');
+    const el = document.getElementById('svsGoogleConfig') || document.getElementById('g_id_onload');
     return (el && el.getAttribute('data-client_id'))
       || '201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com';
   }
@@ -1057,13 +1057,13 @@ const BookingModal = (() => {
       const gid = window.google && window.google.accounts && window.google.accounts.id;
       if (gid) {
         try {
-          // The pages carry a #g_id_onload element, so Google's own script has
-          // already initialised itself with the same client id and the same
-          // handleGoogleSignIn callback. Initialising a second time only causes
-          // "initialize() is called multiple times", so only do it when that
-          // element is missing — or when rendering has already failed once.
+          // auth-modal.js owns the single Google initialisation (it attaches the
+          // error_callback that surfaces blocked-popup failures). Fall back to a
+          // local initialisation only if that helper is unavailable.
           if (!_gidReady) {
-            if (_needInit || !document.getElementById('g_id_onload')) {
+            if (typeof window.svsInitGoogle === 'function') {
+              window.svsInitGoogle();
+            } else if (_needInit || !document.getElementById('g_id_onload')) {
               gid.initialize({
                 client_id: _googleClientId(),
                 callback: (response) => {
