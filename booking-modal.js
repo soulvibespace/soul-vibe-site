@@ -539,6 +539,23 @@ const BookingModal = (() => {
     const future = _futureSlotDates();
 
     if (!future.length) {
+      // Distinguish "this class has nothing at all" from "the user paged forward
+      // into a month the studio hasn't published a schedule for yet".
+      const now = new Date();
+      const browsingAhead = _currentMonth.getFullYear() > now.getFullYear()
+        || (_currentMonth.getFullYear() === now.getFullYear() && _currentMonth.getMonth() > now.getMonth());
+
+      if (browsingAhead) {
+        const lang = _lang();
+        const mIn  = (MONTH_NAMES_IN[lang] || MONTH_NAMES_IN.en)[_currentMonth.getMonth()];
+        slotEl.innerHTML = `<div class="bm-slots-empty">${_t({
+          ru: `Расписание на ${mIn} ещё не опубликовано. Вернитесь к ближайшим месяцам стрелкой ‹.`,
+          el: `Το πρόγραμμα για Τον ${mIn} δεν έχει δημοσιευθεί ακόμα. Γυρίστε πίσω με το ‹.`,
+          en: `The schedule for ${mIn} hasn\u2019t been published yet. Use ‹ to go back to the nearest months.`
+        })}</div>`;
+        return;
+      }
+
       slotEl.innerHTML = `<div class="bm-slots-empty">${_t({
         ru: 'Для этого класса пока нет запланированных занятий. Напишите нам — подскажем ближайшую дату.',
         el: 'Δεν υπάρχουν προγραμματισμένα μαθήματα ακόμα. Επικοινωνήστε μαζί μας.',
