@@ -195,9 +195,31 @@ const BookingModal = (() => {
     }
   }
 
+  // Wording for the wake-up wait, in the language the page is showing.
+  function _loadingText(which) {
+    const lang = (document.documentElement.getAttribute('data-lang') || 'en').slice(0, 2);
+    const copy = {
+      en: { primary: 'Loading available classes\u2026', slow: 'First load of the day takes a little longer \u2014 please stay on this screen.' },
+      ru: { primary: '\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b\u0435 \u043a\u043b\u0430\u0441\u0441\u044b\u2026', slow: '\u041f\u0435\u0440\u0432\u0430\u044f \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0437\u0430 \u0434\u0435\u043d\u044c \u0438\u0434\u0451\u0442 \u0447\u0443\u0442\u044c \u0434\u043e\u043b\u044c\u0448\u0435 \u2014 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043d\u0435 \u0437\u0430\u043a\u0440\u044b\u0432\u0430\u0439\u0442\u0435 \u044d\u0442\u043e \u043e\u043a\u043d\u043e.' },
+      el: { primary: '\u03a6\u03bf\u03c1\u03c4\u03ce\u03bd\u03bf\u03bd\u03c4\u03b1\u03b9 \u03c4\u03b1 \u03b4\u03b9\u03b1\u03b8\u03ad\u03c3\u03b9\u03bc\u03b1 \u03bc\u03b1\u03b8\u03ae\u03bc\u03b1\u03c4\u03b1\u2026', slow: '\u0397 \u03c0\u03c1\u03ce\u03c4\u03b7 \u03c6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7 \u03c4\u03b7\u03c2 \u03b7\u03bc\u03ad\u03c1\u03b1\u03c2 \u03b1\u03c1\u03b3\u03b5\u03af \u03bb\u03af\u03b3\u03bf \u2014 \u03bc\u03b7\u03bd \u03ba\u03bb\u03b5\u03af\u03c3\u03b5\u03c4\u03b5 \u03b1\u03c5\u03c4\u03cc \u03c4\u03bf \u03c0\u03b1\u03c1\u03ac\u03b8\u03c5\u03c1\u03bf.' }
+    };
+    return (copy[lang] || copy.en)[which];
+  }
+
   // ── Services list ─────────────────────────────────────────────
   async function _renderServices(body) {
-    body.innerHTML = `<div class="bm-loading"><div class="bm-spinner"></div></div>`;
+    // The booking service sleeps when nobody has used it for a while and takes
+    // up to ~40 seconds to wake up. A bare spinner for that long reads as broken,
+    // so say what is happening, and after 6 seconds admit that it is slow.
+    body.innerHTML = `<div class="bm-loading">`
+      + `<div class="bm-spinner"></div>`
+      + `<p class="bm-loading-text">${_loadingText('primary')}</p>`
+      + `<p class="bm-loading-hint" id="bmLoadingHint" hidden>${_loadingText('slow')}</p>`
+      + `</div>`;
+    const hintTimer = setTimeout(() => {
+      const h = document.getElementById('bmLoadingHint');
+      if (h) h.hidden = false;
+    }, 6000);
 
     if (!_services) {
       try {
@@ -212,10 +234,12 @@ const BookingModal = (() => {
           ? await SvsFilter.filterVisibleServices(rawServices)
           : rawServices;
       } catch {
+        clearTimeout(hintTimer);
         body.innerHTML = `<div class="bm-error">Failed to load classes. Please try again.</div>`;
         return;
       }
     }
+    clearTimeout(hintTimer);
 
     const lang = document.documentElement.lang || 'en';
     const catLabels = {
@@ -1302,3 +1326,19 @@ const BookingModal = (() => {
 
 // Expose as ClassModal alias for backward compatibility
 window.ClassModal = { open: (serviceId, date, time) => BookingModal.open(serviceId, date || null, time || null) };
+
+// The booking service is hosted on a plan that puts the server to sleep after a
+// period of inactivity, and waking it takes about half a minute. Sending one
+// cheap request as soon as a page that can start a booking has loaded means the
+// server is usually awake by the time somebody actually taps BOOK.
+(function warmBookingService() {
+  const ping = () => {
+    try {
+      fetch('https://soul-vibe-api.onrender.com/api/version', {
+        method: 'GET', mode: 'cors', cache: 'no-store', keepalive: true
+      }).catch(() => {});
+    } catch (_) {}
+  };
+  if (document.readyState === 'complete') setTimeout(ping, 400);
+  else window.addEventListener('load', () => setTimeout(ping, 400), { once: true });
+})();

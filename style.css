@@ -2744,3 +2744,20 @@ button { cursor: pointer; background: none; border: none; }
 .svs-google-btn:focus-visible { outline: 2px solid #6b4fa0; outline-offset: 2px; }
 .svs-google-btn svg  { flex: 0 0 18px; }
 .svs-google-btn span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Wake-up wait inside the booking modal. A spinner on its own for thirty
+   seconds reads as a broken page, so it is captioned. */
+.bm-loading-text {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+}
+.bm-loading-hint {
+  margin: 0.4rem auto 0;
+  max-width: 28ch;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #8a8a8a;
+}
