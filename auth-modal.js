@@ -188,7 +188,7 @@ const AuthModal = (() => {
       });
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
+      if (!res.ok) throw new Error(_registerErrMsg(data.code) || data.error || 'Registration failed');
 
       saveToken(data.token);
       _onAuthSuccess(data.client);
@@ -199,6 +199,29 @@ const AuthModal = (() => {
       btn.disabled = false;
       btn.textContent = _t('acc_tab_register', 'Create Account');
     }
+  }
+
+  // Two register outcomes need a friendly, translated explanation rather than the
+  // raw English text from the API: the email is already known to the studio, and
+  // the phone number does not match the one on that record.
+  function _registerErrMsg(code) {
+    if (!code) return null;
+    const lang = (document.documentElement.getAttribute('data-lang') || 'en').slice(0, 2);
+    const msgs = {
+      en: {
+        exists: 'This email is already in our system. Try signing in on the Sign In tab, or write to us and we will help.',
+        exists_phone_mismatch: 'You are already in our studio records. Enter the phone number the studio has on file and we will link this email to your existing card — or sign in with your existing password.'
+      },
+      ru: {
+        exists: 'Этот email уже есть в нашей системе. Попробуйте войти на вкладке «Вход» или напишите нам — поможем.',
+        exists_phone_mismatch: 'Вы уже есть в базе студии. Введите телефон, который указан у нас в карточке, — и мы свяжем этот email с вашей карточкой. Или войдите со своим паролем.'
+      },
+      el: {
+        exists: 'Αυτό το email υπάρχει ήδη στο σύστημά μας. Δοκιμάστε σύνδεση στην καρτέλα «Σύνδεση» ή γράψτε μας.',
+        exists_phone_mismatch: 'Βρίσκεστε ήδη στα αρχεία του στούντιο. Συμπληρώστε το τηλέφωνο που έχουμε καταγεγραμμένο και θα συνδέσουμε αυτό το email με την καρτέλα σας.'
+      }
+    };
+    return (msgs[lang] || msgs.en)[code] || null;
   }
 
   function _t(key, fallback) {
