@@ -316,6 +316,108 @@ function svsGoogleClientId() {
     || '201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com';
 }
 
+// ── Popup-free Google sign-in (full-page redirect) ────────────────────
+// Google Identity Services signs people in through a popup window. Safari on
+// iPhone blocks popups by default and several Android browsers do too, so that
+// path silently does nothing on a lot of phones. A full-page redirect to Google
+// has no popup at all and works in every browser - but Google only allows it
+// once our return address is registered on the OAuth client, so the API tells us
+// whether it is usable before we offer it.
+var SVS_G_NONCE_KEY  = 'svs_g_nonce';
+var SVS_G_STATE_KEY  = 'svs_g_state';
+var SVS_G_RETURN_KEY = 'svs_g_return';
+var SVS_G_SIGNAL_KEY = 'svs_g_signal';
+var SVS_G_READY_KEY  = 'svs_g_redirect_ready';
+
+function svsGoogleRedirectUri() {
+  return location.origin + '/auth-callback.html';
+}
+
+// Resolves to true when the redirect flow can be used. Cached per browser tab.
+function svsGoogleRedirectReady() {
+  if (window.__svsGRedirect) return window.__svsGRedirect;
+
+  window.__svsGRedirect = new Promise((resolve) => {
+    let cached = null;
+    try { cached = sessionStorage.getItem(SVS_G_READY_KEY); } catch (_) {}
+    if (cached === '1') return resolve(true);
+    if (cached === '0') return resolve(false);
+
+    const done = (val) => {
+      try { sessionStorage.setItem(SVS_G_READY_KEY, val ? '1' : '0'); } catch (_) {}
+      resolve(val);
+    };
+
+    // Never let a slow or sleeping API hold up the sign-in UI.
+    const timer = setTimeout(() => resolve(false), 6000);
+
+    fetch(`${API_BASE}/api/auth/google/redirect-ready?redirect_uri=`
+      + encodeURIComponent(svsGoogleRedirectUri()))
+      .then(r => r.json())
+      .then(d => { clearTimeout(timer); done(!!(d && d.ready)); })
+      .catch(() => { clearTimeout(timer); resolve(false); });
+  });
+
+  return window.__svsGRedirect;
+}
+
+function svsRandomToken() {
+  try {
+    const a = new Uint8Array(16);
+    crypto.getRandomValues(a);
+    return Array.from(a, b => b.toString(16).padStart(2, '0')).join('');
+  } catch (_) {
+    return String(Date.now()) + Math.random().toString(16).slice(2);
+  }
+}
+
+// Leaves the site for Google and comes back to /auth-callback.html.
+function svsGoogleRedirectSignIn() {
+  const nonce = svsRandomToken();
+  const state = svsRandomToken();
+  try {
+    sessionStorage.setItem(SVS_G_NONCE_KEY, nonce);
+    sessionStorage.setItem(SVS_G_STATE_KEY, state);
+    sessionStorage.setItem(SVS_G_RETURN_KEY, location.pathname + location.search);
+  } catch (_) {}
+
+  // Remember the chosen class and time so the booking continues after Google.
+  if (typeof BookingModal !== 'undefined' && BookingModal._savePendingForRedirect) {
+    try { BookingModal._savePendingForRedirect(); } catch (_) {}
+  }
+
+  const url = 'https://accounts.google.com/o/oauth2/v2/auth?' + new URLSearchParams({
+    client_id:     svsGoogleClientId(),
+    response_type: 'id_token',
+    scope:         'openid email profile',
+    redirect_uri:  svsGoogleRedirectUri(),
+    nonce:         nonce,
+    state:         state,
+    prompt:        'select_account',
+    hl:            document.documentElement.getAttribute('lang') || 'en'
+  }).toString();
+
+  location.assign(url);
+}
+
+// Our own Google-branded button, used when the redirect flow is active.
+function svsGoogleButtonHtml(label) {
+  return '<button type="button" class="svs-google-btn" onclick="svsGoogleRedirectSignIn()">'
+    + '<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+    + '<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>'
+    + '<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>'
+    + '<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>'
+    + '<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>'
+    + '</svg><span>' + label + '</span></button>';
+}
+
+function svsGoogleButtonLabel() {
+  const lang = document.documentElement.getAttribute('lang')
+    || document.documentElement.getAttribute('data-lang') || 'en';
+  return { en: 'Continue with Google', ru: 'Войти через Google', el: 'Συνέχεια με Google' }[lang]
+    || 'Continue with Google';
+}
+
 function svsInitGoogle() {
   const gid = window.google && window.google.accounts && window.google.accounts.id;
   if (!gid) return false;
@@ -336,13 +438,28 @@ function svsInitGoogle() {
   return true;
 }
 
-// Render Google's own button into every slot the page provides.
+// Render a Google sign-in button into every slot the page provides: our own
+// redirect button when the redirect flow is available, Google's own otherwise.
 function svsRenderGoogleButtons() {
+  svsGoogleRedirectReady().then(redirect => {
+    if (redirect) {
+      document.querySelectorAll('.g_id_signin').forEach(slot => {
+        if (slot.dataset.svsRendered === 'redirect') return;
+        slot.innerHTML = svsGoogleButtonHtml(svsGoogleButtonLabel());
+        slot.dataset.svsRendered = 'redirect';
+      });
+      return;
+    }
+    svsRenderGsiButtons();
+  });
+}
+
+function svsRenderGsiButtons() {
   const gid = window.google && window.google.accounts && window.google.accounts.id;
   if (!gid || !svsInitGoogle()) return;
 
   document.querySelectorAll('.g_id_signin').forEach(slot => {
-    if (slot.dataset.svsRendered === '1') return;
+    if (slot.dataset.svsRendered) return;
     try {
       gid.renderButton(slot, {
         type: 'standard',
@@ -354,7 +471,7 @@ function svsRenderGoogleButtons() {
         width: 360,
         locale: document.documentElement.getAttribute('lang') || 'en'
       });
-      slot.dataset.svsRendered = '1';
+      slot.dataset.svsRendered = 'gsi';
     } catch (_) {}
   });
 }
@@ -495,6 +612,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // The script may already be present (account.html loads it with its own tag).
   if (window.google && window.google.accounts && window.google.accounts.id) {
     svsRenderGoogleButtons();
+  }
+  // The redirect button does not need Google's script at all, so ask for it
+  // straight away rather than waiting for a script that a phone may never load.
+  svsRenderGoogleButtons();
+
+  // Just came back from the Google redirect: pick the interrupted booking back up.
+  let gSignal = null;
+  try { gSignal = sessionStorage.getItem(SVS_G_SIGNAL_KEY); } catch (_) {}
+  if (gSignal === '1') {
+    try { sessionStorage.removeItem(SVS_G_SIGNAL_KEY); } catch (_) {}
+    setTimeout(async () => {
+      try {
+        const p = JSON.parse(atob(getToken().split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+        _updateHeaderBtn(String(p.name || '').split(' ')[0], true);
+      } catch (_) {}
+      if (typeof BookingModal !== 'undefined' && BookingModal.resumePendingBooking) {
+        try { await BookingModal.resumePendingBooking(); } catch (_) {}
+      }
+    }, 400);
   }
 
   const headerBtn = document.getElementById('headerAccountBtn');

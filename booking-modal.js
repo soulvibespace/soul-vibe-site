@@ -1040,12 +1040,35 @@ const BookingModal = (() => {
   let _needInit = false;
 
   function _mountGoogleButton() {
-    const slot     = document.getElementById('bmGoogleSlot');
-    const fallback = document.getElementById('bmGoogleFallback');
+    const slot = document.getElementById('bmGoogleSlot');
     if (!slot) return;
 
     // Remember the chosen class and time so the booking resumes after Google returns.
     _savePendingBooking();
+
+    // Prefer the popup-free redirect flow wherever it is available: the popup
+    // window Google opens otherwise is blocked by default in Safari on iPhone
+    // and by several Android browsers, and the failure is invisible.
+    if (typeof svsGoogleRedirectReady === 'function') {
+      svsGoogleRedirectReady().then(useRedirect => {
+        const live = document.getElementById('bmGoogleSlot');
+        if (!live) return;
+        if (useRedirect) {
+          live.innerHTML = svsGoogleButtonHtml(svsGoogleButtonLabel());
+          return;
+        }
+        _mountGsiButton();
+      });
+      return;
+    }
+    _mountGsiButton();
+  }
+
+  // Google's own button, rendered by Google inside a cross-origin iframe.
+  function _mountGsiButton() {
+    const slot     = document.getElementById('bmGoogleSlot');
+    const fallback = document.getElementById('bmGoogleFallback');
+    if (!slot) return;
 
     let waited = 0;
     const STEP = 150, LIMIT = 8000;
@@ -1273,7 +1296,8 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn };
+  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn,
+           _savePendingForRedirect: _savePendingBooking };
 })();
 
 // Expose as ClassModal alias for backward compatibility

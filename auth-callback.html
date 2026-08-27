@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Signing you in… — Soul Vibe Space</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Standalone page: it must render correctly even before style.css loads,
+       because the visitor only sees it for a second on the way back from Google. */
+    .cb-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #faf8f6;
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .cb-card {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(60, 40, 90, .12);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .cb-logo { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 18px; display: block; }
+    .cb-title { font-size: 19px; font-weight: 600; color: #2c2440; margin: 0 0 10px; line-height: 1.35; }
+    .cb-text  { font-size: 15px; color: #5c5470; margin: 0 0 20px; line-height: 1.55; }
+    .cb-spinner {
+      width: 34px; height: 34px; margin: 0 auto 18px;
+      border: 3px solid #e6e0f0; border-top-color: #6b4fa0;
+      border-radius: 50%; animation: cb-spin .9s linear infinite;
+    }
+    @keyframes cb-spin { to { transform: rotate(360deg); } }
+    .cb-btn {
+      display: inline-block; width: 100%; box-sizing: border-box;
+      padding: 14px 18px; border-radius: 12px; border: 0;
+      background: #6b4fa0; color: #fff; font-size: 16px; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+    }
+    .cb-btn.secondary { background: #fff; color: #6b4fa0; border: 1.5px solid #d9d0ea; margin-top: 10px; }
+    .cb-hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="cb-wrap">
+    <div class="cb-card">
+      <img src="/images/logo.png" alt="Soul Vibe Space" class="cb-logo"
+           onerror="this.style.display='none'">
+
+      <div id="cbBusy">
+        <div class="cb-spinner" role="status" aria-live="polite"></div>
+        <h1 class="cb-title" id="cbBusyTitle">Signing you in…</h1>
+        <p class="cb-text" id="cbBusyText">One moment, we are connecting your account.</p>
+      </div>
+
+      <div id="cbFail" class="cb-hidden">
+        <h1 class="cb-title" id="cbFailTitle">Sign-in could not be completed</h1>
+        <p class="cb-text" id="cbFailText"></p>
+        <a class="cb-btn" id="cbRetry" href="/">Try again</a>
+        <a class="cb-btn secondary" id="cbHome" href="/">Back to the site</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+      ? 'http://localhost:3001'
+      : 'https://soul-vibe-api.onrender.com';
+
+    var TOKEN_KEY  = 'svs_token';
+    var NONCE_KEY  = 'svs_g_nonce';
+    var STATE_KEY  = 'svs_g_state';
+    var RETURN_KEY = 'svs_g_return';
+    var SIGNAL_KEY = 'svs_g_signal';
+
+    function lang() {
+      try { return localStorage.getItem('svs_lang') || 'en'; } catch (e) { return 'en'; }
+    }
+
+    var T = {
+      en: {
+        busyTitle: 'Signing you in…',
+        busyText:  'One moment, we are connecting your account.',
+        failTitle: 'Sign-in could not be completed',
+        retry:     'Try again',
+        home:      'Back to the site',
+        eState:    'This sign-in link has expired. Please start again from the site.',
+        eNoToken:  'Google did not return a sign-in confirmation. Please try again, or register with your email.',
+        eDenied:   'Sign-in was cancelled. You can try again or register with your email.',
+        eExists:   'An account with this email already exists. Please sign in with your email and password.',
+        eNetwork:  'We could not reach the studio server. Please check your connection and try again.',
+        eGeneric:  'Something went wrong on our side. Please try again, or register with your email.'
+      },
+      ru: {
+        busyTitle: 'Выполняем вход…',
+        busyText:  'Секунду, подключаем ваш аккаунт.',
+        failTitle: 'Войти не удалось',
+        retry:     'Попробовать снова',
+        home:      'Вернуться на сайт',
+        eState:    'Ссылка для входа устарела. Пожалуйста, начните вход заново с сайта.',
+        eNoToken:  'Google не вернул подтверждение входа. Попробуйте снова или зарегистрируйтесь по email.',
+        eDenied:   'Вход отменён. Можно попробовать снова или зарегистрироваться по email.',
+        eExists:   'Аккаунт с таким email уже существует. Войдите, пожалуйста, по email и паролю.',
+        eNetwork:  'Не удалось связаться с сервером студии. Проверьте соединение и попробуйте снова.',
+        eGeneric:  'Что-то пошло не так на нашей стороне. Попробуйте снова или зарегистрируйтесь по email.'
+      },
+      el: {
+        busyTitle: 'Σύνδεση…',
+        busyText:  'Μια στιγμή, συνδέουμε τον λογαριασμό σας.',
+        failTitle: 'Η σύνδεση δεν ολοκληρώθηκε',
+        retry:     'Δοκιμάστε ξανά',
+        home:      'Επιστροφή στον ιστότοπο',
+        eState:    'Ο σύνδεσμος σύνδεσης έληξε. Ξεκινήστε ξανά από τον ιστότοπο.',
+        eNoToken:  'Η Google δεν επέστρεψε επιβεβαίωση. Δοκιμάστε ξανά ή εγγραφείτε με email.',
+        eDenied:   'Η σύνδεση ακυρώθηκε. Δοκιμάστε ξανά ή εγγραφείτε με email.',
+        eExists:   'Υπάρχει ήδη λογαριασμός με αυτό το email. Συνδεθείτε με email και κωδικό.',
+        eNetwork:  'Δεν μπορέσαμε να συνδεθούμε με τον διακομιστή. Δοκιμάστε ξανά.',
+        eGeneric:  'Κάτι πήγε στραβά. Δοκιμάστε ξανά ή εγγραφείτε με email.'
+      }
+    };
+    var t = T[lang()] || T.en;
+
+    document.documentElement.setAttribute('lang', lang());
+    document.getElementById('cbBusyTitle').textContent = t.busyTitle;
+    document.getElementById('cbBusyText').textContent  = t.busyText;
+
+    function ss(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } }
+    function ssDel(key) { try { sessionStorage.removeItem(key); } catch (e) {} }
+
+    var returnUrl = ss(RETURN_KEY) || '/';
+    // Never follow a return address that points off this site.
+    if (!/^\/(?!\/)/.test(returnUrl)) returnUrl = '/';
+
+    function fail(message) {
+      document.getElementById('cbBusy').className = 'cb-hidden';
+      var box = document.getElementById('cbFail');
+      box.className = '';
+      document.getElementById('cbFailTitle').textContent = t.failTitle;
+      document.getElementById('cbFailText').textContent  = message;
+      var retry = document.getElementById('cbRetry');
+      retry.textContent = t.retry;
+      retry.setAttribute('href', returnUrl);
+      var home = document.getElementById('cbHome');
+      home.textContent = t.home;
+      home.setAttribute('href', '/');
+    }
+
+    // Google returns the id_token in the URL fragment, which never reaches a
+    // server or a log file.
+    var frag   = (location.hash || '').replace(/^#/, '');
+    var params = new URLSearchParams(frag);
+    // Remove the token from the address bar straight away.
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+
+    if (params.get('error')) {
+      var g = params.get('error');
+      ssDel(NONCE_KEY); ssDel(STATE_KEY);
+      return fail(g === 'access_denied' ? t.eDenied : t.eGeneric);
+    }
+
+    var idToken     = params.get('id_token');
+    var stateFromG  = params.get('state');
+    var stateStored = ss(STATE_KEY);
+    var nonceStored = ss(NONCE_KEY);
+    ssDel(NONCE_KEY); ssDel(STATE_KEY);
+
+    if (!idToken) return fail(t.eNoToken);
+    // state protects against a sign-in the visitor did not start themselves.
+    if (!stateStored || stateFromG !== stateStored) return fail(t.eState);
+
+    // nonce ties this token to this browser tab; the server verifies the
+    // signature, this only catches a replayed token.
+    try {
+      var payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      if (nonceStored && payload.nonce && payload.nonce !== nonceStored) return fail(t.eState);
+    } catch (e) {}
+
+    fetch(API_BASE + '/api/auth/google', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ id_token: idToken })
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          return { status: res.status, ok: res.ok, data: data };
+        });
+      })
+      .then(function (r) {
+        if (r.status === 409) return fail(t.eExists);
+        if (!r.ok || !r.data.token) return fail(r.data.error || t.eGeneric);
+
+        try { localStorage.setItem(TOKEN_KEY, r.data.token); } catch (e) {}
+        // Tells the page we return to that it should refresh the header and
+        // resume an interrupted booking.
+        try { sessionStorage.setItem(SIGNAL_KEY, '1'); } catch (e) {}
+        ssDel(RETURN_KEY);
+        location.replace(returnUrl);
+      })
+      .catch(function () { fail(t.eNetwork); });
+  })();
+  </script>
+</body>
+</html>
