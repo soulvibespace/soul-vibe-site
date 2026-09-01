@@ -1018,6 +1018,23 @@ Object.assign(SVS_TRANSLATIONS.en, {
   rental_addons_food:       'Food',
 });
 
+// ── Reviews page + homepage preview strings ────────────────────────────────────
+Object.assign(SVS_TRANSLATIONS.en, {
+  nav_reviews:          'Reviews',
+  footer_reviews:       'Reviews',
+  reviews_page_title:   'Client Reviews | Soul Vibe Space Limassol',
+  reviews_hero_eyebrow: 'CLIENT VOICES',
+  reviews_hero_title:   'What People Say About Us',
+  reviews_hero_lead:    'Real reviews from our students and guests, collected through our booking platform and Google.',
+  reviews_avg_of5:      'out of 5',
+  reviews_count_suffix: 'reviews',
+  reviews_source_note:  'Ratings and reviews are verified through our booking platform and Google Business Profile.',
+  home_reviews_eyebrow: 'CLIENT VOICES',
+  home_reviews_title:   'What Our Clients Say',
+  home_reviews_sub:     'Real reviews from students and guests of Soul Vibe Space.',
+  home_reviews_cta:     'See all reviews',
+});
+
 Object.assign(SVS_TRANSLATIONS.ru, {
   nav_pricelist:            'Доп. услуги',
   nav_rental:               'Аренда',
@@ -1037,6 +1054,22 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   rental_addons_food:       'Еда и напитки',
 });
 
+Object.assign(SVS_TRANSLATIONS.ru, {
+  nav_reviews:          'Отзывы',
+  footer_reviews:       'Отзывы',
+  reviews_page_title:   'Отзывы клиентов | Soul Vibe Space Лимасол',
+  reviews_hero_eyebrow: 'ОТЗЫВЫ КЛИЕНТОВ',
+  reviews_hero_title:   'Что говорят о нас клиенты',
+  reviews_hero_lead:    'Настоящие отзывы наших учеников и гостей, собранные через платформу онлайн-записи и Google.',
+  reviews_avg_of5:      'из 5',
+  reviews_count_suffix: 'отзывов',
+  reviews_source_note:  'Оценки и отзывы проверены через платформу онлайн-записи и профиль Google Business.',
+  home_reviews_eyebrow: 'ОТЗЫВЫ КЛИЕНТОВ',
+  home_reviews_title:   'Что говорят наши клиенты',
+  home_reviews_sub:     'Настоящие отзывы учеников и гостей Soul Vibe Space.',
+  home_reviews_cta:     'Смотреть все отзывы',
+});
+
 Object.assign(SVS_TRANSLATIONS.el, {
   nav_pricelist:            'Πρόσθετες Υπηρεσίες',
   nav_rental:               'Ενοικίαση',
@@ -1054,6 +1087,22 @@ Object.assign(SVS_TRANSLATIONS.el, {
   rental_addons_onrequest:  'Κατόπιν Αιτήματος',
   rental_addons_equipment:  'Εξοπλισμός',
   rental_addons_food:       'Φαγητό',
+});
+
+Object.assign(SVS_TRANSLATIONS.el, {
+  nav_reviews:          'Αξιολογήσεις',
+  footer_reviews:       'Αξιολογήσεις',
+  reviews_page_title:   'Αξιολογήσεις Πελατών | Soul Vibe Space Λεμεσός',
+  reviews_hero_eyebrow: 'ΦΩΝΕΣ ΠΕΛΑΤΩΝ',
+  reviews_hero_title:   'Τι Λένε οι Πελάτες μας',
+  reviews_hero_lead:    'Πραγματικές αξιολογήσεις από τους μαθητές και τους επισκέπτες μας, μέσω της πλατφόρμας κρατήσεων και του Google.',
+  reviews_avg_of5:      'από 5',
+  reviews_count_suffix: 'αξιολογήσεις',
+  reviews_source_note:  'Οι βαθμολογίες και οι αξιολογήσεις επαληθεύονται μέσω της πλατφόρμας κρατήσεων και του προφίλ Google Business.',
+  home_reviews_eyebrow: 'ΦΩΝΕΣ ΠΕΛΑΤΩΝ',
+  home_reviews_title:   'Τι Λένε οι Πελάτες μας',
+  home_reviews_sub:     'Πραγματικές αξιολογήσεις μαθητών και επισκεπτών του Soul Vibe Space.',
+  home_reviews_cta:     'Δείτε όλες τις αξιολογήσεις',
 });
 
 // Auto-init after DOM ready — must run after all Object.assign blocks

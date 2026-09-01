@@ -118,6 +118,7 @@
       <a href="#contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
       <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
       <a href="/rental" class="mobile-nav-link" data-i18n="nav_rental">Venue Rental</a>
+      <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
       <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
       <!-- Mobile lang switcher -->
       <div class="mobile-lang">
@@ -158,6 +159,23 @@
     </div>
     <div class="hero-scroll">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ REVIEWS PREVIEW ═══════════════════════════════════════ -->
+  <section class="reviews-preview section" id="reviews-preview">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="home_reviews_eyebrow">CLIENT VOICES</p>
+        <h2 class="section-title" data-i18n="home_reviews_title">What Our Clients Say</h2>
+        <p class="section-lead" data-i18n="home_reviews_sub">Real reviews from students and guests of Soul Vibe Space.</p>
+      </div>
+      <div class="reviews-preview-grid" id="reviewsPreviewGrid">
+        <div class="rlist-skeleton">Loading…</div>
+      </div>
+      <div class="reviews-preview-cta">
+        <a href="/reviews" class="btn btn-outline" data-i18n="home_reviews_cta">See all reviews</a>
+      </div>
     </div>
   </section>
 
@@ -512,6 +530,7 @@
           <a href="#space" data-i18n="footer_coworking">Co-working</a>
           <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
           <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
+          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
           <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
         </nav>
@@ -676,6 +695,7 @@
     })();
   </script>
   <script defer src="auth-modal.js"></script>
+  <script defer src="reviews-preview.js"></script>
 <script src="/cookie-banner.js" defer></script>
 </body>
 </html>

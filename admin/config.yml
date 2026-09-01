@@ -367,8 +367,6 @@ collections:
               - { label: RU, name: ru, widget: text }
               - { label: EL, name: el, widget: text }
 
-          - { label: "Bottom CTA photo", name: cta_image, widget: image, required: false }
-
           - label: "Bottom CTA"
             name: cta
             widget: object
@@ -382,6 +380,72 @@ collections:
                   - { label: EL, name: el, widget: string }
               - label: Description
                 name: desc
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+  - name: reviews
+    label: "Client Reviews (/reviews)"
+    files:
+      - name: reviews
+        label: "Client Reviews"
+        file: data/reviews.json
+        fields:
+          - label: "Page intro"
+            name: meta
+            widget: object
+            fields:
+              - label: Eyebrow
+                name: eyebrow
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: Lead
+                name: lead
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+              - { label: "Average rating (out of 5)", name: avg_rating, widget: number, value_type: float }
+              - { label: "Review count", name: count, widget: number, value_type: int }
+              - label: "Source note"
+                name: source_note
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: text }
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EL, name: el, widget: text }
+
+          - label: "Reviews"
+            name: reviews
+            widget: list
+            summary: "{{fields.name}} — {{fields.subject.en}}"
+            fields:
+              - { label: "Source ID (from booking platform)", name: id, widget: string }
+              - { label: "Reviewer name", name: name, widget: string }
+              - { label: "Rating (1-5)", name: rating, widget: number, value_type: int, min: 1, max: 5 }
+              - { label: "Date", name: date, widget: date, format: "YYYY-MM-DD" }
+              - label: Subject
+                name: subject
+                widget: object
+                fields:
+                  - { label: EN, name: en, widget: string }
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EL, name: el, widget: string }
+              - label: "Review text"
+                name: text
                 widget: object
                 fields:
                   - { label: EN, name: en, widget: text }

@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "eyebrow": { "en": "CLIENT VOICES", "ru": "ОТЗЫВЫ КЛИЕНТОВ", "el": "ΦΩΝΕΣ ΠΕΛΑΤΩΝ" },
+    "title": { "en": "What People Say About Us", "ru": "Что говорят о нас клиенты", "el": "Τι Λένε οι Πελάτες μας" },
+    "lead": {
+      "en": "Real reviews from our students and guests, collected through our booking platform and Google.",
+      "ru": "Настоящие отзывы наших учеников и гостей, собранные через платформу онлайн-записи и Google.",
+      "el": "Πραγματικές αξιολογήσεις από τους μαθητές και τους επισκέπτες μας, μέσω της πλατφόρμας κρατήσεων και του Google."
+    },
+    "avg_rating": 5.0,
+    "count": 12,
+    "source_note": {
+      "en": "Ratings and reviews are verified through our booking platform and Google Business Profile.",
+      "ru": "Оценки и отзывы проверены через платформу онлайн-записи и профиль Google Business.",
+      "el": "Οι βαθμολογίες και οι αξιολογήσεις επαληθεύονται μέσω της πλατφόρμας κρατήσεων και του προφίλ Google Business."
+    }
+  },
+  "reviews": [
+    {
+      "id": "386432",
+      "name": "Christina Kakoulli",
+      "rating": 5,
+      "date": "2026-08-30",
+      "subject": { "en": "Amazing", "ru": "Потрясающе", "el": "Καταπληκτικά" },
+      "text": {
+        "en": "The entire team is amazing, everything is well-thought and organised.",
+        "ru": "Вся команда потрясающая, всё продумано и организовано.",
+        "el": "Όλη η ομάδα είναι καταπληκτική, όλα είναι καλά μελετημένα και οργανωμένα."
+      }
+    },
+    {
+      "id": "383633",
+      "name": "Clio Damianou",
+      "rating": 5,
+      "date": "2026-08-14",
+      "subject": { "en": "Hatha Yoga and Kundalini Yoga", "ru": "Хатха-йога и кундалини-йога", "el": "Χάθα Γιόγκα και Κουνταλίνι Γιόγκα" },
+      "text": {
+        "en": "I tried Hatha yoga classes at the Space and I'm really glad to have discovered the studio. I also experienced a unique yoga and meditation session at the ranch. Thank you!",
+        "ru": "Я попробовала занятия хатха-йогой в студии и очень рада, что открыла для себя это место. А ещё побывала на уникальном занятии йогой и медитацией на ранчо. Спасибо!",
+        "el": "Δοκίμασα μαθήματα Χάθα γιόγκα στο studio και χαίρομαι πραγματικά που ανακάλυψα αυτό το μέρος. Επίσης έζησα μια μοναδική συνεδρία γιόγκα και διαλογισμού στο ranch. Ευχαριστώ!"
+      }
+    },
+    {
+      "id": "379889",
+      "name": "Rania Laham",
+      "rating": 5,
+      "date": "2026-07-28",
+      "subject": { "en": "Soul Reviving", "ru": "Оживление души", "el": "Αναζωογόνηση της Ψυχής" },
+      "text": {
+        "en": "I cannot express how happy I am that we discovered Soul Vibe! My husband and I have attended two very different sessions (Ecstatic Dance at the Ranch and Sound Healing at the studio), and we loved them both.",
+        "ru": "Не могу передать, как я счастлива, что мы открыли для себя Soul Vibe! Мы с мужем побывали на двух совершенно разных занятиях (экстатические танцы на ранчо и звуковое исцеление в студии) — и нам понравилось и то, и другое.",
+        "el": "Δεν μπορώ να εκφράσω πόσο χαρούμενη είμαι που ανακαλύψαμε το Soul Vibe! Ο σύζυγός μου και εγώ παρακολουθήσαμε δύο πολύ διαφορετικές συνεδρίες (Ecstatic Dance στο ranch και Sound Healing στο studio) και μας άρεσαν και οι δύο."
+      }
+    },
+    {
+      "id": "377150",
+      "name": "Kristiana",
+      "rating": 5,
+      "date": "2026-07-15",
+      "subject": { "en": "High-Quality Yoga Classes", "ru": "Качественные занятия йогой", "el": "Μαθήματα Γιόγκα Υψηλής Ποιότητας" },
+      "text": {
+        "en": "I have been attending classes at Soul and Vibe for a very long time, and it's been a wonderful experience. I've tried a variety of yoga styles here, and each instructor has made me appreciate and enjoy the unique benefits of their style. They are all supportive and create a welcoming atmosphere. While I do have a favorite instructor, Marina, whose classes I especially love and miss, every teacher has helped me discover something new and made me enjoy each practice. I always leave feeling refreshed, stronger, and more balanced. I highly recommend Soul and Vibe to anyone looking for high-quality yoga classes.",
+        "ru": "Я хожу на занятия в Soul and Vibe уже очень долгое время, и это прекрасный опыт. Я пробовала здесь разные стили йоги, и каждый преподаватель помогал мне почувствовать и оценить уникальные особенности своего стиля. Все они очень поддерживающие и создают тёплую атмосферу. У меня есть любимый преподаватель — Марина, чьи занятия я особенно люблю и по которым скучаю, но и каждый другой учитель помогал мне открывать что-то новое и получать удовольствие от практики. Я всегда ухожу отсюда отдохнувшей, окрепшей и более уравновешенной. Очень рекомендую Soul and Vibe всем, кто ищет качественные занятия йогой.",
+        "el": "Παρακολουθώ μαθήματα στο Soul and Vibe εδώ και πολύ καιρό και είναι μια υπέροχη εμπειρία. Έχω δοκιμάσει διάφορα στυλ γιόγκα εδώ και κάθε εκπαιδευτής με έκανε να εκτιμήσω και να απολαύσω τα μοναδικά οφέλη του στυλ του. Όλοι είναι υποστηρικτικοί και δημιουργούν μια φιλόξενη ατμόσφαιρα. Έχω μια αγαπημένη εκπαιδεύτρια, τη Μαρίνα, τα μαθήματα της οποίας μου λείπουν ιδιαίτερα, αλλά κάθε δασκάλα/δάσκαλος με βοήθησε να ανακαλύψω κάτι νέο και να απολαύσω κάθε πρακτική. Φεύγω πάντα αναζωογονημένη, πιο δυνατή και πιο ισορροπημένη. Συνιστώ ανεπιφύλακτα το Soul and Vibe σε όποιον αναζητά μαθήματα γιόγκα υψηλής ποιότητας."
+      }
+    },
+    {
+      "id": "340362",
+      "name": "Shehad Hoque (Sumon)",
+      "rating": 5,
+      "date": "2025-12-31",
+      "subject": { "en": "A Place to Recharge, Rejuvenate, and Realign", "ru": "Место, чтобы восстановиться и настроиться на нужный лад", "el": "Ένας Χώρος για Αναζωογόνηση και Επανασύνδεση" },
+      "text": {
+        "en": "Experience Soul Vibe — a warm, contemporary sanctuary featuring yoga and energy healing services, where friendly faces and caring hearts create a truly special atmosphere.",
+        "ru": "Soul Vibe — тёплое, современное пространство с занятиями йогой и энергопрактиками, где приветливые лица и заботливые люди создают по-настоящему особую атмосферу.",
+        "el": "Ζήστε το Soul Vibe — ένα ζεστό, μοντέρνο καταφύγιο με μαθήματα γιόγκα και ενεργειακής θεραπείας, όπου φιλικά πρόσωπα και καρδιές που νοιάζονται δημιουργούν μια πραγματικά ιδιαίτερη ατμόσφαιρα."
+      }
+    },
+    {
+      "id": "322664",
+      "name": "Елена",
+      "rating": 5,
+      "date": "2025-09-23",
+      "subject": { "en": "A Magical Space", "ru": "Волшебное пространство", "el": "Ένας Μαγικός Χώρος" },
+      "text": {
+        "en": "A very modern studio. It feels light, airy, and clean, with all the equipment you need. Every detail has been thought through and made with heart — a real oasis of calm, peace, and kindness. Larisa is the soul of this space, a teacher with the strongest positive energy. I'm lucky that it was Larisa who introduced me to the world of Kundalini yoga. Thank you to everyone who puts their energy and knowledge into this project!",
+        "ru": "Очень современная студия. Ощущение света, воздуха, чистоты. Есть необходимое оборудование. Продумано всё до мелочей и сделано с душой. Просто оазис спокойствия, умиротворения и доброты. Лариса — душа этого пространства. Учитель с сильнейшей положительной энергетикой! Мне повезло, что именно Лариса ввела меня в мир йоги кундалини. Спасибо всем, кто прикладывает свои силы и знания в осуществление этого проекта!",
+        "el": "Ένα πολύ μοντέρνο studio. Αίσθηση φωτός, αέρα και καθαριότητας, με όλο τον απαραίτητο εξοπλισμό. Κάθε λεπτομέρεια είναι μελετημένη και φτιαγμένη με ψυχή — μια όαση γαλήνης, ειρήνης και καλοσύνης. Η Λαρίσα είναι η ψυχή αυτού του χώρου, δασκάλα με πανίσχυρη θετική ενέργεια! Είμαι τυχερή που η Λαρίσα με μύησε στον κόσμο της Κουνταλίνι γιόγκα. Ευχαριστώ όλους όσους βάζουν δύναμη και γνώση σε αυτό το έργο!"
+      }
+    },
+    {
+      "id": "322019",
+      "name": "Ирина Филипова",
+      "rating": 5,
+      "date": "2025-09-20",
+      "subject": { "en": "A Place of Power, Purity, and Harmony!", "ru": "Место силы, чистоты и гармонии!", "el": "Ένας Χώρος Δύναμης, Καθαρότητας και Αρμονίας!" },
+      "text": {
+        "en": "I want to say a special thank you for your space. This is a place you want to come back to again and again — it's always clean, cosy, and pleasant here. The studio's atmosphere fills you with calm and inspiration. Special thanks to the staff — attentive, friendly, and caring. The studio offers a variety of interesting practices that help you grow in body and soul, feeling better with every visit. Thank you for creating such a space of power, harmony, and beauty!",
+        "ru": "Хочу выразить особую благодарность за ваше пространство. Это место, куда хочется возвращаться снова и снова — здесь всегда очень чисто, уютно и приятно находиться. Атмосфера студии наполняет спокойствием и вдохновением. Особая благодарность персоналу — внимательному, доброжелательному и заботливому. В студии разнообразные и интересные практики, которые помогают развивать душу и тело, расти и чувствовать себя с каждым разом всё лучше. Спасибо, что создаёте такое пространство силы, гармонии и красоты!",
+        "el": "Θέλω να εκφράσω μια ιδιαίτερη ευχαριστία για τον χώρο σας. Είναι ένα μέρος στο οποίο θέλεις να επιστρέφεις ξανά και ξανά — είναι πάντα πολύ καθαρό, άνετο και ευχάριστο. Η ατμόσφαιρα του studio σε γεμίζει γαλήνη και έμπνευση. Ιδιαίτερες ευχαριστίες στο προσωπικό — προσεκτικό, φιλικό και φροντιστικό. Το studio προσφέρει ποικίλες και ενδιαφέρουσες πρακτικές που βοηθούν να αναπτύξεις ψυχή και σώμα, νιώθοντας κάθε φορά καλύτερα. Ευχαριστώ που δημιουργείτε έναν τέτοιο χώρο δύναμης, αρμονίας και ομορφιάς!"
+      }
+    },
+    {
+      "id": "302533",
+      "name": "Nadezhda Buzarova",
+      "rating": 5,
+      "date": "2025-06-21",
+      "subject": { "en": "A Space You Want to Come Back To!", "ru": "Пространство, куда хочется возвращаться!", "el": "Ένας Χώρος στον Οποίο Θέλεις να Ξαναγυρίσεις!" },
+      "text": {
+        "en": "A wonderful place for yoga, choreography, and stretching classes. Two bright, spacious halls with high-quality flooring and underfloor heating make practising very comfortable. In the co-working area it's a pleasure to join a masterclass or simply have tea or coffee in a cosy setting. Larisa, our guide into the world of yoga, is the soul of this space! Yoga instructors Alena and Sasha are true masters of their craft! The studio is new, clean, bright, beautifully zoned, and thought through to the smallest detail with love. There are clean, new restrooms, showers, and changing rooms — a real rarity in Cyprus. I especially want to mention the studio's administrator, who is ready to surround you with attention and care from the moment you walk in! Highly recommend.",
+        "ru": "Прекрасное место для занятий йогой, хореографией, стретчингом. Два светлых, просторных зала с напольным покрытием высокого качества и системой «тёплый пол» делают занятия очень комфортными. В зоне коворкинга очень приятно присоединиться к мастер-классам или просто выпить чаю или кофе в уютной обстановке. Проводник в мир йоги Лариса — это душа этого пространства! Инструкторы по йоге Алёна и Саша — настоящие мастера своего дела! Студия новая, чистая, светлая, с прекрасным зонированием, продумана до мелочей с любовью и вниманием к деталям! Есть чистые, новые санузлы, душевые и раздевалки, что большая редкость на Кипре. Особенно хочу отметить администратора студии — она готова окружить вас вниманием и заботой, как только вы переступаете порог! Очень рекомендую.",
+        "el": "Ένα υπέροχο μέρος για μαθήματα γιόγκα, χορογραφίας και stretching. Δύο φωτεινές, ευρύχωρες αίθουσες με δάπεδο υψηλής ποιότητας και ενδοδαπέδια θέρμανση κάνουν την εξάσκηση πολύ άνετη. Στον χώρο co-working είναι πολύ ευχάριστο να συμμετέχεις σε masterclass ή απλά να πιεις τσάι ή καφέ σε ένα άνετο περιβάλλον. Η Λαρίσα, ο οδηγός μας στον κόσμο της γιόγκα, είναι η ψυχή αυτού του χώρου! Οι εκπαιδεύτριες γιόγκα Αλιόνα και Σάσα είναι αληθινές δασκάλες της τέχνης τους! Το studio είναι καινούργιο, καθαρό, φωτεινό, με υπέροχη ζωνοποίηση, μελετημένο σε κάθε λεπτομέρεια με αγάπη. Υπάρχουν καθαρές, καινούργιες τουαλέτες, ντουζιέρες και αποδυτήρια — σπάνιο πράγμα στην Κύπρο. Θέλω ιδιαίτερα να αναφέρω την υπεύθυνη του studio — είναι έτοιμη να σας περιβάλλει με προσοχή και φροντίδα από τη στιγμή που θα περάσετε το κατώφλι! Το συνιστώ ανεπιφύλακτα."
+      }
+    },
+    {
+      "id": "280082",
+      "name": "Juliana P",
+      "rating": 5,
+      "date": "2025-03-20",
+      "subject": { "en": "An Incredible Studio in Cyprus!", "ru": "Невероятная студия на Кипре!", "el": "Ένα Απίστευτο Studio στην Κύπρο!" },
+      "text": {
+        "en": "A very aesthetic space, made with love — you can see it at a glance. Larisa is a true master and teacher; practising with her is pure love! Thank you, Sat Nam! I will definitely keep coming here for yoga and more.",
+        "ru": "Очень эстетичное пространство, которое сделано с любовью, это видно невооружённым глазом. Лариса — настоящий мастер и учитель, проживать с ней практику — настоящая любовь! Благодарю! Сат Нам, обязательно буду ходить сюда на йогу и не только.",
+        "el": "Ένας πολύ αισθητικός χώρος, φτιαγμένος με αγάπη — αυτό φαίνεται με την πρώτη ματιά. Η Λαρίσα είναι αληθινή δασκάλα, η εξάσκηση μαζί της είναι αληθινή αγάπη! Ευχαριστώ, Sat Nam! Σίγουρα θα συνεχίσω να έρχομαι εδώ για γιόγκα και όχι μόνο."
+      }
+    },
+    {
+      "id": "279208",
+      "name": "Marina Grunicheva",
+      "rating": 5,
+      "date": "2025-03-16",
+      "subject": { "en": "A Wonderful Studio", "ru": "Замечательная студия", "el": "Ένα Υπέροχο Studio" },
+      "text": {
+        "en": "A magnificent studio — everything is new and clean, clearly put together with great taste and love, and the atmosphere is wonderful. The instructors — or rather, the 'yoga teachers' — are simply magical: knowledgeable, soulful, deeply committed to sharing their knowledge, and very attentive to each student. Larisa, Alena — thank you so much for the classes!",
+        "ru": "Великолепная студия — всё новое, чистое, видно, что обустроено с большим вкусом и с любовью, атмосфера прекрасная. Инструкторы, точнее — «учителя йоги», просто волшебные — знающие, одухотворённые, с огромным желанием передавать знания, очень чувствуют каждого ученика. Лариса, Алёна — большое спасибо за занятия!",
+        "el": "Ένα υπέροχο studio — όλα καινούργια, καθαρά, φτιαγμένα με μεγάλο γούστο και αγάπη, η ατμόσφαιρα είναι υπέροχη. Οι εκπαιδευτές — ή μάλλον οι «δάσκαλοι γιόγκα» — είναι απλά μαγικοί: γνώστες, με ψυχή, με τεράστια επιθυμία να μεταδώσουν τη γνώση τους, νιώθουν πολύ καλά κάθε μαθητή. Λαρίσα, Αλιόνα — ένα μεγάλο ευχαριστώ για τα μαθήματα!"
+      }
+    },
+    {
+      "id": "278972",
+      "name": "Анастасия Р",
+      "rating": 5,
+      "date": "2025-03-15",
+      "subject": { "en": "It Was Great", "ru": "Это было здорово", "el": "Ήταν Υπέροχο" },
+      "text": {
+        "en": "I really loved it! The tension in my head and body just melted away. After the hypnotherapy session I feel a surge of energy and strength, and my mood has lifted. A beautiful space and atmosphere. I'll be recommending it to my friends and acquaintances.",
+        "ru": "Очень понравилось! Ушло напряжение в голове и теле. После сеанса гипнотерапии чувствую прилив сил, энергии, настроение улучшилось. Прекрасное пространство и атмосфера. Буду рекомендовать своим друзьям и знакомым.",
+        "el": "Μου άρεσε πολύ! Η τάση στο κεφάλι και στο σώμα μου εξαφανίστηκε. Μετά τη συνεδρία υπνοθεραπείας νιώθω αναζωογόνηση δύναμης και ενέργειας, και η διάθεσή μου βελτιώθηκε. Υπέροχος χώρος και ατμόσφαιρα. Θα το συστήσω σε φίλους και γνωστούς μου."
+      }
+    },
+    {
+      "id": "217455",
+      "name": "Victoria Smi (VS)",
+      "rating": 5,
+      "date": "2024-04-17",
+      "subject": { "en": "Thank You for the Class", "ru": "Благодарю за класс", "el": "Ευχαριστώ για το Μάθημα" },
+      "text": {
+        "en": "A wonderful feeling after finishing the practice.",
+        "ru": "Прекрасное состояние по завершению практики.",
+        "el": "Υπέροχη αίσθηση μετά την ολοκλήρωση της πρακτικής."
+      }
+    }
+  ]
+}
