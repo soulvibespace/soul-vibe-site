@@ -862,10 +862,6 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pricing_events_desc:  'Workshops, sound healing sessions and special events are priced individually. Check the schedule or contact us for details.',
 
   // Studio & space rental teaser
-  pricing_rental_title: 'Studio & Space Rental',
-  pricing_rental_desc:  'Rent a room, a floor or the whole venue for your own classes, workshops or events.',
-  pricing_rental_from:  'From €30 / hour',
-  pricing_rental_link:  'View Rooms & Rates',
 
   // Coworking teaser
   pricing_coworking_title: 'Coworking',
@@ -934,10 +930,6 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_events_title: 'Воркшопы и события',
   pricing_events_desc:  'Воркшопы, звуковые практики и специальные события имеют индивидуальные цены. Смотри афишу или напиши нам.',
 
-  pricing_rental_title: 'Аренда студии и пространства',
-  pricing_rental_desc:  'Арендуйте зал, этаж или всё пространство для своих занятий, воркшопов или мероприятий.',
-  pricing_rental_from:  'От €30 / час',
-  pricing_rental_link:  'Смотреть залы и цены',
 
   pricing_coworking_title: 'Коворкинг',
   pricing_coworking_desc:  'Открытое рабочее пространство на первом этаже — Wi-Fi, чай и кофе включены.',
@@ -1003,10 +995,6 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pricing_events_title: 'Εργαστήρια & Ειδικές Εκδηλώσεις',
   pricing_events_desc:  'Τα εργαστήρια και οι ειδικές εκδηλώσεις έχουν ατομικές τιμές. Δείτε το πρόγραμμα ή επικοινωνήστε μαζί μας.',
 
-  pricing_rental_title: 'Ενοικίαση Στούντιο & Χώρου',
-  pricing_rental_desc:  'Νοικιάστε μια αίθουσα, έναν όροφο ή ολόκληρο τον χώρο για τα μαθήματα, εργαστήρια ή εκδηλώσεις σας.',
-  pricing_rental_from:  'Από €30 / ώρα',
-  pricing_rental_link:  'Δείτε Αίθουσες & Τιμές',
 
   pricing_coworking_title: 'Coworking',
   pricing_coworking_desc:  'Ανοιχτός χώρος εργασίας στο ισόγειο — Wi-Fi, τσάι & καφές περιλαμβάνονται.',
@@ -1035,7 +1023,6 @@ Object.assign(SVS_TRANSLATIONS.en, {
   nav_pricelist:            'Extra Services',
   nav_rental:               'Venue Rental',
   pricelist_page_title:     'Extra Services & Pricing | Soul Vibe Space Limassol',
-  rental_page_title:        'Studio & Venue Rental | Soul Vibe Space Limassol',
 
   rental_rooms_title:       'Rooms & Rates',
   rental_rooms_sub:         'Clear hourly rates for a studio, a floor or the whole building.',
@@ -1071,7 +1058,6 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   nav_pricelist:            'Доп. услуги',
   nav_rental:               'Аренда',
   pricelist_page_title:     'Дополнительные услуги и цены | Soul Vibe Space Лимасол',
-  rental_page_title:        'Аренда студии и пространства | Soul Vibe Space Лимасол',
 
   rental_rooms_title:       'Залы и тарифы',
   rental_rooms_sub:         'Чёткие почасовые тарифы на студию, этаж или всё здание.',
@@ -1106,7 +1092,6 @@ Object.assign(SVS_TRANSLATIONS.el, {
   nav_pricelist:            'Πρόσθετες Υπηρεσίες',
   nav_rental:               'Ενοικίαση',
   pricelist_page_title:     'Πρόσθετες Υπηρεσίες & Τιμές | Soul Vibe Space Λεμεσός',
-  rental_page_title:        'Ενοικίαση Studio & Χώρου | Soul Vibe Space Λεμεσός',
 
   rental_rooms_title:       'Αίθουσες & Τιμές',
   rental_rooms_sub:         'Ξεκάθαρες ωριαίες τιμές για studio, όροφο ή όλο το κτίριο.',
