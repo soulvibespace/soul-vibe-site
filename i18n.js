@@ -183,7 +183,21 @@ const SVS_TRANSLATIONS = {
     consent_terms:      'I have read and agree to the <a class="auth-consent-link" href="/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a> and acknowledge the <a class="auth-consent-link" href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>. <span class="req">*</span>',
     consent_newsletter: 'I agree to receive news, offers and updates from Soul Vibe Space by email.',
     err_fill_required:  'Please fill in all required fields.',
-    err_terms_required: 'Please agree to the Terms &amp; Conditions and Privacy Policy to continue.',
+    err_terms_required: 'Please agree to the Terms & Conditions and Privacy Policy to continue.',
+    err_required:        'This field is required.',
+    err_invalid_email:   'Please enter a valid email address.',
+    err_invalid_phone:   'Please enter a valid phone number.',
+    err_password_length: 'Password must be at least 6 characters.',
+    err_password_mismatch: 'Passwords do not match.',
+    acc_label_password_confirm: 'Confirm Password',
+    acc_ph_password_confirm:    'Repeat your password',
+    acc_forgot_link:    'Forgot password?',
+    acc_forgot_title:   'Reset your password',
+    acc_forgot_sub:     "Enter your email and we'll send you a link to reset your password",
+    acc_forgot_info:    'Enter the email associated with your account.',
+    acc_btn_forgot:      'Send reset link',
+    acc_back_to_login:  '← Back to sign in',
+    acc_forgot_success: "If an account exists for that email, we've sent password reset instructions.",
     acc_ph_email:       'your@email.com',
     acc_ph_password:    'Your password',
     acc_ph_newpassword: 'Create a password',
@@ -380,6 +394,20 @@ const SVS_TRANSLATIONS = {
     consent_newsletter: 'Я согласен(на) получать новости, специальные предложения и анонсы Soul Vibe Space по email.',
     err_fill_required:  'Пожалуйста, заполните все обязательные поля.',
     err_terms_required: 'Чтобы продолжить, отметьте согласие с Условиями и Политикой конфиденциальности.',
+    err_required:        'Это поле обязательно.',
+    err_invalid_email:   'Пожалуйста, введите корректный email.',
+    err_invalid_phone:   'Пожалуйста, введите корректный номер телефона.',
+    err_password_length: 'Пароль должен содержать не менее 6 символов.',
+    err_password_mismatch: 'Пароли не совпадают.',
+    acc_label_password_confirm: 'Подтвердите пароль',
+    acc_ph_password_confirm:    'Повторите пароль',
+    acc_forgot_link:    'Забыли пароль?',
+    acc_forgot_title:   'Восстановление пароля',
+    acc_forgot_sub:     'Введите email — мы отправим ссылку для восстановления пароля',
+    acc_forgot_info:    'Введите email, привязанный к вашему аккаунту.',
+    acc_btn_forgot:      'Отправить ссылку',
+    acc_back_to_login:  '← Назад к входу',
+    acc_forgot_success: 'Если аккаунт с таким email существует, мы отправили инструкции по восстановлению пароля.',
     acc_ph_email:       'your@email.com',
     acc_ph_password:    'Ваш пароль',
     acc_ph_newpassword: 'Создайте пароль',
@@ -576,6 +604,20 @@ const SVS_TRANSLATIONS = {
     consent_newsletter: 'Συμφωνώ να λαμβάνω νέα, προσφορές και ενημερώσεις από το Soul Vibe Space μέσω email.',
     err_fill_required:  'Συμπληρώστε όλα τα υποχρεωτικά πεδία.',
     err_terms_required: 'Παρακαλώ αποδεχτείτε τους Όρους & Προϋποθέσεις και την Πολιτική Απορρήτου για να συνεχίσετε.',
+    err_required:        'Αυτό το πεδίο είναι υποχρεωτικό.',
+    err_invalid_email:   'Παρακαλώ εισάγετε έγκυρη διεύθυνση email.',
+    err_invalid_phone:   'Παρακαλώ εισάγετε έγκυρο αριθμό τηλεφώνου.',
+    err_password_length: 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες.',
+    err_password_mismatch: 'Οι κωδικοί δεν ταιριάζουν.',
+    acc_label_password_confirm: 'Επιβεβαίωση κωδικού',
+    acc_ph_password_confirm:    'Επαναλάβετε τον κωδικό',
+    acc_forgot_link:    'Ξεχάσατε τον κωδικό;',
+    acc_forgot_title:   'Επαναφορά κωδικού',
+    acc_forgot_sub:     'Εισάγετε το email σας και θα σας στείλουμε σύνδεσμο επαναφοράς κωδικού',
+    acc_forgot_info:    'Εισάγετε το email που σχετίζεται με τον λογαριασμό σας.',
+    acc_btn_forgot:      'Αποστολή συνδέσμου',
+    acc_back_to_login:  '← Πίσω στη σύνδεση',
+    acc_forgot_success: 'Εάν υπάρχει λογαριασμός με αυτό το email, έχουμε στείλει οδηγίες επαναφοράς κωδικού.',
     acc_ph_email:       'your@email.com',
     acc_ph_password:    'Ο κωδικός σας',
     acc_ph_newpassword: 'Δημιουργήστε κωδικό',
@@ -677,6 +719,12 @@ const SVS_I18N = (function() {
 
   return { init, setLang, t, getLang };
 })();
+
+// Expose on window: this is a top-level `const`, so without this assignment
+// `window.SVS_I18N` is undefined everywhere it's referenced from other
+// scripts (account.js, classes.html, schedule.html), silently forcing the
+// English fallback regardless of the selected language.
+window.SVS_I18N = SVS_I18N;
 
 // (auto-init moved to end of file)
 

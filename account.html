@@ -347,6 +347,49 @@
 
   .acc-msg-error.visible { display: block; }
 
+  .acc-field-error {
+    display: none;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.78rem;
+    color: #c0392b;
+    margin-top: -0.15rem;
+  }
+
+  .acc-field-error.visible { display: block; }
+
+  .acc-input.invalid {
+    border-color: #c0392b;
+  }
+
+  .acc-forgot-link {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: -0.5rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--color-primary);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .acc-forgot-link:hover { text-decoration: underline; }
+
+  .acc-back-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-align: left;
+    margin-top: 0.25rem;
+  }
+
+  .acc-back-link:hover { color: var(--text); }
+
   .acc-msg-success {
     display: none;
     padding: 0.75rem 1rem;
@@ -998,6 +1041,7 @@
             <div class="acc-field">
               <label class="acc-label" for="loginEmail" data-i18n="acc_label_email">Email</label>
               <input class="acc-input" type="email" id="loginEmail" name="email" autocomplete="email" required data-i18n-placeholder="acc_ph_email" placeholder="your@email.com" />
+              <span class="acc-field-error" id="loginEmailErr"></span>
             </div>
             <div class="acc-field">
               <label class="acc-label" for="loginPassword" data-i18n="acc_label_password">Password</label>
@@ -1007,8 +1051,22 @@
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
               </div>
+              <span class="acc-field-error" id="loginPasswordErr"></span>
+              <button type="button" class="acc-forgot-link" id="forgotPwLink" onclick="showForgotPassword()" data-i18n="acc_forgot_link">Forgot password?</button>
             </div>
             <button type="submit" class="acc-btn-submit" id="loginBtn" data-label-key="acc_btn_login">Sign In</button>
+          </form>
+
+          <!-- Forgot password form -->
+          <form class="acc-form" id="forgotPasswordForm" style="display:none" novalidate>
+            <p class="acc-auth-sub" data-i18n="acc_forgot_info" style="margin:-0.5rem 0 0">Enter the email associated with your account.</p>
+            <div class="acc-field">
+              <label class="acc-label" for="forgotEmail" data-i18n="acc_label_email">Email</label>
+              <input class="acc-input" type="email" id="forgotEmail" name="email" autocomplete="email" required data-i18n-placeholder="acc_ph_email" placeholder="your@email.com" />
+              <span class="acc-field-error" id="forgotEmailErr"></span>
+            </div>
+            <button type="submit" class="acc-btn-submit" id="forgotBtn" data-label-key="acc_btn_forgot">Send reset link</button>
+            <button type="button" class="acc-back-link" onclick="backToLogin()" data-i18n="acc_back_to_login">← Back to sign in</button>
           </form>
 
           <!-- Register form -->
@@ -1016,14 +1074,17 @@
             <div class="acc-field">
               <label class="acc-label" for="regName" data-i18n="acc_label_name">Full Name</label>
               <input class="acc-input" type="text" id="regName" name="name" autocomplete="name" required data-i18n-placeholder="acc_ph_name" placeholder="Your name" />
+              <span class="acc-field-error" id="regNameErr"></span>
             </div>
             <div class="acc-field">
               <label class="acc-label" for="regEmail" data-i18n="acc_label_email">Email</label>
               <input class="acc-input" type="email" id="regEmail" name="email" autocomplete="email" required data-i18n-placeholder="acc_ph_email" placeholder="your@email.com" />
+              <span class="acc-field-error" id="regEmailErr"></span>
             </div>
             <div class="acc-field">
               <label class="acc-label" for="regPhone" data-i18n="acc_label_phone">Phone</label>
               <input class="acc-input" type="tel" id="regPhone" name="phone" autocomplete="tel" required data-i18n-placeholder="acc_ph_phone" placeholder="+357 ..." />
+              <span class="acc-field-error" id="regPhoneErr"></span>
             </div>
             <div class="acc-field">
               <label class="acc-label" for="regPassword" data-i18n="acc_label_password">Password</label>
@@ -1033,6 +1094,17 @@
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 </button>
               </div>
+              <span class="acc-field-error" id="regPasswordErr"></span>
+            </div>
+            <div class="acc-field">
+              <label class="acc-label" for="regPasswordConfirm" data-i18n="acc_label_password_confirm">Confirm Password</label>
+              <div class="acc-input-wrap">
+                <input class="acc-input" type="password" id="regPasswordConfirm" name="passwordConfirm" autocomplete="new-password" required data-i18n-placeholder="acc_ph_password_confirm" placeholder="Repeat your password" />
+                <button type="button" class="acc-pw-toggle" onclick="togglePw('regPasswordConfirm',this)" aria-label="Show password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <span class="acc-field-error" id="regPasswordConfirmErr"></span>
             </div>
             <!-- Consent checkboxes -->
             <div class="auth-consent acc-consent">

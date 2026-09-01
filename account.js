@@ -67,10 +67,13 @@ function setLoading(btnId, loading) {
   if (loading) {
     btn.innerHTML = '<span class="acc-spinner"></span>';
   } else {
-    // Restore label from data-label (set at init) or data-label-key (i18n)
-    const label = btn.dataset.label ||
-      (btn.dataset.labelKey ? (window.SVS_I18N && window.SVS_I18N.t ? window.SVS_I18N.t(btn.dataset.labelKey) : '') : '');
-    btn.textContent = label || btn.dataset.labelKey || 'Submit';
+    // Restore label from data-label-key (live translation for current language)
+    // first, falling back to the data-label captured at page load only when no
+    // i18n key exists or the translator isn't ready yet.
+    const live = btn.dataset.labelKey && window.SVS_I18N && window.SVS_I18N.t
+      ? window.SVS_I18N.t(btn.dataset.labelKey) : '';
+    const label = live || btn.dataset.label || btn.dataset.labelKey || 'Submit';
+    btn.textContent = label;
   }
 }
 function escHtml(s) {
@@ -79,23 +82,98 @@ function escHtml(s) {
 function capitalize(s) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
 }
+function t(key, fallback) {
+  return (window.SVS_I18N && window.SVS_I18N.t) ? (window.SVS_I18N.t(key) || fallback) : fallback;
+}
+
+// ── Field-level validation helpers ──────────────────────────────────────────────
+function setFieldError(inputId, msg) {
+  const input = document.getElementById(inputId);
+  const err   = document.getElementById(inputId + 'Err');
+  if (input) input.classList.add('invalid');
+  if (err) { err.textContent = msg; err.classList.add('visible'); }
+}
+function clearFieldError(inputId) {
+  const input = document.getElementById(inputId);
+  const err   = document.getElementById(inputId + 'Err');
+  if (input) input.classList.remove('invalid');
+  if (err) { err.textContent = ''; err.classList.remove('visible'); }
+}
+function clearAllFieldErrors() {
+  document.querySelectorAll('.acc-field-error').forEach(el => { el.textContent = ''; el.classList.remove('visible'); });
+  document.querySelectorAll('.acc-input.invalid').forEach(el => el.classList.remove('invalid'));
+}
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || '').trim());
+}
+function isValidPhone(phone) {
+  return String(phone || '').replace(/\D/g, '').length >= 8;
+}
 
 // ── Tabs ───────────────────────────────────────────────────────────────────────
 function switchTab(tab) {
   clearMessages();
+  clearAllFieldErrors();
+  hideForgotPassword();
   const lf  = document.getElementById('loginForm');
   const rf  = document.getElementById('registerForm');
   const lbt = document.getElementById('loginTabBtn');
   const rbt = document.getElementById('registerTabBtn');
+  const titleEl = document.getElementById('accAuthTitle');
+  const subEl   = document.getElementById('accAuthSub');
   if (tab === 'login') {
     lf.style.display = 'flex'; rf.style.display = 'none';
     lbt.classList.add('active');    rbt.classList.remove('active');
     lbt.setAttribute('aria-selected','true'); rbt.setAttribute('aria-selected','false');
+    if (titleEl) { titleEl.setAttribute('data-i18n', 'acc_login_title'); titleEl.textContent = t('acc_login_title', 'Welcome back'); }
+    if (subEl)   { subEl.setAttribute('data-i18n', 'acc_login_sub'); subEl.textContent = t('acc_login_sub', 'Sign in to your Soul Vibe Space account'); }
   } else {
     lf.style.display = 'none'; rf.style.display = 'flex';
     rbt.classList.add('active');    lbt.classList.remove('active');
     rbt.setAttribute('aria-selected','true'); lbt.setAttribute('aria-selected','false');
+    if (titleEl) { titleEl.setAttribute('data-i18n', 'acc_reg_title'); titleEl.textContent = t('acc_reg_title', 'Join Soul Vibe Space'); }
+    if (subEl)   { subEl.setAttribute('data-i18n', 'acc_reg_sub'); subEl.textContent = t('acc_reg_sub', 'Create your account to manage bookings'); }
   }
+}
+
+// ── Forgot password ──────────────────────────────────────────────────────────
+function showForgotPassword() {
+  clearMessages();
+  clearAllFieldErrors();
+  const lf   = document.getElementById('loginForm');
+  const fpf  = document.getElementById('forgotPasswordForm');
+  const tabs = document.querySelector('.acc-tabs');
+  const gwrap = document.querySelector('.acc-google-wrap');
+  if (lf)    lf.style.display = 'none';
+  if (fpf)   fpf.style.display = 'flex';
+  if (tabs)  tabs.style.display = 'none';
+  if (gwrap) gwrap.style.display = 'none';
+  const titleEl = document.getElementById('accAuthTitle');
+  const subEl   = document.getElementById('accAuthSub');
+  if (titleEl) { titleEl.removeAttribute('data-i18n'); titleEl.textContent = t('acc_forgot_title', 'Reset your password'); }
+  if (subEl)   { subEl.removeAttribute('data-i18n'); subEl.textContent = t('acc_forgot_sub', "Enter your email and we'll send you a link to reset your password"); }
+  const fe = document.getElementById('forgotEmail');
+  const le = document.getElementById('loginEmail');
+  if (fe && le && le.value) fe.value = le.value;
+}
+function hideForgotPassword() {
+  const fpf   = document.getElementById('forgotPasswordForm');
+  const tabs  = document.querySelector('.acc-tabs');
+  const gwrap = document.querySelector('.acc-google-wrap');
+  if (fpf && fpf.style.display !== 'none') fpf.style.display = 'none';
+  if (tabs)  tabs.style.display = '';
+  if (gwrap) gwrap.style.display = '';
+}
+function backToLogin() {
+  clearMessages();
+  clearAllFieldErrors();
+  hideForgotPassword();
+  const lf = document.getElementById('loginForm');
+  if (lf) lf.style.display = 'flex';
+  const titleEl = document.getElementById('accAuthTitle');
+  const subEl   = document.getElementById('accAuthSub');
+  if (titleEl) { titleEl.setAttribute('data-i18n', 'acc_login_title'); titleEl.textContent = t('acc_login_title', 'Welcome back'); }
+  if (subEl)   { subEl.setAttribute('data-i18n', 'acc_login_sub'); subEl.textContent = t('acc_login_sub', 'Sign in to your Soul Vibe Space account'); }
 }
 
 // ── Password visibility ────────────────────────────────────────────────────────
@@ -116,12 +194,18 @@ function togglePw(inputId, btn) {
   if (lb) lb.dataset.label = lb.textContent.trim();
   var rb = document.getElementById('registerBtn');
   if (rb) rb.dataset.label = rb.textContent.trim();
+  var fb = document.getElementById('forgotBtn');
+  if (fb) fb.dataset.label = fb.textContent.trim();
 })();
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault(); clearMessages();
+  e.preventDefault(); clearMessages(); clearAllFieldErrors();
   const email    = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  if (!email || !password) { showError('Please enter your email and password.'); return; }
+  let hasError = false;
+  if (!email) { setFieldError('loginEmail', t('err_required', 'This field is required.')); hasError = true; }
+  else if (!isValidEmail(email)) { setFieldError('loginEmail', t('err_invalid_email', 'Please enter a valid email address.')); hasError = true; }
+  if (!password) { setFieldError('loginPassword', t('err_required', 'This field is required.')); hasError = true; }
+  if (hasError) return;
   setLoading('loginBtn', true);
   try {
     const data = await apiFetch('/api/auth/login', {
@@ -134,20 +218,53 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   } finally { setLoading('loginBtn', false); }
 });
 
+// ── Auth: Forgot password ────────────────────────────────────────────────────
+document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+  e.preventDefault(); clearMessages(); clearAllFieldErrors();
+  const email = document.getElementById('forgotEmail').value.trim();
+  if (!email) { setFieldError('forgotEmail', t('err_required', 'This field is required.')); return; }
+  if (!isValidEmail(email)) { setFieldError('forgotEmail', t('err_invalid_email', 'Please enter a valid email address.')); return; }
+  setLoading('forgotBtn', true);
+  try {
+    await apiFetch('/api/auth/forgot-password', {
+      method: 'POST', body: JSON.stringify({ email })
+    });
+  } catch (err) {
+    // Backend responds ok:true regardless of whether the email exists, to avoid
+    // leaking account existence. Network/unexpected errors still fall through here
+    // but we intentionally show the same generic success message.
+  } finally {
+    setLoading('forgotBtn', false);
+    showSuccess(t('acc_forgot_success', "If an account exists for that email, we've sent password reset instructions."));
+  }
+});
+
 // ── Auth: Register ─────────────────────────────────────────────────────────────
 // registerBtn label stored above
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
-  e.preventDefault(); clearMessages();
+  e.preventDefault(); clearMessages(); clearAllFieldErrors();
   const name               = document.getElementById('regName').value.trim();
   const email              = document.getElementById('regEmail').value.trim();
   const phone              = document.getElementById('regPhone').value.trim();
   const password           = document.getElementById('regPassword').value;
+  const passwordConfirm    = document.getElementById('regPasswordConfirm').value;
   const termsEl            = document.getElementById('regTerms');
   const newsletterEl       = document.getElementById('regNewsletter');
   const newsletter_consent = newsletterEl ? newsletterEl.checked : false;
-  if (!name || !email || !phone) { showError('Please fill in all required fields.'); return; }
-  if (termsEl && !termsEl.checked) { showError('Please agree to the Terms & Conditions.'); return; }
-  if (password && password.length < 6) { showError('Password must be at least 6 characters.'); return; }
+
+  let hasError = false;
+  if (!name) { setFieldError('regName', t('err_required', 'This field is required.')); hasError = true; }
+  if (!email) { setFieldError('regEmail', t('err_required', 'This field is required.')); hasError = true; }
+  else if (!isValidEmail(email)) { setFieldError('regEmail', t('err_invalid_email', 'Please enter a valid email address.')); hasError = true; }
+  if (!phone) { setFieldError('regPhone', t('err_required', 'This field is required.')); hasError = true; }
+  else if (!isValidPhone(phone)) { setFieldError('regPhone', t('err_invalid_phone', 'Please enter a valid phone number.')); hasError = true; }
+  if (!password) { setFieldError('regPassword', t('err_required', 'This field is required.')); hasError = true; }
+  else if (password.length < 6) { setFieldError('regPassword', t('err_password_length', 'Password must be at least 6 characters.')); hasError = true; }
+  if (!passwordConfirm) { setFieldError('regPasswordConfirm', t('err_required', 'This field is required.')); hasError = true; }
+  else if (password !== passwordConfirm) { setFieldError('regPasswordConfirm', t('err_password_mismatch', 'Passwords do not match.')); hasError = true; }
+  if (termsEl && !termsEl.checked) { showError(t('err_terms_required', 'Please agree to the Terms & Conditions and Privacy Policy to continue.')); hasError = true; }
+  if (hasError) return;
+
   setLoading('registerBtn', true);
   const consent_timestamp = new Date().toISOString();
   const consent_version   = (window.SVS_LEGAL_VERSION || '2026-05-24');
@@ -428,8 +545,10 @@ function logout() {
   if (rightEl) rightEl.style.alignItems = '';
   const le = document.getElementById('loginEmail');
   const lp = document.getElementById('loginPassword');
+  const fe = document.getElementById('forgotEmail');
   if (le) le.value = '';
   if (lp) lp.value = '';
+  if (fe) fe.value = '';
   switchTab('login');
   updateHeaderBtn('Sign In');
 }
@@ -466,6 +585,21 @@ function logout() {
     else label.textContent = 'My Account';
   }
 })();
+
+// ── Submit-button labels follow the active language ────────────────────────────
+// data-i18n only re-renders plain text nodes; these buttons store their label
+// via data-label-key so setLoading() can restore it after a spinner state, but
+// that only fires on submit. Refresh them directly on load and on language
+// change so they don't stay stuck in whatever language the HTML shipped with.
+function refreshSubmitButtonLabels() {
+  if (!(window.SVS_I18N && window.SVS_I18N.t)) return;
+  document.querySelectorAll('[data-label-key]').forEach((btn) => {
+    if (btn.disabled) return; // mid-submit spinner is showing; setLoading will restore it
+    btn.textContent = window.SVS_I18N.t(btn.dataset.labelKey) || btn.textContent;
+  });
+}
+window.addEventListener('svs:langchange', refreshSubmitButtonLabels);
+refreshSubmitButtonLabels();
 
 // ── Google Sign-In ─────────────────────────────────────────────────────────────
 async function handleGoogleSignIn(response) {
