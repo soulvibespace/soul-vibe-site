@@ -1,7 +1,15 @@
 {
   "meta": {
-    "eyebrow": { "en": "STUDIO & VENUE RENTAL", "ru": "АРЕНДА СТУДИИ И ПРОСТРАНСТВА", "el": "ΕΝΟΙΚΙΑΣΗ STUDIO & ΧΩΡΟΥ" },
-    "title": { "en": "An Event Space in the Heart of Limassol", "ru": "Пространство для мероприятий в центре Лимасола", "el": "Χώρος Εκδηλώσεων στην Καρδιά της Λεμεσού" },
+    "eyebrow": {
+      "en": "STUDIO & VENUE RENTAL",
+      "ru": "АРЕНДА СТУДИИ И ПРОСТРАНСТВА",
+      "el": "ΕΝΟΙΚΙΑΣΗ STUDIO & ΧΩΡΟΥ"
+    },
+    "title": {
+      "en": "An Event Space in the Heart of Limassol",
+      "ru": "Пространство для мероприятий в центре Лимасола",
+      "el": "Χώρος Εκδηλώσεων στην Καρδιά της Λεμεσού"
+    },
     "lead": {
       "en": "A space that adapts to your format — from a yoga class taught by a visiting instructor to a business meeting or a celebration. 170 m² over two floors, book one part or the whole space.",
       "ru": "Пространство, которое подстраивается под ваш формат — от занятия приглашённого инструктора до бизнес-встречи или праздника. 170 м² на двух этажах, можно забронировать часть или всё помещение.",
@@ -11,11 +19,24 @@
   "rooms": [
     {
       "key": "mirror",
-      "name": { "en": "Mirror Room", "ru": "Зеркальный зал", "el": "Αίθουσα με Καθρέφτες" },
+      "image": "images/rental-room-mirror.webp",
+      "name": {
+        "en": "Mirror Room",
+        "ru": "Зеркальный зал",
+        "el": "Αίθουσα με Καθρέφτες"
+      },
       "size_m2": 35,
       "price_hour": 30,
-      "guests": { "en": "10–20 guests", "ru": "10–20 гостей", "el": "10–20 άτομα" },
-      "extra": { "en": "15 mats", "ru": "15 матов", "el": "15 στρώματα" },
+      "guests": {
+        "en": "10–20 guests",
+        "ru": "10–20 гостей",
+        "el": "10–20 άτομα"
+      },
+      "extra": {
+        "en": "15 mats",
+        "ru": "15 матов",
+        "el": "15 στρώματα"
+      },
       "desc": {
         "en": "Mirrored walls — made for dance, movement and training.",
         "ru": "Зеркальные стены — идеален для танцев, движения и тренировок.",
@@ -24,11 +45,24 @@
     },
     {
       "key": "white",
-      "name": { "en": "White Room", "ru": "Белый зал", "el": "Λευκή Αίθουσα" },
+      "image": "images/rental-room-white.webp",
+      "name": {
+        "en": "White Room",
+        "ru": "Белый зал",
+        "el": "Λευκή Αίθουσα"
+      },
       "size_m2": 35,
       "price_hour": 30,
-      "guests": { "en": "10–15 guests", "ru": "10–15 гостей", "el": "10–15 άτομα" },
-      "extra": { "en": "12 mats", "ru": "12 матов", "el": "12 στρώματα" },
+      "guests": {
+        "en": "10–15 guests",
+        "ru": "10–15 гостей",
+        "el": "10–15 άτομα"
+      },
+      "extra": {
+        "en": "12 mats",
+        "ru": "12 матов",
+        "el": "12 στρώματα"
+      },
       "desc": {
         "en": "Filled with natural light and calm window views — ideal for yoga and meditation.",
         "ru": "Много естественного света и спокойный вид из окон — идеально для йоги и медитации.",
@@ -37,11 +71,24 @@
     },
     {
       "key": "ground",
-      "name": { "en": "Ground Floor — Coworking & Events", "ru": "Первый этаж — коворкинг и события", "el": "Ισόγειο — Coworking & Εκδηλώσεις" },
+      "image": "images/rental-room-ground.webp",
+      "name": {
+        "en": "Ground Floor — Coworking & Events",
+        "ru": "Первый этаж — коворкинг и события",
+        "el": "Ισόγειο — Coworking & Εκδηλώσεις"
+      },
       "size_m2": 100,
       "price_hour": 50,
-      "guests": { "en": "Up to 50 guests", "ru": "До 50 гостей", "el": "Έως 50 άτομα" },
-      "extra": { "en": "", "ru": "", "el": "" },
+      "guests": {
+        "en": "Up to 50 guests",
+        "ru": "До 50 гостей",
+        "el": "Έως 50 άτομα"
+      },
+      "extra": {
+        "en": "",
+        "ru": "",
+        "el": ""
+      },
       "desc": {
         "en": "Open coworking for work, meetings and conversation. Converts into an event hall for up to 50 guests, depending on layout.",
         "ru": "Открытое пространство для работы, встреч и общения. Превращается в зал для мероприятий до 50 гостей, в зависимости от расстановки.",
@@ -50,11 +97,24 @@
     },
     {
       "key": "entire",
-      "name": { "en": "Entire Venue — 2 Floors", "ru": "Всё пространство — 2 этажа", "el": "Ολόκληρος ο Χώρος — 2 Όροφοι" },
+      "image": "images/rental-room-entire.webp",
+      "name": {
+        "en": "Entire Venue — 2 Floors",
+        "ru": "Всё пространство — 2 этажа",
+        "el": "Ολόκληρος ο Χώρος — 2 Όροφοι"
+      },
       "size_m2": 170,
       "price_hour": 100,
-      "guests": { "en": "Up to 50 guests", "ru": "До 50 гостей", "el": "Έως 50 άτομα" },
-      "extra": { "en": "Incl. changing room", "ru": "Включена гардеробная", "el": "Με αποδυτήριο" },
+      "guests": {
+        "en": "Up to 50 guests",
+        "ru": "До 50 гостей",
+        "el": "Έως 50 άτομα"
+      },
+      "extra": {
+        "en": "Incl. changing room",
+        "ru": "Включена гардеробная",
+        "el": "Με αποδυτήριο"
+      },
       "desc": {
         "en": "All 170 m², including both upstairs studios and the changing room. Up to 50 guests, depending on layout.",
         "ru": "Все 170 м², включая оба зала на верхнем этаже и гардеробную. До 50 гостей, в зависимости от расстановки.",
@@ -63,58 +123,298 @@
     }
   ],
   "setups": [
-    { "name": { "en": "Wellness Practice", "ru": "Wellness-практика", "el": "Πρακτική Wellness" }, "guests": { "en": "25–35 guests", "ru": "25–35 гостей", "el": "25–35 άτομα" }, "desc": { "en": "Circle or mat setup with mats, cushions and blankets.", "ru": "Расстановка кругом или матами — с ковриками, подушками и одеялами.", "el": "Διάταξη σε κύκλο ή με στρώματα, μαξιλάρια και κουβέρτες." } },
-    { "name": { "en": "Presentation / Lecture", "ru": "Презентация / лекция", "el": "Παρουσίαση / Διάλεξη" }, "guests": { "en": "Up to 30 guests", "ru": "До 30 гостей", "el": "Έως 30 άτομα" }, "desc": { "en": "Rows with SMART TV and one shared focal point.", "ru": "Ряды кресел, SMART TV и общая точка фокуса.", "el": "Σειρές με SMART TV και ένα κοινό σημείο εστίασης." } },
-    { "name": { "en": "Celebration / Dinner", "ru": "Праздник / ужин", "el": "Γιορτή / Δείπνο" }, "guests": { "en": "20–30 guests", "ru": "20–30 гостей", "el": "20–30 άτομα" }, "desc": { "en": "Long table or lounge setup. Catering available.", "ru": "Длинный стол или лаунж-зона. Возможен кейтеринг.", "el": "Μακρύ τραπέζι ή lounge διάταξη. Διατίθεται catering." } },
-    { "name": { "en": "Workshop / Team Session", "ru": "Воркшоп / командная сессия", "el": "Εργαστήριο / Ομαδική Συνάντηση" }, "guests": { "en": "15–25 guests", "ru": "15–25 гостей", "el": "15–25 άτομα" }, "desc": { "en": "Islands or a shared table for collaborative work.", "ru": "Островки или общий стол для совместной работы.", "el": "Νησίδες ή κοινό τραπέζι για συνεργασία." } },
-    { "name": { "en": "Networking / Open Event", "ru": "Нетворкинг / открытое событие", "el": "Networking / Ανοιχτή Εκδήλωση" }, "guests": { "en": "Up to 50 guests", "ru": "До 50 гостей", "el": "Έως 50 άτομα" }, "desc": { "en": "Open floor with a flexible standing format.", "ru": "Открытая планировка, гибкий формат стоя.", "el": "Ανοιχτός χώρος με ευέλικτη διάταξη όρθιων ατόμων." } },
-    { "name": { "en": "Custom Setup", "ru": "Индивидуальная расстановка", "el": "Προσαρμοσμένη Διάταξη" }, "guests": { "en": "Tailored to your event", "ru": "Под ваше мероприятие", "el": "Προσαρμοσμένο στην εκδήλωσή σου" }, "desc": { "en": "All furniture can be moved and combined to suit your format.", "ru": "Всю мебель можно двигать и комбинировать под ваш формат.", "el": "Όλα τα έπιπλα μετακινούνται και συνδυάζονται όπως χρειάζεσαι." } }
+    {
+      "name": {
+        "en": "Wellness Practice",
+        "ru": "Wellness-практика",
+        "el": "Πρακτική Wellness"
+      },
+      "image": "images/rental-setup-wellness.webp",
+      "guests": {
+        "en": "25–35 guests",
+        "ru": "25–35 гостей",
+        "el": "25–35 άτομα"
+      },
+      "desc": {
+        "en": "Circle or mat setup with mats, cushions and blankets.",
+        "ru": "Расстановка кругом или матами — с ковриками, подушками и одеялами.",
+        "el": "Διάταξη σε κύκλο ή με στρώματα, μαξιλάρια και κουβέρτες."
+      }
+    },
+    {
+      "name": {
+        "en": "Presentation / Lecture",
+        "ru": "Презентация / лекция",
+        "el": "Παρουσίαση / Διάλεξη"
+      },
+      "image": "images/rental-setup-presentation.webp",
+      "guests": {
+        "en": "Up to 30 guests",
+        "ru": "До 30 гостей",
+        "el": "Έως 30 άτομα"
+      },
+      "desc": {
+        "en": "Rows with SMART TV and one shared focal point.",
+        "ru": "Ряды кресел, SMART TV и общая точка фокуса.",
+        "el": "Σειρές με SMART TV και ένα κοινό σημείο εστίασης."
+      }
+    },
+    {
+      "name": {
+        "en": "Celebration / Dinner",
+        "ru": "Праздник / ужин",
+        "el": "Γιορτή / Δείπνο"
+      },
+      "image": "images/rental-setup-celebration.webp",
+      "guests": {
+        "en": "20–30 guests",
+        "ru": "20–30 гостей",
+        "el": "20–30 άτομα"
+      },
+      "desc": {
+        "en": "Long table or lounge setup. Catering available.",
+        "ru": "Длинный стол или лаунж-зона. Возможен кейтеринг.",
+        "el": "Μακρύ τραπέζι ή lounge διάταξη. Διατίθεται catering."
+      }
+    },
+    {
+      "name": {
+        "en": "Workshop / Team Session",
+        "ru": "Воркшоп / командная сессия",
+        "el": "Εργαστήριο / Ομαδική Συνάντηση"
+      },
+      "image": "images/rental-setup-workshop.webp",
+      "guests": {
+        "en": "15–25 guests",
+        "ru": "15–25 гостей",
+        "el": "15–25 άτομα"
+      },
+      "desc": {
+        "en": "Islands or a shared table for collaborative work.",
+        "ru": "Островки или общий стол для совместной работы.",
+        "el": "Νησίδες ή κοινό τραπέζι για συνεργασία."
+      }
+    },
+    {
+      "name": {
+        "en": "Networking / Open Event",
+        "ru": "Нетворкинг / открытое событие",
+        "el": "Networking / Ανοιχτή Εκδήλωση"
+      },
+      "guests": {
+        "en": "Up to 50 guests",
+        "ru": "До 50 гостей",
+        "el": "Έως 50 άτομα"
+      },
+      "desc": {
+        "en": "Open floor with a flexible standing format.",
+        "ru": "Открытая планировка, гибкий формат стоя.",
+        "el": "Ανοιχτός χώρος με ευέλικτη διάταξη όρθιων ατόμων."
+      }
+    },
+    {
+      "name": {
+        "en": "Custom Setup",
+        "ru": "Индивидуальная расстановка",
+        "el": "Προσαρμοσμένη Διάταξη"
+      },
+      "guests": {
+        "en": "Tailored to your event",
+        "ru": "Под ваше мероприятие",
+        "el": "Προσαρμοσμένο στην εκδήλωσή σου"
+      },
+      "desc": {
+        "en": "All furniture can be moved and combined to suit your format.",
+        "ru": "Всю мебель можно двигать и комбинировать под ваш формат.",
+        "el": "Όλα τα έπιπλα μετακινούνται και συνδυάζονται όπως χρειάζεσαι."
+      }
+    }
   ],
   "included": [
-    { "en": "Access to the booked space", "ru": "Доступ к забронированному пространству", "el": "Πρόσβαση στον κρατημένο χώρο" },
-    { "en": "Furniture arranged for your format", "ru": "Мебель расставлена под ваш формат", "el": "Έπιπλα διαταγμένα για τη μορφή σου" },
-    { "en": "Wi-Fi", "ru": "Wi-Fi", "el": "Wi-Fi" },
-    { "en": "Air conditioning", "ru": "Кондиционер", "el": "Κλιματισμός" },
-    { "en": "Restroom", "ru": "Туалет", "el": "Τουαλέτα" },
-    { "en": "Kitchen & coffee-break area", "ru": "Кухня и зона кофе-брейка", "el": "Κουζίνα & χώρος coffee-break" },
-    { "en": "Free tea & water", "ru": "Бесплатный чай и вода", "el": "Δωρεάν τσάι & νερό" },
-    { "en": "Changing room & shower", "ru": "Гардеробная и душ", "el": "Αποδυτήριο & ντους" },
-    { "en": "Practice equipment as agreed", "ru": "Инвентарь для практики по договорённости", "el": "Εξοπλισμός πρακτικής κατόπιν συμφωνίας" },
-    { "en": "Administrator support on request", "ru": "Поддержка администратора по запросу", "el": "Υποστήριξη διαχειριστή κατόπιν αιτήματος" }
+    {
+      "en": "Access to the booked space",
+      "ru": "Доступ к забронированному пространству",
+      "el": "Πρόσβαση στον κρατημένο χώρο"
+    },
+    {
+      "en": "Furniture arranged for your format",
+      "ru": "Мебель расставлена под ваш формат",
+      "el": "Έπιπλα διαταγμένα για τη μορφή σου"
+    },
+    {
+      "en": "Wi-Fi",
+      "ru": "Wi-Fi",
+      "el": "Wi-Fi"
+    },
+    {
+      "en": "Air conditioning",
+      "ru": "Кондиционер",
+      "el": "Κλιματισμός"
+    },
+    {
+      "en": "Restroom",
+      "ru": "Туалет",
+      "el": "Τουαλέτα"
+    },
+    {
+      "en": "Kitchen & coffee-break area",
+      "ru": "Кухня и зона кофе-брейка",
+      "el": "Κουζίνα & χώρος coffee-break"
+    },
+    {
+      "en": "Free tea & water",
+      "ru": "Бесплатный чай и вода",
+      "el": "Δωρεάν τσάι & νερό"
+    },
+    {
+      "en": "Changing room & shower",
+      "ru": "Гардеробная и душ",
+      "el": "Αποδυτήριο & ντους"
+    },
+    {
+      "en": "Practice equipment as agreed",
+      "ru": "Инвентарь для практики по договорённости",
+      "el": "Εξοπλισμός πρακτικής κατόπιν συμφωνίας"
+    },
+    {
+      "en": "Administrator support on request",
+      "ru": "Поддержка администратора по запросу",
+      "el": "Υποστήριξη διαχειριστή κατόπιν αιτήματος"
+    }
   ],
   "kit": [
-    { "en": "Seating cushions", "ru": "Подушки для сидения", "el": "Μαξιλάρια καθίσματος" },
-    { "en": "Yoga mats", "ru": "Йога-маты", "el": "Στρώματα yoga" },
-    { "en": "Blankets", "ru": "Одеяла", "el": "Κουβέρτες" },
-    { "en": "Soft mattresses — 14 pcs", "ru": "Мягкие матрасы — 14 шт.", "el": "Μαλακά στρώματα — 14 τμχ" },
-    { "en": "Yoga eye masks — 12 pcs", "ru": "Маски для глаз — 12 шт.", "el": "Μάσκες ματιών yoga — 12 τμχ" },
-    { "en": "Bolsters & practice props", "ru": "Болстеры и вспомогательный инвентарь", "el": "Bolsters & βοηθητικός εξοπλισμός" }
+    {
+      "en": "Seating cushions",
+      "ru": "Подушки для сидения",
+      "el": "Μαξιλάρια καθίσματος"
+    },
+    {
+      "en": "Yoga mats",
+      "ru": "Йога-маты",
+      "el": "Στρώματα yoga"
+    },
+    {
+      "en": "Blankets",
+      "ru": "Одеяла",
+      "el": "Κουβέρτες"
+    },
+    {
+      "en": "Soft mattresses — 14 pcs",
+      "ru": "Мягкие матрасы — 14 шт.",
+      "el": "Μαλακά στρώματα — 14 τμχ"
+    },
+    {
+      "en": "Yoga eye masks — 12 pcs",
+      "ru": "Маски для глаз — 12 шт.",
+      "el": "Μάσκες ματιών yoga — 12 τμχ"
+    },
+    {
+      "en": "Bolsters & practice props",
+      "ru": "Болстеры и вспомогательный инвентарь",
+      "el": "Bolsters & βοηθητικός εξοπλισμός"
+    }
   ],
   "addons": {
     "on_request": [
-      { "en": "Coffee-break service", "ru": "Кофе-брейк", "el": "Coffee-break" },
-      { "en": "Catering (pre-order)", "ru": "Кейтеринг (по предзаказу)", "el": "Catering (κατόπιν παραγγελίας)" },
-      { "en": "Sound Healing", "ru": "Звуковые практики", "el": "Sound Healing" },
-      { "en": "Yoga class", "ru": "Йога-класс", "el": "Μάθημα yoga" },
-      { "en": "Breathwork", "ru": "Дыхательные практики", "el": "Breathwork" },
-      { "en": "Ecstatic Dance", "ru": "Ecstatic Dance", "el": "Ecstatic Dance" },
-      { "en": "DJ set", "ru": "DJ-сет", "el": "DJ set" },
-      { "en": "Event coordination support", "ru": "Координация мероприятия", "el": "Υποστήριξη συντονισμού εκδήλωσης" }
+      {
+        "en": "Coffee-break service",
+        "ru": "Кофе-брейк",
+        "el": "Coffee-break"
+      },
+      {
+        "en": "Catering (pre-order)",
+        "ru": "Кейтеринг (по предзаказу)",
+        "el": "Catering (κατόπιν παραγγελίας)"
+      },
+      {
+        "en": "Sound Healing",
+        "ru": "Звуковые практики",
+        "el": "Sound Healing"
+      },
+      {
+        "en": "Yoga class",
+        "ru": "Йога-класс",
+        "el": "Μάθημα yoga"
+      },
+      {
+        "en": "Breathwork",
+        "ru": "Дыхательные практики",
+        "el": "Breathwork"
+      },
+      {
+        "en": "Ecstatic Dance",
+        "ru": "Ecstatic Dance",
+        "el": "Ecstatic Dance"
+      },
+      {
+        "en": "DJ set",
+        "ru": "DJ-сет",
+        "el": "DJ set"
+      },
+      {
+        "en": "Event coordination support",
+        "ru": "Координация мероприятия",
+        "el": "Υποστήριξη συντονισμού εκδήλωσης"
+      }
     ],
     "equipment": [
-      { "en": "Party speakers — 2 pcs", "ru": "Колонки — 2 шт.", "el": "Ηχεία — 2 τμχ" },
-      { "en": "Subwoofer", "ru": "Сабвуфер", "el": "Subwoofer" },
-      { "en": "DJ controller", "ru": "DJ-контроллер", "el": "DJ controller" },
-      { "en": "2 wireless microphones", "ru": "2 беспроводных микрофона", "el": "2 ασύρματα μικρόφωνα" },
-      { "en": "Professional karaoke", "ru": "Профессиональное караоке", "el": "Επαγγελματικό καραόκε" }
+      {
+        "en": "Party speakers — 2 pcs",
+        "ru": "Колонки — 2 шт.",
+        "el": "Ηχεία — 2 τμχ"
+      },
+      {
+        "en": "Subwoofer",
+        "ru": "Сабвуфер",
+        "el": "Subwoofer"
+      },
+      {
+        "en": "DJ controller",
+        "ru": "DJ-контроллер",
+        "el": "DJ controller"
+      },
+      {
+        "en": "2 wireless microphones",
+        "ru": "2 беспроводных микрофона",
+        "el": "2 ασύρματα μικρόφωνα"
+      },
+      {
+        "en": "Professional karaoke",
+        "ru": "Профессиональное караоке",
+        "el": "Επαγγελματικό καραόκε"
+      }
     ],
     "food": [
-      { "en": "Cheese platter", "ru": "Сырная тарелка", "el": "Πιατέλα τυριών" },
-      { "en": "Meat platter", "ru": "Мясная тарелка", "el": "Πιατέλα αλλαντικών" },
-      { "en": "Croissants", "ru": "Круассаны", "el": "Κρουασάν" },
-      { "en": "Pastries", "ru": "Выпечка", "el": "Γλυκά" },
-      { "en": "Orange juice", "ru": "Апельсиновый сок", "el": "Χυμός πορτοκάλι" },
-      { "en": "Coffee", "ru": "Кофе", "el": "Καφές" }
+      {
+        "en": "Cheese platter",
+        "ru": "Сырная тарелка",
+        "el": "Πιατέλα τυριών"
+      },
+      {
+        "en": "Meat platter",
+        "ru": "Мясная тарелка",
+        "el": "Πιατέλα αλλαντικών"
+      },
+      {
+        "en": "Croissants",
+        "ru": "Круассаны",
+        "el": "Κρουασάν"
+      },
+      {
+        "en": "Pastries",
+        "ru": "Выпечка",
+        "el": "Γλυκά"
+      },
+      {
+        "en": "Orange juice",
+        "ru": "Апельсиновый сок",
+        "el": "Χυμός πορτοκάλι"
+      },
+      {
+        "en": "Coffee",
+        "ru": "Кофе",
+        "el": "Καφές"
+      }
     ]
   },
   "note": {
@@ -123,11 +423,16 @@
     "el": "Για τακτικούς συνεργάτες — προσφορά κατόπιν συμφωνίας και ευέλικτοι όροι για τακτικές κρατήσεις."
   },
   "cta": {
-    "title": { "en": "Create the Event Exactly as You Imagined It", "ru": "Создайте мероприятие именно таким, каким его представляли", "el": "Δημιούργησε την Εκδήλωση Ακριβώς Όπως τη Φανταζόσουν" },
+    "title": {
+      "en": "Create the Event Exactly as You Imagined It",
+      "ru": "Создайте мероприятие именно таким, каким его представляли",
+      "el": "Δημιούργησε την Εκδήλωση Ακριβώς Όπως τη Φανταζόσουν"
+    },
     "desc": {
       "en": "We'll take care of the space. You take care of the memories. Tell us your dates and format and we'll send an offer.",
       "ru": "Мы позаботимся о пространстве. Вы — о впечатлениях. Напишите даты и формат — пришлём предложение.",
       "el": "Εμείς φροντίζουμε τον χώρο. Εσύ τις αναμνήσεις. Πες μας τις ημερομηνίες και τη μορφή και θα σου στείλουμε προσφορά."
     }
-  }
+  },
+  "cta_image": "images/rental-cta.webp"
 }
