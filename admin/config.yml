@@ -367,6 +367,8 @@ collections:
               - { label: RU, name: ru, widget: text }
               - { label: EL, name: el, widget: text }
 
+          - { label: "Bottom CTA photo", name: cta_image, widget: image, required: false }
+
           - label: "Bottom CTA"
             name: cta
             widget: object
