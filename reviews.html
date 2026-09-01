@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n-title="pricelist_page_title">Extra Services & Pricing | Soul Vibe Space Limassol</title>
-  <meta name="description" content="Personal programs, coworking and private & corporate event pricing at Soul Vibe Space, Limassol." />
-  <meta property="og:title" content="Extra Services & Pricing | Soul Vibe Space" />
-  <meta property="og:image" content="https://soulvibespace.com/images/coworking.webp" />
-  <meta property="og:url" content="https://soulvibespace.com/price-list" />
-  <link rel="canonical" href="https://soulvibespace.com/price-list" />
-  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/price-list" />
-  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/price-list" />
-  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/price-list" />
-  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/price-list" />
+  <title data-i18n-title="reviews_page_title">Client Reviews | Soul Vibe Space Limassol</title>
+  <meta name="description" content="Read real reviews from students and guests of Soul Vibe Space, a yoga studio and wellness space in Limassol, Cyprus." />
+  <meta property="og:title" content="Client Reviews | Soul Vibe Space" />
+  <meta property="og:image" content="https://soulvibespace.com/images/studio-entrance.webp" />
+  <meta property="og:url" content="https://soulvibespace.com/reviews" />
+  <link rel="canonical" href="https://soulvibespace.com/reviews" />
+  <link rel="alternate" hreflang="en" href="https://soulvibespace.com/reviews" />
+  <link rel="alternate" hreflang="ru" href="https://soulvibespace.com/reviews" />
+  <link rel="alternate" hreflang="el" href="https://soulvibespace.com/reviews" />
+  <link rel="alternate" hreflang="x-default" href="https://soulvibespace.com/reviews" />
 
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -31,76 +31,47 @@
       font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400;
       color: var(--text-primary); margin-bottom: 16px; line-height: 1.15;
     }
-    .page-lead { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 620px; }
-    .pricing-section-title {
-      font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 400;
-      color: var(--text-primary); margin-bottom: 6px;
-    }
-    .pricing-section-sub { font-size: .95rem; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.6; max-width: 700px; }
-    .pricing-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
-    .service-label {
-      font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
-    }
+    .page-lead { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; }
 
-    /* Personal program row */
-    .dropin-row {
-      display: flex; align-items: center; justify-content: space-between; gap: 24px;
-      padding: 32px 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    /* Rating summary */
+    .rv-summary {
+      display: flex; align-items: center; gap: 20px; margin: 28px 0 48px;
+      padding: 20px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      flex-wrap: wrap;
     }
-    .dropin-left { flex: 1; }
-    .dropin-name { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
-    .dropin-desc { font-size: .92rem; color: var(--text-secondary); line-height: 1.6; max-width: 560px; }
-    .dropin-right { display: flex; align-items: center; gap: 24px; flex-shrink: 0; }
-    .price-tag {
-      font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--accent);
-      white-space: nowrap;
-    }
+    .rv-summary-score { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 400; color: var(--text-primary); line-height: 1; }
+    .rv-summary-score span { font-family: var(--font-sans); font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
+    .rv-stars { color: var(--accent); display: flex; gap: 2px; }
+    .rv-summary-meta { font-size: .85rem; color: var(--text-secondary); }
 
-    /* Coworking table */
-    .cw-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; }
-    table.cw-table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 480px; }
-    table.cw-table th, table.cw-table td {
-      padding: 16px 20px; text-align: left; font-size: .92rem; border-bottom: 1px solid var(--border);
-    }
-    table.cw-table th {
-      font-family: var(--font-sans); font-size: .74rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--text-secondary); background: color-mix(in srgb, var(--accent) 5%, var(--surface));
-    }
-    table.cw-table td:not(:first-child) { font-family: var(--font-serif); font-size: 1.05rem; color: var(--text-primary); }
-    table.cw-table td .pp-note { font-family: var(--font-sans); font-size: .68rem; color: var(--text-secondary); margin-left: 3px; }
-    table.cw-table tr:last-child td { border-bottom: none; }
-    table.cw-table td:first-child { font-family: var(--font-sans); font-weight: 500; color: var(--text-primary); }
-
-    /* Events list */
-    .event-row {
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding: 20px 0; border-bottom: 1px solid var(--border);
-    }
-    .event-row:last-child { border-bottom: none; }
-    .event-name { font-size: 1rem; color: var(--text-primary); font-weight: 500; }
-    .event-price { font-family: var(--font-serif); font-size: 1.15rem; color: var(--accent); white-space: nowrap; }
-
-    /* CTA */
-    .events-note {
+    /* Review cards */
+    .rv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .rv-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 32px 40px; display: flex; align-items: flex-start; gap: 24px;
+      padding: 26px 24px; display: flex; flex-direction: column; gap: 12px;
+      transition: border-color .2s, box-shadow .2s;
     }
-    .events-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
-    .events-note h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
-    .events-note p { font-size: .95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
-    .events-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .rv-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+    .rv-card-stars { color: var(--accent); display: flex; gap: 2px; }
+    .rv-card-subject { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 400; color: var(--text-primary); line-height: 1.3; }
+    .rv-card-text { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+    .rv-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .rv-card-name { font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--text-primary); }
+    .rv-card-date { font-size: .76rem; color: var(--text-secondary); }
 
-    .plist-skeleton { padding: 24px 0; color: var(--text-secondary); font-size: .9rem; }
+    .rv-source-note {
+      margin-top: 40px; padding: 16px 20px; background: var(--surface); border-radius: 10px;
+      font-size: .82rem; color: var(--text-secondary); line-height: 1.6; border-left: 3px solid var(--accent);
+    }
+
+    .rlist-skeleton { padding: 24px 0; color: var(--text-secondary); font-size: .9rem; }
 
     @media (max-width: 900px) {
-      .dropin-row { flex-direction: column; align-items: flex-start; gap: 20px; }
-      .dropin-right { width: 100%; justify-content: flex-start; }
-      .events-note { flex-direction: column; gap: 16px; padding: 24px; }
+      .rv-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 540px) {
-      .dropin-row { padding: 24px; }
-      .event-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .rv-grid { grid-template-columns: 1fr; }
+      .rv-summary { gap: 14px; padding: 18px 20px; }
     }
   </style>
 </head>
@@ -174,8 +145,8 @@
 
   <!-- ═══ MAIN ═══ -->
   <main class="pricing-page">
-    <div class="container" id="plistRoot">
-      <div class="plist-skeleton">Loading…</div>
+    <div class="container" id="reviewsRoot">
+      <div class="rlist-skeleton">Loading…</div>
     </div>
   </main>
 
@@ -229,44 +200,11 @@
     </div>
   </footer>
 
-  <!-- Auth modal -->
-  <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
-    <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
-    <div class="booking-modal-panel" style="max-width:420px">
-      <div class="booking-modal-header">
-        <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
-        <button class="booking-modal-close" id="authModalClose" aria-label="Close">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="auth-modal-body">
-        <div class="auth-tabs">
-          <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
-          <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
-        </div>
-        <div id="authModalError" class="auth-error" style="display:none"></div>
-        <div id="authModalSuccess" class="auth-success" style="display:none"></div>
-        <form id="loginForm" class="auth-form" onsubmit="AuthModal.login(event)">
-          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authLoginEmail" required autocomplete="email"/></div>
-          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authLoginPassword" required autocomplete="current-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
-          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_login">Sign In</button>
-        </form>
-        <form id="registerForm" class="auth-form" style="display:none" onsubmit="AuthModal.register(event)">
-          <div class="form-group"><label data-i18n="acc_name">Full Name</label><input type="text" id="authRegName" required autocomplete="name"/></div>
-          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authRegEmail" required autocomplete="email"/></div>
-          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authRegPassword" required autocomplete="new-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
-          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_register">Create Account</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <script src="i18n.js"></script>
   <script defer src="auth-modal.js"></script>
   <script src="/cookie-banner.js" defer></script>
 
   <script>
-    // Mobile menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileNav = document.getElementById('mobileNav');
     if (mobileMenuBtn && mobileNav) {
@@ -276,7 +214,6 @@
         mobileNav.setAttribute('aria-hidden', String(!open));
       });
     }
-    // Check auth on load
     (function() {
       try {
         const token = localStorage.getItem('svs_token');
@@ -294,10 +231,11 @@
     })();
   </script>
 
-  <!-- Price-list content: data-driven, editable via /admin -->
+  <!-- Reviews content: data-driven, editable via /admin -->
   <script>
     (function () {
       let DATA = null;
+      const STAR_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
 
       function lang() {
         return (SVS_I18N && SVS_I18N.getLang) ? SVS_I18N.getLang() : 'en';
@@ -307,100 +245,66 @@
         const l = lang();
         return field[l] || field.en || '';
       }
-      function euro(n) { return '€' + n; }
+      function stars(n) {
+        return Array.from({ length: 5 }).map((_, i) => `<span style="opacity:${i < n ? 1 : .25}">${STAR_ICON}</span>`).join('');
+      }
+      function formatDate(iso) {
+        const d = new Date(iso + 'T00:00:00');
+        const l = lang();
+        const locale = l === 'ru' ? 'ru-RU' : (l === 'el' ? 'el-GR' : 'en-GB');
+        return d.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
+      }
 
       function render() {
-        const root = document.getElementById('plistRoot');
+        const root = document.getElementById('reviewsRoot');
         if (!DATA || !root) return;
         const d = DATA;
 
-        const cwRows = d.coworking.tiers.map(t => `
-          <tr>
-            <td>${tr(t.guests)}</td>
-            <td>${euro(t.h1)}${t.per_person ? `<span class="pp-note">${tr(d.coworking.per_person_note)}</span>` : ''}</td>
-            <td>${euro(t.h2)}${t.per_person ? `<span class="pp-note">${tr(d.coworking.per_person_note)}</span>` : ''}</td>
-            <td>${euro(t.h3)}${t.per_person ? `<span class="pp-note">${tr(d.coworking.per_person_note)}</span>` : ''}</td>
-          </tr>`).join('');
-
-        const eventRows = d.events.items.map(it => `
-          <div class="event-row">
-            <span class="event-name">${tr(it.name)}</span>
-            <span class="event-price">${tr(it.price)}</span>
+        const cards = d.reviews.map(r => `
+          <div class="rv-card">
+            <div class="rv-card-stars">${stars(r.rating)}</div>
+            <p class="rv-card-subject">${tr(r.subject)}</p>
+            <p class="rv-card-text">${tr(r.text)}</p>
+            <div class="rv-card-footer">
+              <span class="rv-card-name">${r.name}</span>
+              <span class="rv-card-date">${formatDate(r.date)}</span>
+            </div>
           </div>`).join('');
 
         root.innerHTML = `
-          <div style="margin-bottom: 56px;">
+          <div style="margin-bottom: 8px;">
             <p class="page-eyebrow">${tr(d.meta.eyebrow)}</p>
             <h1 class="page-title">${tr(d.meta.title)}</h1>
             <p class="page-lead">${tr(d.meta.lead)}</p>
           </div>
 
-          <div class="dropin-row">
-            <div class="dropin-left">
-              <p class="service-label">${tr(d.personal.label)}</p>
-              <p class="dropin-name">${tr(d.personal.title)}</p>
-              <p class="dropin-desc">${tr(d.personal.desc)}</p>
-            </div>
-            <div class="dropin-right">
-              <p class="price-tag">${tr(d.personal.price_label)}</p>
-              <a href="/contact" class="btn btn-primary" data-i18n="nav_contact">Contact</a>
-            </div>
-          </div>
-
-          <hr class="pricing-divider">
-
-          <div style="margin-bottom: 24px;">
-            <p class="service-label">${tr(d.coworking.label)}</p>
-            <h2 class="pricing-section-title">${tr(d.coworking.title)}</h2>
-            <p class="pricing-section-sub">${tr(d.coworking.desc)}</p>
-          </div>
-          <div class="cw-table-wrap">
-            <table class="cw-table">
-              <thead>
-                <tr>
-                  <th>${tr(d.coworking.col_guests)}</th>
-                  <th>${tr(d.coworking.col_h1)}</th>
-                  <th>${tr(d.coworking.col_h2)}</th>
-                  <th>${tr(d.coworking.col_h3)}</th>
-                </tr>
-              </thead>
-              <tbody>${cwRows}</tbody>
-            </table>
-          </div>
-
-          <hr class="pricing-divider">
-
-          <div style="margin-bottom: 24px;">
-            <p class="service-label">${tr(d.events.label)}</p>
-            <h2 class="pricing-section-title">${tr(d.events.title)}</h2>
-            <p class="pricing-section-sub">${tr(d.events.desc)}</p>
-          </div>
-          <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding: 8px 32px;">
-            ${eventRows}
-          </div>
-
-          <hr class="pricing-divider">
-
-          <div class="events-note">
-            <div class="events-icon">✨</div>
+          <div class="rv-summary">
+            <div class="rv-summary-score">${d.meta.avg_rating.toFixed(1)}<span> / 5</span></div>
             <div>
-              <h3>${tr(d.cta.title)}</h3>
-              <p>${tr(d.cta.desc)}</p>
-              <div class="events-links">
-                <a href="/contact" class="btn btn-outline btn-sm" data-i18n="nav_contact">Contact</a>
-                <a href="/rental" class="btn btn-outline btn-sm" data-i18n="nav_rental">Venue Rental</a>
-              </div>
+              <div class="rv-stars">${stars(Math.round(d.meta.avg_rating))}</div>
+              <p class="rv-summary-meta">${d.meta.count} ${lang()==='ru'?'отзывов':(lang()==='el'?'αξιολογήσεις':'reviews')}</p>
             </div>
           </div>
+
+          <div class="rv-grid">${cards}</div>
+
+          <p class="rv-source-note">${tr(d.meta.source_note)}</p>
         `;
+        if (SVS_I18N && SVS_I18N.t) {
+          root.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const val = SVS_I18N.t(key);
+            if (val && val !== key) el.textContent = val;
+          });
+        }
       }
 
-      fetch('/data/price-list.json', { cache: 'no-store' })
+      fetch('/data/reviews.json', { cache: 'no-store' })
         .then(r => r.json())
         .then(json => { DATA = json; render(); })
         .catch(() => {
-          const root = document.getElementById('plistRoot');
-          if (root) root.innerHTML = '<p class="plist-skeleton">Could not load pricing data. Please try again later.</p>';
+          const root = document.getElementById('reviewsRoot');
+          if (root) root.innerHTML = '<p class="rlist-skeleton">Could not load reviews. Please try again later.</p>';
         });
 
       window.addEventListener('svs:langchange', render);
