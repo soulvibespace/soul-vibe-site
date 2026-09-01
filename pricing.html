@@ -272,6 +272,46 @@
       flex-wrap: wrap;
     }
 
+    /* ── Extras grid (rental / coworking teasers) ── */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .extra-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .extra-card-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+    .extra-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .extra-card p {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+    .extra-card-price {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--text-primary);
+    }
+    @media (max-width: 720px) {
+      .extras-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── How it works ── */
     .how-grid {
       display: grid;
@@ -566,12 +606,36 @@
 
       <hr class="pricing-divider">
 
+      <!-- ── RENTAL & COWORKING TEASERS ── -->
+      <div class="extras-grid">
+        <div class="extra-card">
+          <div class="extra-card-icon">🏢</div>
+          <h3 data-i18n="pricing_rental_title">Studio & Space Rental</h3>
+          <p data-i18n="pricing_rental_desc">Rent a room, a floor or the whole venue for your own classes, workshops or events.</p>
+          <p class="extra-card-price" data-i18n="pricing_rental_from">From €30 / hour</p>
+          <div class="events-links">
+            <a href="/rental#rooms" class="btn btn-outline btn-sm" data-i18n="pricing_rental_link">View Rooms & Rates</a>
+          </div>
+        </div>
+        <div class="extra-card">
+          <div class="extra-card-icon">💻</div>
+          <h3 data-i18n="pricing_coworking_title">Coworking</h3>
+          <p data-i18n="pricing_coworking_desc">Open workspace on the ground floor — Wi-Fi, tea & coffee included.</p>
+          <p class="extra-card-price" data-i18n="pricing_coworking_from">From €2 / hour pp</p>
+          <div class="events-links">
+            <a href="/price-list#coworking" class="btn btn-outline btn-sm" data-i18n="pricing_coworking_link">View Coworking Rates</a>
+          </div>
+        </div>
+      </div>
+
+      <hr class="pricing-divider">
+
       <!-- ── EXTRAS CROSS-LINK ── -->
       <div class="events-note">
         <div class="events-icon">✨</div>
         <div>
           <h3 data-i18n="pricing_extras_title">Looking for something else?</h3>
-          <p data-i18n="pricing_extras_desc">Individual programs, coworking and venue rental for outside instructors are priced separately.</p>
+          <p data-i18n="pricing_extras_desc">Individual programs and special events are priced separately.</p>
           <div class="events-links">
             <a href="/price-list" class="btn btn-outline btn-sm" data-i18n="pricing_extras_link">See Extra Services & Pricing</a>
           </div>
