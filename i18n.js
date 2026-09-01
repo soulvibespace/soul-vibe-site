@@ -861,9 +861,21 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pricing_events_title: 'Workshops & Special Events',
   pricing_events_desc:  'Workshops, sound healing sessions and special events are priced individually. Check the schedule or contact us for details.',
 
+  // Studio & space rental teaser
+  pricing_rental_title: 'Studio & Space Rental',
+  pricing_rental_desc:  'Rent a room, a floor or the whole venue for your own classes, workshops or events.',
+  pricing_rental_from:  'From €30 / hour',
+  pricing_rental_link:  'View Rooms & Rates',
+
+  // Coworking teaser
+  pricing_coworking_title: 'Coworking',
+  pricing_coworking_desc:  'Open workspace on the ground floor — Wi-Fi, tea & coffee included.',
+  pricing_coworking_from:  'From €2 / hour pp',
+  pricing_coworking_link:  'View Coworking Rates',
+
   // Extra services / rental cross-link
   pricing_extras_title: 'Looking for something else?',
-  pricing_extras_desc:  'Individual programs, coworking and venue rental for outside instructors are priced separately.',
+  pricing_extras_desc:  'Individual programs and special events are priced separately.',
   pricing_extras_link:  'See Extra Services & Pricing',
 
   // How to book
@@ -922,8 +934,18 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_events_title: 'Воркшопы и события',
   pricing_events_desc:  'Воркшопы, звуковые практики и специальные события имеют индивидуальные цены. Смотри афишу или напиши нам.',
 
+  pricing_rental_title: 'Аренда студии и пространства',
+  pricing_rental_desc:  'Арендуйте зал, этаж или всё пространство для своих занятий, воркшопов или мероприятий.',
+  pricing_rental_from:  'От €30 / час',
+  pricing_rental_link:  'Смотреть залы и цены',
+
+  pricing_coworking_title: 'Коворкинг',
+  pricing_coworking_desc:  'Открытое рабочее пространство на первом этаже — Wi-Fi, чай и кофе включены.',
+  pricing_coworking_from:  'От €2 / час с чел.',
+  pricing_coworking_link:  'Смотреть тарифы коворкинга',
+
   pricing_extras_title: 'Ищешь что-то другое?',
-  pricing_extras_desc:  'Индивидуальные программы, коворкинг и аренда помещения для приглашённых инструкторов оплачиваются отдельно.',
+  pricing_extras_desc:  'Индивидуальные программы и специальные события оплачиваются отдельно.',
   pricing_extras_link:  'Смотреть доп. услуги и цены',
 
   pricing_how_title:    'Как это работает',
@@ -981,8 +1003,18 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pricing_events_title: 'Εργαστήρια & Ειδικές Εκδηλώσεις',
   pricing_events_desc:  'Τα εργαστήρια και οι ειδικές εκδηλώσεις έχουν ατομικές τιμές. Δείτε το πρόγραμμα ή επικοινωνήστε μαζί μας.',
 
+  pricing_rental_title: 'Ενοικίαση Στούντιο & Χώρου',
+  pricing_rental_desc:  'Νοικιάστε μια αίθουσα, έναν όροφο ή ολόκληρο τον χώρο για τα μαθήματα, εργαστήρια ή εκδηλώσεις σας.',
+  pricing_rental_from:  'Από €30 / ώρα',
+  pricing_rental_link:  'Δείτε Αίθουσες & Τιμές',
+
+  pricing_coworking_title: 'Coworking',
+  pricing_coworking_desc:  'Ανοιχτός χώρος εργασίας στο ισόγειο — Wi-Fi, τσάι & καφές περιλαμβάνονται.',
+  pricing_coworking_from:  'Από €2 / ώρα ανά άτομο',
+  pricing_coworking_link:  'Δείτε Τιμές Coworking',
+
   pricing_extras_title: 'Ψάχνεις κάτι άλλο;',
-  pricing_extras_desc:  'Ατομικά προγράμματα, coworking και ενοικίαση χώρου για εξωτερικούς εκπαιδευτές τιμολογούνται ξεχωριστά.',
+  pricing_extras_desc:  'Ατομικά προγράμματα και ειδικές εκδηλώσεις τιμολογούνται ξεχωριστά.',
   pricing_extras_link:  'Δείτε Πρόσθετες Υπηρεσίες & Τιμές',
 
   pricing_how_title:    'Πώς Λειτουργεί',
