@@ -364,17 +364,20 @@
   .acc-forgot-link {
     align-self: flex-end;
     background: none;
-    border: none;
-    padding: 0;
-    margin-top: -0.5rem;
+    border: 1.5px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin-top: 0.35rem;
     font-family: 'Work Sans', sans-serif;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     color: var(--color-primary);
     cursor: pointer;
     text-decoration: none;
+    transition: background 0.15s, color 0.15s;
   }
 
-  .acc-forgot-link:hover { text-decoration: underline; }
+  .acc-forgot-link:hover { background: var(--color-primary); color: #fff; }
 
   .acc-back-link {
     background: none;

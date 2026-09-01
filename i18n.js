@@ -401,7 +401,7 @@ const SVS_TRANSLATIONS = {
     err_password_mismatch: 'Пароли не совпадают.',
     acc_label_password_confirm: 'Подтвердите пароль',
     acc_ph_password_confirm:    'Повторите пароль',
-    acc_forgot_link:    'Забыли пароль?',
+    acc_forgot_link:    'Восстановить пароль',
     acc_forgot_title:   'Восстановление пароля',
     acc_forgot_sub:     'Введите email — мы отправим ссылку для восстановления пароля',
     acc_forgot_info:    'Введите email, привязанный к вашему аккаунту.',
