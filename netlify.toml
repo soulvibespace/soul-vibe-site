@@ -3,6 +3,12 @@
   publish = "dist"
   command = "bash build.sh"
 
+# /rental was removed; its content now lives on /pricing.
+[[redirects]]
+  from = "/rental"
+  to = "/pricing#rooms"
+  status = 301
+
 # Long cache for immutable assets, short for HTML so content updates appear fast.
 [[headers]]
   for = "/*.html"

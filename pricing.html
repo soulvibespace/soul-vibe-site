@@ -272,45 +272,96 @@
       flex-wrap: wrap;
     }
 
-    /* ── Extras grid (rental / coworking teasers) ── */
-    .extras-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .extra-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .extra-card-icon {
-      font-size: 1.8rem;
-      line-height: 1;
-    }
-    .extra-card h3 {
-      font-family: var(--font-serif);
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: var(--text-primary);
-    }
-    .extra-card p {
-      font-size: .95rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      flex-grow: 1;
-    }
+    /* ── Coworking teaser price line ── */
     .extra-card-price {
       font-family: var(--font-serif);
       font-size: 1.05rem;
       color: var(--text-primary);
     }
-    @media (max-width: 720px) {
-      .extras-grid { grid-template-columns: 1fr; }
+
+    /* ── Rental: section sub-headings ── */
+    .rental-subhead {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 6px;
     }
+    .rental-subhead-sub {
+      font-size: .92rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* ── Rental: rooms & rates ── */
+    .room-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .room-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 0; display: flex; flex-direction: column; overflow: hidden;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .room-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+    .room-card-img-wrap { width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: color-mix(in srgb, var(--accent) 6%, transparent); }
+    .room-card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+    .room-card:hover .room-card-img { transform: scale(1.05); }
+    .room-card-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .room-size { font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-secondary); }
+    .room-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--text-primary); }
+    .room-price { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; color: var(--accent); line-height: 1; }
+    .room-price span { font-family: var(--font-sans); font-size: .78rem; font-weight: 500; color: var(--text-secondary); margin-left: 4px; }
+    .room-meta { font-size: .8rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 3px; }
+    .room-desc { font-size: .87rem; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+
+    /* ── Rental: setup cards ── */
+    .setup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .setup-icon {
+      width: 44px; height: 44px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+    }
+    .setup-name { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+    .setup-guests { font-size: .78rem; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+    .setup-desc { font-size: .88rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* ── Rental: event moments gallery ── */
+    .rental-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+    .rental-gallery-item { border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--surface); }
+    .rental-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+    .rental-gallery-item:hover img { transform: scale(1.05); }
+
+    /* ── Rental: included checklist ── */
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .92rem; color: var(--text-primary); line-height: 1.5; }
+    .check-list li svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+
+    /* ── Rental: add-ons ── */
+    .addon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .addon-col h4 {
+      font-family: var(--font-sans); font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 12px;
+    }
+    .addon-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+    .addon-col li { font-size: .9rem; color: var(--text-primary); position: relative; padding-left: 14px; }
+    .addon-col li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    .note-box {
+      margin-top: 32px; padding: 16px 20px; background: var(--surface); border-radius: 10px;
+      font-size: .85rem; color: var(--text-secondary); line-height: 1.6; border-left: 3px solid var(--accent);
+    }
+
+    /* ── Rental: closing CTA with image ── */
+    .rental-cta {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      display: grid; grid-template-columns: 260px 1fr; align-items: stretch; overflow: hidden;
+    }
+    .rental-cta-img-wrap { width: 100%; height: 100%; min-height: 240px; overflow: hidden; }
+    .rental-cta-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rental-cta-body { padding: 32px 40px; display: flex; align-items: flex-start; gap: 24px; }
+    .rental-cta-body h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
+    .rental-cta-body p { font-size: .95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+
+    .rlist-skeleton { padding: 24px 0; color: var(--text-secondary); font-size: .9rem; }
 
     /* ── How it works ── */
     .how-grid {
@@ -360,12 +411,23 @@
       .dropin-row { flex-direction: column; align-items: flex-start; gap: 20px; }
       .dropin-right { width: 100%; justify-content: space-between; }
       .events-note { flex-direction: column; gap: 16px; padding: 24px; }
+      .room-grid { grid-template-columns: 1fr 1fr; }
+      .setup-grid { grid-template-columns: 1fr 1fr; }
+      .rental-gallery { grid-template-columns: 1fr 1fr; }
+      .check-grid { grid-template-columns: 1fr; gap: 24px; }
+      .addon-grid { grid-template-columns: 1fr; gap: 24px; }
+      .rental-cta { grid-template-columns: 1fr; }
+      .rental-cta-img-wrap { min-height: 200px; }
+      .rental-cta-body { flex-direction: column; gap: 16px; padding: 24px; }
     }
     @media (max-width: 540px) {
       .pass-grid--3 { grid-template-columns: 1fr; }
       .pass-grid--4 { grid-template-columns: 1fr; }
       .dropin-row { padding: 24px; }
       .price-big { font-size: 2.5rem; }
+      .room-grid { grid-template-columns: 1fr; }
+      .setup-grid { grid-template-columns: 1fr; }
+      .rental-gallery { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -426,7 +488,7 @@
       <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
       <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
       <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
-      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rental">Venue Rental</a>
+      <a href="/pricing#rooms" class="mobile-nav-link" data-i18n="nav_rental">Venue Rental</a>
       <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
       <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
       <div class="mobile-lang">
@@ -606,19 +668,17 @@
 
       <hr class="pricing-divider">
 
-      <!-- ── RENTAL & COWORKING TEASERS ── -->
-      <div class="extras-grid">
-        <div class="extra-card">
-          <div class="extra-card-icon">🏢</div>
-          <h3 data-i18n="pricing_rental_title">Studio & Space Rental</h3>
-          <p data-i18n="pricing_rental_desc">Rent a room, a floor or the whole venue for your own classes, workshops or events.</p>
-          <p class="extra-card-price" data-i18n="pricing_rental_from">From €30 / hour</p>
-          <div class="events-links">
-            <a href="/rental#rooms" class="btn btn-outline btn-sm" data-i18n="pricing_rental_link">View Rooms & Rates</a>
-          </div>
-        </div>
-        <div class="extra-card">
-          <div class="extra-card-icon">💻</div>
+      <!-- ── STUDIO & SPACE RENTAL (full content, migrated from /rental) ── -->
+      <div id="rentalSection">
+        <div class="rlist-skeleton">Loading…</div>
+      </div>
+
+      <hr class="pricing-divider">
+
+      <!-- ── COWORKING ── -->
+      <div class="events-note">
+        <div class="events-icon">💻</div>
+        <div>
           <h3 data-i18n="pricing_coworking_title">Coworking</h3>
           <p data-i18n="pricing_coworking_desc">Open workspace on the ground floor — Wi-Fi, tea & coffee included.</p>
           <p class="extra-card-price" data-i18n="pricing_coworking_from">From €2 / hour pp</p>
@@ -698,7 +758,7 @@
           <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
           <a href="/space" data-i18n="footer_coworking">Co-working</a>
           <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
-          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
+          <a href="/pricing#rooms" data-i18n="nav_rental">Venue Rental</a>
           <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
         </nav>
@@ -782,6 +842,168 @@
           }
         }
       } catch(_) {}
+    })();
+  </script>
+
+  <!-- Studio & Space Rental content: data-driven, editable via /admin, migrated from the former /rental page -->
+  <script>
+    (function () {
+      let RENTAL_DATA = null;
+      const CHECK_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+      // Line-icon set, matching the venue's printed brochure iconography.
+      // Keyed by the item's English label so it stays correct across languages.
+      const SVG_OPEN = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">';
+      const INCLUDED_ICONS = {
+        'Access to the booked space': SVG_OPEN + '<path d="M5 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M5 21h13"/><circle cx="14" cy="12" r="0.6" fill="currentColor" stroke="none"/></svg>',
+        'Furniture arranged for your format': SVG_OPEN + '<path d="M5 11V5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v6"/><path d="M4 11h16v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Z"/><path d="M6 16v3M18 16v3"/></svg>',
+        'Wi-Fi': SVG_OPEN + '<path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8 15.5a6 6 0 0 1 8 0"/><path d="M11 18.5a2 2 0 0 1 2 0"/><circle cx="12" cy="19" r="0.6" fill="currentColor" stroke="none"/></svg>',
+        'Air conditioning': SVG_OPEN + '<path d="M12 3v18M4.5 7.5l15 9M19.5 7.5l-15 9"/></svg>',
+        'Restroom': SVG_OPEN + '<circle cx="12" cy="5" r="2"/><path d="M12 9v6M8 12h8M9 15l-1.5 6M15 15l1.5 6"/></svg>',
+        'Kitchen & coffee-break area': SVG_OPEN + '<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M17 10h1.5a2 2 0 0 1 0 4H17"/><path d="M8 3c0 1-1 1-1 2M12 3c0 1-1 1-1 2"/></svg>',
+        'Free tea & water': SVG_OPEN + '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
+        'Changing room & shower': SVG_OPEN + '<circle cx="12" cy="5" r="1.3"/><path d="M12 6.3v2M4 17l8-6 8 6"/><path d="M3 19h18"/></svg>',
+        'Practice equipment as agreed': SVG_OPEN + '<path d="M5 9v6M3 10v4M8 8v8M16 8v8M19 10v4M21 9v6"/><path d="M8 12h8"/></svg>',
+        'Administrator support on request': SVG_OPEN + '<path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v3a2 2 0 0 0 2 2h1v-6H5a1 1 0 0 0-1 1Z"/><path d="M20 13v3a2 2 0 0 1-2 2h-1v-6h2a1 1 0 0 1 1 1Z"/><path d="M18 18v1a2 2 0 0 1-2 2h-2"/></svg>'
+      };
+      const KIT_ICONS = {
+        'Seating cushions': SVG_OPEN + '<rect x="4" y="7" width="16" height="12" rx="4"/><path d="M12 7v12M9 9.5c1-1 4-1 6 0M9 16.5c1 1 4 1 6 0"/></svg>',
+        'Yoga mats': SVG_OPEN + '<rect x="3" y="10" width="14" height="6" rx="3"/><circle cx="19" cy="13" r="2.3"/></svg>',
+        'Blankets': SVG_OPEN + '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 12h18M9 6v12M15 6v12"/></svg>',
+        'Soft mattresses — 14 pcs': SVG_OPEN + '<rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 8v9M12 8v9M17 8v9"/><path d="M3 17v2M21 17v2"/></svg>',
+        'Yoga eye masks — 12 pcs': SVG_OPEN + '<path d="M2 10c2-2 6-3 10-3s8 1 10 3"/><path d="M4 10.5a3 3 0 1 0 6 0M14 10.5a3 3 0 1 0 6 0"/></svg>',
+        'Bolsters & practice props': SVG_OPEN + '<rect x="3" y="9" width="18" height="6" rx="3"/><path d="M8 9v6M16 9v6"/></svg>'
+      };
+      const SETUP_ICONS = {
+        'Wellness Practice': SVG_OPEN + '<circle cx="12" cy="5" r="2"/><path d="M12 8v3M6 20c1-3 3-5 3-5h6s2 2 3 5M9 15l-3-2M15 15l3-2"/></svg>',
+        'Presentation / Lecture': SVG_OPEN + '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M7 12l3-3 2 2 4-4"/></svg>',
+        'Celebration / Dinner': SVG_OPEN + '<path d="M7 3h10l-1 5a4 4 0 0 1-8 0L7 3Z"/><path d="M12 12v7M8 19h8"/></svg>',
+        'Workshop / Team Session': SVG_OPEN + '<rect x="4" y="8" width="16" height="8" rx="4"/><circle cx="4" cy="8" r="1.7" fill="currentColor" stroke="none"/><circle cx="20" cy="8" r="1.7" fill="currentColor" stroke="none"/><circle cx="4" cy="16" r="1.7" fill="currentColor" stroke="none"/><circle cx="20" cy="16" r="1.7" fill="currentColor" stroke="none"/></svg>',
+        'Networking / Open Event': SVG_OPEN + '<circle cx="8" cy="8" r="2.2"/><path d="M4 19v-1a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v1"/><circle cx="17" cy="7" r="1.8"/><path d="M14.5 19v-1a3.2 3.2 0 0 1 3-3.2h.5a3.2 3.2 0 0 1 3 3.2v1"/></svg>',
+        'Custom Setup': SVG_OPEN + '<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="2" fill="currentColor" stroke="none"/></svg>'
+      };
+      function iconFor(map, field) {
+        return (field && map[field.en]) || CHECK_ICON;
+      }
+
+      function rlang() {
+        return (SVS_I18N && SVS_I18N.getLang) ? SVS_I18N.getLang() : 'en';
+      }
+      function rtr(field) {
+        if (!field) return '';
+        const l = rlang();
+        return field[l] || field.en || '';
+      }
+      function reuro(n) { return '€' + n; }
+
+      function renderRental() {
+        const root = document.getElementById('rentalSection');
+        if (!RENTAL_DATA || !root) return;
+        const d = RENTAL_DATA;
+
+        const roomCards = d.rooms.map(r => `
+          <div class="room-card">
+            ${r.image ? `<div class="room-card-img-wrap"><img class="room-card-img" src="${r.image}" alt="${rtr(r.name)} — Soul Vibe Space Limassol" loading="lazy" width="460" height="575"/></div>` : ''}
+            <div class="room-card-body">
+              <p class="room-size">${r.size_m2} m²</p>
+              <p class="room-name">${rtr(r.name)}</p>
+              <p class="room-price">${reuro(r.price_hour)}<span>/ ${rlang()==='ru'?'час':(rlang()==='el'?'ώρα':'hour')}</span></p>
+              <div class="room-meta">
+                <span>${rtr(r.guests)}</span>
+                ${rtr(r.extra) ? `<span>${rtr(r.extra)}</span>` : ''}
+              </div>
+              <p class="room-desc">${rtr(r.desc)}</p>
+            </div>
+          </div>`).join('');
+
+        const setupCards = d.setups.map(s => `
+          <div class="setup-card">
+            <div class="setup-icon">${iconFor(SETUP_ICONS, s.name)}</div>
+            <p class="setup-name">${rtr(s.name)}</p>
+            <p class="setup-guests">${rtr(s.guests)}</p>
+            <p class="setup-desc">${rtr(s.desc)}</p>
+          </div>`).join('');
+
+        const galleryItems = d.setups.filter(s => s.image).map(s => `
+          <div class="rental-gallery-item">
+            <img src="${s.image}" alt="${rtr(s.name)} — Soul Vibe Space Limassol" loading="lazy" width="435" height="543"/>
+          </div>`).join('');
+
+        const includedItems = d.included.map(i => `<li>${iconFor(INCLUDED_ICONS, i)}<span>${rtr(i)}</span></li>`).join('');
+        const kitItems = d.kit.map(i => `<li>${iconFor(KIT_ICONS, i)}<span>${rtr(i)}</span></li>`).join('');
+
+        const addonCol = (arr) => arr.map(i => `<li>${rtr(i)}</li>`).join('');
+
+        root.innerHTML = `
+          <h2 id="rooms" class="pricing-section-title" style="scroll-margin-top: 110px;">${rtr(d.meta.title)}</h2>
+          <p class="pricing-section-sub">${rtr(d.meta.lead)}</p>
+
+          <h3 class="rental-subhead" data-i18n="rental_rooms_title">Rooms & Rates</h3>
+          <p class="rental-subhead-sub" data-i18n="rental_rooms_sub">Clear hourly rates for a studio, a floor or the whole building.</p>
+          <div class="room-grid">${roomCards}</div>
+
+          <hr class="pricing-divider">
+
+          <h3 class="rental-subhead" data-i18n="rental_setups_title">Choose the Setup for Your Event</h3>
+          <p class="rental-subhead-sub" data-i18n="rental_setups_sub">Six ready-made layouts, or ask us to build a custom one.</p>
+          <div class="setup-grid">${setupCards}</div>
+          ${galleryItems ? `<div class="rental-gallery">${galleryItems}</div>` : ''}
+
+          <hr class="pricing-divider">
+
+          <h3 class="rental-subhead" data-i18n="rental_included_title">Everything You Need — Already Included</h3>
+          <p class="rental-subhead-sub" data-i18n="rental_included_sub">No hidden add-ons for the basics. Everything below comes with the room.</p>
+          <div class="check-grid">
+            <ul class="check-list">${includedItems}</ul>
+            <ul class="check-list">${kitItems}</ul>
+          </div>
+
+          <hr class="pricing-divider">
+
+          <h3 class="rental-subhead" data-i18n="rental_addons_title">Optional Add-Ons</h3>
+          <p class="rental-subhead-sub" data-i18n="rental_addons_sub">Extras that make your event even more comfortable — available at additional charge, please pre-order.</p>
+          <div class="addon-grid">
+            <div class="addon-col"><h4 data-i18n="rental_addons_onrequest">On Request</h4><ul>${addonCol(d.addons.on_request)}</ul></div>
+            <div class="addon-col"><h4 data-i18n="rental_addons_equipment">Equipment</h4><ul>${addonCol(d.addons.equipment)}</ul></div>
+            <div class="addon-col"><h4 data-i18n="rental_addons_food">Food</h4><ul>${addonCol(d.addons.food)}</ul></div>
+          </div>
+          <p class="note-box">${rtr(d.note)}</p>
+
+          <hr class="pricing-divider">
+
+          <div class="rental-cta">
+            ${d.cta_image ? `<div class="rental-cta-img-wrap"><img class="rental-cta-img" src="${d.cta_image}" alt="Celebrating an event at Soul Vibe Space Limassol" loading="lazy" width="435" height="580"/></div>` : ''}
+            <div class="rental-cta-body">
+              <div class="events-icon">🤍</div>
+              <div>
+                <h3>${rtr(d.cta.title)}</h3>
+                <p>${rtr(d.cta.desc)}</p>
+                <div class="events-links">
+                  <a href="/contact" class="btn btn-outline btn-sm" data-i18n="nav_contact">Contact</a>
+                  <a href="tel:+35795642888" class="btn btn-outline btn-sm">+357 95 642 888</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        if (SVS_I18N && SVS_I18N.t) {
+          root.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const val = SVS_I18N.t(key);
+            if (val && val !== key) el.textContent = val;
+          });
+        }
+      }
+
+      fetch('/data/rental.json', { cache: 'no-store' })
+        .then(r => r.json())
+        .then(json => { RENTAL_DATA = json; renderRental(); })
+        .catch(() => {
+          const root = document.getElementById('rentalSection');
+          if (root) root.innerHTML = '<p class="rlist-skeleton">Could not load rental data. Please try again later.</p>';
+        });
+
+      window.addEventListener('svs:langchange', renderRental);
     })();
   </script>
 </body>
