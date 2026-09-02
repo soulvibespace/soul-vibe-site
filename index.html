@@ -162,23 +162,6 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════ REVIEWS PREVIEW ═══════════════════════════════════════ -->
-  <section class="reviews-preview section" id="reviews-preview">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-eyebrow" data-i18n="home_reviews_eyebrow">CLIENT VOICES</p>
-        <h2 class="section-title" data-i18n="home_reviews_title">What Our Clients Say</h2>
-        <p class="section-lead" data-i18n="home_reviews_sub">Real reviews from students and guests of Soul Vibe Space.</p>
-      </div>
-      <div class="reviews-preview-grid" id="reviewsPreviewGrid">
-        <div class="rlist-skeleton">Loading…</div>
-      </div>
-      <div class="reviews-preview-cta">
-        <a href="/reviews" class="btn btn-outline" data-i18n="home_reviews_cta">See all reviews</a>
-      </div>
-    </div>
-  </section>
-
   <!-- ═══════════════════════════════════════ INTRO SPLIT ═══════════════════════════════════════ -->
   <section class="intro section" id="about">
     <div class="container intro-grid">
@@ -498,6 +481,31 @@
         </div>
         <button type="submit" class="btn btn-primary btn-full" data-i18n="form_submit">Send message</button>
       </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ REVIEWS PREVIEW ═══════════════════════════════════════ -->
+  <section class="reviews-preview section" id="reviews-preview">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="home_reviews_eyebrow">CLIENT VOICES</p>
+        <h2 class="section-title" data-i18n="home_reviews_title">What Our Clients Say</h2>
+        <p class="section-lead" data-i18n="home_reviews_sub">Real reviews from students and guests of Soul Vibe Space.</p>
+      </div>
+      <div class="reviews-preview-carousel">
+        <button type="button" class="reviews-preview-arrow reviews-preview-arrow-prev" aria-label="Previous reviews">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="reviews-preview-track" id="reviewsPreviewGrid">
+          <div class="rlist-skeleton">Loading…</div>
+        </div>
+        <button type="button" class="reviews-preview-arrow reviews-preview-arrow-next" aria-label="Next reviews">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div class="reviews-preview-cta">
+        <a href="/reviews" class="btn btn-outline" data-i18n="home_reviews_cta">See all reviews</a>
+      </div>
     </div>
   </section>
 

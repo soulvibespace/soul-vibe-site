@@ -24,10 +24,10 @@
   }
 
   function rvRender() {
-    const grid = document.getElementById('reviewsPreviewGrid');
-    if (!RV_DATA || !grid) return;
-    const featured = RV_DATA.reviews.slice(0, 4);
-    grid.innerHTML = featured.map(function (r) {
+    const track = document.getElementById('reviewsPreviewGrid');
+    if (!RV_DATA || !track) return;
+    const featured = RV_DATA.reviews.slice(0, 8);
+    track.innerHTML = featured.map(function (r) {
       return [
         '<div class="reviews-preview-card">',
         '<div class="reviews-preview-stars">' + rvStars(r.rating) + '</div>',
@@ -40,14 +40,42 @@
         '</div>'
       ].join('');
     }).join('');
+    rvInitCarousel(track);
+  }
+
+  // Horizontal scroll-snap carousel: arrow buttons step by one card width
+  // (card + gap), and disable themselves at either end.
+  function rvInitCarousel(track) {
+    const wrap = track.closest('.reviews-preview-carousel');
+    if (!wrap) return;
+    const prevBtn = wrap.querySelector('.reviews-preview-arrow-prev');
+    const nextBtn = wrap.querySelector('.reviews-preview-arrow-next');
+    if (!prevBtn || !nextBtn) return;
+
+    function step() {
+      const card = track.querySelector('.reviews-preview-card');
+      if (!card) return track.clientWidth;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      return card.getBoundingClientRect().width + gap;
+    }
+    function updateArrows() {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prevBtn.disabled = track.scrollLeft <= 2;
+      nextBtn.disabled = track.scrollLeft >= max;
+    }
+    prevBtn.onclick = function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); };
+    nextBtn.onclick = function () { track.scrollBy({ left: step(), behavior: 'smooth' }); };
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
   }
 
   fetch('/data/reviews.json', { cache: 'no-store' })
     .then(function (r) { return r.json(); })
     .then(function (json) { RV_DATA = json; rvRender(); })
     .catch(function () {
-      const grid = document.getElementById('reviewsPreviewGrid');
-      if (grid) grid.innerHTML = '';
+      const track = document.getElementById('reviewsPreviewGrid');
+      if (track) track.innerHTML = '';
     });
 
   window.addEventListener('svs:langchange', rvRender);
