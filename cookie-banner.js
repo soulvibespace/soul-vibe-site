@@ -78,6 +78,7 @@
 
     function dismiss(value) {
       try { localStorage.setItem(STORE_KEY, value); } catch(e) {}
+      try { window.dispatchEvent(new CustomEvent('svs:consent', { detail: value })); } catch(e) {}
       document.body.removeChild(banner);
     }
 
