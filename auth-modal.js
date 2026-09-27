@@ -17,8 +17,8 @@ function saveToken(t)     { try { window['local'+'Storage'].setItem(TOKEN_KEY, t
 function clearToken()     { try { window['local'+'Storage'].removeItem(TOKEN_KEY); } catch {} }
 function parseJWT(token)  {
   try {
-    const b = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
-    return JSON.parse(atob(b));
+    // base64url → UTF-8 JSON (names may be Cyrillic/Greek)
+    return JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
   } catch { return null; }
 }
 function isTokenValid(t) {
@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try { sessionStorage.removeItem(SVS_G_SIGNAL_KEY); } catch (_) {}
     setTimeout(async () => {
       try {
-        const p = JSON.parse(atob(getToken().split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+        const p = parseJWT(getToken()) || {};
         _updateHeaderBtn(String(p.name || '').split(' ')[0], true);
       } catch (_) {}
       if (typeof BookingModal !== 'undefined' && BookingModal.resumePendingBooking) {

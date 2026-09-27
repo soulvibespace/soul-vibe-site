@@ -137,11 +137,18 @@
         if (e.status === 401) { setKey(''); return showLogin('Неверный ключ модерации'); }
         if (e.status === 503) { $('list').innerHTML = '<p class="empty">Модерация не настроена на сервере (нет REVIEWS_MODERATION_KEY) или хранилище недоступно.</p>'; $('login').hidden = true; $('app').hidden = false; return; }
         if (e.status === 429) { $('list').innerHTML = '<p class="empty">Слишком много запросов. Подождите минуту.</p>'; return; }
+        if ($('app').hidden) return showLogin('Сервер недоступен, попробуйте позже.');
         $('list').innerHTML = '<p class="empty">Не удалось загрузить отзывы: ' + esc(e.message) + '</p>';
       }
     }
 
-    $('loginForm').addEventListener('submit', function (e) { e.preventDefault(); setKey($('key').value.trim()); $('key').value = ''; load(); });
+    $('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var k = $('key').value.trim(); $('key').value = '';
+      // HTTP headers are Latin-1 only; a key typed in the wrong keyboard layout can't be sent.
+      if (!k || /[^\x21-\x7e]/.test(k)) return showLogin('Неверный ключ модерации. Ключ состоит только из латинских букв и цифр — проверьте раскладку клавиатуры.');
+      setKey(k); load();
+    });
     $('refresh').addEventListener('click', load);
     $('logout').addEventListener('click', function () { setKey(''); showLogin(); });
     $('tabs').addEventListener('click', function (e) {
