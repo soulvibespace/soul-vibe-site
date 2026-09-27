@@ -911,6 +911,28 @@
     text-underline-offset: 2px;
   }
   .acc-consent-link:hover { opacity: 0.75; }
+
+  /* My review block (review-form.js) */
+  .rvf-root { margin-bottom: 2rem; scroll-margin-top: 90px; }
+  .rvf-card { padding: 1.25rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+  .rvf-muted { margin: 0 0 1rem; font-family: 'Work Sans', sans-serif; font-size: .9rem; color: var(--text-muted); line-height: 1.5; }
+  .rvf-card > .rvf-muted:last-child { margin-bottom: 0; }
+  .rvf-stars { display: flex; gap: 4px; margin: .35rem 0 1rem; }
+  .rvf-star { background: none; border: 0; padding: 2px; cursor: pointer; color: var(--border); line-height: 0; transition: color .15s, transform .15s; }
+  .rvf-star.on { color: var(--color-primary); }
+  button.rvf-star:hover { transform: scale(1.12); }
+  button.rvf-star:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; border-radius: 4px; }
+  .rvf-stars-static .rvf-star { cursor: default; }
+  .rvf-textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+  .rvf-meta { display: flex; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin-top: .4rem; font-family: 'Work Sans', sans-serif; font-size: .78rem; color: var(--text-muted); }
+  .rvf-actions { display: flex; gap: .75rem; align-items: center; margin-top: 1rem; }
+  .rvf-actions .acc-btn-submit { width: auto; padding: .75rem 1.5rem; }
+  .rvf-text { margin: 0 0 1rem; font-family: 'Work Sans', sans-serif; font-size: .92rem; color: var(--text); line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+  .rvf-status { margin-bottom: .75rem; padding: .65rem .9rem; border-radius: 8px; font-family: 'Work Sans', sans-serif; font-size: .86rem; line-height: 1.45; }
+  .rvf-status-wait { background: rgba(196,140,40,.08); border: 1px solid rgba(196,140,40,.25); color: #8a5a00; }
+  .rvf-status-ok { background: rgba(61,90,46,.07); border: 1px solid rgba(61,90,46,.18); color: #3d5a2e; }
+  .rvf-status-bad { background: rgba(220,53,69,.07); border: 1px solid rgba(220,53,69,.2); color: #c0392b; }
+  .rvf-note { font-size: .8rem; opacity: .85; }
   </style></head>
 <body>
 
@@ -1167,6 +1189,9 @@
             </a>
           </div>
 
+          <!-- My review (review-form.js) -->
+          <div id="reviewFormRoot" class="rvf-root"></div>
+
           <!-- Bookings -->
           <div class="dash-section-head">
             <p class="dash-section-title" data-i18n="acc_section_bookings">My Bookings</p>
@@ -1233,6 +1258,7 @@
   <script defer src="booking-modal.js"></script>
   <script defer src="app.js"></script>
   <script defer src="account.js"></script>
+  <script defer src="review-form.js"></script>
 
 <script src="/cookie-banner.js" defer></script>
 </body>

@@ -59,6 +59,16 @@
     .rv-card-name { font-family: var(--font-sans); font-size: .85rem; font-weight: 600; color: var(--text-primary); }
     .rv-card-date { font-size: .76rem; color: var(--text-secondary); }
 
+    .rv-leave {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      margin: 0 0 28px; padding: 18px 22px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface);
+    }
+    .rv-leave-sub { margin: 0; font-size: .92rem; color: var(--text-secondary); }
+    .rv-leave-btn {
+      display: inline-block; padding: 10px 20px; border-radius: 999px; background: var(--accent); color: #fff;
+      font-family: var(--font-sans); font-size: .88rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+    }
+    .rv-leave-btn:hover { opacity: .9; }
     .rv-source-note {
       margin-top: 40px; padding: 16px 20px; background: var(--surface); border-radius: 10px;
       font-size: .82rem; color: var(--text-secondary); line-height: 1.6; border-left: 3px solid var(--accent);
@@ -204,6 +214,7 @@
   </footer>
 
   <script src="i18n.js"></script>
+  <script src="client-reviews.js"></script>
   <script defer src="auth-modal.js"></script>
   <script src="/cookie-banner.js" defer></script>
 
@@ -258,18 +269,25 @@
         return d.toLocaleDateString(locale, { year: 'numeric', month: 'short' });
       }
 
+      let CLIENT = [];
+      const esc = (s) => window.SVS_CLIENT_REVIEWS ? SVS_CLIENT_REVIEWS.esc(s) : String(s || '').replace(/[&<>"']/g, '');
+      const t = (k, fb) => (SVS_I18N && SVS_I18N.t && SVS_I18N.t(k) !== k) ? SVS_I18N.t(k) : fb;
+
       function render() {
         const root = document.getElementById('reviewsRoot');
         if (!DATA || !root) return;
         const d = DATA;
+        // Approved client reviews (newest first) go before the curated ones.
+        const all = CLIENT.concat(d.reviews);
+        const meta = window.SVS_CLIENT_REVIEWS ? SVS_CLIENT_REVIEWS.combinedMeta(d.meta, CLIENT) : d.meta;
 
-        const cards = d.reviews.map(r => `
+        const cards = all.map(r => `
           <div class="rv-card">
             <div class="rv-card-stars">${stars(r.rating)}</div>
-            <p class="rv-card-subject">${tr(r.subject)}</p>
-            <p class="rv-card-text">${tr(r.text)}</p>
+            ${r.client ? '' : `<p class="rv-card-subject">${tr(r.subject)}</p>`}
+            <p class="rv-card-text"${r.client ? ' style="white-space:pre-line"' : ''}>${r.client ? esc(r.text) : tr(r.text)}</p>
             <div class="rv-card-footer">
-              <span class="rv-card-name">${r.name}</span>
+              <span class="rv-card-name">${r.client ? esc(r.name) : r.name}</span>
               <span class="rv-card-date">${formatDate(r.date)}</span>
             </div>
           </div>`).join('');
@@ -282,11 +300,16 @@
           </div>
 
           <div class="rv-summary">
-            <div class="rv-summary-score">${d.meta.avg_rating.toFixed(1)}<span> / 5</span></div>
+            <div class="rv-summary-score">${meta.avg_rating.toFixed(1)}<span> / 5</span></div>
             <div>
-              <div class="rv-stars">${stars(Math.round(d.meta.avg_rating))}</div>
-              <p class="rv-summary-meta">${d.meta.count} ${lang()==='ru'?'отзывов':(lang()==='el'?'αξιολογήσεις':'reviews')}</p>
+              <div class="rv-stars">${stars(Math.round(meta.avg_rating))}</div>
+              <p class="rv-summary-meta">${meta.count} ${lang()==='ru'?'отзывов':(lang()==='el'?'αξιολογήσεις':'reviews')}</p>
             </div>
+          </div>
+
+          <div class="rv-leave">
+            <p class="rv-leave-sub">${t('reviews_leave_sub', 'Been to a class? Share your experience.')}</p>
+            <a class="rv-leave-btn" href="/account#review">${t('reviews_leave_cta', 'Leave a review')}</a>
           </div>
 
           <div class="rv-grid">${cards}</div>
@@ -305,6 +328,8 @@
       fetch('/data/reviews.json', { cache: 'no-store' })
         .then(r => r.json())
         .then(json => { DATA = json; render(); })
+        .then(() => window.SVS_CLIENT_REVIEWS ? SVS_CLIENT_REVIEWS.fetchApproved() : [])
+        .then(list => { if (list && list.length) { CLIENT = list; render(); } })
         .catch(() => {
           const root = document.getElementById('reviewsRoot');
           if (root) root.innerHTML = '<p class="rlist-skeleton">Could not load reviews. Please try again later.</p>';

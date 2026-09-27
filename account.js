@@ -315,6 +315,7 @@ function showDashboard(client) {
 
   updateHeaderBtn(firstName);
   loadBookings(true);
+  if (window.SVS_REVIEW_FORM) window.SVS_REVIEW_FORM.load();
 }
 
 function updateHeaderBtn(name) {
