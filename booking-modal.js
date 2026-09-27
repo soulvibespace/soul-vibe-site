@@ -1019,11 +1019,11 @@ const BookingModal = (() => {
           <div class="bm-ia-consent">
             <label class="bm-ia-consent-label">
               <input type="checkbox" id="bmIaTerms" required class="bm-ia-checkbox" />
-              <span>${m.terms_text} <a href="/terms.html" target="_blank" class="bm-ia-link">${m.terms_link}</a> <span class="bm-ia-required">*</span></span>
+              <span>${window.SVS_I18N ? SVS_I18N.t('consent_terms') : `${m.terms_text} <a href="/terms" target="_blank" class="bm-ia-link">${m.terms_link}</a> <span class="bm-ia-required">*</span>`}</span>
             </label>
             <label class="bm-ia-consent-label" style="margin-top:8px">
               <input type="checkbox" id="bmIaNewsletter" class="bm-ia-checkbox" />
-              <span>${m.newsletter_text}</span>
+              <span>${window.SVS_I18N ? SVS_I18N.t('consent_newsletter') : m.newsletter_text}</span>
             </label>
           </div>
           <div id="bmIaRegErr" class="bm-ia-error"></div>
@@ -1204,7 +1204,8 @@ const BookingModal = (() => {
     const btn        = document.getElementById('bmIaRegBtn');
     const errEl      = document.getElementById('bmIaRegErr');
 
-    if (!name || !email || !phone) { if(errEl) errEl.textContent = 'Please fill in all fields'; return; }
+    const vErr = window.SVS_REG ? SVS_REG.validate({ name, email, phone, password: pw }) : ((!name || !email || !phone || !pw) ? 'Please fill in all fields' : '');
+    if (vErr) { if (errEl) errEl.textContent = vErr; return; }
     if (!termsEl || !termsEl.checked) {
       if(errEl) errEl.textContent = (window.SVS_I18N && SVS_I18N.t('err_terms_required') !== 'err_terms_required' && SVS_I18N.t('err_terms_required')) || 'Please agree to the Terms & Conditions and Privacy Policy to continue.';
       return;
@@ -1225,12 +1226,12 @@ const BookingModal = (() => {
           consent_locale: (document.documentElement.lang || 'en')
         })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(data.error || 'Registration failed'), { api: data });
       _bmOnAuthSuccess(data.token, data.client);
     } catch(err) {
-      if (errEl) errEl.textContent = err.message;
-      if (btn) { btn.disabled = false; btn.textContent = 'Create Account'; }
+      if (errEl) errEl.textContent = window.SVS_REG ? SVS_REG.serverError(err.api, !err.api) : err.message;
+      if (btn) { btn.disabled = false; btn.textContent = (window.SVS_I18N ? SVS_I18N.t('acc_btn_register') : 'Create Account'); }
     }
   }
 

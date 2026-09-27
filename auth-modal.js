@@ -160,7 +160,8 @@ const AuthModal = (() => {
     const newsletterEl  = document.getElementById('authRegNewsletter');
     const btn      = document.getElementById('authRegBtn');
 
-    if (!name || !email || !phone) return _showError(_t('err_fill_required', 'Please fill in all fields'));
+    const vErr = window.SVS_REG ? SVS_REG.validate({ name, email, phone, password }) : ((!name || !email || !phone || !password) ? _t('err_fill_required', 'Please fill in all fields') : '');
+    if (vErr) return _showError(vErr);
     if (!termsEl || !termsEl.checked) return _showError(_t('err_terms_required', 'Please agree to the Terms & Conditions and Privacy Policy to continue.'));
 
     const newsletter_consent = !!(newsletterEl && newsletterEl.checked);
@@ -186,15 +187,15 @@ const AuthModal = (() => {
           consent_locale
         })
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) throw new Error(_registerErrMsg(data.code) || data.error || 'Registration failed');
+      if (!res.ok) throw Object.assign(new Error(data.error || 'Registration failed'), { api: data });
 
       saveToken(data.token);
       _onAuthSuccess(data.client);
 
     } catch (err) {
-      _showError(err.message);
+      _showError(window.SVS_REG ? SVS_REG.serverError(err.api, !err.api) : (_registerErrMsg(err.api && err.api.code) || err.message));
     } finally {
       btn.disabled = false;
       btn.textContent = _t('acc_tab_register', 'Create Account');

@@ -39,8 +39,8 @@ async function apiFetch(path, options = {}) {
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   if (token) headers['Authorization'] = 'Bearer ' + token;
   const res  = await fetch(API_BASE + path, { ...options, headers });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Request failed');
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(data.error || 'Request failed'), { status: res.status, data });
   return data;
 }
 
@@ -282,10 +282,10 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
       })
     });
     saveToken(data.token);
-    showSuccess('Account created! Welcome to Soul Vibe Space.');
+    showSuccess(t('acc_register_success', 'Account created! Welcome to Soul Vibe Space.'));
     setTimeout(() => showDashboard(data.client), 800);
   } catch (err) {
-    showError(err.message || 'Registration failed. Please try again.');
+    showError(window.SVS_REG ? SVS_REG.serverError(err.data, !err.status) : (err.message || 'Registration failed. Please try again.'));
   } finally { setLoading('registerBtn', false); }
 });
 
