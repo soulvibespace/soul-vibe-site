@@ -487,6 +487,7 @@
   </footer>
 
   <!-- Auth Modal -->
+  <!-- ═══ AUTH MODAL ═══ -->
   <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
     <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
     <div class="booking-modal-panel auth-modal-panel">
@@ -500,17 +501,32 @@
         </button>
       </div>
       <div class="auth-modal-body">
+        <!-- Tabs -->
         <div class="auth-tabs" role="tablist" id="authTabs">
           <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
           <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
         </div>
+
+        <!-- Google -->
         <div class="google-signin-wrap">
           <div id="svsGoogleConfig" data-client_id="201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com"></div>
-          <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="continue_with" data-size="large" data-logo_alignment="left" data-width="360"></div>
+          <div class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="continue_with"
+            data-size="large"
+            data-logo_alignment="left"
+            data-width="360">
+          </div>
           <div class="auth-divider"><span data-i18n="auth_or">or</span></div>
         </div>
+
+        <!-- Messages -->
         <div class="auth-error" id="authModalError" role="alert"></div>
         <div class="auth-success" id="authModalSuccess" role="status"></div>
+
+        <!-- Login form -->
         <form class="auth-form" id="authLoginForm" novalidate>
           <div class="form-group">
             <label class="form-label" for="authLoginEmail">Email</label>
@@ -527,6 +543,8 @@
           </div>
           <button type="submit" class="btn-auth" id="authLoginBtn" data-i18n="acc_tab_login">Sign In</button>
         </form>
+
+        <!-- Register form -->
         <form class="auth-form" id="authRegisterForm" style="display:none" novalidate>
           <div class="form-group">
             <label class="form-label" for="authRegName" data-i18n="auth_name">Full Name</label>
@@ -549,6 +567,19 @@
               </button>
             </div>
           </div>
+
+          <!-- Consent checkboxes -->
+          <div class="auth-consent">
+            <label class="auth-consent-label">
+              <input type="checkbox" id="authRegTerms" class="auth-checkbox" required />
+              <span data-i18n="consent_terms" data-i18n-html="true">I have read and agree to the <a class="auth-consent-link" href="/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a> and acknowledge the <a class="auth-consent-link" href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>. <span class="req">*</span></span>
+            </label>
+            <label class="auth-consent-label">
+              <input type="checkbox" id="authRegNewsletter" class="auth-checkbox" />
+              <span data-i18n="consent_newsletter">I agree to receive news, offers and updates from Soul Vibe Space by email.</span>
+            </label>
+          </div>
+
           <button type="submit" class="btn-auth" id="authRegBtn" data-i18n="acc_tab_register">Create Account</button>
         </form>
       </div>

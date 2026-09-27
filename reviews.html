@@ -203,7 +203,28 @@
     </div>
   </footer>
 
+  <!-- ═══ BOOKING MODAL (Custom) ═══ -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <!-- Header -->
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Booking body -->
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
   <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="booking-modal.js"></script>
   <script defer src="auth-modal.js"></script>
   <script src="/cookie-banner.js" defer></script>
 
@@ -222,7 +243,7 @@
         const token = localStorage.getItem('svs_token');
         const label = document.getElementById('headerAccountLabel');
         if (token && label) {
-          const payload = JSON.parse(atob(token.split('.')[1]));
+          const payload = JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
           if (payload && payload.exp * 1000 > Date.now() && payload.name) {
             label.removeAttribute('data-i18n');
             label.textContent = payload.name.split(' ')[0];

@@ -17,8 +17,8 @@ function saveToken(t)     { try { window['local'+'Storage'].setItem(TOKEN_KEY, t
 function clearToken()     { try { window['local'+'Storage'].removeItem(TOKEN_KEY); } catch {} }
 function parseJWT(token)  {
   try {
-    const b = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
-    return JSON.parse(atob(b));
+    // base64url → UTF-8 JSON (names may be Cyrillic/Greek)
+    return JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
   } catch { return null; }
 }
 function isTokenValid(t) {
@@ -161,13 +161,13 @@ const AuthModal = (() => {
     const btn      = document.getElementById('authRegBtn');
 
     if (!name || !email || !phone) return _showError(_t('err_fill_required', 'Please fill in all fields'));
-    if (termsEl && !termsEl.checked) return _showError(_t('err_terms_required', 'Please agree to the Terms & Conditions and Privacy Policy to continue.'));
+    if (!termsEl || !termsEl.checked) return _showError(_t('err_terms_required', 'Please agree to the Terms & Conditions and Privacy Policy to continue.'));
 
     const newsletter_consent = !!(newsletterEl && newsletterEl.checked);
     const terms_accepted     = !!(termsEl && termsEl.checked);
     const consent_timestamp  = new Date().toISOString();
     const consent_version    = (window.SVS_LEGAL_VERSION || '2026-05-24');
-    const consent_locale     = (document.documentElement.getAttribute('data-lang') || 'en');
+    const consent_locale     = (document.documentElement.lang || 'en');
 
     btn.disabled = true;
     btn.textContent = '...';
@@ -206,7 +206,7 @@ const AuthModal = (() => {
   // the phone number does not match the one on that record.
   function _registerErrMsg(code) {
     if (!code) return null;
-    const lang = (document.documentElement.getAttribute('data-lang') || 'en').slice(0, 2);
+    const lang = (document.documentElement.lang || 'en').slice(0, 2);
     const msgs = {
       en: {
         exists: 'This email is already in our system. Try signing in on the Sign In tab, or write to us and we will help.',
@@ -260,7 +260,7 @@ async function handleGoogleSignIn(response) {
 
   let name = '', email = '';
   try {
-    const p = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    const p = JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
     name  = p.name  || '';
     email = p.email || '';
   } catch {}
@@ -277,7 +277,7 @@ async function handleGoogleSignIn(response) {
   const registerForm = document.getElementById('authRegisterForm');
   const isRegister   = authVisible && registerForm && registerForm.style.display !== 'none';
 
-  if (isRegister && termsEl && !termsEl.checked) {
+  if (isRegister && (!termsEl || !termsEl.checked)) {
     _showGoogleError((window.SVS_I18N ? SVS_I18N.t('err_terms_required') : null)
       || 'Please agree to the Terms & Conditions and Privacy Policy to continue.');
     return;
@@ -288,7 +288,7 @@ async function handleGoogleSignIn(response) {
     newsletter_consent: !!(newsletterEl && newsletterEl.checked),
     consent_timestamp: new Date().toISOString(),
     consent_version: (window.SVS_LEGAL_VERSION || '2026-05-24'),
-    consent_locale: (document.documentElement.getAttribute('data-lang') || 'en')
+    consent_locale: (document.documentElement.lang || 'en')
   } : {};
 
   try {
@@ -436,7 +436,7 @@ function svsGoogleButtonHtml(label) {
 
 function svsGoogleButtonLabel() {
   const lang = document.documentElement.getAttribute('lang')
-    || document.documentElement.getAttribute('data-lang') || 'en';
+    || document.documentElement.lang || 'en';
   return { en: 'Continue with Google', ru: 'Войти через Google', el: 'Συνέχεια με Google' }[lang]
     || 'Continue with Google';
 }
@@ -503,7 +503,7 @@ function svsRenderGsiButtons() {
 // Messages for failures reported by Google itself, before our own code runs.
 function _googleErrMsg(type) {
   const lang = document.documentElement.getAttribute('lang')
-    || document.documentElement.getAttribute('data-lang') || 'en';
+    || document.documentElement.lang || 'en';
   const M = {
     en: {
       popup_failed_to_open: 'Your browser blocked the Google window. Allow pop-ups for this site (on iPhone: Settings → Apps → Safari → turn off Block Pop-ups), then try again — or just register with your email below.',
@@ -536,7 +536,7 @@ function _googleErrMsg(type) {
 
 function _googleMsg(kind, fallback) {
   const lang = document.documentElement.getAttribute('lang')
-    || document.documentElement.getAttribute('data-lang') || 'en';
+    || document.documentElement.lang || 'en';
   const M = {
     en: {
       exists:  'An account with this email already exists. Please sign in with your email and password, or message the studio and we will link Google to your account.',
@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try { sessionStorage.removeItem(SVS_G_SIGNAL_KEY); } catch (_) {}
     setTimeout(async () => {
       try {
-        const p = JSON.parse(atob(getToken().split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+        const p = parseJWT(getToken()) || {};
         _updateHeaderBtn(String(p.name || '').split(' ')[0], true);
       } catch (_) {}
       if (typeof BookingModal !== 'undefined' && BookingModal.resumePendingBooking) {
