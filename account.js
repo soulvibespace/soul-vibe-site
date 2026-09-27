@@ -25,7 +25,8 @@ function saveToken(t) { _memToken = t; if (_store) _store.setItem(TOKEN_KEY, t);
 function clearToken() { _memToken = null; if (_store) _store.removeItem(TOKEN_KEY); }
 
 function parseJWT(token) {
-  try { return JSON.parse(atob(token.split('.')[1])); } catch { return null; }
+  // JWT payload is base64url-encoded UTF-8 (names may be Cyrillic/Greek).
+  try { return JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join(''))); } catch { return null; }
 }
 function isTokenValid(token) {
   if (!token) return false;
@@ -38,8 +39,8 @@ async function apiFetch(path, options = {}) {
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   if (token) headers['Authorization'] = 'Bearer ' + token;
   const res  = await fetch(API_BASE + path, { ...options, headers });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Request failed');
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(data.error || 'Request failed'), { status: res.status, data });
   return data;
 }
 
@@ -268,7 +269,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   setLoading('registerBtn', true);
   const consent_timestamp = new Date().toISOString();
   const consent_version   = (window.SVS_LEGAL_VERSION || '2026-05-24');
-  const consent_locale    = (document.documentElement.getAttribute('data-lang') || 'en');
+  const consent_locale    = (document.documentElement.lang || 'en');
   try {
     const data = await apiFetch('/api/auth/register', {
       method: 'POST', body: JSON.stringify({
@@ -281,10 +282,10 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
       })
     });
     saveToken(data.token);
-    showSuccess('Account created! Welcome to Soul Vibe Space.');
+    showSuccess(t('acc_register_success', 'Account created! Welcome to Soul Vibe Space.'));
     setTimeout(() => showDashboard(data.client), 800);
   } catch (err) {
-    showError(err.message || 'Registration failed. Please try again.');
+    showError(window.SVS_REG ? SVS_REG.serverError(err.data, !err.status) : (err.message || 'Registration failed. Please try again.'));
   } finally { setLoading('registerBtn', false); }
 });
 
@@ -607,7 +608,7 @@ async function handleGoogleSignIn(response) {
   showError('');
   let name = '', email = '';
   try {
-    const p = JSON.parse(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    const p = JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(idToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
     name = p.name || ''; email = p.email || '';
   } catch {}
   try {

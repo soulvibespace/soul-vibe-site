@@ -388,8 +388,9 @@
         </div>
 
         <div>
-          <form class="contact-form" id="contactForm" name="contact" data-netlify="true" novalidate>
+          <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-form data-success="formSuccess" novalidate>
             <input type="hidden" name="form-name" value="contact" />
+            <p hidden><label>Leave empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
             <div class="form-row">
               <div class="form-group">
                 <label for="cf_firstname" data-i18n="form_firstname">First Name</label>
@@ -474,36 +475,34 @@
     </div>
   </footer>
 
+  <!-- ═══ BOOKING MODAL (Custom) ═══ -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <!-- Header -->
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Booking body -->
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
   <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="contact-form.js"></script>
   <script defer src="booking-modal.js"></script>
   <script defer src="auth-modal.js"></script>
 
   <script>
   (() => {
-    // ── Form submit ────────────────────────────────────────────────
-    const form = document.getElementById('contactForm');
-    const successBox = document.getElementById('formSuccess');
-    const submitBtn = document.getElementById('formSubmitBtn');
-    const btnText = document.getElementById('formBtnText');
-
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = form.cf_email.value.trim();
-        const message = form.cf_message.value.trim();
-        if (!email || !message) return;
-
-        submitBtn.disabled = true;
-        const l = (() => { try { return localStorage.getItem('svs_lang') || 'en'; } catch { return 'en'; } })();
-        btnText.textContent = l === 'ru' ? 'Отправка...' : l === 'el' ? 'Αποστολή...' : 'Sending...';
-
-        // Simulate send (replace with real endpoint if needed)
-        await new Promise(r => setTimeout(r, 800));
-
-        form.style.display = 'none';
-        successBox.classList.add('visible');
-      });
-    }
+    // Form submit: handled by contact-form.js (Netlify Forms)
 
     // ── Header auth ────────────────────────────────────────────────
     function updateHeaderAuth() {

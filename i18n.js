@@ -188,6 +188,11 @@ const SVS_TRANSLATIONS = {
     err_invalid_email:   'Please enter a valid email address.',
     err_invalid_phone:   'Please enter a valid phone number.',
     err_password_length: 'Password must be at least 6 characters.',
+    acc_register_success: 'Account created! Welcome to Soul Vibe Space.',
+    err_register_failed: 'Registration failed. Please try again or write to us on WhatsApp.',
+    err_network:         'No connection to the server. Check your internet and try again.',
+    err_reg_exists:      'This email is already in our system. Try signing in on the Sign In tab, or write to us and we will help.',
+    err_reg_phone_mismatch: 'You are already in our studio records. Enter the phone number the studio has on file and we will link this email to your existing card — or sign in with your existing password.',
     err_password_mismatch: 'Passwords do not match.',
     acc_label_password_confirm: 'Confirm Password',
     acc_ph_password_confirm:    'Repeat your password',
@@ -398,6 +403,11 @@ const SVS_TRANSLATIONS = {
     err_invalid_email:   'Пожалуйста, введите корректный email.',
     err_invalid_phone:   'Пожалуйста, введите корректный номер телефона.',
     err_password_length: 'Пароль должен содержать не менее 6 символов.',
+    acc_register_success: 'Аккаунт создан! Добро пожаловать в Soul Vibe Space.',
+    err_register_failed: 'Не удалось зарегистрироваться. Попробуйте ещё раз или напишите нам в WhatsApp.',
+    err_network:         'Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.',
+    err_reg_exists:      'Этот email уже есть в нашей системе. Попробуйте войти на вкладке «Вход» или напишите нам — поможем.',
+    err_reg_phone_mismatch: 'Вы уже есть в базе студии. Введите телефон, который указан у нас в карточке, — и мы свяжем этот email с вашей карточкой. Или войдите со своим паролем.',
     err_password_mismatch: 'Пароли не совпадают.',
     acc_label_password_confirm: 'Подтвердите пароль',
     acc_ph_password_confirm:    'Повторите пароль',
@@ -608,6 +618,11 @@ const SVS_TRANSLATIONS = {
     err_invalid_email:   'Παρακαλώ εισάγετε έγκυρη διεύθυνση email.',
     err_invalid_phone:   'Παρακαλώ εισάγετε έγκυρο αριθμό τηλεφώνου.',
     err_password_length: 'Ο κωδικός πρέπει να έχει τουλάχιστον 6 χαρακτήρες.',
+    acc_register_success: 'Ο λογαριασμός δημιουργήθηκε! Καλώς ήρθατε στο Soul Vibe Space.',
+    err_register_failed: 'Η εγγραφή απέτυχε. Δοκιμάστε ξανά ή γράψτε μας στο WhatsApp.',
+    err_network:         'Δεν υπάρχει σύνδεση με τον διακομιστή. Ελέγξτε το internet και δοκιμάστε ξανά.',
+    err_reg_exists:      'Αυτό το email υπάρχει ήδη στο σύστημά μας. Δοκιμάστε σύνδεση στην καρτέλα «Σύνδεση» ή γράψτε μας.',
+    err_reg_phone_mismatch: 'Βρίσκεστε ήδη στα αρχεία του στούντιο. Συμπληρώστε το τηλέφωνο που έχουμε καταγεγραμμένο και θα συνδέσουμε αυτό το email με την καρτέλα σας.',
     err_password_mismatch: 'Οι κωδικοί δεν ταιριάζουν.',
     acc_label_password_confirm: 'Επιβεβαίωση κωδικού',
     acc_ph_password_confirm:    'Επαναλάβετε τον κωδικό',
@@ -725,6 +740,35 @@ const SVS_I18N = (function() {
 // scripts (account.js, classes.html, schedule.html), silently forcing the
 // English fallback regardless of the selected language.
 window.SVS_I18N = SVS_I18N;
+
+// Shared registration helpers for /account, the sign-in modal and the booking
+// modal, so all three forms validate the same way and show translated errors.
+window.SVS_REG = {
+  validate: function (d) {
+    var t = SVS_I18N.t;
+    if (!d.name || !d.email || !d.phone || !d.password) return t('err_fill_required');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return t('err_invalid_email');
+    if (String(d.phone).replace(/\D/g, '').length < 8) return t('err_invalid_phone');
+    if (String(d.password).length < 6) return t('err_password_length');
+    return '';
+  },
+  // Maps an API error (or a network failure) to a translated message.
+  serverError: function (data, networkError) {
+    var t = SVS_I18N.t;
+    if (networkError) return t('err_network');
+    data = data || {};
+    if (data.code === 'exists') return t('err_reg_exists');
+    if (data.code === 'exists_phone_mismatch') return t('err_reg_phone_mismatch');
+    if (data.code === 'terms_required') return t('err_terms_required');
+    if (data.code === 'password') return t('err_password_length');
+    var e = String(data.error || '');
+    if (/phone/i.test(e)) return t('err_invalid_phone');
+    if (/email address/i.test(e)) return t('err_invalid_email');
+    if (/at least 6/i.test(e)) return t('err_password_length');
+    if (/required/i.test(e)) return t('err_fill_required');
+    return t('err_register_failed');
+  }
+};
 
 // (auto-init moved to end of file)
 

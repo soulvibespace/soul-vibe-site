@@ -436,7 +436,7 @@ collections:
               - { label: "Source ID (from booking platform)", name: id, widget: string }
               - { label: "Reviewer name", name: name, widget: string }
               - { label: "Rating (1-5)", name: rating, widget: number, value_type: int, min: 1, max: 5 }
-              - { label: "Date", name: date, widget: date, format: "YYYY-MM-DD" }
+              - { label: "Date", name: date, widget: datetime, type: date, format: "YYYY-MM-DD", time_format: false }
               - label: Subject
                 name: subject
                 widget: object

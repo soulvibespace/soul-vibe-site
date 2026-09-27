@@ -784,38 +784,127 @@
   </footer>
 
   <!-- Auth modal -->
+  <!-- ═══ AUTH MODAL ═══ -->
   <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
     <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
-    <div class="booking-modal-panel" style="max-width:420px">
+    <div class="booking-modal-panel auth-modal-panel">
       <div class="booking-modal-header">
-        <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        </div>
         <button class="booking-modal-close" id="authModalClose" aria-label="Close">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <div class="auth-modal-body">
-        <div class="auth-tabs">
+        <!-- Tabs -->
+        <div class="auth-tabs" role="tablist" id="authTabs">
           <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
           <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
         </div>
-        <div id="authModalError" class="auth-error" style="display:none"></div>
-        <div id="authModalSuccess" class="auth-success" style="display:none"></div>
-        <form id="loginForm" class="auth-form" onsubmit="AuthModal.login(event)">
-          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authLoginEmail" required autocomplete="email"/></div>
-          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authLoginPassword" required autocomplete="current-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
-          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_login">Sign In</button>
+
+        <!-- Google -->
+        <div class="google-signin-wrap">
+          <div id="svsGoogleConfig" data-client_id="201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com"></div>
+          <div class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="continue_with"
+            data-size="large"
+            data-logo_alignment="left"
+            data-width="360">
+          </div>
+          <div class="auth-divider"><span data-i18n="auth_or">or</span></div>
+        </div>
+
+        <!-- Messages -->
+        <div class="auth-error" id="authModalError" role="alert"></div>
+        <div class="auth-success" id="authModalSuccess" role="status"></div>
+
+        <!-- Login form -->
+        <form class="auth-form" id="authLoginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authLoginEmail">Email</label>
+            <input class="form-input" type="email" id="authLoginEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authLoginPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authLoginPassword" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="authLoginBtn" data-i18n="acc_tab_login">Sign In</button>
         </form>
-        <form id="registerForm" class="auth-form" style="display:none" onsubmit="AuthModal.register(event)">
-          <div class="form-group"><label data-i18n="acc_name">Full Name</label><input type="text" id="authRegName" required autocomplete="name"/></div>
-          <div class="form-group"><label data-i18n="acc_email">Email</label><input type="email" id="authRegEmail" required autocomplete="email"/></div>
-          <div class="form-group pw-group"><label data-i18n="acc_password">Password</label><div class="pw-wrap"><input type="password" id="authRegPassword" required autocomplete="new-password"/><button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
-          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="acc_tab_register">Create Account</button>
+
+        <!-- Register form -->
+        <form class="auth-form" id="authRegisterForm" style="display:none" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authRegName" data-i18n="auth_name">Full Name</label>
+            <input class="form-input" type="text" id="authRegName" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegEmail">Email</label>
+            <input class="form-input" type="email" id="authRegEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPhone" data-i18n="auth_phone">Phone</label>
+            <input class="form-input" type="tel" id="authRegPhone" placeholder="+357 ..." autocomplete="tel" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authRegPassword" placeholder="Create a password" autocomplete="new-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Consent checkboxes -->
+          <div class="auth-consent">
+            <label class="auth-consent-label">
+              <input type="checkbox" id="authRegTerms" class="auth-checkbox" required />
+              <span data-i18n="consent_terms" data-i18n-html="true">I have read and agree to the <a class="auth-consent-link" href="/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a> and acknowledge the <a class="auth-consent-link" href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>. <span class="req">*</span></span>
+            </label>
+            <label class="auth-consent-label">
+              <input type="checkbox" id="authRegNewsletter" class="auth-checkbox" />
+              <span data-i18n="consent_newsletter">I agree to receive news, offers and updates from Soul Vibe Space by email.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-auth" id="authRegBtn" data-i18n="acc_tab_register">Create Account</button>
         </form>
       </div>
     </div>
   </div>
 
+  <!-- ═══ BOOKING MODAL (Custom) ═══ -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <!-- Header -->
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Booking body -->
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
   <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="booking-modal.js"></script>
   <script defer src="auth-modal.js"></script>
   <script src="/cookie-banner.js" defer></script>
 
@@ -836,7 +925,7 @@
         const token = localStorage.getItem('svs_token');
         const label = document.getElementById('headerAccountLabel');
         if (token && label) {
-          const payload = JSON.parse(atob(token.split('.')[1]));
+          const payload = JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
           if (payload && payload.exp * 1000 > Date.now() && payload.name) {
             label.removeAttribute('data-i18n');
             label.textContent = payload.name.split(' ')[0];

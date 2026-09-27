@@ -80,24 +80,7 @@
     sections.forEach(s => observer.observe(s));
   }
 
-  // ── CONTACT FORM (prevent default, show success) ──────────────────
-  const contactForm = document.querySelector('.contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = contactForm.querySelector('button[type="submit"]');
-      const original = btn.textContent;
-      btn.textContent = 'Message sent ✓';
-      btn.disabled = true;
-      btn.style.background = '#437a22';
-      contactForm.reset();
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.disabled = false;
-        btn.style.background = '';
-      }, 4000);
-    });
-  }
+  // Contact form: handled by contact-form.js (Netlify Forms)
 
   // ── SCROLL REVEAL ────────────────────────────────────────────────
   const revealEls = document.querySelectorAll('.practice-card, .feature-item, .space-feature, .contact-item');

@@ -460,7 +460,9 @@
         </div>
       </div>
 
-      <form class="contact-form" name="contact" aria-label="Contact form">
+      <form class="contact-form" name="contact-home" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-contact-form aria-label="Contact form" novalidate>
+        <input type="hidden" name="form-name" value="contact-home" />
+        <p hidden><label>Leave empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
         <h3 class="form-title" data-i18n="form_title">Send us a message</h3>
         <div class="form-row">
           <div class="form-group">
@@ -684,6 +686,7 @@
   <script src="i18n.js"></script>
   <script src="services-filter.js"></script>
   <script defer src="app.js"></script>
+  <script defer src="contact-form.js"></script>
   <script defer src="booking-modal.js"></script>
   <script>
     // Auto-open booking modal if redirected from Google Sign-In

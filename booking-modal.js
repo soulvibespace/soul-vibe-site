@@ -197,7 +197,7 @@ const BookingModal = (() => {
 
   // Wording for the wake-up wait, in the language the page is showing.
   function _loadingText(which) {
-    const lang = (document.documentElement.getAttribute('data-lang') || 'en').slice(0, 2);
+    const lang = (document.documentElement.lang || 'en').slice(0, 2);
     const copy = {
       en: { primary: 'Loading available classes\u2026', slow: 'First load of the day takes a little longer \u2014 please stay on this screen.' },
       ru: { primary: '\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043c \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u044b\u0435 \u043a\u043b\u0430\u0441\u0441\u044b\u2026', slow: '\u041f\u0435\u0440\u0432\u0430\u044f \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0437\u0430 \u0434\u0435\u043d\u044c \u0438\u0434\u0451\u0442 \u0447\u0443\u0442\u044c \u0434\u043e\u043b\u044c\u0448\u0435 \u2014 \u043f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043d\u0435 \u0437\u0430\u043a\u0440\u044b\u0432\u0430\u0439\u0442\u0435 \u044d\u0442\u043e \u043e\u043a\u043d\u043e.' },
@@ -1019,11 +1019,11 @@ const BookingModal = (() => {
           <div class="bm-ia-consent">
             <label class="bm-ia-consent-label">
               <input type="checkbox" id="bmIaTerms" required class="bm-ia-checkbox" />
-              <span>${m.terms_text} <a href="/terms.html" target="_blank" class="bm-ia-link">${m.terms_link}</a> <span class="bm-ia-required">*</span></span>
+              <span>${window.SVS_I18N ? SVS_I18N.t('consent_terms') : `${m.terms_text} <a href="/terms" target="_blank" class="bm-ia-link">${m.terms_link}</a> <span class="bm-ia-required">*</span>`}</span>
             </label>
             <label class="bm-ia-consent-label" style="margin-top:8px">
               <input type="checkbox" id="bmIaNewsletter" class="bm-ia-checkbox" />
-              <span>${m.newsletter_text}</span>
+              <span>${window.SVS_I18N ? SVS_I18N.t('consent_newsletter') : m.newsletter_text}</span>
             </label>
           </div>
           <div id="bmIaRegErr" class="bm-ia-error"></div>
@@ -1132,7 +1132,7 @@ const BookingModal = (() => {
             width: Math.min(Math.max(slot.offsetWidth || 320, 200), 400),
             // Ask Google to label its own button in the visitor's language.
             locale: document.documentElement.getAttribute('lang')
-              || document.documentElement.getAttribute('data-lang') || 'en'
+              || document.documentElement.lang || 'en'
           });
           return;
         } catch (_) {
@@ -1204,9 +1204,10 @@ const BookingModal = (() => {
     const btn        = document.getElementById('bmIaRegBtn');
     const errEl      = document.getElementById('bmIaRegErr');
 
-    if (!name || !email || !phone) { if(errEl) errEl.textContent = 'Please fill in all fields'; return; }
-    if (termsEl && !termsEl.checked) {
-      if(errEl) errEl.textContent = 'Please agree to the Terms & Conditions';
+    const vErr = window.SVS_REG ? SVS_REG.validate({ name, email, phone, password: pw }) : ((!name || !email || !phone || !pw) ? 'Please fill in all fields' : '');
+    if (vErr) { if (errEl) errEl.textContent = vErr; return; }
+    if (!termsEl || !termsEl.checked) {
+      if(errEl) errEl.textContent = (window.SVS_I18N && SVS_I18N.t('err_terms_required') !== 'err_terms_required' && SVS_I18N.t('err_terms_required')) || 'Please agree to the Terms & Conditions and Privacy Policy to continue.';
       return;
     }
 
@@ -1218,14 +1219,19 @@ const BookingModal = (() => {
       const res  = await fetch(`${API_BASE}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, password: pw, newsletter_consent, terms_accepted: true })
+        body: JSON.stringify({
+          name, email, phone, password: pw, newsletter_consent, terms_accepted: true,
+          consent_timestamp: new Date().toISOString(),
+          consent_version: (window.SVS_LEGAL_VERSION || '2026-05-24'),
+          consent_locale: (document.documentElement.lang || 'en')
+        })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(data.error || 'Registration failed'), { api: data });
       _bmOnAuthSuccess(data.token, data.client);
     } catch(err) {
-      if (errEl) errEl.textContent = err.message;
-      if (btn) { btn.disabled = false; btn.textContent = 'Create Account'; }
+      if (errEl) errEl.textContent = window.SVS_REG ? SVS_REG.serverError(err.api, !err.api) : err.message;
+      if (btn) { btn.disabled = false; btn.textContent = (window.SVS_I18N ? SVS_I18N.t('acc_btn_register') : 'Create Account'); }
     }
   }
 
