@@ -315,8 +315,203 @@ function showDashboard(client) {
   if (emailEl) emailEl.textContent = client.email || '';
 
   updateHeaderBtn(firstName);
+  loadVibes();
   loadBookings(true);
 }
+
+// ── VIBES (loyalty programme) ────────────────────────────────────────────────
+// Read-only view of the client's VIBES, served by soul-vibe-api → VIBES panel.
+// 1 regular class = 20 VIBES. Refreshes every 30 s while the tab is visible.
+var VIBES_PER_CLASS = 20;
+// i18n lookup that falls back when the key is missing (SVS_I18N.t returns the key itself).
+function vt(key, fb) { var v = t(key, fb); return (v && v !== key) ? v : fb; }
+var _vibesData = null, _vibesTimer = null, _vibesShowAll = false;
+
+function vibesLocale() {
+  var l = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+  return l === 'ru' ? 'ru-RU' : l === 'el' ? 'el-GR' : 'en-GB';
+}
+function vibesDate(iso, withTime) {
+  if (!iso) return '';
+  var d = new Date(iso.length === 16 ? iso + ':00' : iso);
+  if (isNaN(d)) return '';
+  var o = { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Nicosia' };
+  if (withTime) { o.hour = '2-digit'; o.minute = '2-digit'; }
+  return d.toLocaleString(vibesLocale(), o);
+}
+// Package code (MP4, SP2 …) is the part of the panel label before " · ".
+function vibesLotName(lot) {
+  var code = String(lot.source_label || '').split(' · ')[0].trim();
+  if (lot.source_type === 'membership' || lot.source_type === 'starter_pack') {
+    var key = lot.source_type === 'membership' ? 'vibes_multipass' : 'vibes_starter';
+    return t(key, lot.source_type === 'membership' ? 'Multi Pass' : 'Starter Pack') + (code ? ' ' + code : '');
+  }
+  return vt('vibes_src_' + lot.source_type, vt('vibes_src_bonus', 'Bonus VIBES'));
+}
+function vibesTxName(tx) {
+  var c = tx.category === 'reward_birthday' ? 'birthday' : tx.category;
+  if (tx.direction === 'debit') {
+    if (c === 'expiry') return vt('vibes_tx_expiry', 'Expired');
+    if (c === 'refund') return vt('vibes_tx_refund', 'Refund');
+    return vt('vibes_tx_visit', 'Class visit');
+  }
+  if (c === 'membership' || c === 'starter_pack') return vibesLotName({ source_type: c, source_label: tx.source_label });
+  if (c === 'deposit') return vt('vibes_tx_deposit', 'Top-up');
+  return vt('vibes_src_' + c, vt('vibes_src_bonus', 'Bonus VIBES'));
+}
+
+async function loadVibes(silent) {
+  var section = document.getElementById('vibesSection');
+  var box = document.getElementById('vibesContainer');
+  if (!section || !box) return;
+  try {
+    var data = await apiFetch('/api/me/vibes');
+    _vibesData = data;
+    section.hidden = false;
+    renderVibes();
+  } catch (err) {
+    // 503 = programme not switched on yet → keep the section hidden.
+    if (err.status === 503 && !_vibesData) { section.hidden = true; return; }
+    if (!silent || !_vibesData) {
+      section.hidden = false;
+      box.innerHTML = '<p class="vibes-note">' + escHtml(vt('vibes_unavailable', 'VIBES are temporarily unavailable. Please try again later.')) + '</p>';
+    }
+  }
+  if (!_vibesTimer) {
+    _vibesTimer = setInterval(function () { if (document.visibilityState === 'visible' && isTokenValid(getToken())) loadVibes(true); }, 30000);
+  }
+}
+
+function renderVibes() {
+  var box = document.getElementById('vibesContainer');
+  var d = _vibesData;
+  if (!box || !d) return;
+  if (!d.linked) {
+    var key = d.reason === 'verify_email' ? 'vibes_verify_email' : d.reason === 'ambiguous' ? 'vibes_ambiguous' : 'vibes_not_found';
+    var fb = d.reason === 'verify_email' ? 'To see your VIBES, sign in with Google using the email you gave the studio.'
+      : d.reason === 'ambiguous' ? 'We found more than one studio card with your email. Please contact the studio so we can link the right one.'
+      : 'You have no VIBES yet. Buy a Multi Pass or Starter Pack at the studio — your balance will appear here.';
+    if (d.reason === 'verify_email') { renderVibesVerify(); return; }
+    box.innerHTML = '<p class="vibes-note">' + escHtml(t(key, fb)) + '</p>';
+    return;
+  }
+  var bal = Number(d.balance_vibes || 0);
+  var classes = Math.floor(bal / VIBES_PER_CLASS);
+  var h = '<div class="vibes-balance"><span class="vibes-balance-num">' + bal + '</span><span class="vibes-balance-unit">VIBES</span>'
+        + '<span class="vibes-balance-hint">' + escHtml(vt('vibes_classes_left', '≈ {n} classes').replace('{n}', classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
+
+  var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
+  h += '<p class="vibes-sub">' + escHtml(vt('vibes_active', 'Active packages')) + '</p>';
+  if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active packages.')) + '</p>';
+  else {
+    h += '<ul class="vibes-list">' + active.map(function (l) {
+      var meta = l.expires_at ? vt('vibes_until', 'valid until {d}').replace('{d}', vibesDate(l.expires_at)) : vt('vibes_no_expiry', 'no expiry date');
+      return '<li class="vibes-row"><span class="vibes-row-main"><span class="vibes-row-title">' + escHtml(vibesLotName(l)) + '</span><span class="vibes-row-meta">' + escHtml(meta) + '</span></span>'
+           + '<span class="vibes-row-amount">' + l.remaining_vibes + ' / ' + l.granted_vibes + '</span></li>';
+    }).join('') + '</ul>';
+  }
+
+  var fr = (d.freezes || []).filter(function (f) { return f.status === 'active' || f.status === 'scheduled'; });
+  if (fr.length) {
+    h += '<p class="vibes-sub">' + escHtml(vt('vibes_freezes', 'Freeze')) + '</p><ul class="vibes-list">' + fr.map(function (f) {
+      return '<li class="vibes-row"><span class="vibes-row-main"><span class="vibes-row-title">' + escHtml(vibesDate(f.start_date) + ' – ' + vibesDate(f.end_date)) + '</span><span class="vibes-row-meta">'
+           + escHtml(f.status === 'active' ? vt('vibes_freeze_active', 'active now') : vt('vibes_freeze_scheduled', 'scheduled')) + '</span></span><span class="vibes-row-amount">' + f.days + ' ' + escHtml(vt('vibes_days', 'days')) + '</span></li>';
+    }).join('') + '</ul>';
+  }
+
+  var tx = d.transactions || [];
+  var lim = _vibesShowAll ? tx.length : 5;
+  h += '<p class="vibes-sub">' + escHtml(vt('vibes_history', 'History')) + '</p>';
+  if (!tx.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_history', 'No operations yet.')) + '</p>';
+  else {
+    h += '<ul class="vibes-list">' + tx.slice(0, lim).map(function (x) {
+      var plus = x.direction === 'credit';
+      return '<li class="vibes-row"><span class="vibes-row-main"><span class="vibes-row-title">' + escHtml(vibesTxName(x)) + '</span><span class="vibes-row-meta">' + escHtml(vibesDate(x.created_at, true)) + '</span></span>'
+           + '<span class="vibes-row-amount' + (plus ? ' plus' : '') + '">' + (plus ? '+' : '−') + x.amount_vibes + '</span></li>';
+    }).join('') + '</ul>';
+    if (tx.length > 5) h += '<button type="button" class="vibes-more" onclick="_vibesShowAll=!_vibesShowAll;renderVibes()">' + escHtml(_vibesShowAll ? vt('vibes_show_less', 'Show less') : vt('vibes_show_all', 'Show all')) + '</button>';
+  }
+
+  var visits = (d.visits || []).filter(function (v) { return v.status === 'attended'; }).slice(0, 5);
+  if (visits.length) {
+    var ru = window.SVS_I18N && window.SVS_I18N.getLang() === 'ru';
+    h += '<p class="vibes-sub">' + escHtml(vt('vibes_visits', 'Recent visits')) + '</p><ul class="vibes-list">' + visits.map(function (v) {
+      var title = (ru ? v.title_ru : v.title_en) || v.title_en || v.title_ru || vt('vibes_tx_visit', 'Class visit');
+      var meta = [vibesDate(v.starts_local, true), v.instructor_name].filter(Boolean).join(' · ');
+      return '<li class="vibes-row"><span class="vibes-row-main"><span class="vibes-row-title">' + escHtml(title) + '</span><span class="vibes-row-meta">' + escHtml(meta) + '</span></span></li>';
+    }).join('') + '</ul>';
+  }
+  box.innerHTML = h;
+}
+// ── Email confirmation by code (password sign-in) ─────────────────────────────
+var _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
+function renderVibesVerify() {
+  var box = document.getElementById('vibesContainer');
+  if (!box) return;
+  var email = (parseJWT(getToken()) || {}).email || '';
+  if (_ev.noMail) { box.innerHTML = '<p class="vibes-note">' + escHtml(vt('vibes_verify_email', 'To see your VIBES, sign in with Google using the email you gave the studio.')) + '</p>'; return; }
+  var h = '<p class="vibes-note">' + escHtml(vt('vibes_ev_intro', 'Confirm your email to see your VIBES. We will send a 6-digit code to {email}.').replace('{email}', email)) + '</p>';
+  if (_ev.sent) {
+    h += '<form class="vibes-ev-form" onsubmit="event.preventDefault();vibesVerifyCode()">'
+       + '<input id="vibesEvCode" class="vibes-ev-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" aria-label="' + escHtml(vt('vibes_ev_code', 'Code from the email')) + '">'
+       + '<button type="submit" class="btn btn-primary btn-sm"' + (_ev.busy ? ' disabled' : '') + '>' + escHtml(vt('vibes_ev_confirm', 'Confirm')) + '</button></form>';
+    h += '<button type="button" class="vibes-more" onclick="vibesSendCode()"' + (_ev.wait > 0 || _ev.busy ? ' disabled' : '') + '>'
+       + escHtml(_ev.wait > 0 ? vt('vibes_ev_resend_in', 'Send again in {s} s').replace('{s}', _ev.wait) : vt('vibes_ev_resend', 'Send the code again')) + '</button>';
+  } else {
+    h += '<button type="button" class="btn btn-primary btn-sm vibes-ev-send" onclick="vibesSendCode()"' + (_ev.busy ? ' disabled' : '') + '>' + escHtml(vt('vibes_ev_send', 'Send code')) + '</button>';
+  }
+  if (_ev.msg) h += '<p class="vibes-ev-msg' + (_ev.err ? ' err' : '') + '" role="status">' + escHtml(_ev.msg) + '</p>';
+  box.innerHTML = h;
+}
+function vibesEvTick(sec) {
+  _ev.wait = sec;
+  if (_ev.timer) clearInterval(_ev.timer);
+  _ev.timer = setInterval(function () {
+    _ev.wait--; if (_ev.wait <= 0) { clearInterval(_ev.timer); _ev.timer = null; }
+    if (!_vibesData || _vibesData.linked || _vibesData.reason !== 'verify_email') return;
+    if (!document.getElementById('vibesEvCode') || document.activeElement !== document.getElementById('vibesEvCode')) renderVibesVerify();
+    else { var b = document.querySelector('#vibesContainer .vibes-more'); if (b) { b.disabled = _ev.wait > 0; b.textContent = _ev.wait > 0 ? vt('vibes_ev_resend_in', 'Send again in {s} s').replace('{s}', _ev.wait) : vt('vibes_ev_resend', 'Send the code again'); } }
+  }, 1000);
+}
+async function vibesSendCode() {
+  _ev.busy = true; _ev.msg = ''; renderVibesVerify();
+  try {
+    var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+    var r = await apiFetch('/api/me/email/send-code', { method: 'POST', body: JSON.stringify({ lang: lang }) });
+    if (r.already) { if (r.token) saveToken(r.token); _ev.busy = false; loadVibes(); return; }
+    _ev.sent = true; _ev.err = false; _ev.msg = vt('vibes_ev_sent', 'Code sent. Check your inbox (and the Spam folder).');
+    vibesEvTick(r.retry_after || 60);
+  } catch (err) {
+    _ev.err = true;
+    if (err.status === 503) { _ev.noMail = true; }
+    else if (err.data && err.data.code === 'wait') { _ev.sent = true; _ev.msg = ''; _ev.err = false; vibesEvTick(err.data.retry_after || 60); }
+    else if (err.data && err.data.code === 'too_many') _ev.msg = vt('vibes_ev_too_many', 'Too many codes requested. Please try again in an hour.');
+    else _ev.msg = vt('vibes_ev_send_fail', 'Could not send the email. Please try again later.');
+  }
+  _ev.busy = false; renderVibesVerify();
+  var inp = document.getElementById('vibesEvCode'); if (inp) inp.focus();
+}
+async function vibesVerifyCode() {
+  var inp = document.getElementById('vibesEvCode');
+  var code = inp ? inp.value.replace(/\D/g, '') : '';
+  if (code.length !== 6) { _ev.err = true; _ev.msg = vt('vibes_ev_6digits', 'Enter the 6 digits from the email.'); renderVibesVerify(); return; }
+  _ev.busy = true; renderVibesVerify();
+  try {
+    var r = await apiFetch('/api/me/email/verify', { method: 'POST', body: JSON.stringify({ code: code }) });
+    if (r.token) saveToken(r.token);
+    if (_ev.timer) clearInterval(_ev.timer);
+    _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
+    _vibesData = null; loadVibes();
+    return;
+  } catch (err) {
+    _ev.err = true;
+    _ev.msg = (err.data && err.data.code === 'wrong') ? vt('vibes_ev_wrong', 'Wrong code. Please check and try again.') : vt('vibes_ev_expired', 'The code has expired. Please request a new one.');
+    if (err.data && err.data.code === 'expired') { _ev.sent = false; }
+  }
+  _ev.busy = false; renderVibesVerify();
+}
+window.addEventListener('svs:langchange', function () { renderVibes(); });
+document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && _vibesData && isTokenValid(getToken())) loadVibes(true); });
 
 function updateHeaderBtn(name) {
   const label = document.getElementById('headerAccountLabel');
@@ -538,6 +733,11 @@ function openBookingFromAccount() {
 // ── Logout ─────────────────────────────────────────────────────────────────────
 function logout() {
   clearToken();
+  _vibesData = null; _vibesShowAll = false;
+  if (_ev.timer) clearInterval(_ev.timer);
+  _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
+  if (_vibesTimer) { clearInterval(_vibesTimer); _vibesTimer = null; }
+  var vs = document.getElementById('vibesSection'); if (vs) vs.hidden = true;
   const dashEl  = document.getElementById('accDashboard');
   const authEl  = document.getElementById('accAuth');
   const rightEl = document.getElementById('accRight');
