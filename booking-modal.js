@@ -110,6 +110,8 @@ const BookingModal = (() => {
     _modal = _el('bookingModal');
     if (!_modal) return;
 
+    if (window.svsTrack) window.svsTrack('booking_modal_open', { service_id: serviceId || '' });
+
     // Reset state
     _selectedService = serviceId;
     _selectedDate = date || null;
@@ -318,6 +320,7 @@ const BookingModal = (() => {
   }
 
   async function _pickService(serviceId) {
+    if (window.svsTrack) window.svsTrack('booking_service_selected', { service_id: serviceId });
     _selectedService = serviceId;
     await _selectService(serviceId);
   }
@@ -630,6 +633,7 @@ const BookingModal = (() => {
   }
 
   function _pickDate(dateStr) {
+    if (window.svsTrack) window.svsTrack('booking_date_selected', { service_id: _selectedService || '', date: dateStr });
     _selectedDate = dateStr;
     _selectedSlot = null;
     _renderCalendar();
@@ -673,6 +677,7 @@ const BookingModal = (() => {
   }
 
   function _pickSlot(time) {
+    if (window.svsTrack) window.svsTrack('booking_slot_selected', { service_id: _selectedService || '', time: time });
     _selectedSlot = time;
     _renderSlots(_selectedDate);
   }
@@ -795,8 +800,10 @@ const BookingModal = (() => {
       if (!res.ok || !data.ok) throw new Error(data.error || 'Booking failed');
 
       _lastBooking = data.booking;
+      if (window.svsTrack) window.svsTrack('booking_success', { service_id: _selectedService || '' });
       _renderStep('success');
     } catch (err) {
+      if (window.svsTrack) window.svsTrack('booking_error', { service_id: _selectedService || '', error: (err && err.message) || 'unknown' });
       if (btn) { btn.disabled = false; btn.textContent = (document.documentElement.lang === 'ru' ? 'Подтвердить' : 'Confirm booking'); }
       if (errEl) {
         // Show human-friendly error message
@@ -883,6 +890,7 @@ const BookingModal = (() => {
   }
 
   function _goToConfirm() {
+    if (window.svsTrack) window.svsTrack('booking_reached_confirm', { service_id: _selectedService || '' });
     if (!_selectedDate || !_selectedSlot) return;
     // Check auth before showing confirm
     if (!_getToken()) {
