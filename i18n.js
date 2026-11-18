@@ -7,6 +7,15 @@
  * For aria-label: data-i18n-aria="key"
  */
 
+// Pages that do not include /theme.js in <head> still get the shared, saved
+// light/dark theme: load it from here.
+(function () {
+  if (window.SVS_THEME || document.querySelector('script[src$="theme.js"]')) return;
+  var s = document.createElement('script');
+  s.src = '/theme.js';
+  (document.head || document.documentElement).appendChild(s);
+})();
+
 const SVS_TRANSLATIONS = {
   en: {
     // ── Nav ──
@@ -1234,6 +1243,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
 Object.assign(SVS_TRANSLATIONS.en, {
   nav_pricelist:            'Extra Services',
   nav_rental:               'Venue Rental',
+  nav_rent:                 'Rental',
   pricelist_page_title:     'Extra Services & Pricing | Soul Vibe Space Limassol',
 
   rental_rooms_title:       'Rooms & Rates',
@@ -1269,6 +1279,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
 Object.assign(SVS_TRANSLATIONS.ru, {
   nav_pricelist:            'Доп. услуги',
   nav_rental:               'Аренда',
+  nav_rent:                 'Аренда',
   pricelist_page_title:     'Дополнительные услуги и цены | Soul Vibe Space Лимасол',
 
   rental_rooms_title:       'Залы и тарифы',
@@ -1303,6 +1314,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 Object.assign(SVS_TRANSLATIONS.el, {
   nav_pricelist:            'Πρόσθετες Υπηρεσίες',
   nav_rental:               'Ενοικίαση',
+  nav_rent:                 'Ενοικίαση',
   pricelist_page_title:     'Πρόσθετες Υπηρεσίες & Τιμές | Soul Vibe Space Λεμεσός',
 
   rental_rooms_title:       'Αίθουσες & Τιμές',
