@@ -6,6 +6,7 @@
   'use strict';
   var STORE_KEY = 'svs_cookie_consent';
   var LANG_KEY  = 'svs_lang';
+  var PRIVACY_COOKIES_URL = '/privacy#cookies';
 
   if (localStorage.getItem(STORE_KEY)) return; // already accepted/rejected
 
@@ -15,18 +16,21 @@
       accept: 'Accept all',
       reject: 'Reject optional',
       link: 'Learn more',
+      label: 'Cookie consent',
     },
     ru: {
       text: 'Мы используем cookie для работы бронирования и улучшения вашего опыта.',
       accept: 'Принять все',
       reject: 'Только обязательные',
       link: 'Подробнее',
+      label: 'Согласие на cookie',
     },
     el: {
       text: 'Χρησιμοποιούμε cookies για τη λειτουργία κρατήσεων και τη βελτίωση της εμπειρίας σας.',
       accept: 'Αποδοχή',
       reject: 'Μόνο απαραίτητα',
       link: 'Μάθετε περισσότερα',
+      label: 'Συναίνεση για cookies',
     },
   };
 
@@ -41,7 +45,7 @@
     var banner = document.createElement('div');
     banner.id = 'svs-cookie-banner';
     banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Cookie consent');
+    banner.setAttribute('aria-label', t.label);
     banner.style.cssText = [
       'position:fixed', 'bottom:0', 'left:0', 'right:0', 'z-index:99999',
       'background:var(--surface, #1a1a2e)', 'color:var(--text, #f0f0f0)',
@@ -54,7 +58,8 @@
 
     var msg = document.createElement('p');
     msg.style.cssText = 'margin:0;flex:1;min-width:200px';
-    msg.innerHTML = t.text + ' <a href="/contact.html" style="color:var(--accent,#9b7ab8);text-decoration:underline">' + t.link + '</a>.';
+    // "Learn more" opens the cookies section of the Privacy Policy.
+    msg.innerHTML = t.text + ' <a href="' + PRIVACY_COOKIES_URL + '" style="color:var(--accent,#9b7ab8);text-decoration:underline">' + t.link + '</a>.';
 
     var btnWrap = document.createElement('div');
     btnWrap.style.cssText = 'display:flex;gap:8px;flex-shrink:0';

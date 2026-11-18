@@ -7,6 +7,15 @@
  * For aria-label: data-i18n-aria="key"
  */
 
+// Pages that do not include /theme.js in <head> still get the shared, saved
+// light/dark theme: load it from here.
+(function () {
+  if (window.SVS_THEME || document.querySelector('script[src$="theme.js"]')) return;
+  var s = document.createElement('script');
+  s.src = '/theme.js';
+  (document.head || document.documentElement).appendChild(s);
+})();
+
 const SVS_TRANSLATIONS = {
   en: {
     // ── Nav ──

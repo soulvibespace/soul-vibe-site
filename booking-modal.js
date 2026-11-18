@@ -36,7 +36,44 @@ const BookingModal = (() => {
     el: ['Δε','Τρ','Τε','Πε','Πα','Σα','Κυ']
   };
 
+  // UI strings for the booking window (EN/RU/EL). Every visible label that is
+  // not a class name/description coming from SimplyBook lives here, so a
+  // visitor reading the site in Russian or Greek never sees English fallbacks.
+  const STR = {
+    choose_class:  { en: 'Choose a class', ru: 'Выберите занятие', el: 'Επιλέξτε μάθημα' },
+    load_failed:   { en: 'Failed to load classes. Please try again.', ru: 'Не удалось загрузить занятия. Попробуйте ещё раз.', el: 'Αποτυχία φόρτωσης μαθημάτων. Δοκιμάστε ξανά.' },
+    retry:         { en: 'Try again', ru: 'Попробовать снова', el: 'Δοκιμάστε ξανά' },
+    min:           { en: 'min', ru: 'мин', el: 'λεπτά' },
+    duration:      { en: 'Duration', ru: 'Длительность', el: 'Διάρκεια' },
+    price:         { en: 'Price', ru: 'Стоимость', el: 'Τιμή' },
+    instructor:    { en: 'Instructor', ru: 'Преподаватель', el: 'Εκπαιδευτής' },
+    read_more:     { en: 'Read more ↓', ru: 'Читать далее ↓', el: 'Διαβάστε περισσότερα ↓' },
+    show_less:     { en: 'Show less ↑', ru: 'Свернуть ↑', el: 'Λιγότερα ↑' },
+    confirm:       { en: 'Confirm booking', ru: 'Подтвердить', el: 'Επιβεβαίωση' },
+    enter_email_pw:{ en: 'Please enter email and password', ru: 'Введите email и пароль', el: 'Συμπληρώστε email και κωδικό' },
+    login_failed:  { en: 'Sign-in failed. Please check your email and password.', ru: 'Не удалось войти. Проверьте email и пароль.', el: 'Η σύνδεση απέτυχε. Ελέγξτε το email και τον κωδικό.' },
+    fill_all:      { en: 'Please fill in all fields', ru: 'Заполните все поля', el: 'Συμπληρώστε όλα τα πεδία' },
+    terms_required:{ en: 'Please agree to the Terms & Conditions and Privacy Policy to continue.', ru: 'Чтобы продолжить, примите Условия и Политику конфиденциальности.', el: 'Για να συνεχίσετε, αποδεχτείτε τους Όρους και την Πολιτική Απορρήτου.' },
+    reg_btn:       { en: 'Create Account', ru: 'Создать аккаунт', el: 'Δημιουργία' },
+    login_btn:     { en: 'Sign In', ru: 'Войти', el: 'Σύνδεση' },
+    booking_failed:{ en: '⚠️ Booking failed. Please try again or contact us.', ru: '⚠️ Не удалось забронировать. Попробуйте снова или напишите нам.', el: '⚠️ Αδύνατη η κράτηση. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας.' },
+    user:          { en: 'User', ru: 'Профиль', el: 'Χρήστης' },
+    close:         { en: 'Close', ru: 'Закрыть', el: 'Κλείσιμο' },
+    pick_date_hint:{ en: 'Pick a date on the calendar', ru: 'Выберите дату в календаре', el: 'Επιλέξτε ημέρα στο ημερολόγιο' },
+    prev_month:    { en: 'Previous month', ru: 'Предыдущий месяц', el: 'Προηγούμενος μήνας' },
+    next_month:    { en: 'Next month', ru: 'Следующий месяц', el: 'Επόμενος μήνας' },
+  };
+  function _s(key) { return _t(STR[key] || { en: key }); }
+
+  // Class name in the visitor's language when a translation exists (i18n.js
+  // keeps the RU/EL names keyed by SimplyBook id), otherwise the CRM name.
+  function _svcName(s) {
+    if (!s) return '';
+    return (typeof getSvcName === 'function') ? getSvcName(s.id, s.name) : s.name;
+  }
+
   // State
+  let _step = null;     // which screen is on display — used to re-render on language change
   let _services = null;
   let _selectedService = null;
   let _selectedDate = null;
@@ -55,7 +92,10 @@ const BookingModal = (() => {
 
   function _el(id) { return document.getElementById(id); }
 
-  function _lang() { return document.documentElement.lang || 'en'; }
+  function _lang() {
+    const l = (document.documentElement.lang || 'en').slice(0, 2);
+    return (l === 'ru' || l === 'el') ? l : 'en';
+  }
 
   function _t(dict) {
     const l = _lang();
@@ -127,6 +167,7 @@ const BookingModal = (() => {
     // Close button
     const closeBtn = _el('bookingModalClose');
     if (closeBtn) closeBtn.onclick = close;
+    _applyChromeLabels();
 
     // ESC key
     document.addEventListener('keydown', _onEsc);
@@ -168,6 +209,13 @@ const BookingModal = (() => {
     }
   }
 
+  // Accessible names of the static modal markup, in the page language.
+  function _applyChromeLabels() {
+    if (_modal) _modal.setAttribute('aria-label', _t({ en: 'Book a class', ru: 'Запись на занятие', el: 'Κράτηση μαθήματος' }));
+    const closeBtn = _el('bookingModalClose');
+    if (closeBtn) closeBtn.setAttribute('aria-label', _s('close'));
+  }
+
   function close() {
     if (!_modal) return;
     _modal.hidden = true;
@@ -183,6 +231,7 @@ const BookingModal = (() => {
   async function _renderStep(step) {
     const body = _el('bookingModalBody');
     if (!body) return;
+    _step = step;
 
     if (step === 'services') {
       await _renderServices(body);
@@ -235,13 +284,13 @@ const BookingModal = (() => {
           : rawServices;
       } catch {
         clearTimeout(hintTimer);
-        body.innerHTML = `<div class="bm-error">Failed to load classes. Please try again.</div>`;
+        body.innerHTML = `<div class="bm-error">${_s('load_failed')}</div>`;
         return;
       }
     }
     clearTimeout(hintTimer);
 
-    const lang = document.documentElement.lang || 'en';
+    const lang = _lang();
     const catLabels = {
       yoga:      { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
       spiritual: { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές' },
@@ -267,7 +316,7 @@ const BookingModal = (() => {
 
     const catOrder = ['yoga', 'spiritual', 'dance', 'events', 'other'];
     let html = `<div class="bm-services-header">
-      <h2 class="bm-title" data-i18n="book_choose_class">Choose a class</h2>
+      <h2 class="bm-title">${_s('choose_class')}</h2>
     </div>`;
 
     for (const cat of catOrder) {
@@ -277,7 +326,7 @@ const BookingModal = (() => {
         <div class="bm-category-label">${catName}</div>
         <div class="bm-services-grid">`;
       for (const s of groups[cat]) {
-        const duration = s.duration ? `${s.duration} min` : '';
+        const duration = s.duration ? `${s.duration} ${_s('min')}` : '';
         const price    = s.price > 0 ? `€${s.price.toFixed(0)}` : `€20<sup style="font-size:.65em;vertical-align:super;color:var(--color-primary,#7c5cbf)">*</sup>`;
         const imgUrl   = _svcImg(s);
         // Strip HTML + decode entities for clean display
@@ -285,21 +334,21 @@ const BookingModal = (() => {
           ? s.description.replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim()
           : '';
         const desc = rawDesc;
-        const instructor = s.instructor_name ? `<span class="bm-instructor-tag">👤 ${_esc(s.instructor_name)}</span>` : '';
+        const instructor = s.instructor_name ? `<span class="bm-instructor-tag" title="${_esc(_s('instructor'))}">👤 ${_esc(s.instructor_name)}</span>` : '';
+        const name = _svcName(s);
         html += `<div class="bm-service-card" data-id="${s.id}" onclick="BookingModal._pickService('${s.id}')">
-          ${imgUrl ? `<div class="bm-service-img-wrap"><img class="bm-service-img" src="${imgUrl}" alt="${_esc(s.name)}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
+          ${imgUrl ? `<div class="bm-service-img-wrap"><img class="bm-service-img" src="${imgUrl}" alt="${_esc(name)}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
           <div class="bm-service-info">
-            <div class="bm-service-name">${_esc(s.name)}</div>
+            <div class="bm-service-name">${_esc(name)}</div>
             ${desc ? (() => {
               const BM_LIMIT = 180;
-              const lMore = lang === 'ru' ? 'Читать далее ↓' : lang === 'el' ? 'Διαβάστε ↓' : 'Read more ↓';
-              const lLess = lang === 'ru' ? 'Свернуть ↑' : lang === 'el' ? 'Λιγότερα ↑' : 'Show less ↑';
+              const lMore = _s('read_more');
               const bmShort = desc.length > BM_LIMIT ? desc.slice(0, BM_LIMIT).trimEnd() + '…' : desc;
               const bmId = 'bmd-' + s.id;
               return desc.length > BM_LIMIT
                 ? `<div class="bm-service-desc-wrap">
                     <div class="bm-service-desc" id="${bmId}" data-full="${_esc(desc)}" data-short="${_esc(bmShort)}">${_esc(bmShort)}</div>
-                    <button class="bm-read-more-btn" onclick="(function(b){var d=document.getElementById('${bmId}');var ex=d.dataset.expanded==='1';d.textContent=ex?d.dataset.short:d.dataset.full;d.dataset.expanded=ex?'0':'1';b.textContent=ex?'${lMore}':'${lLess}';})  (this)">${lMore}</button>
+                    <button type="button" class="bm-read-more-btn" aria-expanded="false" aria-controls="${bmId}" onclick="BookingModal._toggleDesc(event, this, '${bmId}')">${lMore}</button>
                   </div>`
                 : `<div class="bm-service-desc">${_esc(desc)}</div>`;
             })() : ''}
@@ -315,6 +364,19 @@ const BookingModal = (() => {
     }
 
     body.innerHTML = html;
+  }
+
+  // «Read more» only expands/collapses the description. It sits inside the
+  // clickable class card, so the click must not bubble up and select the class.
+  function _toggleDesc(ev, btn, descId) {
+    if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+    const d = document.getElementById(descId);
+    if (!d) return;
+    const expanded = d.dataset.expanded === '1';
+    d.textContent = expanded ? d.dataset.short : d.dataset.full;
+    d.dataset.expanded = expanded ? '0' : '1';
+    btn.textContent = expanded ? _s('read_more') : _s('show_less');
+    btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   }
 
   async function _pickService(serviceId) {
@@ -336,11 +398,11 @@ const BookingModal = (() => {
   // ── Schedule (calendar + slots) ───────────────────────────────
   function _renderSchedule(body) {
     const service = _services?.find(s => String(s.id) === String(_selectedService));
-    const serviceName = service ? _esc(service.name) : '';
-    const lang = document.documentElement.lang || 'en';
+    const serviceName = service ? _esc(_svcName(service)) : '';
+    const lang = _lang();
 
     const backLabel = lang === 'ru' ? '← Назад' : lang === 'el' ? '← Πίσω' : '← Back';
-    const chooseLabel = lang === 'ru' ? 'Выбери дату' : lang === 'el' ? 'Επέλεξε ημέρα' : 'Choose a date';
+    const chooseLabel = lang === 'ru' ? 'Выберите дату' : lang === 'el' ? 'Επιλέξτε ημέρα' : 'Choose a date';
     const slotsLabel = lang === 'ru' ? 'Доступное время' : lang === 'el' ? 'Διαθέσιμες ώρες' : 'Available times';
 
     body.innerHTML = `
@@ -355,7 +417,7 @@ const BookingModal = (() => {
         </div>
         <div class="bm-slots-section">
           <div class="bm-slots-title">${slotsLabel}</div>
-          <div id="bmSlots" class="bm-slots"><div class="bm-slots-placeholder">←</div></div>
+          <div id="bmSlots" class="bm-slots"><div class="bm-slots-placeholder">${_s('pick_date_hint')}</div></div>
         </div>
       </div>`;
 
@@ -385,9 +447,9 @@ const BookingModal = (() => {
     if (startDow < 0) startDow = 6;
 
     let html = `<div class="bm-cal-nav">
-      <button class="bm-cal-prev" onclick="BookingModal._prevMonth()">‹</button>
+      <button class="bm-cal-prev" onclick="BookingModal._prevMonth()" aria-label="${_s('prev_month')}">‹</button>
       <div class="bm-cal-month">${mNames[month]} ${year}</div>
-      <button class="bm-cal-next" onclick="BookingModal._nextMonth()">›</button>
+      <button class="bm-cal-next" onclick="BookingModal._nextMonth()" aria-label="${_s('next_month')}">›</button>
     </div>
     <div class="bm-cal-grid">`;
 
@@ -574,7 +636,7 @@ const BookingModal = (() => {
         const mIn  = (MONTH_NAMES_IN[lang] || MONTH_NAMES_IN.en)[_currentMonth.getMonth()];
         slotEl.innerHTML = `<div class="bm-slots-empty">${_t({
           ru: `Расписание на ${mIn} ещё не опубликовано. Вернитесь к ближайшим месяцам стрелкой ‹.`,
-          el: `Το πρόγραμμα για Τον ${mIn} δεν έχει δημοσιευθεί ακόμα. Γυρίστε πίσω με το ‹.`,
+          el: `Το πρόγραμμα για τον ${mIn} δεν έχει δημοσιευθεί ακόμα. Γυρίστε πίσω με το ‹.`,
           en: `The schedule for ${mIn} hasn\u2019t been published yet. Use ‹ to go back to the nearest months.`
         })}</div>`;
         return;
@@ -596,7 +658,7 @@ const BookingModal = (() => {
       const mIn    = (MONTH_NAMES_IN[lang] || MONTH_NAMES_IN.en)[first.getMonth()];
       const msg    = _t({
         ru: `В этом месяце занятий нет. Ближайшие — в ${mIn}.`,
-        el: `Δεν υπάρχουν μαθήματα αυτόν τον μήνα. Τα επόμενα — Τον ${mIn}.`,
+        el: `Δεν υπάρχουν μαθήματα αυτόν τον μήνα. Τα επόμενα — τον ${mIn}.`,
         en: `No classes this month. The next ones are in ${mIn}.`
       });
       const go = _t({ ru: 'Показать →', el: 'Εμφάνιση →', en: 'Show →' });
@@ -606,9 +668,9 @@ const BookingModal = (() => {
     }
 
     slotEl.innerHTML = `<div class="bm-slots-placeholder">${_t({
-      ru: 'Выбери дату в календаре',
-      el: 'Επέλεξε ημέρα',
-      en: 'Pick a date'
+      ru: 'Выберите дату в календаре',
+      el: 'Επιλέξτε ημέρα στο ημερολόγιο',
+      en: 'Pick a date on the calendar'
     })}</div>`;
   }
 
@@ -641,7 +703,7 @@ const BookingModal = (() => {
     if (!slotEl) return;
 
     const times = _slots[dateStr] || [];
-    const lang  = document.documentElement.lang || 'en';
+    const lang  = _lang();
 
     if (times.length === 0) {
       slotEl.innerHTML = `<div class="bm-slots-empty">${lang === 'ru' ? 'Нет свободного времени' : lang === 'el' ? 'Δεν υπάρχουν θέσεις' : 'No slots available'}</div>`;
@@ -696,7 +758,7 @@ const BookingModal = (() => {
   // ── Confirm step ──────────────────────────────────────────────
   function _renderConfirm(body) {
     const service = _services?.find(s => String(s.id) === String(_selectedService));
-    const lang    = document.documentElement.lang || 'en';
+    const lang    = _lang();
     const locale  = lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB';
 
     const d = new Date(_selectedDate + 'T00:00:00');
@@ -721,7 +783,7 @@ const BookingModal = (() => {
       <div class="bm-confirm-card">
         <div class="bm-confirm-row">
           <span class="bm-confirm-label">${L('class')}</span>
-          <span class="bm-confirm-value">${_esc(service?.name || '')}</span>
+          <span class="bm-confirm-value">${_esc(_svcName(service))}</span>
         </div>
         <div class="bm-confirm-row">
           <span class="bm-confirm-label">${L('date')}</span>
@@ -732,11 +794,11 @@ const BookingModal = (() => {
           <span class="bm-confirm-value">${timeStr}</span>
         </div>
         ${service?.duration ? `<div class="bm-confirm-row">
-          <span class="bm-confirm-label">Duration</span>
-          <span class="bm-confirm-value">${service.duration} min</span>
+          <span class="bm-confirm-label">${_s('duration')}</span>
+          <span class="bm-confirm-value">${service.duration} ${_s('min')}</span>
         </div>` : ''}
         ${service?.price > 0 ? `<div class="bm-confirm-row">
-          <span class="bm-confirm-label">Price</span>
+          <span class="bm-confirm-label">${_s('price')}</span>
           <span class="bm-confirm-value">€${service.price.toFixed(0)}</span>
         </div>` : ''}
       </div>
@@ -797,18 +859,16 @@ const BookingModal = (() => {
       _lastBooking = data.booking;
       _renderStep('success');
     } catch (err) {
-      if (btn) { btn.disabled = false; btn.textContent = (document.documentElement.lang === 'ru' ? 'Подтвердить' : 'Confirm booking'); }
+      if (btn) { btn.disabled = false; btn.textContent = _s('confirm'); }
       if (errEl) {
         // Show human-friendly error message
         const rawMsg = err.message || 'Booking failed';
-        const lang = document.documentElement.lang || 'en';
         let friendlyMsg = rawMsg;
-        if (rawMsg.toLowerCase().includes('unexpected') || rawMsg.toLowerCase().includes('error')) {
-          friendlyMsg = lang === 'ru'
-            ? '⚠️ Не удалось забронировать. Попробуйте снова или напишите нам.'
-            : lang === 'el'
-            ? '⚠️ Αδύνατη η κράτηση. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας.'
-            : '⚠️ Booking failed. Please try again or contact us.';
+        // Messages from the booking backend are English-only; show the
+        // translated generic text unless the page itself is in English.
+        if (_lang() !== 'en' || rawMsg === 'Booking failed'
+            || rawMsg.toLowerCase().includes('unexpected') || rawMsg.toLowerCase().includes('error')) {
+          friendlyMsg = _s('booking_failed');
         }
         errEl.textContent = friendlyMsg;
         errEl.style.display = '';
@@ -823,7 +883,7 @@ const BookingModal = (() => {
   let _lastBooking = null;
 
   function _renderSuccess(body) {
-    const lang = document.documentElement.lang || 'en';
+    const lang = _lang();
     const labels = {
       title:   { en: 'Booking confirmed!', ru: 'Бронирование подтверждено!', el: 'Η κράτηση επιβεβαιώθηκε!' },
       sub:     { en: 'See you at Soul Vibe Space', ru: 'Ждём вас в Soul Vibe Space', el: 'Σας περιμένουμε' },
@@ -842,7 +902,7 @@ const BookingModal = (() => {
       <div class="bm-success">
         <div class="bm-success-icon">✓</div>
         <h2 class="bm-success-title">${L('title')}</h2>
-        <div class="bm-success-detail">${_esc(service?.name || '')}</div>
+        <div class="bm-success-detail">${_esc(_svcName(service))}</div>
         <div class="bm-success-detail">${dateStr} · ${timeStr}</div>
         <p class="bm-success-sub">${L('sub')}</p>
         <div class="bm-success-actions">
@@ -867,9 +927,14 @@ const BookingModal = (() => {
     _renderStep('services');
   }
 
+  // Going back to the calendar (from the confirm step or from the sign-in
+  // gate) keeps the chosen date and time highlighted, so the visitor can just
+  // press Continue again instead of picking everything from scratch.
   function _goToSchedule() {
-    _selectedDate = null;
-    _selectedSlot = null;
+    if (_selectedDate) {
+      const d = new Date(_selectedDate + 'T00:00:00');
+      if (!isNaN(d)) _currentMonth = new Date(d.getFullYear(), d.getMonth(), 1);
+    }
     _renderStep('schedule');
   }
 
@@ -900,7 +965,8 @@ const BookingModal = (() => {
   async function _renderAuthGate(defaultTab) {
     const body = _el('bookingModalBody');
     if (!body) return;
-    const lang = document.documentElement.lang || 'en';
+    _step = 'auth';
+    const lang = _lang();
     const tab  = defaultTab || 'login';
 
     const L = {
@@ -1176,7 +1242,7 @@ const BookingModal = (() => {
     const pw    = document.getElementById('bmIaPassword')?.value;
     const btn   = document.getElementById('bmIaLoginBtn');
     const errEl = document.getElementById('bmIaLoginErr');
-    if (!email || !pw) { if(errEl) errEl.textContent = 'Please enter email and password'; return; }
+    if (!email || !pw) { if(errEl) errEl.textContent = _s('enter_email_pw'); return; }
     if (btn) { btn.disabled = true; btn.textContent = '...'; }
     if (errEl) errEl.textContent = '';
     try {
@@ -1189,8 +1255,10 @@ const BookingModal = (() => {
       if (!res.ok) throw new Error(data.error || 'Login failed');
       _bmOnAuthSuccess(data.token, data.client);
     } catch(err) {
-      if (errEl) errEl.textContent = err.message;
-      if (btn) { btn.disabled = false; btn.textContent = 'Sign In'; }
+      // The API answers in English only — show it as-is on the English site,
+      // a translated equivalent otherwise.
+      if (errEl) errEl.textContent = (_lang() === 'en' && err.message) ? err.message : _s('login_failed');
+      if (btn) { btn.disabled = false; btn.textContent = _s('login_btn'); }
     }
   }
 
@@ -1204,10 +1272,10 @@ const BookingModal = (() => {
     const btn        = document.getElementById('bmIaRegBtn');
     const errEl      = document.getElementById('bmIaRegErr');
 
-    const vErr = window.SVS_REG ? SVS_REG.validate({ name, email, phone, password: pw }) : ((!name || !email || !phone || !pw) ? 'Please fill in all fields' : '');
+    const vErr = window.SVS_REG ? SVS_REG.validate({ name, email, phone, password: pw }) : ((!name || !email || !phone || !pw) ? _s('fill_all') : '');
     if (vErr) { if (errEl) errEl.textContent = vErr; return; }
     if (!termsEl || !termsEl.checked) {
-      if(errEl) errEl.textContent = (window.SVS_I18N && SVS_I18N.t('err_terms_required') !== 'err_terms_required' && SVS_I18N.t('err_terms_required')) || 'Please agree to the Terms & Conditions and Privacy Policy to continue.';
+      if(errEl) errEl.textContent = (window.SVS_I18N && SVS_I18N.t('err_terms_required') !== 'err_terms_required' && SVS_I18N.t('err_terms_required')) || _s('terms_required');
       return;
     }
 
@@ -1231,7 +1299,7 @@ const BookingModal = (() => {
       _bmOnAuthSuccess(data.token, data.client);
     } catch(err) {
       if (errEl) errEl.textContent = window.SVS_REG ? SVS_REG.serverError(err.api, !err.api) : err.message;
-      if (btn) { btn.disabled = false; btn.textContent = (window.SVS_I18N ? SVS_I18N.t('acc_btn_register') : 'Create Account'); }
+      if (btn) { btn.disabled = false; btn.textContent = (window.SVS_I18N && SVS_I18N.t('acc_btn_register') !== 'acc_btn_register' ? SVS_I18N.t('acc_btn_register') : _s('reg_btn')); }
     }
   }
 
@@ -1256,7 +1324,7 @@ const BookingModal = (() => {
     try { window['local'+'Storage'].setItem('svs_token', token); } catch(_) {}
     // Update header button
     if (typeof _updateHeaderBtn === 'function') {
-      const firstName = (client?.name || '').split(' ')[0] || 'User';
+      const firstName = (client?.name || '').split(' ')[0] || _s('user');
       _updateHeaderBtn(firstName, true);
     }
     // Clear pending booking from storage (we already have state)
@@ -1278,6 +1346,23 @@ const BookingModal = (() => {
     } else {
       _renderStep('services');
     }
+  }
+
+  // Re-render the current screen in the new language without losing state.
+  function _rerender() {
+    _applyChromeLabels();
+    if (_step === 'auth') {
+      const regVisible = !!document.getElementById('bmIaRegForm')
+        && !document.getElementById('bmIaRegForm').classList.contains('bm-ia-hidden');
+      _renderAuthGate(regVisible ? 'register' : 'login');
+      return;
+    }
+    if (_step === 'schedule') {
+      const body = _el('bookingModalBody');
+      if (body) { _step = 'schedule'; _renderSchedule(body); }
+      return;
+    }
+    if (_step) _renderStep(_step);
   }
 
   // ── Helpers ───────────────────────────────────────────────────
@@ -1326,9 +1411,16 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn,
-           _savePendingForRedirect: _savePendingBooking };
+  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn,
+           _savePendingForRedirect: _savePendingBooking, _rerender };
 })();
+
+// Re-draw the open booking window when the visitor switches language, so
+// labels never stay in the previous language. Selections are kept.
+window.addEventListener('svs:langchange', () => {
+  const m = document.getElementById('bookingModal');
+  if (m && !m.hidden && typeof BookingModal._rerender === 'function') BookingModal._rerender();
+});
 
 // Expose as ClassModal alias for backward compatibility
 window.ClassModal = { open: (serviceId, date, time) => BookingModal.open(serviceId, date || null, time || null) };
