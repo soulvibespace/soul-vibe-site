@@ -24,8 +24,7 @@
   <style>
 /* ── Page layout ── */
     .pricing-page {
-      padding: 100px 0 80px;
-      min-height: 100vh;
+      padding: var(--page-pt) 0 var(--page-pb);
     }
 
     /* ── Page header ── */
@@ -72,7 +71,7 @@
     .pricing-divider {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 56px 0;
+      margin: var(--block-gap) 0;
     }
 
     /* ── Events note ── */
@@ -80,7 +79,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 32px 40px;
+      padding: 24px 32px;
       display: flex;
       align-items: flex-start;
       gap: 24px;
@@ -187,7 +186,7 @@
     }
     .rental-cta-img-wrap { width: 100%; height: 100%; min-height: 240px; overflow: hidden; }
     .rental-cta-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .rental-cta-body { padding: 32px 40px; display: flex; align-items: flex-start; gap: 24px; }
+    .rental-cta-body { padding: 24px 32px; display: flex; align-items: flex-start; gap: 24px; }
     .rental-cta-body h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
     .rental-cta-body p { font-size: .95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
 
@@ -209,6 +208,19 @@
       .room-grid { grid-template-columns: 1fr; }
       .setup-grid { grid-template-columns: 1fr; }
       .rental-gallery { grid-template-columns: 1fr 1fr; }
+    }
+    /* ── Compact vertical rhythm (#79) ── */
+    .room-card-img-wrap { aspect-ratio: 1 / 1; }
+    .room-card-body { padding: 16px 20px 20px; gap: 10px; }
+    .rental-subhead-sub { margin-bottom: 20px; }
+    .rental-gallery { margin-top: 24px; }
+    .rental-gallery-item { aspect-ratio: 1 / 1; }
+    .note-box { margin-top: 24px; }
+    @media (max-width: 540px) {
+      .room-card-img-wrap { aspect-ratio: 16 / 10; }
+      .room-grid, .setup-grid { gap: 12px; }
+      .rental-gallery { gap: 10px; }
+      .rental-cta-img-wrap { min-height: 160px; }
     }
   </style>
 </head>
@@ -587,7 +599,7 @@
         const addonCol = (arr) => arr.map(i => `<li>${rtr(i)}</li>`).join('');
 
         root.innerHTML = `
-          <div style="margin-bottom: 56px;">
+          <div style="margin-bottom: var(--block-gap);">
             ${rtr(d.meta.eyebrow) ? `<p class="page-eyebrow">${rtr(d.meta.eyebrow)}</p>` : ''}
             <h1 class="page-title">${rtr(d.meta.title)}</h1>
             <p class="page-lead">${rtr(d.meta.lead)}</p>

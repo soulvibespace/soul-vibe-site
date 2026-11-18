@@ -29,7 +29,7 @@
 
   <style>
     /* ── Page layout ── */
-    .classes-page { padding: 100px 0 80px; min-height: 100vh; }
+    .classes-page { padding: var(--page-pt) 0 var(--page-pb); }
     .classes-page .page-eyebrow {
       font-family: var(--font-sans);
       font-size: 11px;
@@ -50,7 +50,7 @@
     .classes-page .page-subtitle {
       font-size: 1rem;
       color: var(--text-secondary);
-      margin-bottom: 40px;
+      margin-bottom: var(--head-gap);
       max-width: 540px;
     }
 
@@ -60,7 +60,7 @@
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 40px;
+      margin-bottom: var(--head-gap);
     }
     .cat-pill {
       padding: 7px 18px;
@@ -89,7 +89,7 @@
     .classes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 28px;
+      gap: 20px;
     }
 
     /* ── Class card ── */
@@ -108,14 +108,14 @@
     }
     .class-card-img {
       width: 100%;
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/10;
       object-fit: cover;
       background: var(--surface-alt, #f3f0eb);
       display: block;
     }
     .class-card-img-placeholder {
       width: 100%;
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/10;
       background: linear-gradient(135deg, var(--surface-alt, #f3f0eb) 0%, var(--border) 100%);
       display: flex;
       align-items: center;
@@ -123,7 +123,7 @@
       color: var(--text-tertiary, #aaa);
     }
     .class-card-body {
-      padding: 20px 22px 22px;
+      padding: 16px 20px 18px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -197,7 +197,7 @@
     .class-card-actions {
       display: flex;
       gap: 8px;
-      padding-top: 14px;
+      padding-top: 12px;
       margin-top: auto;
     }
     .class-card-actions .btn {
@@ -211,7 +211,7 @@
     .classes-skeleton {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 28px;
+      gap: 20px;
     }
     .skel-class-card {
       background: var(--surface);
@@ -221,11 +221,11 @@
     }
     .skel-class-img {
       width: 100%;
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/10;
       background: var(--border);
       animation: skelpulse 1.5s infinite;
     }
-    .skel-class-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+    .skel-class-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
     .skel-line {
       height: 12px;
       border-radius: 6px;
@@ -241,7 +241,7 @@
     .classes-empty {
       grid-column: 1/-1;
       text-align: center;
-      padding: 64px 0;
+      padding: var(--block-gap) 0;
       color: var(--text-secondary);
       font-size: .95rem;
     }
@@ -251,7 +251,7 @@
     .classes-meta {
       font-size: .85rem;
       color: var(--text-secondary);
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
 
     /* ── Detail modal expansion (read more) ── */
@@ -275,8 +275,9 @@
     }
 
     @media (max-width: 600px) {
-      .classes-grid, .classes-skeleton { grid-template-columns: 1fr; gap: 18px; }
-      .classes-page { padding: 90px 0 60px; }
+      .classes-grid, .classes-skeleton { grid-template-columns: 1fr; gap: 14px; }
+      .class-card-img, .class-card-img-placeholder, .skel-class-img { aspect-ratio: 16/9; }
+      .classes-page { padding: var(--page-pt) 0 var(--page-pb); }
     }
   </style></head>
 <body>
