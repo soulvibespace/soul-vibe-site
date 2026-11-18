@@ -93,48 +93,7 @@
   --font-body:    'Work Sans', 'Helvetica Neue', sans-serif;
 }
 
-[data-theme='dark'] {
-  --color-bg:             #17151f;
-  --color-surface:        #1e1b29;
-  --color-surface-2:      #221f30;
-  --color-surface-offset: #26233a;
-  --color-divider:        #302d3e;
-  --color-border:         #3d3952;
-  --color-text:           #e8e4f0;
-  --color-text-muted:     #9a95a8;
-  --color-text-faint:     #5e5a6a;
-  --color-text-inverse:   #17151f;
-  --color-primary:        #9b7dd4;
-  --color-primary-hover:  #b899e8;
-  --color-primary-active: #c8adee;
-  --color-primary-light:  #29233a;
-  --color-primary-highlight: #3a2f55;
-  --color-accent:         #7a5fc7;
-  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-lg:  0 12px 36px rgba(0, 0, 0, 0.45);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-bg:             #17151f;
-    --color-surface:        #1e1b29;
-    --color-surface-2:      #221f30;
-    --color-surface-offset: #26233a;
-    --color-divider:        #302d3e;
-    --color-border:         #3d3952;
-    --color-text:           #e8e4f0;
-    --color-text-muted:     #9a95a8;
-    --color-text-faint:     #5e5a6a;
-    --color-text-inverse:   #17151f;
-    --color-primary:        #9b7dd4;
-    --color-primary-hover:  #b899e8;
-    --color-primary-active: #c8adee;
-    --color-primary-light:  #29233a;
-    --color-primary-highlight: #3a2f55;
-    --color-accent:         #7a5fc7;
-  }
-}
 
 /* ── BASE RESET ────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1145,7 +1104,6 @@ button { cursor: pointer; background: none; border: none; }
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
-[data-theme="dark"] { --skeleton: #2a2535; --surface-2: #1e1929; }
 
 /* Reveal animation */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.4s ease, transform 0.4s ease; }
@@ -1308,30 +1266,12 @@ button { cursor: pointer; background: none; border: none; }
 }
 
 /* ── CSS variable aliases for new sections ── */
-:root, [data-theme='light'] {
+:root {
   --brand:          var(--color-primary);
   --brand-dark:     #3d5a2e;
   --bg:             var(--color-bg);
   --surface:        var(--color-surface);
   --card-bg:        var(--color-surface);
-  --border:         var(--color-border);
-  --text:           var(--color-text);
-  --text-muted:     var(--color-text-muted);
-
-  /* Universal shorthand aliases used across pages */
-  --accent:         var(--color-primary);
-  --text-primary:   var(--color-text);
-  --text-secondary: var(--color-text-muted);
-  --text-tertiary:  var(--color-text-subtle, var(--color-text-muted));
-  --font-sans:      'Work Sans', sans-serif;
-  --font-serif:     'Zodiak', Georgia, serif;
-}
-[data-theme='dark'] {
-  --brand:          var(--color-primary);
-  --brand-dark:     #7dbf6a;
-  --bg:             var(--color-bg);
-  --surface:        var(--color-surface);
-  --card-bg:        var(--color-surface-2);
   --border:         var(--color-border);
   --text:           var(--color-text);
   --text-muted:     var(--color-text-muted);
@@ -2890,3 +2830,95 @@ button { cursor: pointer; background: none; border: none; }
   .reviews-preview-arrow { width: 36px; height: 36px; }
   .reviews-preview-arrow svg { width: 15px; height: 15px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHT-ONLY SITE — the theme toggle was removed. Safety net for any
+   page that still has the old button in its markup.
+   ══════════════════════════════════════════════════════════════ */
+:root { color-scheme: light; }
+[data-theme-toggle] { display: none !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE HEADER — EN/RU/EL switcher next to the account icon and
+   burger (instead of inside the burger menu). Fits 320–414px.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .header-inner { gap: var(--space-3); }
+  .header-actions { margin-left: auto; gap: 4px; }
+  .header-actions > .lang-switcher {
+    display: flex;
+    flex-shrink: 0;
+    margin-right: 2px;
+  }
+  .header-actions > .lang-switcher .lang-btn {
+    min-height: 32px;
+    min-width: 30px;
+    padding: 0 0.4rem;
+    font-size: 0.72rem;
+  }
+  /* The switcher now lives in the header, so the copy in the menu is hidden */
+  .mobile-nav .mobile-lang { display: none; }
+}
+@media (max-width: 414px) {
+  .logo-full { height: 52px; }
+}
+@media (max-width: 360px) {
+  .header-inner { gap: var(--space-2); }
+  .logo-full { height: 44px; }
+  .header-actions { gap: 0; }
+  .header-actions > .lang-switcher .lang-btn { min-width: 27px; padding: 0 0.3rem; font-size: 0.68rem; }
+  .mobile-signin-btn { min-width: 40px; }
+  .mobile-menu-btn { min-width: 40px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DESKTOP HEADER — one line in EN/RU/EL.
+   ≥1360px : full header (social icons, wider container)
+   1181–1359px : social icons hidden, tighter gaps
+   ≤1180px : burger header (same as mobile), language switcher stays
+   ══════════════════════════════════════════════════════════════ */
+.nav-link { white-space: nowrap; }
+.header-actions .btn { white-space: nowrap; }
+@media (min-width: 1181px) {
+  .header .header-inner.container { width: min(1400px, 100% - 48px); }
+  .nav { gap: clamp(14px, 1.4vw, 22px); }
+  .header-inner { gap: var(--space-5); }
+}
+@media (min-width: 1181px) and (max-width: 1359px) {
+  .header-actions > a.icon-btn { display: none; }
+  .logo-full { height: 56px; }
+}
+@media (min-width: 901px) and (max-width: 1180px) {
+  .nav { display: none; }
+  .header-actions { margin-left: auto; }
+  .header-actions > a.icon-btn,
+  .header-actions .btn-outline { display: none; }
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    margin: -11px -6px -11px 0;
+  }
+  .mobile-signin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text, #1a1a2e);
+    border-radius: 50%;
+  }
+  .mobile-nav .mobile-lang { display: none; }
+}
+
+/* Активный пункт меню (единая шапка, tools/header.html) */
+.nav-link[aria-current="page"] { color: var(--color-primary); }
+.nav-link[aria-current="page"]::after { width: 100%; }
+.mobile-nav-link[aria-current="page"] { color: var(--color-primary); font-weight: 600; }
