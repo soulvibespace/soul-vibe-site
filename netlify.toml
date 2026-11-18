@@ -3,11 +3,9 @@
   publish = "dist"
   command = "bash build.sh"
 
-# /rental was removed; its content now lives on /pricing.
-[[redirects]]
-  from = "/rental"
-  to = "/pricing#rooms"
-  status = 301
+# Studio & Space Rental lives on its own page again (rental.html → /rental).
+# Old in-page anchors (/pricing#rooms etc.) are forwarded to /rental by a small
+# script in pricing.html, because URL fragments never reach the server.
 
 # Long cache for immutable assets, short for HTML so content updates appear fast.
 [[headers]]

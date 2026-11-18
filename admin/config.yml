@@ -220,7 +220,7 @@ collections:
                   - { label: EL, name: el, widget: text }
 
   - name: rental
-    label: "Studio & Space Rental (used on /pricing)"
+    label: "Studio & Space Rental (used on /rental)"
     files:
       - name: rental
         label: "Studio & Space Rental"
