@@ -382,6 +382,7 @@ async function loadVibes(silent) {
   try {
     var data = await apiFetch('/api/me/vibes');
     _vibesData = data;
+    if (data && data.linked) await loadFreezeRequests(); else _fzReqs = null;
     section.hidden = false;
     renderVibes();
   } catch (err) {
@@ -451,6 +452,8 @@ function renderVibes() {
     }).join('') + '</ul>';
   }
 
+  h += renderFreezeBlock(d);
+
   var tx = d.transactions || [];
   var lim = _vibesShowAll ? tx.length : 5;
   h += '<p class="vibes-sub">' + escHtml(vt('vibes_history', 'History')) + '</p>';
@@ -475,6 +478,184 @@ function renderVibes() {
   }
   box.innerHTML = h;
 }
+// ── Freeze request (заявление на заморозку) ──────────────────────────────────
+// A linked client with an active package can ask the studio to freeze it.
+// Requests live in the VIBES panel; an administrator approves or rejects them.
+// Only one request can be pending at a time. If the API does not offer the
+// endpoint yet, the block simply stays hidden.
+var FZ_MAX_DAYS = 90, FZ_MAX_LEAD_DAYS = 60, FZ_COMMENT_MAX = 500;
+var _fzReqs = null, _fzNotice = '';
+var _fz = { open: false, start: '', end: '', preset: 7, reason: '', comment: '', busy: false, err: '', trigger: null };
+
+async function loadFreezeRequests() {
+  try {
+    var d = await apiFetch('/api/me/vibes/freeze-requests');
+    _fzReqs = d && d.linked ? (d.requests || []) : null;
+  } catch (e) { _fzReqs = null; }
+}
+function fzToday() {
+  // Studio date (Asia/Nicosia) as YYYY-MM-DD.
+  try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Nicosia', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+  catch (e) { return new Date().toISOString().slice(0, 10); }
+}
+function fzAdd(ymd, n) { var d = new Date(ymd + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+function fzDays(a, b) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(a) || !/^\d{4}-\d{2}-\d{2}$/.test(b)) return 0;
+  var x = Date.parse(a + 'T00:00:00Z'), y = Date.parse(b + 'T00:00:00Z');
+  return isFinite(x) && isFinite(y) && y >= x ? Math.round((y - x) / 864e5) + 1 : 0;
+}
+function fzDate(ymd) { return vibesDate(ymd ? ymd + 'T12:00:00Z' : ''); }
+function fzReason(r) { return vt('fz_reason_' + r, r === 'illness' ? 'Illness or injury' : r === 'travel' ? 'Travel' : 'Other'); }
+function fzCanRequest(d) {
+  return (d.lots || []).some(function (l) { return l.status === 'active' && l.remaining_vibes > 0 && l.expires_at; });
+}
+
+// Block inside «My VIBES»: latest request card + «Freeze package» button.
+function renderFreezeBlock(d) {
+  if (!_fzReqs) return '';
+  var pending = _fzReqs.filter(function (r) { return r.status === 'pending'; })[0];
+  var latest = _fzReqs[0];
+  var recent = latest && (latest.status === 'pending' || (latest.decided_at && Date.now() - Date.parse(latest.decided_at) < 30 * 864e5));
+  var canRequest = fzCanRequest(d);
+  if (!recent && !canRequest) return '';
+  var h = '<p class="vibes-sub">' + escHtml(vt('fz_title', 'Freeze request')) + '</p>';
+  if (recent) {
+    var st = latest.status;
+    var pill = st === 'pending' ? vt('fz_status_pending', 'Under review') : st === 'approved' ? vt('fz_status_approved', 'Approved') : vt('fz_status_rejected', 'Declined');
+    var s = st === 'approved' && latest.approved_start_date ? latest.approved_start_date : latest.start_date;
+    var e = st === 'approved' && latest.approved_end_date ? latest.approved_end_date : latest.end_date;
+    var meta = fzReason(latest.reason) + ' · ' + vt('fz_sent_on', 'sent {d}').replace('{d}', vibesDate(latest.created_at));
+    h += '<div class="fz-card fz-' + st + '"><div class="fz-card-top"><span class="fz-card-dates">' + escHtml(fzDate(s) + ' – ' + fzDate(e)) + ' · ' + fzDays(s, e) + ' ' + escHtml(vt('vibes_days', 'days')) + '</span>'
+       + '<span class="fz-pill">' + escHtml(pill) + '</span></div>'
+       + '<p class="fz-card-meta">' + escHtml(meta) + '</p>';
+    if (st === 'approved' && (latest.approved_start_date !== latest.start_date || latest.approved_end_date !== latest.end_date))
+      h += '<p class="fz-card-meta">' + escHtml(vt('fz_dates_changed', 'The studio adjusted the dates you asked for ({d}).').replace('{d}', fzDate(latest.start_date) + ' – ' + fzDate(latest.end_date))) + '</p>';
+    if (st === 'pending') h += '<p class="fz-card-note">' + escHtml(vt('fz_pending_note', 'We will email you when an administrator reviews it.')) + '</p>';
+    if (latest.admin_comment) h += '<p class="fz-card-comment"><span>' + escHtml(vt('fz_admin_comment', 'Comment from the studio')) + ':</span> ' + escHtml(latest.admin_comment) + '</p>';
+    h += '</div>';
+  }
+  if (_fzNotice) h += '<p class="vibes-ev-msg" role="status">' + escHtml(_fzNotice) + '</p>';
+  if (!pending && canRequest) h += '<button type="button" class="btn btn-outline btn-sm fz-open" onclick="openFreezeModal(this)">' + escHtml(vt('fz_open', 'Freeze package')) + '</button>';
+  return h;
+}
+
+function fzEnsureModal() {
+  var m = document.getElementById('fzModal');
+  if (m) return m;
+  m = document.createElement('div');
+  m.id = 'fzModal'; m.className = 'fz-modal'; m.hidden = true;
+  m.innerHTML = '<div class="fz-backdrop" data-fz-close></div><div class="fz-panel" role="dialog" aria-modal="true" aria-labelledby="fzTitle"><div id="fzBody"></div></div>';
+  m.addEventListener('click', function (e) { if (e.target.hasAttribute('data-fz-close')) closeFreezeModal(); });
+  m.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeFreezeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var f = m.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea,[tabindex="0"]');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  document.body.appendChild(m);
+  return m;
+}
+function openFreezeModal(trigger) {
+  var today = fzToday();
+  _fz = { open: true, start: today, end: fzAdd(today, 6), preset: 7, reason: '', comment: '', busy: false, err: '', trigger: trigger || null };
+  _fzNotice = '';
+  var m = fzEnsureModal(); m.hidden = false; document.body.classList.add('fz-lock');
+  renderFreezeModal();
+  var first = m.querySelector('.fz-chip'); if (first) first.focus();
+}
+function closeFreezeModal() {
+  var m = document.getElementById('fzModal');
+  if (!m || m.hidden || _fz.busy) return;
+  m.hidden = true; _fz.open = false; document.body.classList.remove('fz-lock');
+  var t = _fz.trigger && document.body.contains(_fz.trigger) ? _fz.trigger : document.querySelector('.fz-open');
+  if (t) t.focus();
+}
+function fzValidate() {
+  var today = fzToday(), n = fzDays(_fz.start, _fz.end);
+  if (!_fz.start || !_fz.end || !n) return vt('fz_err_dates', 'Check the dates: the end cannot be before the start.');
+  if (_fz.start < today) return vt('fz_err_past', 'The freeze cannot start in the past.');
+  if (_fz.start > fzAdd(today, FZ_MAX_LEAD_DAYS)) return vt('fz_err_far', 'The start date can be at most {n} days from today.').replace('{n}', FZ_MAX_LEAD_DAYS);
+  if (n > FZ_MAX_DAYS) return vt('fz_err_long', 'A freeze can last at most {n} days.').replace('{n}', FZ_MAX_DAYS);
+  if (!_fz.reason) return vt('fz_err_reason', 'Choose a reason.');
+  return '';
+}
+function renderFreezeModal() {
+  var body = document.getElementById('fzBody');
+  if (!body || !_fz.open) return;
+  var today = fzToday(), n = fzDays(_fz.start, _fz.end);
+  var chips = [7, 14, 30].map(function (k) {
+    return '<button type="button" class="fz-chip" aria-pressed="' + (_fz.preset === k) + '" onclick="fzPreset(' + k + ')">' + escHtml(vt('fz_preset_days', '{n} days').replace('{n}', k)) + '</button>';
+  }).join('') + '<button type="button" class="fz-chip" aria-pressed="' + (_fz.preset === 0) + '" onclick="fzPreset(0)">' + escHtml(vt('fz_preset_custom', 'Custom dates')) + '</button>';
+  var reasons = ['illness', 'travel', 'other'].map(function (r) {
+    return '<label class="fz-radio"><input type="radio" name="fzReason" value="' + r + '"' + (_fz.reason === r ? ' checked' : '') + ' onchange="fzSet(\'reason\',this.value)"><span>' + escHtml(fzReason(r)) + '</span></label>';
+  }).join('');
+  var summary = n ? vt('fz_summary', '{n} days: {from} – {to}').replace('{n}', n).replace('{from}', fzDate(_fz.start)).replace('{to}', fzDate(_fz.end)) : '';
+  body.innerHTML =
+    '<div class="fz-head"><h2 id="fzTitle" class="fz-title">' + escHtml(vt('fz_modal_title', 'Freeze your package')) + '</h2>'
+    + '<button type="button" class="fz-x" data-fz-close aria-label="' + escHtml(vt('fz_close', 'Close')) + '">&times;</button></div>'
+    + '<form class="fz-form" onsubmit="event.preventDefault();submitFreezeRequest()" novalidate>'
+    + '<fieldset class="fz-field"><legend>' + escHtml(vt('fz_period', 'Period')) + '</legend><div class="fz-chips">' + chips + '</div>'
+    + '<div class="fz-dates"><label>' + escHtml(vt('fz_start', 'Start')) + '<input type="date" id="fzStart" min="' + today + '" max="' + fzAdd(today, FZ_MAX_LEAD_DAYS) + '" value="' + _fz.start + '" onchange="fzSet(\'start\',this.value)" required></label>'
+    + '<label>' + escHtml(vt('fz_end', 'End')) + '<input type="date" id="fzEnd" min="' + (_fz.start || today) + '" value="' + _fz.end + '" onchange="fzSet(\'end\',this.value)" required></label></div>'
+    + (summary ? '<p class="fz-summary">' + escHtml(summary) + '</p>' : '') + '</fieldset>'
+    + '<fieldset class="fz-field"><legend>' + escHtml(vt('fz_reason', 'Reason')) + '</legend><div class="fz-radios">' + reasons + '</div></fieldset>'
+    + '<label class="fz-field fz-comment">' + escHtml(vt('fz_comment', 'Comment (optional)')) + '<textarea id="fzComment" rows="3" maxlength="' + FZ_COMMENT_MAX + '" oninput="_fz.comment=this.value" placeholder="' + escHtml(vt('fz_comment_ph', 'Anything the studio should know')) + '">' + escHtml(_fz.comment) + '</textarea></label>'
+    + '<ul class="fz-rules"><li>' + escHtml(vt('fz_rule_1', 'Your active packages are extended by the number of freeze days; your VIBES balance does not change.')) + '</li>'
+    + '<li>' + escHtml(vt('fz_rule_2', 'The freeze starts today at the earliest and lasts up to {n} days.').replace('{n}', FZ_MAX_DAYS)) + '</li>'
+    + '<li>' + escHtml(vt('fz_rule_3', 'An administrator reviews the request and you get the decision by email. Only one request can be under review at a time.')) + '</li></ul>'
+    + (_fz.err ? '<p class="vibes-ev-msg err" role="alert">' + escHtml(_fz.err) + '</p>' : '')
+    + '<div class="fz-actions"><button type="button" class="btn btn-outline btn-sm" data-fz-close' + (_fz.busy ? ' disabled' : '') + '>' + escHtml(vt('fz_cancel', 'Cancel')) + '</button>'
+    + '<button type="submit" class="btn btn-primary btn-sm"' + (_fz.busy ? ' disabled' : '') + '>' + escHtml(_fz.busy ? vt('fz_sending', 'Sending…') : vt('fz_submit', 'Send request')) + '</button></div>'
+    + '</form>';
+}
+function fzKeepFocus(id) { renderFreezeModal(); var el = document.getElementById(id) || document.querySelector(id); if (el) el.focus(); }
+function fzPreset(k) {
+  _fz.preset = k; _fz.err = '';
+  if (k) { if (!_fz.start || _fz.start < fzToday()) _fz.start = fzToday(); _fz.end = fzAdd(_fz.start, k - 1); renderFreezeModal(); var b = document.querySelectorAll('#fzBody .fz-chip')[[7, 14, 30].indexOf(k)]; if (b) b.focus(); }
+  else fzKeepFocus('fzStart');
+}
+function fzSet(field, value) {
+  _fz.err = '';
+  if (field === 'reason') { _fz.reason = value; fzKeepFocus('#fzBody input[value="' + value + '"]'); return; }
+  _fz[field] = value;
+  if (field === 'start' && _fz.preset && value) _fz.end = fzAdd(value, _fz.preset - 1);
+  else if (field === 'start' && _fz.end && value > _fz.end) _fz.end = value;
+  if (field === 'end') _fz.preset = [7, 14, 30].filter(function (k) { return fzDays(_fz.start, value) === k; })[0] || 0;
+  fzKeepFocus(field === 'start' ? 'fzStart' : 'fzEnd');
+}
+async function submitFreezeRequest() {
+  var c = document.getElementById('fzComment'); if (c) _fz.comment = c.value;
+  var err = fzValidate();
+  if (err) { _fz.err = err; renderFreezeModal(); return; }
+  _fz.busy = true; _fz.err = ''; renderFreezeModal();
+  try {
+    var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+    var r = await apiFetch('/api/me/vibes/freeze-requests', { method: 'POST', body: JSON.stringify({ start_date: _fz.start, end_date: _fz.end, reason: _fz.reason, comment: _fz.comment.trim(), lang: lang }) });
+    _fz.busy = false;
+    if (r && r.request) _fzReqs = [r.request].concat(_fzReqs || []);
+    closeFreezeModal();
+    _fzNotice = vt('fz_sent', 'Request sent. We have emailed you a confirmation.');
+    renderVibes();
+    loadFreezeRequests().then(renderVibes);
+    var o = document.querySelector('#vibesContainer .fz-card'); if (o) o.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  } catch (e) {
+    _fz.busy = false;
+    var code = e.data && e.data.code;
+    _fz.err = code === 'pending_exists' ? vt('fz_err_pending', 'You already have a request under review.')
+      : code === 'start_in_past' ? vt('fz_err_past', 'The freeze cannot start in the past.')
+      : code === 'too_long' ? vt('fz_err_long', 'A freeze can last at most {n} days.').replace('{n}', FZ_MAX_DAYS)
+      : code === 'start_too_far' ? vt('fz_err_far', 'The start date can be at most {n} days from today.').replace('{n}', FZ_MAX_LEAD_DAYS)
+      : code === 'invalid_dates' ? vt('fz_err_dates', 'Check the dates: the end cannot be before the start.')
+      : vt('fz_err_generic', 'Could not send the request. Please try again later.');
+    renderFreezeModal();
+    if (code === 'pending_exists') { loadFreezeRequests().then(renderVibes); }
+  }
+}
+window.addEventListener('svs:langchange', function () { renderFreezeModal(); });
+
 // ── Email confirmation by code (password sign-in) ─────────────────────────────
 var _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
 function renderVibesVerify() {
