@@ -111,6 +111,9 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      /* allow the pills row to shrink and scroll inside instead of widening the page */
+      min-width: 0;
+      max-width: 100%;
     }
     .filter-label {
       font-size: .78rem;
@@ -131,7 +134,8 @@
     }
     .filter-pills::-webkit-scrollbar { display: none; }
     @media (max-width: 480px) {
-      .filter-pills { flex-wrap: nowrap; }
+      .filter-group { flex: 1 1 100%; }
+      .filter-pills { flex-wrap: nowrap; min-width: 0; max-width: 100%; }
       .filter-pill { font-size: .72rem; padding: 4px 10px; }
     }
     .filter-pill {
