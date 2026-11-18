@@ -15,9 +15,9 @@ twitter:card, twitter:title, twitter:description, twitter:image.
 в <title> и <meta name="description"> самой страницы.
 
 TODO(домен): canonical и hreflang сейчас НЕ выводятся — soulvibespace.com ещё
-указывает на старый сайт (Squarespace). После переноса домена: сделать его
-основным в Netlify (тогда $URL в build.sh станет https://soulvibespace.com),
-поменять DEFAULT_BASE и включить CANONICAL = True.
+указывает на старый сайт (Squarespace). После переноса домена поменять
+DEFAULT_BASE на https://soulvibespace.com и включить CANONICAL = True.
+(Переменную $URL Netlify не используем: в ней уже стоит soulvibespace.com.)
 """
 import html
 import os

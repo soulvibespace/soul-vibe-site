@@ -78,8 +78,9 @@ git push origin main   # Netlify подхватит и опубликует са
 | Подвал | `tools/footer.html` (переводы — `footer_*` в `i18n.js`) | `python3 tools/footer.py` | `python3 tools/footer.py --check` |
 | OG/Twitter-теги | `<title>` и `<meta name="description">` страницы, картинка — `IMAGES` в `tools/meta.py` | `python3 tools/meta.py` | `python3 tools/meta.py --check` |
 
-`build.sh` прогоняет всё это для `dist/` при каждой сборке на Netlify. Мета-теги в `dist/`
-получают абсолютные адреса от `$URL` Netlify. `canonical`/`hreflang` пока не выводятся — домен
+`build.sh` прогоняет всё это для `dist/` при каждой сборке на Netlify. Абсолютные адреса в
+мета-тегах — от `DEFAULT_BASE` в `tools/meta.py` (сейчас https://soul-vibe-space.netlify.app)
+или от переменной `SITE_URL`. `canonical`/`hreflang` пока не выводятся — домен
 `soulvibespace.com` ещё на Squarespace (см. TODO в `tools/meta.py`).
 
 Тексты `/terms` и `/privacy`: английский — в разметке страниц, русский и греческий — в `i18n-legal.js`.
