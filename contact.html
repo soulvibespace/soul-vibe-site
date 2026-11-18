@@ -2,6 +2,8 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <!-- Saved light/dark theme, applied before first paint -->
+  <script src="/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | Soul Vibe Space</title>
   <meta name="description" content="Get in touch with Soul Vibe Space in Limassol, Cyprus. Book a class, ask a question, or find us on the map." />
@@ -251,7 +253,7 @@
         <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
         <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
         <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
-        <a class='nav-link' data-i18n='nav_space' href='/#space'>Space</a>
+        <a class='nav-link' data-i18n='nav_space' href='/space'>Space</a>
         <a href="/contact" class="nav-link nav-link--active" data-i18n="nav_contact">Contact</a>
         <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
       </nav>
@@ -295,7 +297,7 @@
       <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
       <a href="/pricing#rooms" class="mobile-nav-link" data-i18n="nav_rental">Venue Rental</a>
       <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
-      <a href="/#space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
       <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
       <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
       <!-- Mobile lang switcher -->
@@ -525,13 +527,7 @@
       });
     }
 
-    // ── Theme ──────────────────────────────────────────────────────
-    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem('svs_theme', next); } catch {}
-    });
-    try { const t = localStorage.getItem('svs_theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch {}
+    // Theme: handled by /theme.js (saved choice is shared by all pages)
 
     // ── Scroll header ──────────────────────────────────────────────
     const header = document.getElementById('header');

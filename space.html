@@ -2,6 +2,8 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <!-- Saved light/dark theme, applied before first paint -->
+  <script src="/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Our Space | Soul Vibe Space</title>
   <meta name="description" content="Explore Soul Vibe Space — yoga studio, co-working, and wellness center in Limassol, Cyprus. Gallery, amenities and facilities." />
@@ -586,12 +588,7 @@
         mobileNav.setAttribute('aria-hidden', !open);
       });
     }
-    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      try { localStorage.setItem('svs_theme', next); } catch {}
-    });
-    try { const t = localStorage.getItem('svs_theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch {}
+    // Theme: handled by /theme.js (saved choice is shared by all pages)
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => { header?.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
     document.addEventListener('DOMContentLoaded', () => {
