@@ -1602,6 +1602,31 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_rental_go:         'Ενοικίαση χώρου →',
 });
 
+// ── Footer: legal links (единый подвал, tools/footer.html) ──
+Object.assign(SVS_TRANSLATIONS.en, {
+  footer_terms:   'Terms & Conditions',
+  footer_privacy: 'Privacy Policy',
+  footer_cookies: 'Cookies',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  footer_terms:   'Условия использования',
+  footer_privacy: 'Политика конфиденциальности',
+  footer_cookies: 'Cookies',
+});
+Object.assign(SVS_TRANSLATIONS.el, {
+  footer_terms:   'Όροι & Προϋποθέσεις',
+  footer_privacy: 'Πολιτική Απορρήτου',
+  footer_cookies: 'Cookies',
+});
+
+// Extra translations registered by page-specific scripts loaded BEFORE i18n.js
+// (e.g. i18n-legal.js on /terms and /privacy): window.SVS_I18N_EXTRA = { en:{}, ru:{}, el:{} }.
+if (window.SVS_I18N_EXTRA) {
+  Object.keys(window.SVS_I18N_EXTRA).forEach(function (lang) {
+    if (SVS_TRANSLATIONS[lang]) Object.assign(SVS_TRANSLATIONS[lang], window.SVS_I18N_EXTRA[lang]);
+  });
+}
+
 // Auto-init after DOM ready — must run after all Object.assign blocks
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', SVS_I18N.init);
