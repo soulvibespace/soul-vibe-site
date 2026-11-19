@@ -45,7 +45,7 @@ const SVS_TERMS = {
     starter_line: { nom: 'Starter Pack' },
   },
   el: {
-    // TODO(владелица): подтвердить. Возможный греческий вариант — «κάρτα μαθημάτων»; пока оставляем латиницу, как бренд.
+    // Согласовано владелицей: в греческой версии — латиницей, как бренд (средний род: «το Class Pass»).
     pass:    { nom: 'Class Pass', pl: 'Class Pass' },
     starter: { nom: 'Starter Pack', pl: 'Starter Pack' },
     pass_line:    { nom: 'Class Pass' },
