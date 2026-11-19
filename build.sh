@@ -18,6 +18,7 @@ rsync -a ./ dist/ \
   --exclude 'node_modules/' \
   --exclude 'build.sh' \
   --exclude 'tools/' \
+  --exclude 'tests/' \
   --exclude 'deploy.py' \
   --exclude 'README.md' \
   --exclude 'netlify.toml' \
@@ -44,6 +45,12 @@ if command -v python3 >/dev/null 2>&1; then
   python3 tools/terms.py $STRICT
 else
   echo "ВНИМАНИЕ: python3 не найден — шапка не синхронизирована" >&2
+fi
+
+# С --check — ещё и тесты расчёта оплаты при записи (pay-plan.js), если есть node.
+if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
+  node tests/pay-plan.test.js >/dev/null || { echo "ОШИБКА: tests/pay-plan.test.js" >&2; exit 1; }
+  echo "тесты оплаты: ок"
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"

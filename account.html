@@ -981,6 +981,9 @@
   }
   .bk-toast--error { background: #c0392b; }
   .bk-toast[hidden] { display: none; }
+      .vibes-card--none { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .vibes-card--none .vibes-note { margin: 0; }
+    .vibes-cta { color: var(--color-primary, #6B4FA0); font-weight: 600; font-size: 0.9rem; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
   </style>  <link rel="stylesheet" href="/compact.css" />
 </head>
 <body>
@@ -1352,6 +1355,7 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="i18n.js"></script>
   <script src="services-filter.js"></script>
+  <script defer src="pay-plan.js"></script>
   <script defer src="booking-modal.js"></script>
   <script defer src="app.js"></script>
   <script defer src="account.js"></script>

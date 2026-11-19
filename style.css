@@ -2295,6 +2295,29 @@ a.bm-confirm-btn:hover { color: #fff; }
 }
 .bm-cal-btn:hover { background: #f3efff; }
 
+/* ── Booking: how the class will be paid (display only) ── */
+.bm-pay {
+  display: flex; flex-direction: column; gap: 4px; align-items: flex-start;
+  border: 1px solid rgba(107,79,160,0.18); border-radius: 12px; padding: 12px 14px; margin: -6px 0 16px;
+  background: #fff; text-align: left;
+}
+.bm-pay[hidden], .bm-pay:empty { display: none; }
+.bm-pay-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: #888; font-weight: 600; }
+.bm-pay-main { margin: 0; font-size: 0.92rem; line-height: 1.5; color: #1a1a1a; }
+.bm-pay-main--pass { color: #3d2a6b; }
+.bm-pay[data-kind="full"] { border-color: rgba(107,79,160,0.4); background: #f8f6ff; }
+.bm-pay[data-kind="partial"], .bm-pay[data-kind="used"], .bm-pay[data-kind="expired"] { border-color: #ecd9a8; background: #fffaf0; }
+.bm-pay-alt { margin: 4px 0 0; font-size: 0.84rem; color: #666; line-height: 1.45; }
+.bm-pay-link, .bm-pay .bm-pay-link.bm-link-btn {
+  color: var(--color-primary, #6B4FA0); font-weight: 600; font-size: 0.86rem; padding: 0; text-align: left;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.bm-pay-main .bm-pay-link { font-size: inherit; }
+.bm-pay--guest { margin: 0 0 16px; }
+.bm-pay--success { width: 100%; max-width: 420px; box-sizing: border-box; margin: 14px 0 0; }
+.bm-pay-skel { display: block; width: 70%; height: 14px; border-radius: 6px; background: linear-gradient(90deg,#f0edf7,#e6e1f2,#f0edf7); background-size: 200% 100%; animation: bmPaySkel 1.2s linear infinite; }
+@keyframes bmPaySkel { to { background-position: -200% 0; } }
+
 /* ═══════════════════════════════════════════════
    ACCOUNT PAGE — extra styles
    ═══════════════════════════════════════════════ */

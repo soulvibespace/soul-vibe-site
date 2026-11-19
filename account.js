@@ -389,6 +389,21 @@ function renderVibes() {
   var box = document.getElementById('vibesContainer');
   var d = _vibesData;
   if (!box || !d) return;
+  // The VIBES block is for clients who have (or had) a Class Pass / Starter Pack, or still hold VIBES.
+  // Everyone else sees only a link to the Class Passes — no VIBES wording at all.
+  var head = document.querySelector('#vibesSection .dash-section-head');
+  var hasVibes = d.linked && (Number(d.balance_vibes || 0) > 0 || (window.SVSPayPlan ? SVSPayPlan.hadPass(d)
+    : (d.lots || []).some(function (l) { return l.source_type === 'membership' || l.source_type === 'starter_pack'; })));
+  var pending = !d.linked && (d.reason === 'verify_email' || d.reason === 'ambiguous');
+  if (!hasVibes && !pending) {
+    if (head) head.style.display = 'none';
+    box.classList.add('vibes-card--none');
+    box.innerHTML = '<p class="vibes-note">' + escHtml(vt('vibes_none_lead', 'Classes are cheaper with a Class Pass.')) + '</p>'
+      + '<a class="vibes-cta" href="/pricing">' + escHtml(vt('vibes_see_passes', 'See Class Passes')) + ' →</a>';
+    return;
+  }
+  if (head) head.style.display = '';
+  box.classList.remove('vibes-card--none');
   if (!d.linked) {
     var key = d.reason === 'verify_email' ? 'vibes_verify_email' : d.reason === 'ambiguous' ? 'vibes_ambiguous' : 'vibes_not_found';
     var fb = d.reason === 'verify_email' ? 'To see your VIBES, sign in with Google using the email you gave the studio.'

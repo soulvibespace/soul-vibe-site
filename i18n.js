@@ -1964,6 +1964,78 @@ window.svsClassName = svsClassName;
 window.svsIsPersonName = svsIsPersonName;
 window.svsTeacherName = svsTeacherName;
 
+// ── Оплата при записи: только показ, ничего не списывается ──────────────────
+// Плейсхолдеры: {lot} — название абонемента/Стартер пака с кодом (MP8, SP2) в нужном падеже,
+// {n}/{left}/{have}/{miss} — VIBES, {d}/{c} — даты. 1 класс = 20 VIBES, 1 € = 1 VIBE.
+// Слово VIBES показываем только тем, у кого есть абонемент или Стартер пак.
+Object.assign(SVS_TRANSLATIONS.en, {
+  pay_title:        'Payment',
+  pay_guest:        'Drop-in class €20, pay at the studio',
+  pay_guest_login:  'Have a {{pass}}? Sign in to book with it',
+  pay_studio:       'Pay at the studio: €20',
+  pay_studio_hint:  'Classes are cheaper with a {{pass}}',
+  pay_full:         'Paid with {lot}: {n} VIBES will be used, {left} left{note}.',
+  pay_with_bookings:' (including your other bookings)',
+  pay_until:        'Valid until {d}.',
+  pay_or_studio:    'Prefer to pay at the studio? €20 — just tell the front desk.',
+  pay_partial:      'Your {lot} has {have} VIBES{note} — {miss} short. Pay the difference at the studio: €{miss}',
+  pay_partial_note: ' left after your other bookings',
+  pay_used:         'The VIBES on your {lot} are already reserved for your other bookings. Pay at the studio: €20',
+  pay_expired:      'Your {lot} is valid until {d}, and the class is on {c}. Pay €20 at the studio or {action}.',
+  pay_renew:        'renew your {{pass}}',
+  pay_buy:          'get a {{pass}}',
+  pay_unknown:      'Payment: with your {{pass}} or €20 at the studio',
+  pay_success_full: '{n} VIBES from your {lot} will be used at the visit.',
+  pay_bonus:        'Bonus VIBES',
+  vibes_see_passes: 'See Class Passes',
+  vibes_none_lead:  'Classes are cheaper with a {{pass}}.',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  pay_title:        'Оплата',
+  pay_guest:        'Разовое занятие €20, оплата в студии',
+  pay_guest_login:  'Есть {{pass}}? Войдите, чтобы записаться по нему',
+  pay_studio:       'Оплата в студии: €20',
+  pay_studio_hint:  'С {{pass:ins}} занятие дешевле',
+  pay_full:         'Оплата по {lot:dat}: спишется {n} VIBES, останется {left}{note}.',
+  pay_with_bookings:' — с учётом ваших записей',
+  pay_until:        'Действует до {d}.',
+  pay_or_studio:    'Оплачу в студии: €20 — просто скажите администратору.',
+  pay_partial:      'На {lot:prep} {have} VIBES{note} — не хватает {miss}. Доплата в студии: €{miss}',
+  pay_partial_note: ' с учётом ваших записей',
+  pay_used:         'VIBES на {lot:prep} уже учтены в ваших записях. Оплата в студии: €20',
+  pay_expired:      '{Lot} действует до {d}, а занятие {c}. Оплата в студии €20 или {action}.',
+  pay_renew:        'продлите {{pass:acc}}',
+  pay_buy:          'выберите {{pass:acc}}',
+  pay_unknown:      'Оплата: по {{pass:dat}} или €20 в студии',
+  pay_success_full: 'При посещении с {lot:gen} спишется {n} VIBES.',
+  pay_bonus:        'бонусные VIBES',
+  vibes_see_passes: 'Посмотреть {{pass:pl}}',
+  vibes_none_lead:  'С {{pass:ins}} занятия дешевле.',
+});
+// EL: формулировки на «εσύ», как в остальном греческом тексте сайта.
+Object.assign(SVS_TRANSLATIONS.el, {
+  pay_title:        'Πληρωμή',
+  pay_guest:        'Μεμονωμένο μάθημα €20, πληρωμή στο στούντιο',
+  pay_guest_login:  'Έχεις {{pass}}; Συνδέσου για να κλείσεις με αυτό',
+  pay_studio:       'Πληρωμή στο στούντιο: €20',
+  pay_studio_hint:  'Με {{pass}} το μάθημα κοστίζει λιγότερο',
+  pay_full:         'Πληρωμή με {lot}: θα χρησιμοποιηθούν {n} VIBES, θα μείνουν {left}{note}.',
+  pay_with_bookings:' (μαζί με τις άλλες κρατήσεις σου)',
+  pay_until:        'Ισχύει έως {d}.',
+  pay_or_studio:    'Θα πληρώσω στο στούντιο: €20 — απλώς πες το στη ρεσεψιόν.',
+  pay_partial:      'Στο {lot} έχεις {have} VIBES{note} — λείπουν {miss}. Συμπλήρωση στο στούντιο: €{miss}',
+  pay_partial_note: ' μετά τις άλλες κρατήσεις σου',
+  pay_used:         'Τα VIBES του {lot} έχουν ήδη δεσμευτεί για τις άλλες κρατήσεις σου. Πληρωμή στο στούντιο: €20',
+  pay_expired:      'Το {lot} ισχύει έως {d}, ενώ το μάθημα είναι στις {c}. Πλήρωσε €20 στο στούντιο ή {action}.',
+  pay_renew:        'ανανέωσε το {{pass}}',
+  pay_buy:          'πάρε ένα {{pass}}',
+  pay_unknown:      'Πληρωμή: με {{pass}} ή €20 στο στούντιο',
+  pay_success_full: 'Στην επίσκεψη θα χρησιμοποιηθούν {n} VIBES από το {lot}.',
+  pay_bonus:        'Bonus VIBES',
+  vibes_see_passes: 'Δες τα {{pass:pl}}',
+  vibes_none_lead:  'Με {{pass}} τα μαθήματα κοστίζουν λιγότερο.',
+});
+
 // Extra translations registered by page-specific scripts loaded BEFORE i18n.js
 // (e.g. i18n-legal.js on /terms and /privacy): window.SVS_I18N_EXTRA = { en:{}, ru:{}, el:{} }.
 if (window.SVS_I18N_EXTRA) {
