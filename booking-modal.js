@@ -248,8 +248,10 @@ const BookingModal = (() => {
       _renderSchedule(body);
     } else if (step === 'confirm') {
       _renderConfirm(body);
+      _loadPay();
     } else if (step === 'success') {
       _renderSuccess(body);
+      _paintPay('bmSuccessPay', _lastPlan, 'success');
     }
   }
 
@@ -764,6 +766,150 @@ const BookingModal = (() => {
     _loadSlotsForMonth();
   }
 
+
+  // ── Payment display (nothing is charged here) ─────────────────
+  // How the class will be paid: Class Pass / Starter Pack VIBES or at the studio.
+  // Data: /api/me/vibes + the client's future bookings; the plan itself is in pay-plan.js.
+  // The word VIBES is shown only to clients who have usable VIBES.
+  let _payCache = null;   // { at, vibes, bookings }
+  let _lastPlan = null;
+
+  async function _payData() {
+    const token = _getToken();
+    if (!token) return null;
+    if (_payCache && Date.now() - _payCache.at < 30000) return _payCache;
+    const h = { 'Authorization': `Bearer ${token}` };
+    const get = (u) => fetch(`${API_BASE}${u}`, { headers: h })
+      .then(r => r.ok ? r.json() : null).catch(() => null);
+    const [vibes, bk] = await Promise.all([get('/api/me/vibes'), get('/api/client/bookings?upcoming=true')]);
+    _payCache = { at: Date.now(), vibes, bookings: (bk && bk.bookings) || [] };
+    return _payCache;
+  }
+
+  function _payDate(iso) {
+    if (!iso) return '';
+    const lang = _lang();
+    const locale = lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB';
+    const d = new Date(String(iso).slice(0, 10) + 'T12:00:00');
+    const o = { day: 'numeric', month: 'long' };
+    if (d.getFullYear() !== new Date().getFullYear()) o.year = 'numeric';
+    return d.toLocaleDateString(locale, o);
+  }
+
+  // Lot name from the terms dictionary: «абонемент MP8» / «Стартер пак SP2» / Class Pass MP8.
+  function _lotName(lot, form) {
+    if (!lot) return '';
+    const code = String(lot.source_label || '').split(' · ')[0].trim();
+    const type = lot.source_type === 'membership' ? 'pass' : lot.source_type === 'starter_pack' ? 'starter' : null;
+    if (!type) return _k('pay_bonus', 'Bonus VIBES');
+    const lang = _lang();
+    const terms = window.SVS_TERMS || {};
+    let name;
+    if (form === 'Nom') name = (terms[lang]?.[type + '_line'] || terms.en?.[type + '_line'] || {}).nom;
+    else {
+      const e = terms[lang]?.[type] || terms.en?.[type] || {};
+      name = e[form || 'nom'] || e.nom;
+    }
+    name = name || (type === 'pass' ? 'Class Pass' : 'Starter Pack');
+    return code ? name + ' ' + code : name;
+  }
+
+  function _payFill(str, v) {
+    return String(str).replace(/\{(Lot|lot)(?::([a-z_]+))?\}|\{([a-z]+)\}/g, (m, lk, form, key) => {
+      if (lk) return _esc(_lotName(v.lot, lk === 'Lot' ? 'Nom' : (form || 'nom')));
+      return key in v ? v[key] : m;
+    });
+  }
+
+  // HTML for the payment box. `ctx` = 'confirm' | 'success' | 'guest'.
+  function _payHtml(plan, ctx) {
+    const label = `<span class="bm-pay-label">${_esc(_k('pay_title', 'Payment'))}</span>`;
+    if (ctx === 'guest') {
+      return `${label}<p class="bm-pay-main">${_esc(_k('pay_guest'))}</p>
+        <button type="button" class="bm-link-btn bm-pay-link" onclick="BookingModal._focusLogin()">${_esc(_k('pay_guest_login'))}</button>`;
+    }
+    if (!plan) return '';
+    const v = {
+      lot: plan.lot, n: Math.min(plan.covered || 0, 20), left: plan.left, have: plan.covered, miss: plan.due,
+      d: _esc(_payDate(plan.expiry)), c: _esc(_payDate(_selectedDate)),
+      note: '',
+    };
+    const pricing = (txt) => `<a class="bm-pay-link" href="/pricing">${_esc(txt)}</a>`;
+    // Bonus VIBES (e.g. a birthday gift) are the client's real balance: shown, own wording,
+    // and no "buy a Class Pass" push.
+    const bonus = !!plan.lot && plan.lot.source_type !== 'membership' && plan.lot.source_type !== 'starter_pack';
+    const K = (key) => (bonus && _k(key + '_bonus') !== key + '_bonus') ? _k(key + '_bonus') : _k(key);
+    let main = '', extra = '', tone = 'studio';
+    switch (plan.kind) {
+      case 'full':
+        tone = 'pass';
+        if (ctx === 'success') { main = _payFill(_esc(K('pay_success_full')), v); break; }
+        v.note = plan.withBookings ? _esc(_k('pay_with_bookings')) : '';
+        main = _payFill(_esc(K('pay_full')), v);
+        if (plan.expiry) main += ' ' + _payFill(_esc(_k('pay_until')), v);
+        extra = `<p class="bm-pay-alt">${_esc(_k('pay_or_studio'))}</p>`;
+        break;
+      case 'partial':
+        tone = 'warn';
+        v.note = plan.withBookings ? _esc(_k('pay_partial_note')) : '';
+        main = _payFill(_esc(K('pay_partial')), v);
+        break;
+      case 'used':
+        tone = 'warn';
+        main = _payFill(_esc(K('pay_used')), v);
+        break;
+      case 'expired': {
+        tone = 'warn';
+        const act = plan.lot && plan.lot.source_type === 'membership' ? 'pay_renew' : 'pay_buy';
+        v.action = pricing(_k(act));
+        main = _payFill(_esc(K('pay_expired')), v);
+        break;
+      }
+      case 'unknown':
+        main = _esc(_k('pay_unknown'));
+        break;
+      default: // 'none' — no VIBES: never mention them
+        main = _esc(_k('pay_studio'));
+        if (ctx !== 'success') extra = pricing(_k('pay_studio_hint'));
+    }
+    return `${label}<p class="bm-pay-main bm-pay-main--${tone}">${main}</p>${extra}`;
+  }
+
+  function _paintPay(id, plan, ctx) {
+    const box = _el(id);
+    if (!box) return;
+    const html = _payHtml(plan, ctx);
+    box.innerHTML = html;
+    box.hidden = !html;
+    box.dataset.kind = ctx === 'guest' ? 'guest' : (plan ? plan.kind : '');
+    box.classList.remove('bm-pay--loading');
+  }
+
+  async function _loadPay() {
+    const box = _el('bmPayBox');
+    if (!box) return;
+    box.classList.add('bm-pay--loading');
+    box.innerHTML = `<span class="bm-pay-label">${_esc(_k('pay_title', 'Payment'))}</span><span class="bm-pay-skel"></span>`;
+    const want = _selectedService + '|' + _selectedDate + '|' + _selectedSlot;
+    const data = await _payData();
+    if (want !== _selectedService + '|' + _selectedDate + '|' + _selectedSlot || _step !== 'confirm') return;
+    const plan = window.SVSPayPlan
+      ? SVSPayPlan.planPayment(data && data.vibes, data && data.bookings, { date: _selectedDate, time: _selectedSlot, service_id: _selectedService })
+      : null;
+    _lastPlan = plan;
+    _paintPay('bmPayBox', plan, 'confirm');
+  }
+
+  // "Have a Class Pass? Sign in…" — the sign-in form is right below; take the visitor there.
+  function _focusLogin() {
+    if (_el('bmIaLoginForm')?.classList.contains('bm-ia-hidden')) _switchAuthTab('login');
+    _showForgot(false);
+    const slot = _el('bmGoogleSlot');
+    if (slot) slot.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    const email = _el('bmIaEmail');
+    if (email) setTimeout(() => email.focus({ preventScroll: true }), 250);
+  }
+
   // ── Confirm step ──────────────────────────────────────────────
   function _renderConfirm(body) {
     const service = _services?.find(s => String(s.id) === String(_selectedService));
@@ -868,6 +1014,7 @@ const BookingModal = (() => {
       if (!res.ok || !data.ok) throw new Error(data.error || 'Booking failed');
 
       _lastBooking = data.booking;
+      _payCache = null; // the new booking changes the balance estimate
       _renderStep('success');
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = _k('bm_confirm_btn'); }
@@ -963,7 +1110,7 @@ const BookingModal = (() => {
         <h2 class="bm-success-title">${_esc(_k('bm_success_title'))}</h2>
         <div class="bm-success-detail">${_esc(_svcName(service))}</div>
         <div class="bm-success-detail">${_esc(dateStr)} · ${timeStr}</div>
-        <div id="bmSuccessPay" class="bm-pay bm-pay--success"></div>
+        <div id="bmSuccessPay" class="bm-pay bm-pay--success" hidden></div>
         <ul class="bm-success-info">
           <li><span class="bm-success-info-label">${_esc(_k('bm_address_label'))}</span>
             <span>Soul Vibe Space, ${_esc(_k('bm_address'))} · <a href="${STUDIO_MAP_URL}" target="_blank" rel="noopener">${_esc(_k('bm_map'))}</a></span></li>
@@ -1111,7 +1258,8 @@ const BookingModal = (() => {
           <span class="bm-auth-context-label">${_esc(_k('bm_booking_for'))}</span>
           <span class="bm-auth-context-name">${_esc(_svcName(ctxService))}</span>
           <span class="bm-auth-context-when">${_esc(dStr)} · ${_esc(_selectedSlot.slice(0, 5))}</span>
-        </div>`;
+        </div>
+        <div class="bm-pay bm-pay--guest" data-kind="guest">${_payHtml(null, 'guest')}</div>`;
     }
 
     body.innerHTML = `
@@ -1546,7 +1694,7 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs,
+  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs, _focusLogin,
            _savePendingForRedirect: _savePendingBooking, _rerender };
 })();
 

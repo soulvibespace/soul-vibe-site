@@ -363,6 +363,17 @@ function vibesTxName(tx) {
   return vt('vibes_src_' + c, vt('vibes_src_bonus', 'Bonus VIBES'));
 }
 
+// «≈ 1 занятие / 2 занятия / 5 занятий» — plural form for the page language (Intl.PluralRules).
+function vibesClassesLeft(n) {
+  var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+  var form = 'other';
+  try { form = new Intl.PluralRules(lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB').select(n); } catch (_) {}
+  var key = 'vibes_classes_left_' + form;
+  var s = vt(key, '');
+  if (!s || s === key) s = vt('vibes_classes_left_other', '') || vt('vibes_classes_left', '≈ {n} classes');
+  return s.replace('{n}', n);
+}
+
 async function loadVibes(silent) {
   var section = document.getElementById('vibesSection');
   var box = document.getElementById('vibesContainer');
@@ -389,6 +400,21 @@ function renderVibes() {
   var box = document.getElementById('vibesContainer');
   var d = _vibesData;
   if (!box || !d) return;
+  // The VIBES block is for clients who have (or had) a Class Pass / Starter Pack, or still hold VIBES.
+  // Everyone else sees only a link to the Class Passes — no VIBES wording at all.
+  var head = document.querySelector('#vibesSection .dash-section-head');
+  var hasVibes = d.linked && (Number(d.balance_vibes || 0) > 0 || (window.SVSPayPlan ? SVSPayPlan.hadPass(d)
+    : (d.lots || []).some(function (l) { return l.source_type === 'membership' || l.source_type === 'starter_pack'; })));
+  var pending = !d.linked && (d.reason === 'verify_email' || d.reason === 'ambiguous');
+  if (!hasVibes && !pending) {
+    if (head) head.style.display = 'none';
+    box.classList.add('vibes-card--none');
+    box.innerHTML = '<p class="vibes-note">' + escHtml(vt('vibes_none_lead', 'Classes are cheaper with a Class Pass.')) + '</p>'
+      + '<a class="vibes-cta" href="/pricing">' + escHtml(vt('vibes_see_passes', 'See Class Passes')) + ' →</a>';
+    return;
+  }
+  if (head) head.style.display = '';
+  box.classList.remove('vibes-card--none');
   if (!d.linked) {
     var key = d.reason === 'verify_email' ? 'vibes_verify_email' : d.reason === 'ambiguous' ? 'vibes_ambiguous' : 'vibes_not_found';
     var fb = d.reason === 'verify_email' ? 'To see your VIBES, sign in with Google using the email you gave the studio.'
@@ -401,10 +427,12 @@ function renderVibes() {
   var bal = Number(d.balance_vibes || 0);
   var classes = Math.floor(bal / VIBES_PER_CLASS);
   var h = '<div class="vibes-balance"><span class="vibes-balance-num">' + bal + '</span><span class="vibes-balance-unit">VIBES</span>'
-        + '<span class="vibes-balance-hint">' + escHtml(vt('vibes_classes_left', '≈ {n} classes').replace('{n}', classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
+        + '<span class="vibes-balance-hint">' + escHtml(vibesClassesLeft(classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
 
   var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
-  h += '<p class="vibes-sub">' + escHtml(vt('vibes_active', 'Active Class Passes and Starter Packs')) + '</p>';
+  // Bonus VIBES (e.g. a birthday gift) are not a Class Pass: neutral heading when there are any.
+  var anyBonus = active.some(function (l) { return l.source_type !== 'membership' && l.source_type !== 'starter_pack'; });
+  h += '<p class="vibes-sub">' + escHtml(anyBonus ? vt('vibes_active_mixed', 'Active VIBES') : vt('vibes_active', 'Active Class Passes and Starter Packs')) + '</p>';
   if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active Class Pass or Starter Pack.')) + '</p>';
   else {
     h += '<ul class="vibes-list">' + active.map(function (l) {
