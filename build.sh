@@ -3,6 +3,10 @@
 # Служебное (README, скрипт публикации, конфиг, git) на сайт не попадает.
 set -euo pipefail
 
+# bash build.sh --check — строгий режим: проверка терминологии (tools/terms.py) роняет сборку.
+STRICT=""
+for a in "$@"; do [ "$a" = "--check" ] && STRICT="--check"; done
+
 rm -rf dist
 mkdir -p dist
 
@@ -35,6 +39,9 @@ if command -v python3 >/dev/null 2>&1; then
   # soulvibespace.com, а домен ещё указывает на старый сайт.
   # TODO(домен): после переноса soulvibespace.com — см. tools/meta.py (DEFAULT_BASE, CANONICAL).
   python3 tools/meta.py dist ${SITE_URL:+--base "$SITE_URL"}
+  # Термины (абонемент / Class Pass, Стартер пак / Starter Pack): по умолчанию только
+  # предупреждения, с --check — ошибка. Словарь — SVS_TERMS в i18n.js.
+  python3 tools/terms.py $STRICT
 else
   echo "ВНИМАНИЕ: python3 не найден — шапка не синхронизирована" >&2
 fi

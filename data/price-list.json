@@ -3,9 +3,9 @@
     "eyebrow": { "en": "PROGRAMS & SERVICES", "ru": "ПРОГРАММЫ И УСЛУГИ", "el": "ΠΡΟΓΡΑΜΜΑΤΑ & ΥΠΗΡΕΣΙΕΣ" },
     "title": { "en": "Extra Services & Pricing", "ru": "Дополнительные услуги и цены", "el": "Πρόσθετες Υπηρεσίες & Τιμές" },
     "lead": {
-      "en": "Beyond regular classes — personal programs, coworking and private events. For class passes, see the Pricing page.",
-      "ru": "Помимо регулярных занятий — индивидуальные программы, коворкинг и частные события. Абонементы на занятия — на странице «Цены».",
-      "el": "Πέρα από τα κανονικά μαθήματα — προσωπικά προγράμματα, coworking και ιδιωτικές εκδηλώσεις. Για πακέτα μαθημάτων δείτε τη σελίδα Τιμές."
+      "en": "Beyond regular classes — personal programs, coworking and private events. For Class Passes and Starter Packs, see the Pricing page.",
+      "ru": "Помимо регулярных занятий — индивидуальные программы, коворкинг и частные события. Абонементы и Стартер паки — на странице «Цены».",
+      "el": "Πέρα από τα κανονικά μαθήματα — προσωπικά προγράμματα, coworking και ιδιωτικές εκδηλώσεις. Για Class Pass και Starter Pack δείτε τη σελίδα Τιμές."
     }
   },
   "personal": {
