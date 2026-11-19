@@ -35,8 +35,6 @@
 
   /* ── Page layout ── */
   .acc-page {
-    min-height: 100vh;
-    padding-top: 76px;
     background: var(--bg);
     display: flex;
     flex-direction: column;
@@ -46,7 +44,7 @@
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 76px);
+    min-height: clamp(560px, calc(100vh - 96px), 760px);
   }
 
   /* ── Left hero panel ── */
@@ -896,7 +894,6 @@
     .acc-hero { display: none; }
     .acc-right {
       padding: 1.5rem 1rem 2rem;
-      min-height: calc(100vh - 76px);
     }
     /* Slightly compact form */
     .acc-auth-title { font-size: 1.5rem; }
@@ -942,7 +939,8 @@
     text-underline-offset: 2px;
   }
   .acc-consent-link:hover { opacity: 0.75; }
-  </style></head>
+  </style>  <link rel="stylesheet" href="/compact.css" />
+</head>
 <body>
 
   <!-- ═══════════════ HEADER ═══════════════ -->
@@ -1271,5 +1269,6 @@
   <script defer src="account.js"></script>
 
 <script src="/cookie-banner.js" defer></script>
+  <script src="/compact.js" defer></script>
 </body>
 </html>

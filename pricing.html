@@ -33,8 +33,7 @@
   <style>
     /* ── Page layout ── */
     .pricing-page {
-      padding: 100px 0 80px;
-      min-height: 100vh;
+      padding: var(--page-pt) 0 var(--page-pb);
     }
 
     /* ── Page header ── */
@@ -81,7 +80,7 @@
     .pricing-divider {
       border: none;
       border-top: 1px solid var(--border);
-      margin: 56px 0;
+      margin: var(--block-gap) 0;
     }
 
     /* ── Drop-in row ── */
@@ -90,7 +89,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 32px 40px;
+      padding: 24px 32px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -252,7 +251,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 32px 40px;
+      padding: 24px 32px;
       display: flex;
       align-items: flex-start;
       gap: 24px;
@@ -428,7 +427,19 @@
       .vp-rate { padding: 18px 16px; }
       .vp-rate-value { font-size: 1.2rem; }
     }
+    /* ── Compact vertical rhythm on phones (#79) ── */
+    @media (max-width: 540px) {
+      .vp-steps { gap: 10px; }
+      .vp-step { display: grid; grid-template-columns: 32px 1fr; column-gap: 14px; padding: 16px 18px; }
+      .vp-step-num { grid-row: 1 / span 2; width: 32px; height: 32px; margin-bottom: 0; }
+      .pass-card { padding: 20px 20px; }
+      .vp-card { gap: 10px; }
+      .vp-bonus { padding: 16px 18px; gap: 14px; }
+      .vp-bonus-amt { min-width: 52px; height: 52px; font-size: 1.2rem; }
+      .vp-bonus-grid, .vp-pair { gap: 12px; }
+    }
   </style>
+  <link rel="stylesheet" href="/compact.css" />
 </head>
 <body>
 
@@ -500,7 +511,7 @@
     <div class="container">
 
       <!-- Page header -->
-      <div style="margin-bottom: 40px;">
+      <div style="margin-bottom: var(--head-gap);">
         <p class="page-eyebrow" data-i18n="pricing_eyebrow">Pricing · VIBES</p>
         <h1 class="page-title" data-i18n="pricing_h1">Classes, Packages &amp; VIBES</h1>
         <p class="page-lead" data-i18n="pricing_lead">At Soul Vibe Space you pay for classes with VIBES — our studio currency.</p>
@@ -1066,5 +1077,6 @@
     })();
   </script>
 
+  <script src="/compact.js" defer></script>
 </body>
 </html>

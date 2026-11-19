@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    .pricing-page { padding: 100px 0 80px; min-height: 100vh; }
+    .pricing-page { padding: var(--page-pt) 0 var(--page-pb); }
     .page-eyebrow {
       font-family: var(--font-sans); font-size: 11px; font-weight: 600;
       letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
@@ -39,7 +39,7 @@
       color: var(--text-primary); margin-bottom: 6px;
     }
     .pricing-section-sub { font-size: .95rem; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.6; max-width: 700px; }
-    .pricing-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+    .pricing-divider { border: none; border-top: 1px solid var(--border); margin: var(--block-gap) 0; }
     .service-label {
       font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .14em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
@@ -48,7 +48,7 @@
     /* Personal program row */
     .dropin-row {
       display: flex; align-items: center; justify-content: space-between; gap: 24px;
-      padding: 32px 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px 32px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
     }
     .dropin-left { flex: 1; }
     .dropin-name { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
@@ -86,7 +86,7 @@
     /* CTA */
     .events-note {
       background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 32px 40px; display: flex; align-items: flex-start; gap: 24px;
+      padding: 24px 32px; display: flex; align-items: flex-start; gap: 24px;
     }
     .events-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
     .events-note h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
@@ -105,6 +105,7 @@
       .event-row { flex-direction: column; align-items: flex-start; gap: 4px; }
     }
   </style>
+  <link rel="stylesheet" href="/compact.css" />
 </head>
 <body>
 
@@ -417,7 +418,7 @@
           </div>`).join('');
 
         root.innerHTML = `
-          <div style="margin-bottom: 56px;">
+          <div style="margin-bottom: var(--block-gap);">
             <p class="page-eyebrow">${tr(d.meta.eyebrow)}</p>
             <h1 class="page-title">${tr(d.meta.title)}</h1>
             <p class="page-lead">${tr(d.meta.lead)}</p>
@@ -494,5 +495,6 @@
       window.addEventListener('svs:langchange', render);
     })();
   </script>
+  <script src="/compact.js" defer></script>
 </body>
 </html>
