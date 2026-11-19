@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n-title="pricing_page_title">Pricing | Soul Vibe Space Limassol</title>
-  <meta name="description" content="Yoga class pricing in Limassol — Starter Packs for newcomers, Multi-Pass for regular practice. From €15." />
+  <meta name="description" content="Yoga class pricing in Limassol with VIBES: 1 regular class = 20 VIBES. Multi Pass from €70, one-time Starter Pack from €15, drop-in €20, top up any amount." />
   <meta property="og:title" content="Pricing | Soul Vibe Space" />
   <meta property="og:image" content="https://soulvibespace.com/images/hero.webp" />
   <meta property="og:url" content="https://soulvibespace.com/pricing" />
@@ -20,6 +20,15 @@
 
   <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script>
+    /* Rental moved to /rental: keep old links like /rental working. */
+    (function () {
+      var h = (location.hash || '').toLowerCase();
+      if (['#rooms', '#rental', '#rentalsection', '#pricing-rental', '#venue-rental'].indexOf(h) !== -1) {
+        location.replace('/rental' + (h === '#rooms' ? '#rooms' : ''));
+      }
+    })();
+  </script>
 
   <style>
     /* ── Page layout ── */
@@ -279,119 +288,108 @@
       color: var(--text-primary);
     }
 
-    /* ── Rental: section sub-headings ── */
-    .rental-subhead {
-      font-family: var(--font-serif);
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 6px;
+    /* ── VIBES: rate strip ── */
+    .vp-rates {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
     }
-    .rental-subhead-sub {
-      font-size: .92rem;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      line-height: 1.6;
+    .vp-rate { padding: 22px 24px; border-left: 1px solid var(--border); }
+    .vp-rate:first-child { border-left: none; }
+    .vp-rate-label {
+      font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;
     }
+    .vp-rate-value { font-family: var(--font-serif); font-size: 1.45rem; color: var(--text-primary); line-height: 1.15; }
+    .vp-rate-value em { font-style: normal; color: var(--accent); }
 
-    /* ── Rental: rooms & rates ── */
-    .room-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .room-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      padding: 0; display: flex; flex-direction: column; overflow: hidden;
-      transition: border-color .2s, box-shadow .2s;
+    /* ── VIBES: steps ── */
+    .vp-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: vpstep; }
+    .vp-step {
+      position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px 22px;
     }
-    .room-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
-    .room-card-img-wrap { width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: color-mix(in srgb, var(--accent) 6%, transparent); }
-    .room-card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
-    .room-card:hover .room-card-img { transform: scale(1.05); }
-    .room-card-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-    .room-size { font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-secondary); }
-    .room-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 400; color: var(--text-primary); }
-    .room-price { font-family: var(--font-serif); font-size: 2rem; font-weight: 400; color: var(--accent); line-height: 1; }
-    .room-price span { font-family: var(--font-sans); font-size: .78rem; font-weight: 500; color: var(--text-secondary); margin-left: 4px; }
-    .room-meta { font-size: .8rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 3px; }
-    .room-desc { font-size: .87rem; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+    .vp-step-num {
+      width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);
+      font-family: var(--font-serif); font-size: 1.05rem; margin-bottom: 14px;
+    }
+    .vp-step-title { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.35; }
+    .vp-step-desc { font-size: .88rem; color: var(--text-secondary); line-height: 1.6; }
+    .vp-step-desc a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
-    /* ── Rental: setup cards ── */
-    .setup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .setup-icon {
-      width: 44px; height: 44px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 12%, transparent);
-      color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+    /* ── VIBES: package cards ── */
+    .vp-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    .vp-card { gap: 14px; position: relative; }
+    .vp-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 22px; }
+    .vp-code {
+      font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      color: var(--text-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px;
     }
-    .setup-name { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
-    .setup-guests { font-size: .78rem; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
-    .setup-desc { font-size: .88rem; color: var(--text-secondary); line-height: 1.55; }
+    .vp-vibes { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 400; color: var(--text-primary); line-height: 1; }
+    .vp-vibes span { font-family: var(--font-sans); font-size: .78rem; font-weight: 600; letter-spacing: .08em; color: var(--accent); margin-left: 6px; }
+    .vp-eq { font-size: .85rem; color: var(--text-secondary); margin-top: 6px; }
+    .vp-price-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .vp-price-row .pass-price { line-height: 1; }
 
-    /* ── Rental: event moments gallery ── */
-    .rental-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
-    .rental-gallery-item { border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--surface); }
-    .rental-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
-    .rental-gallery-item:hover img { transform: scale(1.05); }
+    /* ── VIBES: top-up + drop-in pair ── */
+    .vp-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .vp-pair .dropin-row { padding: 28px 32px; height: 100%; flex-direction: column; align-items: stretch; gap: 20px; }
+    .vp-pair .dropin-right { justify-content: space-between; }
+    .vp-unit { font-family: var(--font-sans); font-size: 1.1rem; color: var(--text-secondary); margin-left: 6px; }
 
-    /* ── Rental: included checklist ── */
-    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-    .check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .92rem; color: var(--text-primary); line-height: 1.5; }
-    .check-list li svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+    /* ── VIBES: payment note ── */
+    .vp-pay {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 24px;
+      padding: 20px 24px; border-radius: 12px; border-left: 3px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+    }
+    .vp-pay-title { font-family: var(--font-sans); font-weight: 600; font-size: .95rem; color: var(--text-primary); margin-bottom: 4px; }
+    .vp-pay-text { font-size: .88rem; color: var(--text-secondary); line-height: 1.6; }
+    .vp-pay-actions { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
 
-    /* ── Rental: add-ons ── */
-    .addon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .addon-col h4 {
-      font-family: var(--font-sans); font-size: .78rem; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 12px;
+    /* ── VIBES: bonuses ── */
+    .vp-bonus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vp-bonus {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+      display: flex; gap: 18px; align-items: flex-start;
     }
-    .addon-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-    .addon-col li { font-size: .9rem; color: var(--text-primary); position: relative; padding-left: 14px; }
-    .addon-col li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+    .vp-bonus-amt {
+      flex-shrink: 0; min-width: 64px; height: 64px; border-radius: 50%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent); font-family: var(--font-serif); font-size: 1.45rem; line-height: 1;
+    }
+    .vp-bonus-amt small { font-family: var(--font-sans); font-size: .55rem; font-weight: 700; letter-spacing: .12em; margin-top: 3px; }
+    .vp-bonus-title { font-family: var(--font-sans); font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 4px; }
+    .vp-bonus-desc { font-size: .88rem; color: var(--text-secondary); line-height: 1.55; }
 
-    .note-box {
-      margin-top: 32px; padding: 16px 20px; background: var(--surface); border-radius: 10px;
-      font-size: .85rem; color: var(--text-secondary); line-height: 1.6; border-left: 3px solid var(--accent);
+    /* ── Rental plaque ── */
+    .vp-rental {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 24px 32px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface);
+      text-decoration: none; color: inherit; transition: border-color .2s, box-shadow .2s;
     }
+    .vp-rental:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+    .vp-rental-title { font-family: var(--font-serif); font-size: 1.3rem; color: var(--text-primary); margin-bottom: 4px; }
+    .vp-rental-desc { font-size: .9rem; color: var(--text-secondary); line-height: 1.55; }
+    .vp-rental-go { flex-shrink: 0; font-family: var(--font-sans); font-weight: 600; font-size: .9rem; color: var(--accent); white-space: nowrap; }
 
-    /* ── Rental: closing CTA with image ── */
-    .rental-cta {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-      display: grid; grid-template-columns: 260px 1fr; align-items: stretch; overflow: hidden;
+    /* ── FAQ ── */
+    .vp-faq { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+    .vp-faq details { border-bottom: 1px solid var(--border); }
+    .vp-faq summary {
+      list-style: none; cursor: pointer; padding: 18px 40px 18px 0; position: relative;
+      font-family: var(--font-sans); font-weight: 600; font-size: 1rem; color: var(--text-primary); line-height: 1.45;
     }
-    .rental-cta-img-wrap { width: 100%; height: 100%; min-height: 240px; overflow: hidden; }
-    .rental-cta-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .rental-cta-body { padding: 32px 40px; display: flex; align-items: flex-start; gap: 24px; }
-    .rental-cta-body h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 8px; }
-    .rental-cta-body p { font-size: .95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
+    .vp-faq summary::-webkit-details-marker { display: none; }
+    .vp-faq summary::after {
+      content: '+'; position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-sans); font-weight: 400; font-size: 1.5rem; color: var(--accent); transition: transform .2s;
+    }
+    .vp-faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+    .vp-faq-a { padding: 0 40px 20px 0; font-size: .93rem; color: var(--text-secondary); line-height: 1.7; max-width: 760px; }
+    .vp-faq-a a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
-    .rlist-skeleton { padding: 24px 0; color: var(--text-secondary); font-size: .9rem; }
-
-    /* ── How it works ── */
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      margin-top: 32px;
-    }
-    .how-step { }
-    .how-num {
-      font-family: var(--font-serif);
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--accent);
-      opacity: .55;
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-    .how-title {
-      font-family: var(--font-sans);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-    .how-desc {
-      font-size: .9rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
+    /* ── Note under FAQ ── */
     .how-note {
       margin-top: 32px;
       padding: 16px 20px;
@@ -404,30 +402,31 @@
     }
 
     /* ── Responsive ── */
+    @media (max-width: 1080px) {
+      .vp-steps { grid-template-columns: 1fr 1fr; }
+      .vp-rates { grid-template-columns: 1fr 1fr; }
+      .vp-rate:nth-child(3) { border-left: none; }
+      .vp-rate:nth-child(n+3) { border-top: 1px solid var(--border); }
+    }
     @media (max-width: 900px) {
       .pass-grid--3 { grid-template-columns: 1fr 1fr; }
       .pass-grid--4 { grid-template-columns: 1fr 1fr; }
-      .how-grid { grid-template-columns: 1fr; gap: 24px; }
       .dropin-row { flex-direction: column; align-items: flex-start; gap: 20px; }
       .dropin-right { width: 100%; justify-content: space-between; }
       .events-note { flex-direction: column; gap: 16px; padding: 24px; }
-      .room-grid { grid-template-columns: 1fr 1fr; }
-      .setup-grid { grid-template-columns: 1fr 1fr; }
-      .rental-gallery { grid-template-columns: 1fr 1fr; }
-      .check-grid { grid-template-columns: 1fr; gap: 24px; }
-      .addon-grid { grid-template-columns: 1fr; gap: 24px; }
-      .rental-cta { grid-template-columns: 1fr; }
-      .rental-cta-img-wrap { min-height: 200px; }
-      .rental-cta-body { flex-direction: column; gap: 16px; padding: 24px; }
+      .vp-pair { grid-template-columns: 1fr; }
+      .vp-bonus-grid { grid-template-columns: 1fr; }
+      .vp-pay { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .vp-rental { flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px; }
     }
     @media (max-width: 540px) {
       .pass-grid--3 { grid-template-columns: 1fr; }
       .pass-grid--4 { grid-template-columns: 1fr; }
-      .dropin-row { padding: 24px; }
+      .vp-steps { grid-template-columns: 1fr; }
+      .dropin-row, .vp-pair .dropin-row { padding: 24px; }
       .price-big { font-size: 2.5rem; }
-      .room-grid { grid-template-columns: 1fr; }
-      .setup-grid { grid-template-columns: 1fr; }
-      .rental-gallery { grid-template-columns: 1fr 1fr; }
+      .vp-rate { padding: 18px 16px; }
+      .vp-rate-value { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -435,19 +434,22 @@
 
   <!-- ═══ HEADER ═══ -->
   <header class="header" id="header">
+    <!-- Единая шапка: источник tools/header.html, вставляется tools/header.py. Не правьте вручную на страницах. -->
     <div class="header-inner container">
       <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
-        <img src="images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+        <img src="/images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
       </a>
+
       <nav class="nav" aria-label="Main navigation">
-        <a href="/" class="nav-link" data-i18n="nav_home">Home</a>
         <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
-        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
         <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
-        <a href="/pricing" class="nav-link nav-link--active" data-i18n="nav_pricing">Pricing</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a aria-current="page" href="/pricing" class="nav-link nav-link--active" data-i18n="nav_pricing">Pricing</a>
         <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
+        <a href="/rental" class="nav-link" data-i18n="nav_rent">Rental</a>
         <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
       </nav>
+
       <div class="header-actions">
         <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
@@ -463,14 +465,11 @@
           <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
           <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
         </div>
-        <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
         <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
         </a>
-        <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        </button>
         <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         </button>
@@ -479,26 +478,20 @@
         </button>
       </div>
     </div>
+
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <a href="/" class="mobile-nav-link" data-i18n="nav_home">Home</a>
       <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
-      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
       <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
-      <a href="/pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a>
-      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
-      <a href="/pricing#rooms" class="mobile-nav-link" data-i18n="nav_rental">Venue Rental</a>
-      <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a aria-current="page" href="/pricing" class="mobile-nav-link active" data-i18n="nav_pricing">Pricing</a>
       <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental</a>
       <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
+      <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
       <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
-      <!-- Mobile lang switcher -->
-      <div class="mobile-lang">
-        <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" title="English">EN</button>
-        <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" title="Русский">RU</button>
-        <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" title="Ελληνικά">EL</button>
-      </div>
-      <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link" target="_blank">Instagram</a>
-      <a href="https://www.tiktok.com/@soul.vibe.space.y" class="mobile-nav-link" target="_blank">TikTok</a>
+      <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@soul.vibe.space.y" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">TikTok</a>
     </div>
   </header>
 
@@ -507,161 +500,263 @@
     <div class="container">
 
       <!-- Page header -->
-      <div style="margin-bottom: 56px;">
-        <p class="page-eyebrow" data-i18n="pricing_eyebrow">Passes & Pricing</p>
-        <h1 class="page-title" data-i18n="pricing_h1">Classes & Passes</h1>
-        <p class="page-lead" data-i18n="pricing_lead">Choose the option that fits your rhythm — from a single class to a monthly practice.</p>
+      <div style="margin-bottom: 40px;">
+        <p class="page-eyebrow" data-i18n="pricing_eyebrow">Pricing · VIBES</p>
+        <h1 class="page-title" data-i18n="pricing_h1">Classes, Packages &amp; VIBES</h1>
+        <p class="page-lead" data-i18n="pricing_lead">At Soul Vibe Space you pay for classes with VIBES — our studio currency.</p>
       </div>
 
-      <!-- ── 1. SINGLE CLASS ── -->
-      <div class="dropin-row">
-        <div class="dropin-left">
-          <p class="dropin-label" data-i18n="pricing_drop_label">Drop-in</p>
-          <p class="dropin-name" data-i18n="pricing_drop_name">Single Class</p>
-          <p class="dropin-desc" data-i18n="pricing_drop_desc">Any class, any day. No commitment needed.</p>
+      <!-- ── VIBES at a glance ── -->
+      <div class="vp-rates">
+        <div class="vp-rate">
+          <p class="vp-rate-label" data-i18n="pv_rate_regular">Regular class</p>
+          <p class="vp-rate-value"><em>20</em> VIBES</p>
         </div>
-        <div class="dropin-right">
-          <p class="price-big"><sup>€</sup>20</p>
-          <a href="/schedule" class="btn btn-primary" data-i18n="btn_view_schedule">View Schedule</a>
+        <div class="vp-rate">
+          <p class="vp-rate-label" data-i18n="pv_rate_special">Special class</p>
+          <p class="vp-rate-value" data-i18n="pv_rate_special_val">Own price in VIBES</p>
+        </div>
+        <div class="vp-rate">
+          <p class="vp-rate-label" data-i18n="pv_rate_topup">Top-up</p>
+          <p class="vp-rate-value"><em>€1</em> = 1 VIBE</p>
+        </div>
+        <div class="vp-rate">
+          <p class="vp-rate-label" data-i18n="pv_rate_dropin">Drop-in, no package</p>
+          <p class="vp-rate-value"><em>€20</em></p>
         </div>
       </div>
 
       <hr class="pricing-divider">
 
-      <!-- ── 2. STARTER PACK ── -->
-      <div style="margin-bottom: 32px;">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px;">
-          <h2 class="pricing-section-title" data-i18n="pricing_starter_title">Starter Pack</h2>
-          <span class="pass-badge pass-badge--new" data-i18n="pricing_starter_badge">New students only</span>
+      <!-- ── HOW VIBES WORK ── -->
+      <section id="how-vibes" aria-labelledby="pvHowTitle">
+        <h2 class="pricing-section-title" id="pvHowTitle" data-i18n="pv_how_title">How VIBES Work</h2>
+        <p class="pricing-section-sub" data-i18n="pv_how_sub">Four simple steps — from your first package to your next class.</p>
+        <div class="vp-steps">
+          <div class="vp-step">
+            <p class="vp-step-num">1</p>
+            <p class="vp-step-title" data-i18n="pv_how1_title">Choose a package or top up</p>
+            <p class="vp-step-desc" data-i18n="pv_how1_desc">Pick a Multi Pass or a Starter Pack — or top up any amount, €1 = 1 VIBE. Pay at the studio; the administrator confirms the payment.</p>
+          </div>
+          <div class="vp-step">
+            <p class="vp-step-num">2</p>
+            <p class="vp-step-title" data-i18n="pv_how2_title">VIBES land on your balance</p>
+            <p class="vp-step-desc" data-i18n="pv_how2_desc">Your balance and the full history of credits and visits are always in your <a href="/account">personal account</a>.</p>
+          </div>
+          <div class="vp-step">
+            <p class="vp-step-num">3</p>
+            <p class="vp-step-title" data-i18n="pv_how3_title">Come to class</p>
+            <p class="vp-step-desc" data-i18n="pv_how3_desc">Each visit is paid in VIBES: a regular class is 20 VIBES, a special class has its own price in VIBES.</p>
+          </div>
+          <div class="vp-step">
+            <p class="vp-step-num">4</p>
+            <p class="vp-step-title" data-i18n="pv_how4_title">Validity starts with your first visit</p>
+            <p class="vp-step-desc" data-i18n="pv_how4_desc">The package period starts from your first visit, not from the purchase date. With several packages, VIBES are used from the earliest one first.</p>
+          </div>
         </div>
-        <p class="pricing-section-sub" data-i18n="pricing_starter_sub">One-time offer for your first classes at Soul Vibe Space.</p>
-      </div>
-      <div class="pass-grid pass-grid--3">
+      </section>
 
-        <!-- 1 class -->
-        <div class="pass-card">
+      <hr class="pricing-divider">
+
+      <!-- ── MULTI PASS ── -->
+      <section id="multi-pass" aria-labelledby="pvMpTitle">
+        <div class="vp-head">
+          <h2 class="pricing-section-title" id="pvMpTitle" data-i18n="pv_mp_title">Multi Pass</h2>
+        </div>
+        <p class="pricing-section-sub" data-i18n="pv_mp_sub">For a regular practice. The bigger the package, the lower the price per class.</p>
+        <div class="pass-grid pass-grid--4">
+        <div class="pass-card vp-card">
+          <div class="vp-card-top"><span class="vp-code">MP4</span></div>
           <div>
-            <p class="pass-classes">1 <span data-i18n="pricing_class_word">class</span></p>
+            <p class="vp-vibes">80<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_4">= 4 regular classes</p>
           </div>
           <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_30">30 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
+            <p class="pass-price"><sup>€</sup>70</p>
+            <p class="pass-per-class" data-i18n="pricing_m4_saving">€17.50 / class</p>
+          </div>
+        </div>
+        <div class="pass-card vp-card pass-card--featured">
+          <div class="vp-card-top"><span class="vp-code">MP8</span><span class="pass-badge" data-i18n="pv_badge_popular">Popular</span></div>
+          <div>
+            <p class="vp-vibes">160<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_8">= 8 regular classes</p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_60">60 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
+            <p class="pass-price"><sup>€</sup>130</p>
+            <p class="pass-per-class" data-i18n="pricing_m8_saving">€16.25 / class</p>
+          </div>
+        </div>
+        <div class="pass-card vp-card">
+          <div class="vp-card-top"><span class="vp-code">MP12</span></div>
+          <div>
+            <p class="vp-vibes">240<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_12">= 12 regular classes</p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_90">90 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
+            <p class="pass-price"><sup>€</sup>190</p>
+            <p class="pass-per-class" data-i18n="pricing_m12_saving">€15.83 / class</p>
+          </div>
+        </div>
+        <div class="pass-card vp-card pass-card--featured">
+          <div class="vp-card-top"><span class="vp-code">MP20</span><span class="pass-badge" data-i18n="pricing_multi_badge">Best value</span></div>
+          <div>
+            <p class="vp-vibes">400<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_20">= 20 regular classes</p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_120">120 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
+            <p class="pass-price"><sup>€</sup>300</p>
+            <p class="pass-per-class" data-i18n="pricing_m20_saving">€15 / class</p>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <hr class="pricing-divider">
+
+      <!-- ── STARTER PACK ── -->
+      <section id="starter-pack" aria-labelledby="pvSpTitle">
+        <div class="vp-head">
+          <h2 class="pricing-section-title" id="pvSpTitle" data-i18n="pv_sp_title">Starter Pack</h2>
+          <span class="pass-badge pass-badge--new" data-i18n="pv_sp_badge">One time only</span>
+        </div>
+        <p class="pricing-section-sub" data-i18n="pv_sp_sub">A gentle start for your first classes. A Starter Pack can be purchased only once — choose one of the three options.</p>
+        <div class="pass-grid pass-grid--3">
+        <div class="pass-card vp-card">
+          <div class="vp-card-top"><span class="vp-code">SP1</span></div>
+          <div>
+            <p class="vp-vibes">20<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_1">= 1 regular classes</p>
+          </div>
+          <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_30">30 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>15</p>
             <p class="pass-per-class" data-i18n="pricing_s1_saving">Save €5 vs drop-in</p>
           </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
         </div>
-
-        <!-- 2 classes -->
-        <div class="pass-card pass-card--featured">
+        <div class="pass-card vp-card pass-card--featured">
+          <div class="vp-card-top"><span class="vp-code">SP2</span></div>
           <div>
-            <p class="pass-classes">2 <span data-i18n="pricing_classes_word">classes</span></p>
+            <p class="vp-vibes">40<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_2">= 2 regular classes</p>
           </div>
           <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_30">30 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>20</p>
             <p class="pass-per-class" data-i18n="pricing_s2_saving">Save €20 vs drop-in</p>
           </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
         </div>
-
-        <!-- 4 classes -->
-        <div class="pass-card">
+        <div class="pass-card vp-card">
+          <div class="vp-card-top"><span class="vp-code">SP4</span></div>
           <div>
-            <p class="pass-classes">4 <span data-i18n="pricing_classes_word">classes</span></p>
+            <p class="vp-vibes">80<span>VIBES</span></p>
+            <p class="vp-eq" data-i18n="pv_eq_4">= 4 regular classes</p>
           </div>
           <div class="pass-meta">
+            <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span data-i18n="pv_valid_30">30 days from your first visit</span></p>
+          </div>
+          <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>40</p>
             <p class="pass-per-class" data-i18n="pricing_s4_saving">Save €40 vs drop-in</p>
           </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
         </div>
+        </div>
+      </section>
 
+      <hr class="pricing-divider">
+
+      <!-- ── TOP-UP + DROP-IN ── -->
+      <section id="topup-dropin" class="vp-pair">
+        <div class="dropin-row">
+          <div class="dropin-left">
+            <p class="dropin-label" data-i18n="pv_topup_label">Top-up</p>
+            <p class="dropin-name" data-i18n="pv_topup_name">Any amount</p>
+            <p class="dropin-desc" data-i18n="pv_topup_desc">Add exactly as many VIBES as you need — any amount, at the studio.</p>
+          </div>
+          <div class="dropin-right">
+            <p class="price-big"><sup>€</sup>1<span class="vp-unit">= 1 VIBE</span></p>
+          </div>
+        </div>
+        <div class="dropin-row" id="drop-in">
+          <div class="dropin-left">
+            <p class="dropin-label" data-i18n="pricing_drop_label">Drop-in</p>
+            <p class="dropin-name" data-i18n="pv_drop_name">Single visit</p>
+            <p class="dropin-desc" data-i18n="pv_drop_desc">One regular class without a package, paid in euros at the studio.</p>
+          </div>
+          <div class="dropin-right">
+            <p class="price-big"><sup>€</sup>20</p>
+            <a href="/schedule" class="btn btn-primary" data-i18n="btn_view_schedule">View Schedule</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payment note -->
+      <div class="vp-pay" role="note">
+        <div>
+          <p class="vp-pay-title" data-i18n="pv_pay_title">Payment at the studio</p>
+          <p class="vp-pay-text" data-i18n="pv_pay_text">Online payment is not available yet. Pay for packages, top-ups and drop-ins at the studio — the administrator confirms the payment and credits VIBES to your balance.</p>
+        </div>
+        <div class="vp-pay-actions">
+          <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="footer_book">Book a class</a>
+          <a href="/account" class="btn btn-outline btn-sm" data-i18n="nav_account">My Account</a>
+        </div>
       </div>
 
       <hr class="pricing-divider">
 
-      <!-- ── 3. MULTI PASS ── -->
-      <div style="margin-bottom: 32px;">
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:6px;">
-          <h2 class="pricing-section-title" data-i18n="pricing_multi_title">Multi Pass</h2>
-          <span class="pass-badge" data-i18n="pricing_multi_badge">Best value</span>
+      <!-- ── BONUSES ── -->
+      <section id="bonuses" aria-labelledby="pvBonusTitle">
+        <h2 class="pricing-section-title" id="pvBonusTitle" data-i18n="pv_bonus_title">Bonus VIBES</h2>
+        <p class="pricing-section-sub" data-i18n="pv_bonus_sub">Practise, share and celebrate — we add VIBES to your balance.</p>
+        <div class="vp-bonus-grid">
+          <div class="vp-bonus">
+            <p class="vp-bonus-amt">+7<small>VIBES</small></p>
+            <div>
+              <p class="vp-bonus-title" data-i18n="pv_bonus_friend_title">Bring a friend</p>
+              <p class="vp-bonus-desc" data-i18n="pv_bonus_friend_desc">+7 VIBES for every friend you bring to the studio.</p>
+            </div>
+          </div>
+          <div class="vp-bonus">
+            <p class="vp-bonus-amt">+5<small>VIBES</small></p>
+            <div>
+              <p class="vp-bonus-title" data-i18n="pv_bonus_review_title">Review on Google Maps</p>
+              <p class="vp-bonus-desc" data-i18n="pv_bonus_review_desc">+5 VIBES for sharing your experience on Google Maps.</p>
+            </div>
+          </div>
+          <div class="vp-bonus">
+            <p class="vp-bonus-amt">+10<small>VIBES</small></p>
+            <div>
+              <p class="vp-bonus-title" data-i18n="pv_bonus_bday_title">Birthday</p>
+              <p class="vp-bonus-desc" data-i18n="pv_bonus_bday_desc">+10 VIBES as a birthday gift — once a year.</p>
+            </div>
+          </div>
         </div>
-        <p class="pricing-section-sub" data-i18n="pricing_multi_sub">For regular practitioners. Valid for all weekly classes.</p>
-      </div>
-      <div class="pass-grid pass-grid--4">
-
-        <!-- 4 classes -->
-        <div class="pass-card">
-          <div>
-            <p class="pass-classes">4 <span data-i18n="pricing_classes_word">classes</span></p>
-          </div>
-          <div class="pass-meta">
-            <p class="pass-price"><sup>€</sup>70</p>
-            <p class="pass-validity">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
-              <span data-i18n="pricing_m4_validity">Valid 1 month</span>
-            </p>
-            <p class="pass-per-class" data-i18n="pricing_m4_saving">€17.50 / class</p>
-          </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
-        </div>
-
-        <!-- 8 classes -->
-        <div class="pass-card pass-card--featured">
-          <div>
-            <p class="pass-classes">8 <span data-i18n="pricing_classes_word">classes</span></p>
-          </div>
-          <div class="pass-meta">
-            <p class="pass-price"><sup>€</sup>130</p>
-            <p class="pass-validity">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
-              <span data-i18n="pricing_m8_validity">Valid 2 months</span>
-            </p>
-            <p class="pass-per-class" data-i18n="pricing_m8_saving">€16.25 / class</p>
-          </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
-        </div>
-
-        <!-- 12 classes -->
-        <div class="pass-card pass-card--featured">
-          <div>
-            <p class="pass-classes">12 <span data-i18n="pricing_classes_word">classes</span></p>
-          </div>
-          <div class="pass-meta">
-            <p class="pass-price"><sup>€</sup>190</p>
-            <p class="pass-validity">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
-              <span data-i18n="pricing_m12_validity">Valid 2 months</span>
-            </p>
-            <p class="pass-per-class" data-i18n="pricing_m12_saving">€15.83 / class</p>
-          </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
-        </div>
-
-        <!-- 20 classes -->
-        <div class="pass-card">
-          <div>
-            <p class="pass-classes">20 <span data-i18n="pricing_classes_word">classes</span></p>
-          </div>
-          <div class="pass-meta">
-            <p class="pass-price"><sup>€</sup>300</p>
-            <p class="pass-validity">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>
-              <span data-i18n="pricing_m20_validity">Valid 3 months</span>
-            </p>
-            <p class="pass-per-class" data-i18n="pricing_m20_saving">€15 / class</p>
-          </div>
-          <a href="/schedule" class="pass-book-btn" data-i18n="btn_book_now">Book Now</a>
-        </div>
-
-      </div>
+      </section>
 
       <hr class="pricing-divider">
 
-      <!-- ── 4. EVENTS ── -->
+      <!-- ── SPECIAL CLASSES & EVENTS ── -->
       <div class="events-note">
         <div class="events-icon">🎶</div>
         <div>
           <h3 data-i18n="pricing_events_title">Workshops & Special Events</h3>
-          <p data-i18n="pricing_events_desc">Workshops, sound healing and special events are priced individually. Check the schedule or contact us for details.</p>
+          <p data-i18n="pricing_events_desc">Workshops, sound healing and other special classes have their own price in VIBES, set separately for each event. Check the schedule or contact us for details.</p>
           <div class="events-links">
             <a href="/schedule" class="btn btn-outline btn-sm" data-i18n="nav_schedule">Schedule</a>
             <a href="/contact" class="btn btn-outline btn-sm" data-i18n="nav_contact">Contact</a>
@@ -671,10 +766,69 @@
 
       <hr class="pricing-divider">
 
-      <!-- ── STUDIO & SPACE RENTAL (full content, migrated from /rental) ── -->
-      <div id="rentalSection">
-        <div class="rlist-skeleton">Loading…</div>
-      </div>
+      <!-- ── FAQ ── -->
+      <section id="faq" aria-labelledby="pvFaqTitle">
+        <h2 class="pricing-section-title" id="pvFaqTitle" data-i18n="pv_faq_title">Questions &amp; Answers</h2>
+        <p class="pricing-section-sub" data-i18n="pv_faq_sub">Everything about VIBES, packages and payment.</p>
+        <div class="vp-faq">
+          <details>
+            <summary data-i18n="pv_faq1_q">What are VIBES?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq1_a">VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs 20 VIBES, special classes have their own price in VIBES.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq2_q">When does my package start?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq2_a">The validity period starts from your first visit, not from the day you buy the package. For example, MP8 is valid for 60 days counting from the first class you attend with it.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq3_q">I have several packages. Which one is used first?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq3_a">VIBES are always debited from the earliest package first, so nothing expires unused while a newer package waits.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq4_q">Can I buy a Starter Pack more than once?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq4_a">No. A Starter Pack can be purchased only once per client — choose SP1, SP2 or SP4. After that, Multi Pass packages and top-ups are available.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq5_q">Can I top up a small amount?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq5_a">Yes — any amount, at the rate €1 = 1 VIBE.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq6_q">How much is a special class?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq6_a">Special classes, workshops and events have their own price in VIBES, set separately for each one. Check the schedule or ask the administrator.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq7_q">Can I come without a package?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq7_a">Of course. A single visit to a regular class without a package costs €20, paid at the studio.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq8_q">Can I pay online?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq8_a">Not yet. Payment is made at the studio, and the administrator confirms it. VIBES then appear on your balance.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq9_q">Can I freeze my package?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq9_a">Yes. Submit a freeze request from your <a href="/account">personal account</a>; the administrator reviews it. A freeze can last up to 90 days, and the package validity is extended by the number of frozen days.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq11_q">Can I get a refund for unused VIBES?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq11_a">Refunds for unused VIBES are possible at the studio’s discretion, at the rate of 1 VIBE = €0.75. Bonus VIBES (for referring a friend, a review or your birthday) are not refundable.</div>
+          </details>
+          <details>
+            <summary data-i18n="pv_faq10_q">Where can I see my balance and history?</summary>
+            <div class="vp-faq-a" data-i18n="pv_faq10_a">In your <a href="/account">personal account</a>: current VIBES balance, packages and their expiry dates, freezes, and the full history of credits, bonuses and visits.</div>
+          </details>
+        </div>
+        <p class="how-note" data-i18n="pricing_how_note">Packages are not intended to be transferred to third parties. If you can’t make it, please cancel your booking in advance — that way someone else can take your spot.</p>
+      </section>
+
+      <hr class="pricing-divider">
+
+      <!-- ── STUDIO & SPACE RENTAL → /rental ── -->
+      <a href="/rental" class="vp-rental" id="rental-link">
+        <div>
+          <p class="vp-rental-title" data-i18n="pv_rental_title">Studio &amp; Space Rental</p>
+          <p class="vp-rental-desc" data-i18n="pv_rental_desc">Rooms, hourly rates, event setups and what’s included — on a separate page.</p>
+        </div>
+        <span class="vp-rental-go" data-i18n="pv_rental_go">Space rental →</span>
+      </a>
 
       <hr class="pricing-divider">
 
@@ -703,31 +857,6 @@
             <a href="/price-list" class="btn btn-outline btn-sm" data-i18n="pricing_extras_link">See Extra Services & Pricing</a>
           </div>
         </div>
-      </div>
-
-      <hr class="pricing-divider">
-
-      <!-- ── 5. HOW IT WORKS ── -->
-      <div>
-        <h2 class="pricing-section-title" data-i18n="pricing_how_title">How It Works</h2>
-        <div class="how-grid">
-          <div class="how-step">
-            <p class="how-num">01</p>
-            <p class="how-title" data-i18n="pricing_how1_title">Choose a Class</p>
-            <p class="how-desc" data-i18n="pricing_how1_desc">Browse the schedule and pick a session that speaks to you.</p>
-          </div>
-          <div class="how-step">
-            <p class="how-num">02</p>
-            <p class="how-title" data-i18n="pricing_how2_title">Book Your Spot</p>
-            <p class="how-desc" data-i18n="pricing_how2_desc">Sign in and reserve your place — no redirects, no extra steps.</p>
-          </div>
-          <div class="how-step">
-            <p class="how-num">03</p>
-            <p class="how-title" data-i18n="pricing_how3_title">Show Up & Practice</p>
-            <p class="how-desc" data-i18n="pricing_how3_desc">Arrive 5–10 min early. Your mat is waiting.</p>
-          </div>
-        </div>
-        <p class="how-note" data-i18n="pricing_how_note">Passes are personal and non-transferable. Cancellations accepted up to 3 hours before class.</p>
       </div>
 
     </div>
@@ -761,7 +890,7 @@
           <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
           <a href="/space" data-i18n="footer_coworking">Co-working</a>
           <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
-          <a href="/pricing#rooms" data-i18n="nav_rental">Venue Rental</a>
+          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
           <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" data-i18n="footer_book">Book a class</a>
         </nav>
@@ -937,166 +1066,5 @@
     })();
   </script>
 
-  <!-- Studio & Space Rental content: data-driven, editable via /admin, migrated from the former /rental page -->
-  <script>
-    (function () {
-      let RENTAL_DATA = null;
-      const CHECK_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-
-      // Line-icon set, matching the venue's printed brochure iconography.
-      // Keyed by the item's English label so it stays correct across languages.
-      const SVG_OPEN = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">';
-      const INCLUDED_ICONS = {
-        'Access to the booked space': SVG_OPEN + '<path d="M5 21V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v17"/><path d="M5 21h13"/><circle cx="14" cy="12" r="0.6" fill="currentColor" stroke="none"/></svg>',
-        'Furniture arranged for your format': SVG_OPEN + '<path d="M5 11V5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v6"/><path d="M4 11h16v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Z"/><path d="M6 16v3M18 16v3"/></svg>',
-        'Wi-Fi': SVG_OPEN + '<path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8 15.5a6 6 0 0 1 8 0"/><path d="M11 18.5a2 2 0 0 1 2 0"/><circle cx="12" cy="19" r="0.6" fill="currentColor" stroke="none"/></svg>',
-        'Air conditioning': SVG_OPEN + '<path d="M12 3v18M4.5 7.5l15 9M19.5 7.5l-15 9"/></svg>',
-        'Restroom': SVG_OPEN + '<circle cx="12" cy="5" r="2"/><path d="M12 9v6M8 12h8M9 15l-1.5 6M15 15l1.5 6"/></svg>',
-        'Kitchen & coffee-break area': SVG_OPEN + '<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M17 10h1.5a2 2 0 0 1 0 4H17"/><path d="M8 3c0 1-1 1-1 2M12 3c0 1-1 1-1 2"/></svg>',
-        'Free tea & water': SVG_OPEN + '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
-        'Changing room & shower': SVG_OPEN + '<circle cx="12" cy="5" r="1.3"/><path d="M12 6.3v2M4 17l8-6 8 6"/><path d="M3 19h18"/></svg>',
-        'Practice equipment as agreed': SVG_OPEN + '<path d="M5 9v6M3 10v4M8 8v8M16 8v8M19 10v4M21 9v6"/><path d="M8 12h8"/></svg>',
-        'Administrator support on request': SVG_OPEN + '<path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v3a2 2 0 0 0 2 2h1v-6H5a1 1 0 0 0-1 1Z"/><path d="M20 13v3a2 2 0 0 1-2 2h-1v-6h2a1 1 0 0 1 1 1Z"/><path d="M18 18v1a2 2 0 0 1-2 2h-2"/></svg>'
-      };
-      const KIT_ICONS = {
-        'Seating cushions': SVG_OPEN + '<rect x="4" y="7" width="16" height="12" rx="4"/><path d="M12 7v12M9 9.5c1-1 4-1 6 0M9 16.5c1 1 4 1 6 0"/></svg>',
-        'Yoga mats': SVG_OPEN + '<rect x="3" y="10" width="14" height="6" rx="3"/><circle cx="19" cy="13" r="2.3"/></svg>',
-        'Blankets': SVG_OPEN + '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 12h18M9 6v12M15 6v12"/></svg>',
-        'Soft mattresses — 14 pcs': SVG_OPEN + '<rect x="3" y="8" width="18" height="9" rx="2"/><path d="M7 8v9M12 8v9M17 8v9"/><path d="M3 17v2M21 17v2"/></svg>',
-        'Yoga eye masks — 12 pcs': SVG_OPEN + '<path d="M2 10c2-2 6-3 10-3s8 1 10 3"/><path d="M4 10.5a3 3 0 1 0 6 0M14 10.5a3 3 0 1 0 6 0"/></svg>',
-        'Bolsters & practice props': SVG_OPEN + '<rect x="3" y="9" width="18" height="6" rx="3"/><path d="M8 9v6M16 9v6"/></svg>'
-      };
-      const SETUP_ICONS = {
-        'Wellness Practice': SVG_OPEN + '<circle cx="12" cy="5" r="2"/><path d="M12 8v3M6 20c1-3 3-5 3-5h6s2 2 3 5M9 15l-3-2M15 15l3-2"/></svg>',
-        'Presentation / Lecture': SVG_OPEN + '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M7 12l3-3 2 2 4-4"/></svg>',
-        'Celebration / Dinner': SVG_OPEN + '<path d="M7 3h10l-1 5a4 4 0 0 1-8 0L7 3Z"/><path d="M12 12v7M8 19h8"/></svg>',
-        'Workshop / Team Session': SVG_OPEN + '<rect x="4" y="8" width="16" height="8" rx="4"/><circle cx="4" cy="8" r="1.7" fill="currentColor" stroke="none"/><circle cx="20" cy="8" r="1.7" fill="currentColor" stroke="none"/><circle cx="4" cy="16" r="1.7" fill="currentColor" stroke="none"/><circle cx="20" cy="16" r="1.7" fill="currentColor" stroke="none"/></svg>',
-        'Networking / Open Event': SVG_OPEN + '<circle cx="8" cy="8" r="2.2"/><path d="M4 19v-1a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v1"/><circle cx="17" cy="7" r="1.8"/><path d="M14.5 19v-1a3.2 3.2 0 0 1 3-3.2h.5a3.2 3.2 0 0 1 3 3.2v1"/></svg>',
-        'Custom Setup': SVG_OPEN + '<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="2" fill="currentColor" stroke="none"/></svg>'
-      };
-      function iconFor(map, field) {
-        return (field && map[field.en]) || CHECK_ICON;
-      }
-
-      function rlang() {
-        return (SVS_I18N && SVS_I18N.getLang) ? SVS_I18N.getLang() : 'en';
-      }
-      function rtr(field) {
-        if (!field) return '';
-        const l = rlang();
-        return field[l] || field.en || '';
-      }
-      function reuro(n) { return '€' + n; }
-
-      function renderRental() {
-        const root = document.getElementById('rentalSection');
-        if (!RENTAL_DATA || !root) return;
-        const d = RENTAL_DATA;
-
-        const roomCards = d.rooms.map(r => `
-          <div class="room-card">
-            ${r.image ? `<div class="room-card-img-wrap"><img class="room-card-img" src="${r.image}" alt="${rtr(r.name)} — Soul Vibe Space Limassol" loading="lazy" width="460" height="575"/></div>` : ''}
-            <div class="room-card-body">
-              <p class="room-size">${r.size_m2} m²</p>
-              <p class="room-name">${rtr(r.name)}</p>
-              <p class="room-price">${reuro(r.price_hour)}<span>/ ${rlang()==='ru'?'час':(rlang()==='el'?'ώρα':'hour')}</span></p>
-              <div class="room-meta">
-                <span>${rtr(r.guests)}</span>
-                ${rtr(r.extra) ? `<span>${rtr(r.extra)}</span>` : ''}
-              </div>
-              <p class="room-desc">${rtr(r.desc)}</p>
-            </div>
-          </div>`).join('');
-
-        const setupCards = d.setups.map(s => `
-          <div class="setup-card">
-            <div class="setup-icon">${iconFor(SETUP_ICONS, s.name)}</div>
-            <p class="setup-name">${rtr(s.name)}</p>
-            <p class="setup-guests">${rtr(s.guests)}</p>
-            <p class="setup-desc">${rtr(s.desc)}</p>
-          </div>`).join('');
-
-        const galleryItems = d.setups.filter(s => s.image).map(s => `
-          <div class="rental-gallery-item">
-            <img src="${s.image}" alt="${rtr(s.name)} — Soul Vibe Space Limassol" loading="lazy" width="435" height="543"/>
-          </div>`).join('');
-
-        const includedItems = d.included.map(i => `<li>${iconFor(INCLUDED_ICONS, i)}<span>${rtr(i)}</span></li>`).join('');
-        const kitItems = d.kit.map(i => `<li>${iconFor(KIT_ICONS, i)}<span>${rtr(i)}</span></li>`).join('');
-
-        const addonCol = (arr) => arr.map(i => `<li>${rtr(i)}</li>`).join('');
-
-        root.innerHTML = `
-          <h2 id="rooms" class="pricing-section-title" style="scroll-margin-top: 110px;">${rtr(d.meta.title)}</h2>
-          <p class="pricing-section-sub">${rtr(d.meta.lead)}</p>
-
-          <h3 class="rental-subhead" data-i18n="rental_rooms_title">Rooms & Rates</h3>
-          <p class="rental-subhead-sub" data-i18n="rental_rooms_sub">Clear hourly rates for a studio, a floor or the whole building.</p>
-          <div class="room-grid">${roomCards}</div>
-
-          <hr class="pricing-divider">
-
-          <h3 class="rental-subhead" data-i18n="rental_setups_title">Choose the Setup for Your Event</h3>
-          <p class="rental-subhead-sub" data-i18n="rental_setups_sub">Six ready-made layouts, or ask us to build a custom one.</p>
-          <div class="setup-grid">${setupCards}</div>
-          ${galleryItems ? `<div class="rental-gallery">${galleryItems}</div>` : ''}
-
-          <hr class="pricing-divider">
-
-          <h3 class="rental-subhead" data-i18n="rental_included_title">Everything You Need — Already Included</h3>
-          <p class="rental-subhead-sub" data-i18n="rental_included_sub">No hidden add-ons for the basics. Everything below comes with the room.</p>
-          <div class="check-grid">
-            <ul class="check-list">${includedItems}</ul>
-            <ul class="check-list">${kitItems}</ul>
-          </div>
-
-          <hr class="pricing-divider">
-
-          <h3 class="rental-subhead" data-i18n="rental_addons_title">Optional Add-Ons</h3>
-          <p class="rental-subhead-sub" data-i18n="rental_addons_sub">Extras that make your event even more comfortable — available at additional charge, please pre-order.</p>
-          <div class="addon-grid">
-            <div class="addon-col"><h4 data-i18n="rental_addons_onrequest">On Request</h4><ul>${addonCol(d.addons.on_request)}</ul></div>
-            <div class="addon-col"><h4 data-i18n="rental_addons_equipment">Equipment</h4><ul>${addonCol(d.addons.equipment)}</ul></div>
-            <div class="addon-col"><h4 data-i18n="rental_addons_food">Food</h4><ul>${addonCol(d.addons.food)}</ul></div>
-          </div>
-          <p class="note-box">${rtr(d.note)}</p>
-
-          <hr class="pricing-divider">
-
-          <div class="rental-cta">
-            ${d.cta_image ? `<div class="rental-cta-img-wrap"><img class="rental-cta-img" src="${d.cta_image}" alt="Celebrating an event at Soul Vibe Space Limassol" loading="lazy" width="435" height="580"/></div>` : ''}
-            <div class="rental-cta-body">
-              <div class="events-icon">🤍</div>
-              <div>
-                <h3>${rtr(d.cta.title)}</h3>
-                <p>${rtr(d.cta.desc)}</p>
-                <div class="events-links">
-                  <a href="/contact" class="btn btn-outline btn-sm" data-i18n="nav_contact">Contact</a>
-                  <a href="tel:+35795642888" class="btn btn-outline btn-sm">+357 95 642 888</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-        if (SVS_I18N && SVS_I18N.t) {
-          root.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            const val = SVS_I18N.t(key);
-            if (val && val !== key) el.textContent = val;
-          });
-        }
-      }
-
-      fetch('/data/rental.json', { cache: 'no-store' })
-        .then(r => r.json())
-        .then(json => { RENTAL_DATA = json; renderRental(); })
-        .catch(() => {
-          const root = document.getElementById('rentalSection');
-          if (root) root.innerHTML = '<p class="rlist-skeleton">Could not load rental data. Please try again later.</p>';
-        });
-
-      window.addEventListener('svs:langchange', renderRental);
-    })();
-  </script>
 </body>
 </html>
