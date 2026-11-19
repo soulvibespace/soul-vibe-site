@@ -49,14 +49,14 @@ const BookingModal = (() => {
     instructor:    { en: 'Instructor', ru: 'Преподаватель', el: 'Εκπαιδευτής' },
     read_more:     { en: 'Read more ↓', ru: 'Читать далее ↓', el: 'Διαβάστε περισσότερα ↓' },
     show_less:     { en: 'Show less ↑', ru: 'Свернуть ↑', el: 'Λιγότερα ↑' },
-    confirm:       { en: 'Confirm booking', ru: 'Подтвердить', el: 'Επιβεβαίωση' },
+    confirm:       { en: 'Confirm booking', ru: 'Подтвердить запись', el: 'Επιβεβαίωση κράτησης' },
     enter_email_pw:{ en: 'Please enter email and password', ru: 'Введите email и пароль', el: 'Συμπληρώστε email και κωδικό' },
     login_failed:  { en: 'Sign-in failed. Please check your email and password.', ru: 'Не удалось войти. Проверьте email и пароль.', el: 'Η σύνδεση απέτυχε. Ελέγξτε το email και τον κωδικό.' },
     fill_all:      { en: 'Please fill in all fields', ru: 'Заполните все поля', el: 'Συμπληρώστε όλα τα πεδία' },
     terms_required:{ en: 'Please agree to the Terms & Conditions and Privacy Policy to continue.', ru: 'Чтобы продолжить, примите Условия и Политику конфиденциальности.', el: 'Για να συνεχίσετε, αποδεχτείτε τους Όρους και την Πολιτική Απορρήτου.' },
     reg_btn:       { en: 'Create Account', ru: 'Создать аккаунт', el: 'Δημιουργία' },
     login_btn:     { en: 'Sign In', ru: 'Войти', el: 'Σύνδεση' },
-    booking_failed:{ en: '⚠️ Booking failed. Please try again or contact us.', ru: '⚠️ Не удалось забронировать. Попробуйте снова или напишите нам.', el: '⚠️ Αδύνατη η κράτηση. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας.' },
+    booking_failed:{ en: '⚠️ Booking failed. Please try again or contact us.', ru: '⚠️ Не удалось записаться. Попробуйте ещё раз или напишите нам.', el: '⚠️ Αδύνατη η κράτηση. Δοκιμάστε ξανά ή επικοινωνήστε μαζί μας.' },
     user:          { en: 'User', ru: 'Профиль', el: 'Χρήστης' },
     close:         { en: 'Close', ru: 'Закрыть', el: 'Κλείσιμο' },
     pick_date_hint:{ en: 'Pick a date on the calendar', ru: 'Выберите дату в календаре', el: 'Επιλέξτε ημέρα στο ημερολόγιο' },
@@ -67,10 +67,19 @@ const BookingModal = (() => {
 
   // Class name in the visitor's language when a translation exists (i18n.js
   // keeps the RU/EL names keyed by SimplyBook id), otherwise the CRM name.
+  // The class language and teacher are kept: «Инь йога (рус.) · Елена» (svsClassName in i18n.js).
   function _svcName(s) {
     if (!s) return '';
+    if (typeof svsClassName === 'function') return svsClassName(s.id, s.name, _lang());
     return (typeof getSvcName === 'function') ? getSvcName(s.id, s.name) : s.name;
   }
+  // Shared dictionary string (i18n.js) with a fallback.
+  function _k(key, fb) {
+    const v = window.SVS_I18N ? SVS_I18N.t(key) : '';
+    return (v && v !== key) ? v : (fb || key);
+  }
+  const STUDIO_ADDRESS = '50 Agias Zonis, Limassol 3090';
+  const STUDIO_MAP_URL = 'https://g.co/kgs/G6ZR1W7';
 
   // State
   let _step = null;     // which screen is on display — used to re-render on language change
@@ -327,14 +336,14 @@ const BookingModal = (() => {
         <div class="bm-services-grid">`;
       for (const s of groups[cat]) {
         const duration = s.duration ? `${s.duration} ${_s('min')}` : '';
-        const price    = s.price > 0 ? `€${s.price.toFixed(0)}` : `€20<sup style="font-size:.65em;vertical-align:super;color:var(--color-primary,#7c5cbf)">*</sup>`;
+        const price    = s.price > 0 ? `€${s.price.toFixed(0)}` : _esc(_k('sched_price_dropin', '€20'));
         const imgUrl   = _svcImg(s);
         // Strip HTML + decode entities for clean display
         const rawDesc  = s.description
           ? s.description.replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim()
           : '';
         const desc = rawDesc;
-        const instructor = s.instructor_name ? `<span class="bm-instructor-tag" title="${_esc(_s('instructor'))}">👤 ${_esc(s.instructor_name)}</span>` : '';
+        const instructor = (s.instructor_name && (typeof svsIsPersonName !== 'function' || svsIsPersonName(s.instructor_name))) ? `<span class="bm-instructor-tag" title="${_esc(_s('instructor'))}">👤 ${_esc(s.instructor_name)}</span>` : '';
         const name = _svcName(s);
         html += `<div class="bm-service-card" data-id="${s.id}" onclick="BookingModal._pickService('${s.id}')">
           ${imgUrl ? `<div class="bm-service-img-wrap"><img class="bm-service-img" src="${imgUrl}" alt="${_esc(name)}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
@@ -766,9 +775,9 @@ const BookingModal = (() => {
     const timeStr = _selectedSlot?.slice(0,5);
 
     const labels = {
-      confirm: { en: 'Confirm booking', ru: 'Подтвердить', el: 'Επιβεβαίωση' },
+      confirm: { en: _k('bm_confirm_btn'), ru: _k('bm_confirm_btn'), el: _k('bm_confirm_btn') },
       back:    { en: '← Back', ru: '← Назад', el: '← Πίσω' },
-      booking: { en: 'Your booking', ru: 'Ваше бронирование', el: 'Η κράτησή σας' },
+      booking: { en: _k('bm_your_booking'), ru: _k('bm_your_booking'), el: _k('bm_your_booking') },
       class:   { en: 'Class', ru: 'Занятие', el: 'Μάθημα' },
       date:    { en: 'Date', ru: 'Дата', el: 'Ημερομηνία' },
       time:    { en: 'Time', ru: 'Время', el: 'Ώρα' },
@@ -802,6 +811,8 @@ const BookingModal = (() => {
           <span class="bm-confirm-value">€${service.price.toFixed(0)}</span>
         </div>` : ''}
       </div>
+      <div id="bmPayBox" class="bm-pay" aria-live="polite"></div>
+      <p class="bm-confirm-note">${_esc(_k('bm_cancel_rule'))}</p>
       <div id="bmConfirmError" class="bm-error-msg" style="display:none"></div>
       <button class="bm-confirm-btn" id="bmConfirmBtn" onclick="BookingModal._submitBooking()">
         ${L('confirm')}
@@ -859,7 +870,7 @@ const BookingModal = (() => {
       _lastBooking = data.booking;
       _renderStep('success');
     } catch (err) {
-      if (btn) { btn.disabled = false; btn.textContent = _s('confirm'); }
+      if (btn) { btn.disabled = false; btn.textContent = _k('bm_confirm_btn'); }
       if (errEl) {
         // Show human-friendly error message
         const rawMsg = err.message || 'Booking failed';
@@ -868,7 +879,7 @@ const BookingModal = (() => {
         // translated generic text unless the page itself is in English.
         if (_lang() !== 'en' || rawMsg === 'Booking failed'
             || rawMsg.toLowerCase().includes('unexpected') || rawMsg.toLowerCase().includes('error')) {
-          friendlyMsg = _s('booking_failed');
+          friendlyMsg = _k('bm_failed', _s('booking_failed'));
         }
         errEl.textContent = friendlyMsg;
         errEl.style.display = '';
@@ -882,32 +893,92 @@ const BookingModal = (() => {
   // ── Success step ──────────────────────────────────────────────
   let _lastBooking = null;
 
+  // Studio time (Asia/Nicosia) → UTC "YYYYMMDDTHHMMSSZ" for calendar links.
+  function _nicosiaUTC(dateStr, timeStr, addMin) {
+    const [y, mo, d] = dateStr.split('-').map(Number);
+    const [h, mi] = (timeStr || '00:00').split(':').map(Number);
+    const guess = Date.UTC(y, mo - 1, d, h, mi + (addMin || 0));
+    let off = 0;
+    try {
+      const p = {};
+      new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Nicosia', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+        .formatToParts(new Date(guess)).forEach(x => { p[x.type] = x.value; });
+      off = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute) - guess;
+    } catch (_) { off = 2 * 3600e3; }
+    return new Date(guess - off).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  }
+  function _calEvent(service) {
+    const dur = Number(service?.duration) || 60;
+    const title = _svcName(service) + ' — Soul Vibe Space';
+    const details = _k('bm_arrive') + '\n' + _k('bm_how_cancel') + '\nhttps://soulvibespace.netlify.app/account';
+    return {
+      title, details,
+      start: _nicosiaUTC(_selectedDate, _selectedSlot),
+      end:   _nicosiaUTC(_selectedDate, _selectedSlot, dur),
+      location: 'Soul Vibe Space, ' + STUDIO_ADDRESS,
+    };
+  }
+  function _googleCalUrl(ev) {
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent(ev.title)
+      + '&dates=' + ev.start + '/' + ev.end
+      + '&details=' + encodeURIComponent(ev.details)
+      + '&location=' + encodeURIComponent(ev.location)
+      + '&ctz=Asia%2FNicosia';
+  }
+  function _icsEsc(v) { return String(v).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/([,;])/g, '\\$1'); }
+  function _downloadIcs() {
+    const service = _services?.find(s => String(s.id) === String(_selectedService));
+    const ev = _calEvent(service);
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Soul Vibe Space//Booking//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:svs-' + (_lastBooking?.id || (_selectedDate + '-' + _selectedSlot + '-' + _selectedService)) + '@soulvibespace',
+      'DTSTAMP:' + stamp, 'DTSTART:' + ev.start, 'DTEND:' + ev.end,
+      'SUMMARY:' + _icsEsc(ev.title), 'DESCRIPTION:' + _icsEsc(ev.details), 'LOCATION:' + _icsEsc(ev.location),
+      'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:' + _icsEsc(ev.title), 'END:VALARM',
+      'END:VEVENT', 'END:VCALENDAR', ''
+    ].join('\r\n');
+    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = 'soul-vibe-space-' + _selectedDate + '.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
   function _renderSuccess(body) {
     const lang = _lang();
-    const labels = {
-      title:   { en: 'Booking confirmed!', ru: 'Бронирование подтверждено!', el: 'Η κράτηση επιβεβαιώθηκε!' },
-      sub:     { en: 'See you at Soul Vibe Space', ru: 'Ждём вас в Soul Vibe Space', el: 'Σας περιμένουμε' },
-      close:   { en: 'Done', ru: 'Готово', el: 'Τέλος' },
-      another: { en: 'Book another class', ru: 'Забронировать ещё', el: 'Νέα κράτηση' },
-    };
-    const L = (k) => labels[k]?.[lang] || labels[k]?.en;
-
     const service = _services?.find(s => String(s.id) === String(_selectedService));
     const timeStr = _selectedSlot?.slice(0,5);
     const d = new Date(_selectedDate + 'T00:00:00');
     const locale = lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB';
-    const dateStr = d.toLocaleDateString(locale, { day: 'numeric', month: 'long' });
+    const dateStr = d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
+    const ev = _calEvent(service);
+    const calIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 
     body.innerHTML = `
       <div class="bm-success">
         <div class="bm-success-icon">✓</div>
-        <h2 class="bm-success-title">${L('title')}</h2>
+        <h2 class="bm-success-title">${_esc(_k('bm_success_title'))}</h2>
         <div class="bm-success-detail">${_esc(_svcName(service))}</div>
-        <div class="bm-success-detail">${dateStr} · ${timeStr}</div>
-        <p class="bm-success-sub">${L('sub')}</p>
+        <div class="bm-success-detail">${_esc(dateStr)} · ${timeStr}</div>
+        <div id="bmSuccessPay" class="bm-pay bm-pay--success"></div>
+        <ul class="bm-success-info">
+          <li><span class="bm-success-info-label">${_esc(_k('bm_address_label'))}</span>
+            <span>Soul Vibe Space, ${_esc(_k('bm_address'))} · <a href="${STUDIO_MAP_URL}" target="_blank" rel="noopener">${_esc(_k('bm_map'))}</a></span></li>
+          <li>${_esc(_k('bm_arrive'))}</li>
+          <li>${_esc(_k('bm_how_cancel'))}</li>
+        </ul>
+        <p class="bm-success-cal-title">${calIcon} ${_esc(_k('bm_add_cal'))}</p>
+        <div class="bm-success-cal">
+          <a class="bm-cal-btn" href="${_googleCalUrl(ev)}" target="_blank" rel="noopener">${_esc(_k('bm_cal_google'))}</a>
+          <button type="button" class="bm-cal-btn" onclick="BookingModal._downloadIcs()">${_esc(_k('bm_cal_ics'))}</button>
+        </div>
         <div class="bm-success-actions">
-          <button class="bm-confirm-btn" onclick="BookingModal.close()">${L('close')}</button>
-          <button class="bm-back-btn" onclick="BookingModal._goToServices()">${L('another')}</button>
+          <a class="bm-confirm-btn" href="/account#bookings">${_esc(_k('bm_my_bookings'))}</a>
+          <button class="bm-back-btn" onclick="BookingModal._goToServices()">${_esc(_k('bm_another'))}</button>
+          <button class="bm-link-btn" onclick="BookingModal.close()">${_esc(_k('bm_done'))}</button>
         </div>
       </div>`;
   }
@@ -1030,9 +1101,24 @@ const BookingModal = (() => {
     };
     const m = L[lang] || L.en;
 
+    // Remind the visitor what they are booking: class, date and time.
+    const ctxService = _services?.find(s => String(s.id) === String(_selectedService));
+    let ctxHtml = '';
+    if (ctxService && _selectedDate && _selectedSlot) {
+      const loc = lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB';
+      const dStr = new Date(_selectedDate + 'T00:00:00').toLocaleDateString(loc, { weekday: 'short', day: 'numeric', month: 'long' });
+      ctxHtml = `<div class="bm-auth-context">
+          <span class="bm-auth-context-label">${_esc(_k('bm_booking_for'))}</span>
+          <span class="bm-auth-context-name">${_esc(_svcName(ctxService))}</span>
+          <span class="bm-auth-context-when">${_esc(dStr)} · ${_esc(_selectedSlot.slice(0, 5))}</span>
+        </div>`;
+    }
+
     body.innerHTML = `
       <div class="bm-inline-auth">
         <button class="bm-back-btn" onclick="BookingModal._goToScheduleOrServices()" style="margin-bottom:16px">${m.back}</button>
+        <h2 class="bm-title bm-auth-title">${tab === 'register' ? m.title_reg : _esc(_k('bm_login_title', m.title_login))}</h2>
+        ${ctxHtml}
         <div class="bm-inline-auth-tabs">
           <button class="bm-ia-tab${tab==='login'?' bm-ia-tab-active':''}" id="bmIaTabLogin" onclick="BookingModal._switchAuthTab('login')">${m.tab_login}</button>
           <button class="bm-ia-tab${tab==='register'?' bm-ia-tab-active':''}" id="bmIaTabReg" onclick="BookingModal._switchAuthTab('register')">${m.tab_reg}</button>
@@ -1062,6 +1148,20 @@ const BookingModal = (() => {
           </div>
           <div id="bmIaLoginErr" class="bm-ia-error"></div>
           <button type="submit" class="bm-confirm-btn" id="bmIaLoginBtn">${m.login_btn}</button>
+          <button type="button" class="bm-link-btn bm-forgot-link" onclick="BookingModal._showForgot(true)">${_esc(_k('bm_forgot'))}</button>
+        </form>
+
+        <!-- Forgot password: POST /api/auth/forgot-password (SimplyBook sends the reset email) -->
+        <form id="bmIaForgotForm" class="bm-ia-form bm-ia-hidden" onsubmit="event.preventDefault();BookingModal._bmForgot()">
+          <p class="bm-ia-forgot-title">${_esc(_k('bm_forgot_title'))}</p>
+          <p class="bm-ia-forgot-info">${_esc(_k('bm_forgot_info'))}</p>
+          <div class="bm-ia-field">
+            <label class="bm-ia-label" for="bmIaForgotEmail">${m.email}</label>
+            <input class="bm-ia-input" id="bmIaForgotEmail" type="email" autocomplete="email" required placeholder="your@email.com" />
+          </div>
+          <div id="bmIaForgotMsg" class="bm-ia-error" role="status"></div>
+          <button type="submit" class="bm-confirm-btn" id="bmIaForgotBtn">${_esc(_k('bm_forgot_btn'))}</button>
+          <button type="button" class="bm-link-btn" onclick="BookingModal._showForgot(false)">${_esc(_k('bm_back_to_login'))}</button>
         </form>
 
         <!-- Register form -->
@@ -1224,6 +1324,9 @@ const BookingModal = (() => {
     const tabLogin  = document.getElementById('bmIaTabLogin');
     const tabReg    = document.getElementById('bmIaTabReg');
     if (!loginForm) return;
+    const ff = document.getElementById('bmIaForgotForm'); if (ff) ff.classList.add('bm-ia-hidden');
+    const ttl = document.querySelector('#bookingModalBody .bm-auth-title');
+    if (ttl) ttl.textContent = tab === 'login' ? _k('bm_login_title') : (_lang() === 'ru' ? 'Создать аккаунт' : _lang() === 'el' ? 'Δημιουργία λογαριασμού' : 'Create account');
     if (tab === 'login') {
       loginForm.classList.remove('bm-ia-hidden');
       regForm.classList.add('bm-ia-hidden');
@@ -1235,6 +1338,38 @@ const BookingModal = (() => {
       tabLogin.classList.remove('bm-ia-tab-active');
       tabReg.classList.add('bm-ia-tab-active');
     }
+  }
+
+  function _showForgot(show) {
+    const lf = document.getElementById('bmIaLoginForm');
+    const ff = document.getElementById('bmIaForgotForm');
+    if (!lf || !ff) return;
+    lf.classList.toggle('bm-ia-hidden', !!show);
+    ff.classList.toggle('bm-ia-hidden', !show);
+    if (show) {
+      const le = document.getElementById('bmIaEmail'), fe = document.getElementById('bmIaForgotEmail');
+      if (le && fe && le.value && !fe.value) fe.value = le.value;
+      if (fe) fe.focus();
+    }
+  }
+
+  async function _bmForgot() {
+    const email = document.getElementById('bmIaForgotEmail')?.value.trim();
+    const btn = document.getElementById('bmIaForgotBtn');
+    const msg = document.getElementById('bmIaForgotMsg');
+    if (!email) { if (msg) { msg.classList.remove('bm-ia-ok'); msg.textContent = _k('bm_forgot_need_email'); } return; }
+    if (btn) { btn.disabled = true; btn.textContent = '...'; }
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/forgot-password`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (!res.ok) throw new Error('forgot failed');
+      if (msg) { msg.classList.add('bm-ia-ok'); msg.textContent = _k('bm_forgot_sent'); }
+    } catch (_) {
+      if (msg) { msg.classList.remove('bm-ia-ok'); msg.textContent = _k('bm_forgot_fail'); }
+    }
+    if (btn) { btn.disabled = false; btn.textContent = _k('bm_forgot_btn'); }
   }
 
   async function _bmLogin() {
@@ -1411,7 +1546,7 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn,
+  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs,
            _savePendingForRedirect: _savePendingBooking, _rerender };
 })();
 

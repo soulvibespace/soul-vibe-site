@@ -943,6 +943,44 @@
     text-underline-offset: 2px;
   }
   .acc-consent-link:hover { opacity: 0.75; }
+  /* ── Bookings: labelled cancel button, wrapped titles, in-language dialog ── */
+  .booking-service { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.35; }
+  .booking-card .booking-cancel-btn {
+    width: auto; height: auto; padding: 0.45rem 0.8rem; gap: 0.35rem; border-radius: 999px;
+    font-family: 'Work Sans', sans-serif; font-size: 0.78rem; font-weight: 600; white-space: nowrap;
+    color: #c0392b; border: 1.5px solid rgba(192,57,43,0.3); background: rgba(192,57,43,0.04);
+  }
+  @media (max-width: 520px) {
+    .booking-card { flex-wrap: wrap; }
+    .booking-card .booking-info { flex: 1 1 calc(100% - 80px); }
+    .booking-card .booking-cancel-btn { margin-left: auto; }
+  }
+  .bk-dialog-backdrop {
+    position: fixed; inset: 0; z-index: 10050; background: rgba(20,16,35,0.5);
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+  }
+  .bk-dialog {
+    background: var(--card-bg, #fff); color: var(--text, #1a1a1a); border-radius: 18px;
+    padding: 1.4rem 1.4rem 1.2rem; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    font-family: 'Work Sans', sans-serif;
+  }
+  .bk-dialog-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 0.6rem; }
+  .bk-dialog-class { font-weight: 600; margin: 0; }
+  .bk-dialog-when { color: var(--text-muted); margin: 0.1rem 0 0.7rem; font-size: 0.9rem; }
+  .bk-dialog-text { color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin: 0 0 1.1rem; }
+  .bk-dialog-actions { display: flex; gap: 0.6rem; justify-content: flex-end; flex-wrap: wrap; }
+  .bk-dialog-actions button {
+    font-family: inherit; font-size: 0.9rem; font-weight: 600; padding: 0.65rem 1.1rem; border-radius: 10px; cursor: pointer;
+  }
+  .bk-dialog-no { background: none; border: 1.5px solid var(--border); color: var(--text); }
+  .bk-dialog-yes { background: #c0392b; border: 1.5px solid #c0392b; color: #fff; }
+  .bk-toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 10060;
+    background: #2f2a45; color: #fff; padding: 0.7rem 1.1rem; border-radius: 12px; font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: calc(100% - 32px);
+  }
+  .bk-toast--error { background: #c0392b; }
+  .bk-toast[hidden] { display: none; }
   </style>  <link rel="stylesheet" href="/compact.css" />
 </head>
 <body>
@@ -980,7 +1018,7 @@
           <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
           <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
         </div>
-        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book a class</a>
         <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
@@ -1024,13 +1062,13 @@
           <a href="/" class="acc-hero-logo">
             <img src="images/logo.png" alt="Soul Vibe Space" />
           </a>
-          <p class="acc-hero-tagline">Your Wellness Journey</p>
-          <h1 class="acc-hero-title">Move. Breathe.<br><em>Come back.</em></h1>
-          <p class="acc-hero-desc">Sign in to manage your bookings, view your practice history, and reserve your next class — all in one place.</p>
+          <p class="acc-hero-tagline" data-i18n="acc_hero_tagline">Your Wellness Journey</p>
+          <h1 class="acc-hero-title" data-i18n="acc_hero_title">Move. Breathe.<br><em>Come back.</em></h1>
+          <p class="acc-hero-desc" data-i18n="acc_hero_desc">Sign in to see your bookings, cancel when plans change and book your next class — all in one place.</p>
           <div class="acc-hero-perks">
-            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span>View and manage upcoming bookings</div>
-            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span>Cancel with one click</div>
-            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span>Quick access to the full schedule</div>
+            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span><span data-i18n="acc_hero_perk1">Your upcoming bookings in one list</span></div>
+            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span><span data-i18n="acc_hero_perk2">Cancel a booking in two taps</span></div>
+            <div class="acc-hero-perk"><span class="acc-hero-perk-dot"></span><span data-i18n="acc_hero_perk3">Quick access to the schedule</span></div>
           </div>
         </div>
       </div>
@@ -1179,7 +1217,7 @@
               <div class="dash-action-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               </div>
-              <span class="dash-action-label" data-i18n="acc_action_bookclass">Book a Class</span>
+              <span class="dash-action-label" data-i18n="acc_action_bookclass">Book a class</span>
             </a>
             <a href="/schedule" class="dash-action">
               <div class="dash-action-icon">
@@ -1206,8 +1244,8 @@
           </section>
 
           <!-- Bookings -->
-          <div class="dash-section-head">
-            <p class="dash-section-title" data-i18n="acc_section_bookings">My Bookings</p>
+          <div class="dash-section-head" id="bookings">
+            <p class="dash-section-title" data-i18n="acc_section_bookings">My bookings</p>
             <div class="dash-filter-wrap">
               <button class="dash-filter-btn active" id="filterUpcoming" onclick="loadBookings(true)" data-i18n="acc_upcoming">Upcoming</button>
               <button class="dash-filter-btn" id="filterAll" onclick="loadBookings(false)" data-i18n="acc_all">All bookings</button>
@@ -1307,6 +1345,10 @@
   </div>
 
   <!-- Scripts -->
+  <script>
+    // Google renders its button in the browser language by default — use the site language instead.
+    (function () { try { var l = localStorage.getItem('svs_lang') || 'en'; document.querySelectorAll('.g_id_signin').forEach(function (el) { el.setAttribute('data-locale', l); }); } catch (e) {} })();
+  </script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="i18n.js"></script>
   <script src="services-filter.js"></script>

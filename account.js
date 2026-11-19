@@ -317,6 +317,8 @@ function showDashboard(client) {
   updateHeaderBtn(firstName);
   loadVibes();
   loadBookings(true);
+  // /account#bookings (link «Мои записи» from the booking window) → scroll to the list
+  if (location.hash === '#bookings') setTimeout(function () { var el = document.getElementById('bookings'); if (el) el.scrollIntoView({ block: 'start' }); }, 300);
 }
 
 // ── VIBES (loyalty programme) ────────────────────────────────────────────────
@@ -537,11 +539,14 @@ async function loadBookings(upcomingOnly) {
 
   try {
     const data = await apiFetch(`/api/client/bookings?upcoming=${upcomingOnly}`);
+    _bookingsLoaded = true;
     renderBookings(data.bookings || [], upcomingOnly);
   } catch (err) {
+    _bookingsLoaded = false;
     container.innerHTML = `
       <div class="bookings-empty">
-        <p>Could not load bookings. Please try again.</p>
+        <p>${escHtml(vt('bk_load_error', 'Could not load your bookings. Please try again.'))}</p>
+        <button type="button" class="acc-book-btn" onclick="loadBookings(_currentFilter)">${escHtml(vt('bk_retry', 'Try again'))}</button>
       </div>`;
   }
 }
@@ -549,41 +554,82 @@ async function loadBookings(upcomingOnly) {
 const BOOKINGS_PAGE_SIZE = 10;
 let _allBookings = [];
 let _shownCount  = 0;
+let _bookingsLoaded = false;
+
+function bkLang() { return window.SVS_I18N ? window.SVS_I18N.getLang() : 'en'; }
+function bkLocale() { var l = bkLang(); return l === 'ru' ? 'ru-RU' : l === 'el' ? 'el-GR' : 'en-GB'; }
+// Class name in the site language, the same as in the booking window: «Инь йога (рус.)».
+function bkClassTitle(b) {
+  return window.svsClassInfo ? svsClassInfo(b.service_id, b.service || '', bkLang()).title : (b.service || vt('bk_class', 'Class'));
+}
+function bkTeacher(b) {
+  return window.svsTeacherName ? (svsTeacherName(b.service_id, b.service || '', b.instructor, bkLang()) || '') : '';
+}
+function bkMonthLabel(b) {
+  if (!b.date) return '—';
+  const d = new Date(b.date + 'T00:00:00');
+  const s = d.toLocaleString(bkLocale(), { month: 'long', year: 'numeric' }).replace(/\s*г\.$/, '');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function bkIsCancelled(b) { return (b.status || '').toLowerCase().includes('cancel'); }
 
 function renderBookingCard(b) {
   const today = new Date(); today.setHours(0,0,0,0);
   const dateObj  = b.date ? new Date(b.date + 'T00:00:00') : null;
   const day      = dateObj ? dateObj.getDate() : '—';
-  const month    = dateObj ? dateObj.toLocaleString('en', { month: 'short' }).toUpperCase() : '';
-  const weekday  = dateObj ? dateObj.toLocaleString('en', { weekday: 'short' }) : '';
+  const month    = dateObj ? dateObj.toLocaleString(bkLocale(), { month: 'short' }).replace('.', '') : '';
+  const weekday  = dateObj ? dateObj.toLocaleString(bkLocale(), { weekday: 'short' }).replace('.', '') : '';
   const timeStr  = b.time ? b.time.slice(0,5) + (b.end_time ? ' – ' + b.end_time.slice(0,5) : '') : '';
   const isPast   = dateObj ? dateObj < today : false;
-  const isCancelled = (b.status || '').toLowerCase().includes('cancel');
+  const isCancelled = bkIsCancelled(b);
   const statusClass = isCancelled ? 'status-cancelled' : isPast ? 'status-past' : 'status-confirmed';
-  const statusLabel = isCancelled ? 'Cancelled' : isPast ? 'Completed' : 'Confirmed';
+  const statusLabel = isCancelled ? vt('bk_status_cancelled', 'Cancelled') : isPast ? vt('bk_status_past', 'Past') : vt('bk_status_confirmed', 'Confirmed');
   const showCancel  = !isPast && !isCancelled && b.id;
+  const teacher     = bkTeacher(b);
   const cancelBtn   = showCancel
-    ? `<button class="booking-cancel-btn" onclick="cancelBooking('${b.id}', this)" title="Cancel booking">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    ? `<button type="button" class="booking-cancel-btn" onclick="cancelBooking('${escHtml(String(b.id))}', this)">
+         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+         <span>${escHtml(vt('bk_cancel_btn', 'Cancel booking'))}</span>
        </button>`
     : '';
   return `
-    <div class="booking-card" id="booking-${b.id}">
-      <div class="booking-date-badge ${isPast ? 'booking-date-past' : ''}">
+    <div class="booking-card" id="booking-${escHtml(String(b.id))}">
+      <div class="booking-date-badge ${isPast || isCancelled ? 'booking-date-past' : ''}">
         <div class="booking-date-day">${day}</div>
-        <div class="booking-date-month">${month}</div>
-        ${weekday ? `<div class="booking-date-weekday">${weekday}</div>` : ''}
+        <div class="booking-date-month">${escHtml(month)}</div>
+        ${weekday ? `<div class="booking-date-weekday">${escHtml(weekday)}</div>` : ''}
       </div>
       <div class="booking-info">
-        <div class="booking-service">${escHtml(b.service || 'Class')}</div>
-        ${timeStr ? `<div class="booking-time">${timeStr}</div>` : ''}
+        <div class="booking-service" title="${escHtml(bkClassTitle(b))}">${escHtml(bkClassTitle(b))}</div>
+        ${timeStr || teacher ? `<div class="booking-time">${escHtml([timeStr, teacher].filter(Boolean).join(' · '))}</div>` : ''}
         <div class="booking-footer">
-          <span class="booking-status ${statusClass}">${statusLabel}</span>
+          <span class="booking-status ${statusClass}">${escHtml(statusLabel)}</span>
           ${b.code ? `<span class="booking-code">#${escHtml(b.code)}</span>` : ''}
         </div>
       </div>
       ${cancelBtn}
     </div>`;
+}
+
+function bkCountText(shown, total) {
+  return vt('bk_showing', 'Showing {n} of {total}').replace('{n}', shown).replace('{total}', total);
+}
+function bkMoreText(left) { return vt('bk_load_more', 'Show more ({n})').replace('{n}', left); }
+
+function bkAppend(list, items) {
+  const seps = list.querySelectorAll('.bookings-month-sep');
+  let lastMonth = seps.length ? seps[seps.length - 1].textContent : null;
+  items.forEach(b => {
+    const ml = bkMonthLabel(b);
+    if (ml !== lastMonth) {
+      const sep = document.createElement('div');
+      sep.className = 'bookings-month-sep';
+      sep.textContent = ml;
+      list.appendChild(sep);
+      lastMonth = ml;
+    }
+    list.insertAdjacentHTML('beforeend', renderBookingCard(b));
+  });
 }
 
 function renderBookings(bookings, upcomingOnly) {
@@ -595,54 +641,33 @@ function renderBookings(bookings, upcomingOnly) {
     container.innerHTML = `
       <div class="bookings-empty">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <p>${upcomingOnly ? 'No upcoming bookings' : 'No bookings yet'}</p>
-        <button onclick="openBookingFromAccount()" class="acc-book-btn">Book a class</button>
+        <p>${escHtml(upcomingOnly ? t('acc_no_upcoming', 'No upcoming bookings') : t('acc_no_all', 'No bookings yet'))}</p>
+        <button onclick="openBookingFromAccount()" class="acc-book-btn">${escHtml(t('acc_book_class', 'Book a class'))}</button>
       </div>`;
     return;
   }
 
-  // Group by month label
-  function monthLabel(b) {
-    if (!b.date) return 'Unknown';
-    const d = new Date(b.date + 'T00:00:00');
-    return d.toLocaleString('en', { month: 'long', year: 'numeric' });
-  }
-
   const list = document.createElement('div');
   list.className = 'bookings-list';
-
   const slice = bookings.slice(0, BOOKINGS_PAGE_SIZE);
   _shownCount = slice.length;
-
-  let lastMonth = null;
-  slice.forEach(b => {
-    const ml = monthLabel(b);
-    if (ml !== lastMonth) {
-      const sep = document.createElement('div');
-      sep.className = 'bookings-month-sep';
-      sep.textContent = ml;
-      list.appendChild(sep);
-      lastMonth = ml;
-    }
-    list.insertAdjacentHTML('beforeend', renderBookingCard(b));
-  });
+  bkAppend(list, slice);
 
   container.innerHTML = '';
   container.appendChild(list);
 
-  // Show counter + load more
   const total = bookings.length;
   const info = document.createElement('div');
   info.className = 'bookings-count-info';
   info.id = 'bookingsCountInfo';
-  info.innerHTML = `<span>Showing ${Math.min(_shownCount, total)} of ${total}</span>`;
+  info.innerHTML = `<span>${escHtml(bkCountText(Math.min(_shownCount, total), total))}</span>`;
   container.appendChild(info);
 
   if (_shownCount < total) {
     const btn = document.createElement('button');
     btn.className = 'bookings-load-more';
     btn.id = 'bookingsLoadMore';
-    btn.textContent = `Load more (${total - _shownCount} remaining)`;
+    btn.textContent = bkMoreText(total - _shownCount);
     btn.onclick = loadMoreBookings;
     container.appendChild(btn);
   }
@@ -653,50 +678,76 @@ function loadMoreBookings() {
   const list       = container.querySelector('.bookings-list');
   const total      = _allBookings.length;
   const nextSlice  = _allBookings.slice(_shownCount, _shownCount + BOOKINGS_PAGE_SIZE);
-
-  // Find last month label already rendered
-  const seps = list.querySelectorAll('.bookings-month-sep');
-  let lastMonth = seps.length ? seps[seps.length - 1].textContent : null;
-
-  function monthLabel(b) {
-    if (!b.date) return 'Unknown';
-    const d = new Date(b.date + 'T00:00:00');
-    return d.toLocaleString('en', { month: 'long', year: 'numeric' });
-  }
-
-  nextSlice.forEach(b => {
-    const ml = monthLabel(b);
-    if (ml !== lastMonth) {
-      const sep = document.createElement('div');
-      sep.className = 'bookings-month-sep';
-      sep.textContent = ml;
-      list.appendChild(sep);
-      lastMonth = ml;
-    }
-    list.insertAdjacentHTML('beforeend', renderBookingCard(b));
-  });
-
+  bkAppend(list, nextSlice);
   _shownCount += nextSlice.length;
-
-  // Update counter
   const info = document.getElementById('bookingsCountInfo');
-  if (info) info.innerHTML = `<span>Showing ${_shownCount} of ${total}</span>`;
-
-  // Remove load more button if done
+  if (info) info.innerHTML = `<span>${escHtml(bkCountText(_shownCount, total))}</span>`;
   const btn = document.getElementById('bookingsLoadMore');
   if (btn) {
-    if (_shownCount >= total) {
-      btn.remove();
-    } else {
-      btn.textContent = `Load more (${total - _shownCount} remaining)`;
-    }
+    if (_shownCount >= total) btn.remove();
+    else btn.textContent = bkMoreText(total - _shownCount);
   }
 }
 
-// ── Cancel booking ─────────────────────────────────────────────────────────────
-async function cancelBooking(bookingId, btn) {
-  if (!confirm('Cancel this booking?')) return;
+// Re-draw the list in the new language without another request.
+window.addEventListener('svs:langchange', function () {
+  if (!_bookingsLoaded || !document.getElementById('bookingsContainer')) return;
+  const shown = _shownCount;
+  renderBookings(_allBookings, _currentFilter);
+  while (_shownCount < Math.min(shown, _allBookings.length)) loadMoreBookings();
+});
 
+// ── Cancel booking: in-language dialog instead of the browser's confirm() ─────
+function bkConfirmDialog(b) {
+  return new Promise(function (resolve) {
+    const prev = document.activeElement;
+    const wrap = document.createElement('div');
+    wrap.className = 'bk-dialog-backdrop';
+    const when = b && b.date
+      ? vt('bk_at', '{date} at {time}')
+          .replace('{date}', new Date(b.date + 'T00:00:00').toLocaleDateString(bkLocale(), { weekday: 'long', day: 'numeric', month: 'long' }))
+          .replace('{time}', (b.time || '').slice(0, 5))
+      : '';
+    wrap.innerHTML = `
+      <div class="bk-dialog" role="alertdialog" aria-modal="true" aria-labelledby="bkDlgTitle" aria-describedby="bkDlgText">
+        <p class="bk-dialog-title" id="bkDlgTitle">${escHtml(vt('bk_cancel_title', 'Cancel this booking?'))}</p>
+        ${b ? `<p class="bk-dialog-class">${escHtml(bkClassTitle(b))}</p><p class="bk-dialog-when">${escHtml(when)}</p>` : ''}
+        <p class="bk-dialog-text" id="bkDlgText">${escHtml(vt('bk_cancel_text', ''))}</p>
+        <div class="bk-dialog-actions">
+          <button type="button" class="bk-dialog-no">${escHtml(vt('bk_cancel_no', 'Keep booking'))}</button>
+          <button type="button" class="bk-dialog-yes">${escHtml(vt('bk_cancel_yes', 'Cancel booking'))}</button>
+        </div>
+      </div>`;
+    function done(v) {
+      document.removeEventListener('keydown', onKey);
+      wrap.remove();
+      if (prev && prev.focus) try { prev.focus(); } catch (_) {}
+      resolve(v);
+    }
+    function onKey(e) { if (e.key === 'Escape') done(false); }
+    wrap.addEventListener('click', function (e) { if (e.target === wrap) done(false); });
+    wrap.querySelector('.bk-dialog-no').onclick = function () { done(false); };
+    wrap.querySelector('.bk-dialog-yes').onclick = function () { done(true); };
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(wrap);
+    wrap.querySelector('.bk-dialog-no').focus();
+  });
+}
+
+function bkToast(msg, isError) {
+  let el = document.getElementById('bkToast');
+  if (!el) { el = document.createElement('div'); el.id = 'bkToast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+  el.className = 'bk-toast' + (isError ? ' bk-toast--error' : '');
+  el.textContent = msg;
+  clearTimeout(el._t); el.hidden = false;
+  el._t = setTimeout(function () { el.hidden = true; }, 5000);
+}
+
+async function cancelBooking(bookingId, btn) {
+  const b = _allBookings.find(x => String(x.id) === String(bookingId));
+  if (!(await bkConfirmDialog(b))) return;
+
+  const original = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner" style="border-color:rgba(192,57,43,.3);border-top-color:#c0392b;"></span>';
 
@@ -705,20 +756,21 @@ async function cancelBooking(bookingId, btn) {
       method: 'POST',
       body: JSON.stringify({ booking_id: bookingId })
     });
-
-    // Update card UI immediately
+    if (b) b.status = 'cancelled';
     const card = document.getElementById(`booking-${bookingId}`);
     if (card) {
       const badge = card.querySelector('.booking-date-badge');
       if (badge) badge.classList.add('booking-date-past');
       const status = card.querySelector('.booking-status');
-      if (status) { status.className = 'booking-status status-cancelled'; status.textContent = 'Cancelled'; }
+      if (status) { status.className = 'booking-status status-cancelled'; status.textContent = vt('bk_status_cancelled', 'Cancelled'); }
       btn.remove();
     }
+    bkToast(vt('bk_cancel_done', 'Booking cancelled.'));
+    window.dispatchEvent(new CustomEvent('svs:bookingschange'));
   } catch (err) {
     btn.disabled = false;
-    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-    alert(err.message || 'Could not cancel booking.');
+    btn.innerHTML = original;
+    bkToast(vt('bk_cancel_fail', 'Could not cancel the booking. Please try again or message us.'), true);
   }
 }
 
@@ -752,7 +804,7 @@ function logout() {
   if (lp) lp.value = '';
   if (fe) fe.value = '';
   switchTab('login');
-  updateHeaderBtn('Sign In');
+  updateHeaderBtn(t('nav_signin', 'Sign In'));
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────────
@@ -823,3 +875,15 @@ async function handleGoogleSignIn(response) {
     showDashboard({ name: data.client?.name || name, email: data.client?.email || email });
   } catch (err) { showError(err.message || 'Google sign-in failed. Please try again.'); }
 }
+
+// Google's own button is drawn in one language; re-draw it when the site language changes.
+window.addEventListener('svs:langchange', function (e) {
+  var gid = window.google && window.google.accounts && window.google.accounts.id;
+  var lang = (e && e.detail && e.detail.lang) || (window.SVS_I18N && window.SVS_I18N.getLang()) || 'en';
+  document.querySelectorAll('.g_id_signin').forEach(function (el) {
+    el.setAttribute('data-locale', lang);
+    if (gid && el.dataset.svsRendered !== 'redirect' && el.children.length) {
+      try { el.innerHTML = ''; gid.renderButton(el, { type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', logo_alignment: 'left', width: 420, locale: lang }); } catch (_) {}
+    }
+  });
+});

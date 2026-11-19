@@ -78,7 +78,7 @@ const SVS_TRANSLATIONS = {
     nav_contact:    'Contact',
     nav_account:    'My Account',
     nav_signin:     'Sign In',
-    btn_book_now:   'Book Now',
+    btn_book_now:   'Book a class',
     btn_book_float: 'Book now',
 
     // ── Hero ──
@@ -407,7 +407,7 @@ const SVS_TRANSLATIONS = {
     // ── Schedule ──
     schedule_eyebrow:   'Живое расписание',
     schedule_title:     'Ближайшие занятия',
-    schedule_lead:      'Расписание в реальном времени из нашей системы бронирования — обновляется автоматически.',
+    schedule_lead:      'Актуальное расписание прямо из нашей системы записи — обновляется автоматически.',
     schedule_subtitle:  'В реальном времени из студии — обновляется автоматически.',
     schedule_today:     'Сегодня',
     schedule_filter_cat:  'Категория',
@@ -1723,6 +1723,246 @@ Object.assign(SVS_TRANSLATIONS.el, {
   footer_privacy: 'Πολιτική Απορρήτου',
   footer_cookies: 'Cookies',
 });
+
+// ── Запись на занятие и кабинет: тексты (RU — «запись», на «вы») ─────────────
+// Строки окна записи, экрана «Готово», списка записей и отмены в кабинете.
+Object.assign(SVS_TRANSLATIONS.en, {
+  bk_status_confirmed: 'Confirmed',
+  bk_status_past:      'Past',
+  bk_status_cancelled: 'Cancelled',
+  bk_cancel_btn:       'Cancel booking',
+  bk_cancel_title:     'Cancel this booking?',
+  bk_cancel_text:      'Your place will be freed up for someone else. Please cancel in advance if you can’t make it.',
+  bk_cancel_yes:       'Cancel booking',
+  bk_cancel_no:        'Keep booking',
+  bk_cancel_fail:      'Could not cancel the booking. Please try again or message us.',
+  bk_cancel_done:      'Booking cancelled.',
+  bk_showing:          'Showing {n} of {total}',
+  bk_load_more:        'Show more ({n})',
+  bk_load_error:       'Could not load your bookings. Please try again.',
+  bk_retry:            'Try again',
+  bk_class:            'Class',
+  bk_at:               '{date} at {time}',
+  acc_hero_tagline:    'Your Wellness Journey',
+  acc_hero_title:      'Move. Breathe.<br><em>Come back.</em>',
+  acc_hero_desc:       'Sign in to see your bookings, cancel when plans change and book your next class — all in one place.',
+  acc_hero_perk1:      'Your upcoming bookings in one list',
+  acc_hero_perk2:      'Cancel a booking in two taps',
+  acc_hero_perk3:      'Quick access to the schedule',
+  // booking window
+  bm_confirm_btn:      'Confirm booking',
+  bm_your_booking:     'Your booking',
+  bm_booking_for:      'You are booking',
+  bm_login_title:      'Sign in to book',
+  bm_forgot:           'Forgot password?',
+  bm_forgot_title:     'Reset password',
+  bm_forgot_info:      'Enter the email of your account — we will send you a link to set a new password.',
+  bm_forgot_btn:       'Send link',
+  bm_forgot_sent:      'If an account with this email exists, we have sent a link to reset the password. Check your inbox (and the Spam folder).',
+  bm_forgot_fail:      'Could not send the email. Please try again later or message us.',
+  bm_back_to_login:    '← Back to sign in',
+  bm_forgot_need_email: 'Enter your email.',
+  bm_cancel_rule:      'Plans changed? Cancel in your account: My bookings → Cancel booking.',
+  bm_success_title:    'You’re booked!',
+  bm_success_sub:      'See you at Soul Vibe Space',
+  bm_arrive:           'Please arrive 5–10 minutes before the start.',
+  bm_address_label:    'Address',
+  bm_address:          '50 Agias Zonis, Limassol 3090',
+  bm_map:              'Open in Maps',
+  bm_add_cal:          'Add to calendar',
+  bm_cal_google:       'Google Calendar',
+  bm_cal_ics:          'Apple / Outlook (.ics)',
+  bm_my_bookings:      'My bookings',
+  bm_how_cancel:       'To cancel, open My bookings and press “Cancel booking”.',
+  bm_done:             'Done',
+  bm_another:          'Book another class',
+  bm_failed:           'Booking failed. Please try again or message us.',
+  // schedule price
+  sched_price_dropin:  '€20 drop-in',
+  sched_price_hint:    'cheaper with a {{pass}}',
+  sched_book_aria:     'Book {name}, {date} at {time}',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  bk_status_confirmed: 'Подтверждена',
+  bk_status_past:      'Прошло',
+  bk_status_cancelled: 'Отменена',
+  bk_cancel_btn:       'Отменить запись',
+  bk_cancel_title:     'Отменить запись?',
+  bk_cancel_text:      'Место освободится для других. Если не получается прийти, пожалуйста, отменяйте запись заранее.',
+  bk_cancel_yes:       'Отменить запись',
+  bk_cancel_no:        'Оставить',
+  bk_cancel_fail:      'Не удалось отменить запись. Попробуйте ещё раз или напишите нам.',
+  bk_cancel_done:      'Запись отменена.',
+  bk_showing:          'Показано {n} из {total}',
+  bk_load_more:        'Показать ещё ({n})',
+  bk_load_error:       'Не удалось загрузить записи. Попробуйте ещё раз.',
+  bk_retry:            'Попробовать снова',
+  bk_class:            'Занятие',
+  bk_at:               '{date} в {time}',
+  acc_hero_tagline:    'Ваша практика',
+  acc_hero_title:      'Двигайтесь. Дышите.<br><em>Возвращайтесь.</em>',
+  acc_hero_desc:       'Войдите, чтобы видеть свои записи, отменять их, если планы изменились, и записываться на следующее занятие — всё в одном месте.',
+  acc_hero_perk1:      'Все ваши записи в одном списке',
+  acc_hero_perk2:      'Отмена записи в два нажатия',
+  acc_hero_perk3:      'Быстрый переход к расписанию',
+  acc_reg_sub:         'Создайте аккаунт, чтобы управлять записями',
+  acc_all:             'Все записи',
+  acc_no_upcoming:     'Предстоящих записей нет',
+  acc_no_all:          'Записей пока нет',
+  acc_section_bookings:'Мои записи',
+  bm_confirm_btn:      'Подтвердить запись',
+  bm_your_booking:     'Ваша запись',
+  bm_booking_for:      'Вы записываетесь',
+  bm_login_title:      'Войдите, чтобы записаться',
+  bm_forgot:           'Забыли пароль?',
+  bm_forgot_title:     'Восстановление пароля',
+  bm_forgot_info:      'Введите email вашего аккаунта — мы пришлём ссылку, чтобы задать новый пароль.',
+  bm_forgot_btn:       'Отправить ссылку',
+  bm_forgot_sent:      'Если аккаунт с таким email есть, мы отправили ссылку для смены пароля. Проверьте почту (и папку «Спам»).',
+  bm_forgot_fail:      'Не удалось отправить письмо. Попробуйте позже или напишите нам.',
+  bm_back_to_login:    '← Назад ко входу',
+  bm_forgot_need_email: 'Введите email.',
+  bm_cancel_rule:      'Планы изменились? Отменить запись можно в кабинете: «Мои записи» → «Отменить запись».',
+  bm_success_title:    'Вы записаны!',
+  bm_success_sub:      'Ждём вас в Soul Vibe Space',
+  bm_arrive:           'Приходите за 5–10 минут до начала.',
+  bm_address_label:    'Адрес',
+  bm_address:          '50 Agias Zonis, Limassol 3090',
+  bm_map:              'Открыть на карте',
+  bm_add_cal:          'Добавить в календарь',
+  bm_cal_google:       'Google Календарь',
+  bm_cal_ics:          'Apple / Outlook (.ics)',
+  bm_my_bookings:      'Мои записи',
+  bm_how_cancel:       'Чтобы отменить, откройте «Мои записи» и нажмите «Отменить запись».',
+  bm_done:             'Готово',
+  bm_another:          'Записаться ещё',
+  bm_failed:           'Не удалось записаться. Попробуйте ещё раз или напишите нам.',
+  sched_price_dropin:  'Разово €20',
+  sched_price_hint:    'с {{pass:ins}} дешевле',
+  sched_book_aria:     'Записаться: {name}, {date} в {time}',
+});
+Object.assign(SVS_TRANSLATIONS.el, {
+  bk_status_confirmed: 'Επιβεβαιωμένη',
+  bk_status_past:      'Πέρασε',
+  bk_status_cancelled: 'Ακυρώθηκε',
+  bk_cancel_btn:       'Ακύρωση κράτησης',
+  bk_cancel_title:     'Ακύρωση της κράτησης;',
+  bk_cancel_text:      'Η θέση σου θα ελευθερωθεί για κάποιον άλλο. Αν δεν μπορείς να έρθεις, ακύρωσε έγκαιρα.',
+  bk_cancel_yes:       'Ακύρωση κράτησης',
+  bk_cancel_no:        'Διατήρηση',
+  bk_cancel_fail:      'Η ακύρωση δεν ήταν δυνατή. Δοκίμασε ξανά ή στείλε μας μήνυμα.',
+  bk_cancel_done:      'Η κράτηση ακυρώθηκε.',
+  bk_showing:          'Εμφανίζονται {n} από {total}',
+  bk_load_more:        'Περισσότερα ({n})',
+  bk_load_error:       'Δεν ήταν δυνατή η φόρτωση των κρατήσεων. Δοκίμασε ξανά.',
+  bk_retry:            'Δοκίμασε ξανά',
+  bk_class:            'Μάθημα',
+  bk_at:               '{date} στις {time}',
+  acc_hero_tagline:    'Η πρακτική σου',
+  acc_hero_title:      'Κινήσου. Ανάπνευσε.<br><em>Έλα ξανά.</em>',
+  acc_hero_desc:       'Συνδέσου για να βλέπεις τις κρατήσεις σου, να τις ακυρώνεις αν αλλάξουν τα σχέδια και να κλείνεις το επόμενο μάθημα — όλα σε ένα μέρος.',
+  acc_hero_perk1:      'Όλες οι κρατήσεις σου σε μία λίστα',
+  acc_hero_perk2:      'Ακύρωση με δύο πατήματα',
+  acc_hero_perk3:      'Γρήγορη πρόσβαση στο πρόγραμμα',
+  bm_confirm_btn:      'Επιβεβαίωση κράτησης',
+  bm_your_booking:     'Η κράτησή σου',
+  bm_booking_for:      'Κάνεις κράτηση για',
+  bm_login_title:      'Συνδέσου για να κάνεις κράτηση',
+  bm_forgot:           'Ξέχασες τον κωδικό;',
+  bm_forgot_title:     'Επαναφορά κωδικού',
+  bm_forgot_info:      'Γράψε το email του λογαριασμού σου — θα σου στείλουμε σύνδεσμο για νέο κωδικό.',
+  bm_forgot_btn:       'Αποστολή συνδέσμου',
+  bm_forgot_sent:      'Αν υπάρχει λογαριασμός με αυτό το email, στείλαμε σύνδεσμο επαναφοράς. Έλεγξε τα εισερχόμενα (και τα Ανεπιθύμητα).',
+  bm_forgot_fail:      'Η αποστολή απέτυχε. Δοκίμασε αργότερα ή στείλε μας μήνυμα.',
+  bm_back_to_login:    '← Πίσω στη σύνδεση',
+  bm_forgot_need_email: 'Συμπλήρωσε το email σου.',
+  bm_cancel_rule:      'Άλλαξαν τα σχέδια; Ακύρωσε από τον λογαριασμό σου: Οι κρατήσεις μου → Ακύρωση κράτησης.',
+  bm_success_title:    'Η κράτησή σου έγινε!',
+  bm_success_sub:      'Σε περιμένουμε στο Soul Vibe Space',
+  bm_arrive:           'Έλα 5–10 λεπτά πριν την έναρξη.',
+  bm_address_label:    'Διεύθυνση',
+  bm_address:          'Αγίας Ζώνης 50, Λεμεσός 3090',
+  bm_map:              'Άνοιγμα στον χάρτη',
+  bm_add_cal:          'Προσθήκη στο ημερολόγιο',
+  bm_cal_google:       'Google Calendar',
+  bm_cal_ics:          'Apple / Outlook (.ics)',
+  bm_my_bookings:      'Οι κρατήσεις μου',
+  bm_how_cancel:       'Για ακύρωση άνοιξε «Οι κρατήσεις μου» και πάτησε «Ακύρωση κράτησης».',
+  bm_done:             'Τέλος',
+  bm_another:          'Νέα κράτηση',
+  bm_failed:           'Η κράτηση απέτυχε. Δοκίμασε ξανά ή στείλε μας μήνυμα.',
+  sched_price_dropin:  '€20 μεμονωμένα',
+  sched_price_hint:    'φθηνότερα με {{pass}}',
+  sched_book_aria:     'Κράτηση: {name}, {date} στις {time}',
+});
+// EN: единый призыв «Book a class» (на карточках расписания — короткое «Book»)
+Object.assign(SVS_TRANSLATIONS.en, { acc_book_class: 'Book a class', acc_action_bookclass: 'Book a class', acc_section_bookings: 'My bookings', acc_all: 'All bookings' });
+Object.assign(SVS_TRANSLATIONS.el, { acc_section_bookings: 'Οι κρατήσεις μου' });
+
+// ── Названия классов: перевод без потери языка класса и преподавателя ───────
+// В SimplyBook язык класса пишется в скобках: (rus), (Eng.), (rus/eng), (Eng/Rus),
+// преподаватель — после «with». При переводе названия по SVS_SERVICE_NAMES язык
+// и имя добавляются обратно: «Виньяса йога (англ.) · Стефани».
+Object.assign(SVS_SERVICE_NAMES, {
+  97:  { en: 'Ecstatic Dance at the Rancho', ru: 'Экстатический танец на Ранчо', el: 'Ecstatic Dance στο Rancho' },
+  138: { en: 'Aerial Yoga', ru: 'Аэройога', el: 'Aerial Yoga' },
+  142: { en: 'Kundalini Yoga, 90 min', ru: 'Кундалини йога, 90 мин', el: 'Kundalini Yoga, 90 λεπτά' },
+  145: { en: 'Yin Yoga', ru: 'Инь йога', el: 'Yin Yoga' },
+  146: { en: 'Low Hammock: Healthy Spine', ru: 'Низкий гамак: здоровая спина', el: 'Χαμηλή αιώρα: Υγιής σπονδυλική στήλη' },
+  147: { en: 'Lila – Transformation Game', ru: 'Лила — игра трансформации', el: 'Lila — Παιχνίδι μεταμόρφωσης' },
+  148: { en: 'Morning Hatha Yoga', ru: 'Утренняя хатха йога', el: 'Πρωινή Hatha Yoga' },
+});
+const SVS_CLASS_LANG = {
+  en: { ru: 'Russian', en: 'English', sep: '/' },
+  ru: { ru: 'рус.', en: 'англ.', sep: '/' },
+  el: { ru: 'ρωσικά', en: 'αγγλικά', sep: '/' },
+};
+// Имена преподавателей на русском (остальные языки — латиницей, как в SimplyBook).
+const SVS_TEACHER_RU = { Stephanie: 'Стефани', Elena: 'Елена', Tati: 'Тати', Larisa: 'Лариса' };
+const SVS_LANG_TAG_RX = /\s*\(\s*(rus|eng|ru|en)\.?\s*(?:\/\s*(rus|eng|ru|en)\.?\s*)?\)/i;
+const SVS_WITH_RX = /\s+(?:class\s+)?with\s+([A-ZА-Я][\p{L}-]+)(?=[\s,(|]|$)/u;
+const SVS_WITH_STOP = { Live: 1 };
+
+function svsClassInfo(serviceId, rawName, lang) {
+  lang = lang || (window.SVS_I18N ? window.SVS_I18N.getLang() : 'en');
+  const raw = String(rawName || '').trim();
+  const tag = raw.match(SVS_LANG_TAG_RX);
+  const langs = tag ? [tag[1], tag[2]].filter(Boolean).map(x => x.toLowerCase().slice(0, 2) === 'ru' ? 'ru' : 'en') : [];
+  const w = raw.match(SVS_WITH_RX);
+  const teacher = (w && !SVS_WITH_STOP[w[1]]) ? w[1] : '';
+  const map = SVS_SERVICE_NAMES[serviceId];
+  let base = map ? (map[lang] || map.en) : raw;
+  if (!map) {
+    base = base.replace(SVS_LANG_TAG_RX, '');
+    if (teacher) base = base.replace(SVS_WITH_RX, '');
+    base = base.replace(/\s+,/g, ',').replace(/\s{2,}/g, ' ').trim() || raw;
+  }
+  const L = SVS_CLASS_LANG[lang] || SVS_CLASS_LANG.en;
+  const langLabel = langs.length ? '(' + langs.map(x => L[x]).join(L.sep) + ')' : '';
+  const t = teacher && lang === 'ru' ? (SVS_TEACHER_RU[teacher] || teacher) : teacher;
+  return { title: base + (langLabel ? ' ' + langLabel : ''), teacher: t, langs: langs };
+}
+// Полное название для мест без отдельной строки преподавателя: «Инь йога (рус.) · Елена».
+function svsClassName(serviceId, rawName, lang) {
+  const i = svsClassInfo(serviceId, rawName, lang);
+  return i.teacher ? i.title + ' · ' + i.teacher : i.title;
+}
+// Провайдер SimplyBook — человек? «Hatha Yoga (rus)», «Soul Vibe Space LTD», «Vinyasa instructor»
+// и т. п. — служебные названия ресурсов, на сайте их не показываем.
+function svsIsPersonName(name) {
+  const n = String(name || '').trim();
+  if (!n || n.split(/\s+/).length > 3) return false;
+  return !/instructor|teacher|yoga|ltd|soul\s*vibe|qigong|hatha|vinyasa|kundalini|pilates|aerial|hip\s*-?hop|\bdj\b|\bHE\b|[()&\d]|morning|class|studio/i.test(n);
+}
+// Преподаватель для показа: человек-провайдер или имя из названия класса.
+function svsTeacherName(serviceId, rawName, unitName, lang) {
+  if (svsIsPersonName(unitName)) return lang === 'ru' || (!lang && window.SVS_I18N && window.SVS_I18N.getLang() === 'ru') ? (SVS_TEACHER_RU[unitName] || unitName) : unitName;
+  return svsClassInfo(serviceId, rawName, lang).teacher;
+}
+window.svsClassInfo = svsClassInfo;
+window.svsClassName = svsClassName;
+window.svsIsPersonName = svsIsPersonName;
+window.svsTeacherName = svsTeacherName;
 
 // Extra translations registered by page-specific scripts loaded BEFORE i18n.js
 // (e.g. i18n-legal.js on /terms and /privacy): window.SVS_I18N_EXTRA = { en:{}, ru:{}, el:{} }.
