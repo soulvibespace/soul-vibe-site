@@ -1456,7 +1456,9 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pv_faq8_q:            'Can I pay online?',
   pv_faq8_a:            'Not yet. Payment is made at the studio, and the administrator confirms it. VIBES then appear on your balance.',
   pv_faq9_q:            'Can I freeze my package?',
-  pv_faq9_a:            'Yes. Submit a freeze request from your <a href="/account">personal account</a>; the administrator reviews it. The package validity is extended by the number of frozen days.',
+  pv_faq9_a:            'Yes. Submit a freeze request from your <a href="/account">personal account</a>; the administrator reviews it. A freeze can last up to 90 days, and the package validity is extended by the number of frozen days.',
+  pv_faq11_q:           'Can I get a refund for unused VIBES?',
+  pv_faq11_a:           'Refunds for unused VIBES are possible at the studio’s discretion, at the rate of 1 VIBE = €0.75. Bonus VIBES (for referring a friend, a review or your birthday) are not refundable.',
   pv_faq10_q:           'Where can I see my balance and history?',
   pv_faq10_a:           'In your <a href="/account">personal account</a>: current VIBES balance, packages and their expiry dates, freezes, and the full history of credits, bonuses and visits.',
 
@@ -1541,7 +1543,9 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pv_faq8_q:            'Можно оплатить онлайн?',
   pv_faq8_a:            'Пока нет. Оплата проходит в студии, администратор её подтверждает — после этого VIBES появляются на балансе.',
   pv_faq9_q:            'Можно заморозить пакет?',
-  pv_faq9_a:            'Да. Подай заявление на заморозку из <a href="/account">личного кабинета</a> — его рассмотрит администратор. Срок пакета продлевается на количество дней заморозки.',
+  pv_faq9_a:            'Да. Подай заявление на заморозку из <a href="/account">личного кабинета</a> — его рассмотрит администратор. Заморозка — до 90 дней, срок пакета продлевается на количество дней заморозки.',
+  pv_faq11_q:           'Можно ли вернуть деньги за неиспользованные VIBES?',
+  pv_faq11_a:           'Возврат денег за неиспользованные VIBES возможен по решению студии по курсу 1 VIBE = €0,75. Бонусные VIBES (за друга, отзыв, день рождения) не возвращаются.',
   pv_faq10_q:           'Где посмотреть баланс и историю?',
   pv_faq10_a:           'В <a href="/account">личном кабинете</a>: текущий баланс VIBES, пакеты и сроки их действия, заморозки и полная история начислений, бонусов и посещений.',
 
@@ -1626,7 +1630,9 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_faq8_q:            'Μπορώ να πληρώσω online;',
   pv_faq8_a:            'Όχι ακόμη. Η πληρωμή γίνεται στο studio και ο διαχειριστής την επιβεβαιώνει — έπειτα τα VIBES εμφανίζονται στο υπόλοιπό σου.',
   pv_faq9_q:            'Μπορώ να παγώσω το πακέτο μου;',
-  pv_faq9_a:            'Ναι. Υπόβαλε αίτημα παγώματος από τον <a href="/account">προσωπικό σου λογαριασμό</a> — το εξετάζει ο διαχειριστής. Η ισχύς του πακέτου παρατείνεται κατά τις ημέρες παγώματος.',
+  pv_faq9_a:            'Ναι. Υπόβαλε αίτημα παγώματος από τον <a href="/account">προσωπικό σου λογαριασμό</a> — το εξετάζει ο διαχειριστής. Το πάγωμα διαρκεί έως 90 ημέρες και η ισχύς του πακέτου παρατείνεται κατά τις ημέρες παγώματος.',
+  pv_faq11_q:           'Μπορώ να πάρω πίσω χρήματα για αχρησιμοποίητα VIBES;',
+  pv_faq11_a:           'Η επιστροφή χρημάτων για αχρησιμοποίητα VIBES είναι δυνατή κατά την κρίση του στούντιο, με ισοτιμία 1 VIBE = €0,75. Τα bonus VIBES (για σύσταση φίλου, κριτική ή γενέθλια) δεν επιστρέφονται.',
   pv_faq10_q:           'Πού βλέπω το υπόλοιπο και το ιστορικό;',
   pv_faq10_a:           'Στον <a href="/account">προσωπικό σου λογαριασμό</a>: τρέχον υπόλοιπο VIBES, πακέτα και ημερομηνίες λήξης, παγώματα και πλήρες ιστορικό πιστώσεων, bonus και επισκέψεων.',
 
