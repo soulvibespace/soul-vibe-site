@@ -316,7 +316,10 @@ function showDashboard(client) {
 
   updateHeaderBtn(firstName);
   loadVibes();
+  if (typeof loadBirthday === 'function') loadBirthday(); // account-birthday.js
   loadBookings(true);
+  // /account#bookings (link «Мои записи» from the booking window) → scroll to the list
+  if (location.hash === '#bookings') setTimeout(function () { var el = document.getElementById('bookings'); if (el) el.scrollIntoView({ block: 'start' }); }, 300);
 }
 
 // ── VIBES (loyalty programme) ────────────────────────────────────────────────
@@ -339,12 +342,13 @@ function vibesDate(iso, withTime) {
   if (withTime) { o.hour = '2-digit'; o.minute = '2-digit'; }
   return d.toLocaleString(vibesLocale(), o);
 }
-// Package code (MP4, SP2 …) is the part of the panel label before " · ".
+// Class Pass / Starter Pack code (MP4, SP2 …) is the part of the panel label before " · ".
+// Product names come from the terms dictionary (SVS_TERMS in i18n.js): {{pass_line}} / {{starter_line}}.
 function vibesLotName(lot) {
   var code = String(lot.source_label || '').split(' · ')[0].trim();
   if (lot.source_type === 'membership' || lot.source_type === 'starter_pack') {
     var key = lot.source_type === 'membership' ? 'vibes_multipass' : 'vibes_starter';
-    return t(key, lot.source_type === 'membership' ? 'Multi Pass' : 'Starter Pack') + (code ? ' ' + code : '');
+    return vt(key, lot.source_type === 'membership' ? 'Class Pass' : 'Starter Pack') + (code ? ' ' + code : '');
   }
   return vt('vibes_src_' + lot.source_type, vt('vibes_src_bonus', 'Bonus VIBES'));
 }
@@ -360,6 +364,17 @@ function vibesTxName(tx) {
   return vt('vibes_src_' + c, vt('vibes_src_bonus', 'Bonus VIBES'));
 }
 
+// «≈ 1 занятие / 2 занятия / 5 занятий» — plural form for the page language (Intl.PluralRules).
+function vibesClassesLeft(n) {
+  var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+  var form = 'other';
+  try { form = new Intl.PluralRules(lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB').select(n); } catch (_) {}
+  var key = 'vibes_classes_left_' + form;
+  var s = vt(key, '');
+  if (!s || s === key) s = vt('vibes_classes_left_other', '') || vt('vibes_classes_left', '≈ {n} classes');
+  return s.replace('{n}', n);
+}
+
 async function loadVibes(silent) {
   var section = document.getElementById('vibesSection');
   var box = document.getElementById('vibesContainer');
@@ -367,6 +382,7 @@ async function loadVibes(silent) {
   try {
     var data = await apiFetch('/api/me/vibes');
     _vibesData = data;
+    if (data && data.linked) await loadFreezeRequests(); else _fzReqs = null;
     section.hidden = false;
     renderVibes();
   } catch (err) {
@@ -386,11 +402,26 @@ function renderVibes() {
   var box = document.getElementById('vibesContainer');
   var d = _vibesData;
   if (!box || !d) return;
+  // The VIBES block is for clients who have (or had) a Class Pass / Starter Pack, or still hold VIBES.
+  // Everyone else sees only a link to the Class Passes — no VIBES wording at all.
+  var head = document.querySelector('#vibesSection .dash-section-head');
+  var hasVibes = d.linked && (Number(d.balance_vibes || 0) > 0 || (window.SVSPayPlan ? SVSPayPlan.hadPass(d)
+    : (d.lots || []).some(function (l) { return l.source_type === 'membership' || l.source_type === 'starter_pack'; })));
+  var pending = !d.linked && (d.reason === 'verify_email' || d.reason === 'ambiguous');
+  if (!hasVibes && !pending) {
+    if (head) head.style.display = 'none';
+    box.classList.add('vibes-card--none');
+    box.innerHTML = '<p class="vibes-note">' + escHtml(vt('vibes_none_lead', 'Classes are cheaper with a Class Pass.')) + '</p>'
+      + '<a class="vibes-cta" href="/pricing">' + escHtml(vt('vibes_see_passes', 'See Class Passes')) + ' →</a>';
+    return;
+  }
+  if (head) head.style.display = '';
+  box.classList.remove('vibes-card--none');
   if (!d.linked) {
     var key = d.reason === 'verify_email' ? 'vibes_verify_email' : d.reason === 'ambiguous' ? 'vibes_ambiguous' : 'vibes_not_found';
     var fb = d.reason === 'verify_email' ? 'To see your VIBES, sign in with Google using the email you gave the studio.'
       : d.reason === 'ambiguous' ? 'We found more than one studio card with your email. Please contact the studio so we can link the right one.'
-      : 'You have no VIBES yet. Buy a Multi Pass or Starter Pack at the studio — your balance will appear here.';
+      : 'You have no VIBES yet. Buy a Class Pass at the studio — your balance will appear here.';
     if (d.reason === 'verify_email') { renderVibesVerify(); return; }
     box.innerHTML = '<p class="vibes-note">' + escHtml(t(key, fb)) + '</p>';
     return;
@@ -398,11 +429,13 @@ function renderVibes() {
   var bal = Number(d.balance_vibes || 0);
   var classes = Math.floor(bal / VIBES_PER_CLASS);
   var h = '<div class="vibes-balance"><span class="vibes-balance-num">' + bal + '</span><span class="vibes-balance-unit">VIBES</span>'
-        + '<span class="vibes-balance-hint">' + escHtml(vt('vibes_classes_left', '≈ {n} classes').replace('{n}', classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
+        + '<span class="vibes-balance-hint">' + escHtml(vibesClassesLeft(classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
 
   var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
-  h += '<p class="vibes-sub">' + escHtml(vt('vibes_active', 'Active packages')) + '</p>';
-  if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active packages.')) + '</p>';
+  // Bonus VIBES (e.g. a birthday gift) are not a Class Pass: neutral heading when there are any.
+  var anyBonus = active.some(function (l) { return l.source_type !== 'membership' && l.source_type !== 'starter_pack'; });
+  h += '<p class="vibes-sub">' + escHtml(anyBonus ? vt('vibes_active_mixed', 'Active VIBES') : vt('vibes_active', 'Active Class Passes and Starter Packs')) + '</p>';
+  if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active Class Pass or Starter Pack.')) + '</p>';
   else {
     h += '<ul class="vibes-list">' + active.map(function (l) {
       var meta = l.expires_at ? vt('vibes_until', 'valid until {d}').replace('{d}', vibesDate(l.expires_at)) : vt('vibes_no_expiry', 'no expiry date');
@@ -418,6 +451,8 @@ function renderVibes() {
            + escHtml(f.status === 'active' ? vt('vibes_freeze_active', 'active now') : vt('vibes_freeze_scheduled', 'scheduled')) + '</span></span><span class="vibes-row-amount">' + f.days + ' ' + escHtml(vt('vibes_days', 'days')) + '</span></li>';
     }).join('') + '</ul>';
   }
+
+  h += renderFreezeBlock(d);
 
   var tx = d.transactions || [];
   var lim = _vibesShowAll ? tx.length : 5;
@@ -443,6 +478,184 @@ function renderVibes() {
   }
   box.innerHTML = h;
 }
+// ── Freeze request (заявление на заморозку) ──────────────────────────────────
+// A linked client with an active Class Pass can ask the studio to freeze it.
+// Requests live in the VIBES panel; an administrator approves or rejects them.
+// Only one request can be pending at a time. If the API does not offer the
+// endpoint yet, the block simply stays hidden.
+var FZ_MAX_DAYS = 90, FZ_MAX_LEAD_DAYS = 60, FZ_COMMENT_MAX = 500;
+var _fzReqs = null, _fzNotice = '';
+var _fz = { open: false, start: '', end: '', preset: 7, reason: '', comment: '', busy: false, err: '', trigger: null };
+
+async function loadFreezeRequests() {
+  try {
+    var d = await apiFetch('/api/me/vibes/freeze-requests');
+    _fzReqs = d && d.linked ? (d.requests || []) : null;
+  } catch (e) { _fzReqs = null; }
+}
+function fzToday() {
+  // Studio date (Asia/Nicosia) as YYYY-MM-DD.
+  try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Nicosia', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+  catch (e) { return new Date().toISOString().slice(0, 10); }
+}
+function fzAdd(ymd, n) { var d = new Date(ymd + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+function fzDays(a, b) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(a) || !/^\d{4}-\d{2}-\d{2}$/.test(b)) return 0;
+  var x = Date.parse(a + 'T00:00:00Z'), y = Date.parse(b + 'T00:00:00Z');
+  return isFinite(x) && isFinite(y) && y >= x ? Math.round((y - x) / 864e5) + 1 : 0;
+}
+function fzDate(ymd) { return vibesDate(ymd ? ymd + 'T12:00:00Z' : ''); }
+function fzReason(r) { return vt('fz_reason_' + r, r === 'illness' ? 'Illness or injury' : r === 'travel' ? 'Travel' : 'Other'); }
+function fzCanRequest(d) {
+  return (d.lots || []).some(function (l) { return l.status === 'active' && l.remaining_vibes > 0 && l.expires_at; });
+}
+
+// Block inside «My VIBES»: latest request card + «Freeze Class Pass» button.
+function renderFreezeBlock(d) {
+  if (!_fzReqs) return '';
+  var pending = _fzReqs.filter(function (r) { return r.status === 'pending'; })[0];
+  var latest = _fzReqs[0];
+  var recent = latest && (latest.status === 'pending' || (latest.decided_at && Date.now() - Date.parse(latest.decided_at) < 30 * 864e5));
+  var canRequest = fzCanRequest(d);
+  if (!recent && !canRequest) return '';
+  var h = '<p class="vibes-sub">' + escHtml(vt('fz_title', 'Freeze request')) + '</p>';
+  if (recent) {
+    var st = latest.status;
+    var pill = st === 'pending' ? vt('fz_status_pending', 'Under review') : st === 'approved' ? vt('fz_status_approved', 'Approved') : vt('fz_status_rejected', 'Declined');
+    var s = st === 'approved' && latest.approved_start_date ? latest.approved_start_date : latest.start_date;
+    var e = st === 'approved' && latest.approved_end_date ? latest.approved_end_date : latest.end_date;
+    var meta = fzReason(latest.reason) + ' · ' + vt('fz_sent_on', 'sent {d}').replace('{d}', vibesDate(latest.created_at));
+    h += '<div class="fz-card fz-' + st + '"><div class="fz-card-top"><span class="fz-card-dates">' + escHtml(fzDate(s) + ' – ' + fzDate(e)) + ' · ' + fzDays(s, e) + ' ' + escHtml(vt('vibes_days', 'days')) + '</span>'
+       + '<span class="fz-pill">' + escHtml(pill) + '</span></div>'
+       + '<p class="fz-card-meta">' + escHtml(meta) + '</p>';
+    if (st === 'approved' && (latest.approved_start_date !== latest.start_date || latest.approved_end_date !== latest.end_date))
+      h += '<p class="fz-card-meta">' + escHtml(vt('fz_dates_changed', 'The studio adjusted the dates you asked for ({d}).').replace('{d}', fzDate(latest.start_date) + ' – ' + fzDate(latest.end_date))) + '</p>';
+    if (st === 'pending') h += '<p class="fz-card-note">' + escHtml(vt('fz_pending_note', 'We will email you when an administrator reviews it.')) + '</p>';
+    if (latest.admin_comment) h += '<p class="fz-card-comment"><span>' + escHtml(vt('fz_admin_comment', 'Comment from the studio')) + ':</span> ' + escHtml(latest.admin_comment) + '</p>';
+    h += '</div>';
+  }
+  if (_fzNotice) h += '<p class="vibes-ev-msg" role="status">' + escHtml(_fzNotice) + '</p>';
+  if (!pending && canRequest) h += '<button type="button" class="btn btn-outline btn-sm fz-open" onclick="openFreezeModal(this)">' + escHtml(vt('fz_open', 'Freeze Class Pass')) + '</button>';
+  return h;
+}
+
+function fzEnsureModal() {
+  var m = document.getElementById('fzModal');
+  if (m) return m;
+  m = document.createElement('div');
+  m.id = 'fzModal'; m.className = 'fz-modal'; m.hidden = true;
+  m.innerHTML = '<div class="fz-backdrop" data-fz-close></div><div class="fz-panel" role="dialog" aria-modal="true" aria-labelledby="fzTitle"><div id="fzBody"></div></div>';
+  m.addEventListener('click', function (e) { if (e.target.hasAttribute('data-fz-close')) closeFreezeModal(); });
+  m.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeFreezeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var f = m.querySelectorAll('button:not([disabled]),input:not([disabled]),textarea,[tabindex="0"]');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+  document.body.appendChild(m);
+  return m;
+}
+function openFreezeModal(trigger) {
+  var today = fzToday();
+  _fz = { open: true, start: today, end: fzAdd(today, 6), preset: 7, reason: '', comment: '', busy: false, err: '', trigger: trigger || null };
+  _fzNotice = '';
+  var m = fzEnsureModal(); m.hidden = false; document.body.classList.add('fz-lock');
+  renderFreezeModal();
+  var first = m.querySelector('.fz-chip'); if (first) first.focus();
+}
+function closeFreezeModal() {
+  var m = document.getElementById('fzModal');
+  if (!m || m.hidden || _fz.busy) return;
+  m.hidden = true; _fz.open = false; document.body.classList.remove('fz-lock');
+  var t = _fz.trigger && document.body.contains(_fz.trigger) ? _fz.trigger : document.querySelector('.fz-open');
+  if (t) t.focus();
+}
+function fzValidate() {
+  var today = fzToday(), n = fzDays(_fz.start, _fz.end);
+  if (!_fz.start || !_fz.end || !n) return vt('fz_err_dates', 'Check the dates: the end cannot be before the start.');
+  if (_fz.start < today) return vt('fz_err_past', 'The freeze cannot start in the past.');
+  if (_fz.start > fzAdd(today, FZ_MAX_LEAD_DAYS)) return vt('fz_err_far', 'The start date can be at most {n} days from today.').replace('{n}', FZ_MAX_LEAD_DAYS);
+  if (n > FZ_MAX_DAYS) return vt('fz_err_long', 'A freeze can last at most {n} days.').replace('{n}', FZ_MAX_DAYS);
+  if (!_fz.reason) return vt('fz_err_reason', 'Choose a reason.');
+  return '';
+}
+function renderFreezeModal() {
+  var body = document.getElementById('fzBody');
+  if (!body || !_fz.open) return;
+  var today = fzToday(), n = fzDays(_fz.start, _fz.end);
+  var chips = [7, 14, 30].map(function (k) {
+    return '<button type="button" class="fz-chip" aria-pressed="' + (_fz.preset === k) + '" onclick="fzPreset(' + k + ')">' + escHtml(vt('fz_preset_days', '{n} days').replace('{n}', k)) + '</button>';
+  }).join('') + '<button type="button" class="fz-chip" aria-pressed="' + (_fz.preset === 0) + '" onclick="fzPreset(0)">' + escHtml(vt('fz_preset_custom', 'Custom dates')) + '</button>';
+  var reasons = ['illness', 'travel', 'other'].map(function (r) {
+    return '<label class="fz-radio"><input type="radio" name="fzReason" value="' + r + '"' + (_fz.reason === r ? ' checked' : '') + ' onchange="fzSet(\'reason\',this.value)"><span>' + escHtml(fzReason(r)) + '</span></label>';
+  }).join('');
+  var summary = n ? vt('fz_summary', '{n} days: {from} – {to}').replace('{n}', n).replace('{from}', fzDate(_fz.start)).replace('{to}', fzDate(_fz.end)) : '';
+  body.innerHTML =
+    '<div class="fz-head"><h2 id="fzTitle" class="fz-title">' + escHtml(vt('fz_modal_title', 'Freeze your Class Pass')) + '</h2>'
+    + '<button type="button" class="fz-x" data-fz-close aria-label="' + escHtml(vt('fz_close', 'Close')) + '">&times;</button></div>'
+    + '<form class="fz-form" onsubmit="event.preventDefault();submitFreezeRequest()" novalidate>'
+    + '<fieldset class="fz-field"><legend>' + escHtml(vt('fz_period', 'Period')) + '</legend><div class="fz-chips">' + chips + '</div>'
+    + '<div class="fz-dates"><label>' + escHtml(vt('fz_start', 'Start')) + '<input type="date" id="fzStart" min="' + today + '" max="' + fzAdd(today, FZ_MAX_LEAD_DAYS) + '" value="' + _fz.start + '" onchange="fzSet(\'start\',this.value)" required></label>'
+    + '<label>' + escHtml(vt('fz_end', 'End')) + '<input type="date" id="fzEnd" min="' + (_fz.start || today) + '" value="' + _fz.end + '" onchange="fzSet(\'end\',this.value)" required></label></div>'
+    + (summary ? '<p class="fz-summary">' + escHtml(summary) + '</p>' : '') + '</fieldset>'
+    + '<fieldset class="fz-field"><legend>' + escHtml(vt('fz_reason', 'Reason')) + '</legend><div class="fz-radios">' + reasons + '</div></fieldset>'
+    + '<label class="fz-field fz-comment">' + escHtml(vt('fz_comment', 'Comment (optional)')) + '<textarea id="fzComment" rows="3" maxlength="' + FZ_COMMENT_MAX + '" oninput="_fz.comment=this.value" placeholder="' + escHtml(vt('fz_comment_ph', 'Anything the studio should know')) + '">' + escHtml(_fz.comment) + '</textarea></label>'
+    + '<ul class="fz-rules"><li>' + escHtml(vt('fz_rule_1', 'Your active Class Passes are extended by the number of freeze days; your VIBES balance does not change.')) + '</li>'
+    + '<li>' + escHtml(vt('fz_rule_2', 'The freeze starts today at the earliest and lasts up to {n} days.').replace('{n}', FZ_MAX_DAYS)) + '</li>'
+    + '<li>' + escHtml(vt('fz_rule_3', 'An administrator reviews the request and you get the decision by email. Only one request can be under review at a time.')) + '</li></ul>'
+    + (_fz.err ? '<p class="vibes-ev-msg err" role="alert">' + escHtml(_fz.err) + '</p>' : '')
+    + '<div class="fz-actions"><button type="button" class="btn btn-outline btn-sm" data-fz-close' + (_fz.busy ? ' disabled' : '') + '>' + escHtml(vt('fz_cancel', 'Cancel')) + '</button>'
+    + '<button type="submit" class="btn btn-primary btn-sm"' + (_fz.busy ? ' disabled' : '') + '>' + escHtml(_fz.busy ? vt('fz_sending', 'Sending…') : vt('fz_submit', 'Send request')) + '</button></div>'
+    + '</form>';
+}
+function fzKeepFocus(id) { renderFreezeModal(); var el = document.getElementById(id) || document.querySelector(id); if (el) el.focus(); }
+function fzPreset(k) {
+  _fz.preset = k; _fz.err = '';
+  if (k) { if (!_fz.start || _fz.start < fzToday()) _fz.start = fzToday(); _fz.end = fzAdd(_fz.start, k - 1); renderFreezeModal(); var b = document.querySelectorAll('#fzBody .fz-chip')[[7, 14, 30].indexOf(k)]; if (b) b.focus(); }
+  else fzKeepFocus('fzStart');
+}
+function fzSet(field, value) {
+  _fz.err = '';
+  if (field === 'reason') { _fz.reason = value; fzKeepFocus('#fzBody input[value="' + value + '"]'); return; }
+  _fz[field] = value;
+  if (field === 'start' && _fz.preset && value) _fz.end = fzAdd(value, _fz.preset - 1);
+  else if (field === 'start' && _fz.end && value > _fz.end) _fz.end = value;
+  if (field === 'end') _fz.preset = [7, 14, 30].filter(function (k) { return fzDays(_fz.start, value) === k; })[0] || 0;
+  fzKeepFocus(field === 'start' ? 'fzStart' : 'fzEnd');
+}
+async function submitFreezeRequest() {
+  var c = document.getElementById('fzComment'); if (c) _fz.comment = c.value;
+  var err = fzValidate();
+  if (err) { _fz.err = err; renderFreezeModal(); return; }
+  _fz.busy = true; _fz.err = ''; renderFreezeModal();
+  try {
+    var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+    var r = await apiFetch('/api/me/vibes/freeze-requests', { method: 'POST', body: JSON.stringify({ start_date: _fz.start, end_date: _fz.end, reason: _fz.reason, comment: _fz.comment.trim(), lang: lang }) });
+    _fz.busy = false;
+    if (r && r.request) _fzReqs = [r.request].concat(_fzReqs || []);
+    closeFreezeModal();
+    _fzNotice = vt('fz_sent', 'Request sent. We have emailed you a confirmation.');
+    renderVibes();
+    loadFreezeRequests().then(renderVibes);
+    var o = document.querySelector('#vibesContainer .fz-card'); if (o) o.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  } catch (e) {
+    _fz.busy = false;
+    var code = e.data && e.data.code;
+    _fz.err = code === 'pending_exists' ? vt('fz_err_pending', 'You already have a request under review.')
+      : code === 'start_in_past' ? vt('fz_err_past', 'The freeze cannot start in the past.')
+      : code === 'too_long' ? vt('fz_err_long', 'A freeze can last at most {n} days.').replace('{n}', FZ_MAX_DAYS)
+      : code === 'start_too_far' ? vt('fz_err_far', 'The start date can be at most {n} days from today.').replace('{n}', FZ_MAX_LEAD_DAYS)
+      : code === 'invalid_dates' ? vt('fz_err_dates', 'Check the dates: the end cannot be before the start.')
+      : vt('fz_err_generic', 'Could not send the request. Please try again later.');
+    renderFreezeModal();
+    if (code === 'pending_exists') { loadFreezeRequests().then(renderVibes); }
+  }
+}
+window.addEventListener('svs:langchange', function () { renderFreezeModal(); });
+
 // ── Email confirmation by code (password sign-in) ─────────────────────────────
 var _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
 function renderVibesVerify() {
@@ -536,11 +749,14 @@ async function loadBookings(upcomingOnly) {
 
   try {
     const data = await apiFetch(`/api/client/bookings?upcoming=${upcomingOnly}`);
+    _bookingsLoaded = true;
     renderBookings(data.bookings || [], upcomingOnly);
   } catch (err) {
+    _bookingsLoaded = false;
     container.innerHTML = `
       <div class="bookings-empty">
-        <p>Could not load bookings. Please try again.</p>
+        <p>${escHtml(vt('bk_load_error', 'Could not load your bookings. Please try again.'))}</p>
+        <button type="button" class="acc-book-btn" onclick="loadBookings(_currentFilter)">${escHtml(vt('bk_retry', 'Try again'))}</button>
       </div>`;
   }
 }
@@ -548,41 +764,82 @@ async function loadBookings(upcomingOnly) {
 const BOOKINGS_PAGE_SIZE = 10;
 let _allBookings = [];
 let _shownCount  = 0;
+let _bookingsLoaded = false;
+
+function bkLang() { return window.SVS_I18N ? window.SVS_I18N.getLang() : 'en'; }
+function bkLocale() { var l = bkLang(); return l === 'ru' ? 'ru-RU' : l === 'el' ? 'el-GR' : 'en-GB'; }
+// Class name in the site language, the same as in the booking window: «Инь йога (рус.)».
+function bkClassTitle(b) {
+  return window.svsClassInfo ? svsClassInfo(b.service_id, b.service || '', bkLang()).title : (b.service || vt('bk_class', 'Class'));
+}
+function bkTeacher(b) {
+  return window.svsTeacherName ? (svsTeacherName(b.service_id, b.service || '', b.instructor, bkLang()) || '') : '';
+}
+function bkMonthLabel(b) {
+  if (!b.date) return '—';
+  const d = new Date(b.date + 'T00:00:00');
+  const s = d.toLocaleString(bkLocale(), { month: 'long', year: 'numeric' }).replace(/\s*г\.$/, '');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function bkIsCancelled(b) { return (b.status || '').toLowerCase().includes('cancel'); }
 
 function renderBookingCard(b) {
   const today = new Date(); today.setHours(0,0,0,0);
   const dateObj  = b.date ? new Date(b.date + 'T00:00:00') : null;
   const day      = dateObj ? dateObj.getDate() : '—';
-  const month    = dateObj ? dateObj.toLocaleString('en', { month: 'short' }).toUpperCase() : '';
-  const weekday  = dateObj ? dateObj.toLocaleString('en', { weekday: 'short' }) : '';
+  const month    = dateObj ? dateObj.toLocaleString(bkLocale(), { month: 'short' }).replace('.', '') : '';
+  const weekday  = dateObj ? dateObj.toLocaleString(bkLocale(), { weekday: 'short' }).replace('.', '') : '';
   const timeStr  = b.time ? b.time.slice(0,5) + (b.end_time ? ' – ' + b.end_time.slice(0,5) : '') : '';
   const isPast   = dateObj ? dateObj < today : false;
-  const isCancelled = (b.status || '').toLowerCase().includes('cancel');
+  const isCancelled = bkIsCancelled(b);
   const statusClass = isCancelled ? 'status-cancelled' : isPast ? 'status-past' : 'status-confirmed';
-  const statusLabel = isCancelled ? 'Cancelled' : isPast ? 'Completed' : 'Confirmed';
+  const statusLabel = isCancelled ? vt('bk_status_cancelled', 'Cancelled') : isPast ? vt('bk_status_past', 'Past') : vt('bk_status_confirmed', 'Confirmed');
   const showCancel  = !isPast && !isCancelled && b.id;
+  const teacher     = bkTeacher(b);
   const cancelBtn   = showCancel
-    ? `<button class="booking-cancel-btn" onclick="cancelBooking('${b.id}', this)" title="Cancel booking">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    ? `<button type="button" class="booking-cancel-btn" onclick="cancelBooking('${escHtml(String(b.id))}', this)">
+         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+         <span>${escHtml(vt('bk_cancel_btn', 'Cancel booking'))}</span>
        </button>`
     : '';
   return `
-    <div class="booking-card" id="booking-${b.id}">
-      <div class="booking-date-badge ${isPast ? 'booking-date-past' : ''}">
+    <div class="booking-card" id="booking-${escHtml(String(b.id))}">
+      <div class="booking-date-badge ${isPast || isCancelled ? 'booking-date-past' : ''}">
         <div class="booking-date-day">${day}</div>
-        <div class="booking-date-month">${month}</div>
-        ${weekday ? `<div class="booking-date-weekday">${weekday}</div>` : ''}
+        <div class="booking-date-month">${escHtml(month)}</div>
+        ${weekday ? `<div class="booking-date-weekday">${escHtml(weekday)}</div>` : ''}
       </div>
       <div class="booking-info">
-        <div class="booking-service">${escHtml(b.service || 'Class')}</div>
-        ${timeStr ? `<div class="booking-time">${timeStr}</div>` : ''}
+        <div class="booking-service" title="${escHtml(bkClassTitle(b))}">${escHtml(bkClassTitle(b))}</div>
+        ${timeStr || teacher ? `<div class="booking-time">${escHtml([timeStr, teacher].filter(Boolean).join(' · '))}</div>` : ''}
         <div class="booking-footer">
-          <span class="booking-status ${statusClass}">${statusLabel}</span>
+          <span class="booking-status ${statusClass}">${escHtml(statusLabel)}</span>
           ${b.code ? `<span class="booking-code">#${escHtml(b.code)}</span>` : ''}
         </div>
       </div>
       ${cancelBtn}
     </div>`;
+}
+
+function bkCountText(shown, total) {
+  return vt('bk_showing', 'Showing {n} of {total}').replace('{n}', shown).replace('{total}', total);
+}
+function bkMoreText(left) { return vt('bk_load_more', 'Show more ({n})').replace('{n}', left); }
+
+function bkAppend(list, items) {
+  const seps = list.querySelectorAll('.bookings-month-sep');
+  let lastMonth = seps.length ? seps[seps.length - 1].textContent : null;
+  items.forEach(b => {
+    const ml = bkMonthLabel(b);
+    if (ml !== lastMonth) {
+      const sep = document.createElement('div');
+      sep.className = 'bookings-month-sep';
+      sep.textContent = ml;
+      list.appendChild(sep);
+      lastMonth = ml;
+    }
+    list.insertAdjacentHTML('beforeend', renderBookingCard(b));
+  });
 }
 
 function renderBookings(bookings, upcomingOnly) {
@@ -594,54 +851,33 @@ function renderBookings(bookings, upcomingOnly) {
     container.innerHTML = `
       <div class="bookings-empty">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <p>${upcomingOnly ? 'No upcoming bookings' : 'No bookings yet'}</p>
-        <button onclick="openBookingFromAccount()" class="acc-book-btn">Book a class</button>
+        <p>${escHtml(upcomingOnly ? t('acc_no_upcoming', 'No upcoming bookings') : t('acc_no_all', 'No bookings yet'))}</p>
+        <button onclick="openBookingFromAccount()" class="acc-book-btn">${escHtml(t('acc_book_class', 'Book a class'))}</button>
       </div>`;
     return;
   }
 
-  // Group by month label
-  function monthLabel(b) {
-    if (!b.date) return 'Unknown';
-    const d = new Date(b.date + 'T00:00:00');
-    return d.toLocaleString('en', { month: 'long', year: 'numeric' });
-  }
-
   const list = document.createElement('div');
   list.className = 'bookings-list';
-
   const slice = bookings.slice(0, BOOKINGS_PAGE_SIZE);
   _shownCount = slice.length;
-
-  let lastMonth = null;
-  slice.forEach(b => {
-    const ml = monthLabel(b);
-    if (ml !== lastMonth) {
-      const sep = document.createElement('div');
-      sep.className = 'bookings-month-sep';
-      sep.textContent = ml;
-      list.appendChild(sep);
-      lastMonth = ml;
-    }
-    list.insertAdjacentHTML('beforeend', renderBookingCard(b));
-  });
+  bkAppend(list, slice);
 
   container.innerHTML = '';
   container.appendChild(list);
 
-  // Show counter + load more
   const total = bookings.length;
   const info = document.createElement('div');
   info.className = 'bookings-count-info';
   info.id = 'bookingsCountInfo';
-  info.innerHTML = `<span>Showing ${Math.min(_shownCount, total)} of ${total}</span>`;
+  info.innerHTML = `<span>${escHtml(bkCountText(Math.min(_shownCount, total), total))}</span>`;
   container.appendChild(info);
 
   if (_shownCount < total) {
     const btn = document.createElement('button');
     btn.className = 'bookings-load-more';
     btn.id = 'bookingsLoadMore';
-    btn.textContent = `Load more (${total - _shownCount} remaining)`;
+    btn.textContent = bkMoreText(total - _shownCount);
     btn.onclick = loadMoreBookings;
     container.appendChild(btn);
   }
@@ -652,50 +888,76 @@ function loadMoreBookings() {
   const list       = container.querySelector('.bookings-list');
   const total      = _allBookings.length;
   const nextSlice  = _allBookings.slice(_shownCount, _shownCount + BOOKINGS_PAGE_SIZE);
-
-  // Find last month label already rendered
-  const seps = list.querySelectorAll('.bookings-month-sep');
-  let lastMonth = seps.length ? seps[seps.length - 1].textContent : null;
-
-  function monthLabel(b) {
-    if (!b.date) return 'Unknown';
-    const d = new Date(b.date + 'T00:00:00');
-    return d.toLocaleString('en', { month: 'long', year: 'numeric' });
-  }
-
-  nextSlice.forEach(b => {
-    const ml = monthLabel(b);
-    if (ml !== lastMonth) {
-      const sep = document.createElement('div');
-      sep.className = 'bookings-month-sep';
-      sep.textContent = ml;
-      list.appendChild(sep);
-      lastMonth = ml;
-    }
-    list.insertAdjacentHTML('beforeend', renderBookingCard(b));
-  });
-
+  bkAppend(list, nextSlice);
   _shownCount += nextSlice.length;
-
-  // Update counter
   const info = document.getElementById('bookingsCountInfo');
-  if (info) info.innerHTML = `<span>Showing ${_shownCount} of ${total}</span>`;
-
-  // Remove load more button if done
+  if (info) info.innerHTML = `<span>${escHtml(bkCountText(_shownCount, total))}</span>`;
   const btn = document.getElementById('bookingsLoadMore');
   if (btn) {
-    if (_shownCount >= total) {
-      btn.remove();
-    } else {
-      btn.textContent = `Load more (${total - _shownCount} remaining)`;
-    }
+    if (_shownCount >= total) btn.remove();
+    else btn.textContent = bkMoreText(total - _shownCount);
   }
 }
 
-// ── Cancel booking ─────────────────────────────────────────────────────────────
-async function cancelBooking(bookingId, btn) {
-  if (!confirm('Cancel this booking?')) return;
+// Re-draw the list in the new language without another request.
+window.addEventListener('svs:langchange', function () {
+  if (!_bookingsLoaded || !document.getElementById('bookingsContainer')) return;
+  const shown = _shownCount;
+  renderBookings(_allBookings, _currentFilter);
+  while (_shownCount < Math.min(shown, _allBookings.length)) loadMoreBookings();
+});
 
+// ── Cancel booking: in-language dialog instead of the browser's confirm() ─────
+function bkConfirmDialog(b) {
+  return new Promise(function (resolve) {
+    const prev = document.activeElement;
+    const wrap = document.createElement('div');
+    wrap.className = 'bk-dialog-backdrop';
+    const when = b && b.date
+      ? vt('bk_at', '{date} at {time}')
+          .replace('{date}', new Date(b.date + 'T00:00:00').toLocaleDateString(bkLocale(), { weekday: 'long', day: 'numeric', month: 'long' }))
+          .replace('{time}', (b.time || '').slice(0, 5))
+      : '';
+    wrap.innerHTML = `
+      <div class="bk-dialog" role="alertdialog" aria-modal="true" aria-labelledby="bkDlgTitle" aria-describedby="bkDlgText">
+        <p class="bk-dialog-title" id="bkDlgTitle">${escHtml(vt('bk_cancel_title', 'Cancel this booking?'))}</p>
+        ${b ? `<p class="bk-dialog-class">${escHtml(bkClassTitle(b))}</p><p class="bk-dialog-when">${escHtml(when)}</p>` : ''}
+        <p class="bk-dialog-text" id="bkDlgText">${escHtml(vt('bk_cancel_text', ''))}</p>
+        <div class="bk-dialog-actions">
+          <button type="button" class="bk-dialog-no">${escHtml(vt('bk_cancel_no', 'Keep booking'))}</button>
+          <button type="button" class="bk-dialog-yes">${escHtml(vt('bk_cancel_yes', 'Cancel booking'))}</button>
+        </div>
+      </div>`;
+    function done(v) {
+      document.removeEventListener('keydown', onKey);
+      wrap.remove();
+      if (prev && prev.focus) try { prev.focus(); } catch (_) {}
+      resolve(v);
+    }
+    function onKey(e) { if (e.key === 'Escape') done(false); }
+    wrap.addEventListener('click', function (e) { if (e.target === wrap) done(false); });
+    wrap.querySelector('.bk-dialog-no').onclick = function () { done(false); };
+    wrap.querySelector('.bk-dialog-yes').onclick = function () { done(true); };
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(wrap);
+    wrap.querySelector('.bk-dialog-no').focus();
+  });
+}
+
+function bkToast(msg, isError) {
+  let el = document.getElementById('bkToast');
+  if (!el) { el = document.createElement('div'); el.id = 'bkToast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+  el.className = 'bk-toast' + (isError ? ' bk-toast--error' : '');
+  el.textContent = msg;
+  clearTimeout(el._t); el.hidden = false;
+  el._t = setTimeout(function () { el.hidden = true; }, 5000);
+}
+
+async function cancelBooking(bookingId, btn) {
+  const b = _allBookings.find(x => String(x.id) === String(bookingId));
+  if (!(await bkConfirmDialog(b))) return;
+
+  const original = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner" style="border-color:rgba(192,57,43,.3);border-top-color:#c0392b;"></span>';
 
@@ -704,20 +966,21 @@ async function cancelBooking(bookingId, btn) {
       method: 'POST',
       body: JSON.stringify({ booking_id: bookingId })
     });
-
-    // Update card UI immediately
+    if (b) b.status = 'cancelled';
     const card = document.getElementById(`booking-${bookingId}`);
     if (card) {
       const badge = card.querySelector('.booking-date-badge');
       if (badge) badge.classList.add('booking-date-past');
       const status = card.querySelector('.booking-status');
-      if (status) { status.className = 'booking-status status-cancelled'; status.textContent = 'Cancelled'; }
+      if (status) { status.className = 'booking-status status-cancelled'; status.textContent = vt('bk_status_cancelled', 'Cancelled'); }
       btn.remove();
     }
+    bkToast(vt('bk_cancel_done', 'Booking cancelled.'));
+    window.dispatchEvent(new CustomEvent('svs:bookingschange'));
   } catch (err) {
     btn.disabled = false;
-    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-    alert(err.message || 'Could not cancel booking.');
+    btn.innerHTML = original;
+    bkToast(vt('bk_cancel_fail', 'Could not cancel the booking. Please try again or message us.'), true);
   }
 }
 
@@ -738,6 +1001,7 @@ function logout() {
   _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
   if (_vibesTimer) { clearInterval(_vibesTimer); _vibesTimer = null; }
   var vs = document.getElementById('vibesSection'); if (vs) vs.hidden = true;
+  if (typeof resetBirthday === 'function') resetBirthday();
   const dashEl  = document.getElementById('accDashboard');
   const authEl  = document.getElementById('accAuth');
   const rightEl = document.getElementById('accRight');
@@ -751,7 +1015,7 @@ function logout() {
   if (lp) lp.value = '';
   if (fe) fe.value = '';
   switchTab('login');
-  updateHeaderBtn('Sign In');
+  updateHeaderBtn(t('nav_signin', 'Sign In'));
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────────
@@ -822,3 +1086,15 @@ async function handleGoogleSignIn(response) {
     showDashboard({ name: data.client?.name || name, email: data.client?.email || email });
   } catch (err) { showError(err.message || 'Google sign-in failed. Please try again.'); }
 }
+
+// Google's own button is drawn in one language; re-draw it when the site language changes.
+window.addEventListener('svs:langchange', function (e) {
+  var gid = window.google && window.google.accounts && window.google.accounts.id;
+  var lang = (e && e.detail && e.detail.lang) || (window.SVS_I18N && window.SVS_I18N.getLang()) || 'en';
+  document.querySelectorAll('.g_id_signin').forEach(function (el) {
+    el.setAttribute('data-locale', lang);
+    if (gid && el.dataset.svsRendered !== 'redirect' && el.children.length) {
+      try { el.innerHTML = ''; gid.renderButton(el, { type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', logo_alignment: 'left', width: 420, locale: lang }); } catch (_) {}
+    }
+  });
+});

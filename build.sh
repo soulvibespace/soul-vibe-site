@@ -3,6 +3,10 @@
 # Служебное (README, скрипт публикации, конфиг, git) на сайт не попадает.
 set -euo pipefail
 
+# bash build.sh --check — строгий режим: проверка терминологии (tools/terms.py) роняет сборку.
+STRICT=""
+for a in "$@"; do [ "$a" = "--check" ] && STRICT="--check"; done
+
 rm -rf dist
 mkdir -p dist
 
@@ -14,6 +18,7 @@ rsync -a ./ dist/ \
   --exclude 'node_modules/' \
   --exclude 'build.sh' \
   --exclude 'tools/' \
+  --exclude 'tests/' \
   --exclude 'deploy.py' \
   --exclude 'README.md' \
   --exclude 'netlify.toml' \
@@ -35,8 +40,17 @@ if command -v python3 >/dev/null 2>&1; then
   # soulvibespace.com, а домен ещё указывает на старый сайт.
   # TODO(домен): после переноса soulvibespace.com — см. tools/meta.py (DEFAULT_BASE, CANONICAL).
   python3 tools/meta.py dist ${SITE_URL:+--base "$SITE_URL"}
+  # Термины (абонемент / Class Pass, Стартер пак / Starter Pack): по умолчанию только
+  # предупреждения, с --check — ошибка. Словарь — SVS_TERMS в i18n.js.
+  python3 tools/terms.py $STRICT
 else
   echo "ВНИМАНИЕ: python3 не найден — шапка не синхронизирована" >&2
+fi
+
+# С --check — ещё и тесты расчёта оплаты при записи (pay-plan.js), если есть node.
+if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
+  node tests/pay-plan.test.js >/dev/null || { echo "ОШИБКА: tests/pay-plan.test.js" >&2; exit 1; }
+  echo "тесты оплаты: ок"
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"

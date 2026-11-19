@@ -2257,6 +2257,67 @@ button { cursor: pointer; background: none; border: none; }
   max-width: 280px;
 }
 
+/* ── Booking: confirm note, success next steps, sign-in context ── */
+a.bm-confirm-btn { display: block; text-align: center; text-decoration: none; box-sizing: border-box; }
+a.bm-confirm-btn:hover { color: #fff; }
+.bm-confirm-note { font-size: 0.82rem; color: #6b6b6b; line-height: 1.5; margin: -6px 0 16px; }
+.bm-link-btn {
+  background: none; border: none; padding: 6px 0; cursor: pointer;
+  color: var(--color-primary, #6B4FA0); font-size: 0.9rem; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px; font-family: inherit;
+}
+.bm-forgot-link { display: block; margin: 10px auto 0; font-size: 0.85rem; }
+.bm-ia-forgot-title { font-weight: 700; font-size: 1rem; color: #1a1a1a; margin: 0 0 4px; }
+.bm-ia-forgot-info { font-size: 0.85rem; color: #666; margin: 0 0 12px; line-height: 1.5; }
+.bm-ia-error.bm-ia-ok:not(:empty) { color: #1f7a4d; background: #eaf7f0; border-color: #bfe5cf; }
+.bm-auth-title { margin: 0 0 12px; }
+.bm-auth-context {
+  display: flex; flex-direction: column; gap: 2px;
+  background: #f8f6ff; border-radius: 12px; padding: 12px 14px; margin-bottom: 16px;
+  border-left: 3px solid var(--color-primary, #6B4FA0);
+}
+.bm-auth-context-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: #888; font-weight: 600; }
+.bm-auth-context-name { font-size: 0.95rem; font-weight: 700; color: #1a1a1a; }
+.bm-auth-context-when { font-size: 0.88rem; color: #555; }
+.bm-success-info {
+  list-style: none; margin: 18px 0 8px; padding: 14px 16px; width: 100%; max-width: 420px; box-sizing: border-box;
+  background: #f8f6ff; border-radius: 12px; text-align: left; display: flex; flex-direction: column; gap: 8px;
+  font-size: 0.86rem; color: #444; line-height: 1.5;
+}
+.bm-success-info a { color: var(--color-primary, #6B4FA0); font-weight: 600; }
+.bm-success-info-label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: #888; font-weight: 600; }
+.bm-success-cal-title { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: #444; margin: 12px 0 8px; }
+.bm-success-cal { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 18px; }
+.bm-cal-btn {
+  display: inline-flex; align-items: center; padding: 9px 14px; border-radius: 999px;
+  border: 1.5px solid rgba(107,79,160,0.35); background: #fff; color: var(--color-primary, #6B4FA0);
+  font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer; font-family: inherit;
+}
+.bm-cal-btn:hover { background: #f3efff; }
+
+/* ── Booking: how the class will be paid (display only) ── */
+.bm-pay {
+  display: flex; flex-direction: column; gap: 4px; align-items: flex-start;
+  border: 1px solid rgba(107,79,160,0.18); border-radius: 12px; padding: 12px 14px; margin: -6px 0 16px;
+  background: #fff; text-align: left;
+}
+.bm-pay[hidden], .bm-pay:empty { display: none; }
+.bm-pay-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: #888; font-weight: 600; }
+.bm-pay-main { margin: 0; font-size: 0.92rem; line-height: 1.5; color: #1a1a1a; }
+.bm-pay-main--pass { color: #3d2a6b; }
+.bm-pay[data-kind="full"] { border-color: rgba(107,79,160,0.4); background: #f8f6ff; }
+.bm-pay[data-kind="partial"], .bm-pay[data-kind="used"], .bm-pay[data-kind="expired"] { border-color: #ecd9a8; background: #fffaf0; }
+.bm-pay-alt { margin: 4px 0 0; font-size: 0.84rem; color: #666; line-height: 1.45; }
+.bm-pay-link, .bm-pay .bm-pay-link.bm-link-btn {
+  color: var(--color-primary, #6B4FA0); font-weight: 600; font-size: 0.86rem; padding: 0; text-align: left;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.bm-pay-main .bm-pay-link { font-size: inherit; }
+.bm-pay--guest { margin: 0 0 16px; }
+.bm-pay--success { width: 100%; max-width: 420px; box-sizing: border-box; margin: 14px 0 0; }
+.bm-pay-skel { display: block; width: 70%; height: 14px; border-radius: 6px; background: linear-gradient(90deg,#f0edf7,#e6e1f2,#f0edf7); background-size: 200% 100%; animation: bmPaySkel 1.2s linear infinite; }
+@keyframes bmPaySkel { to { background-position: -200% 0; } }
+
 /* ═══════════════════════════════════════════════
    ACCOUNT PAGE — extra styles
    ═══════════════════════════════════════════════ */

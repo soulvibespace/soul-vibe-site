@@ -239,21 +239,24 @@ const AuthModal = (() => {
     // Close auth modal
     close();
 
-    // Resume pending booking if exists, otherwise open booking from scratch
-    setTimeout(async () => {
-      if (typeof BookingModal !== 'undefined') {
-        const resumed = await BookingModal.resumePendingBooking();
-        if (resumed) return; // Booking modal reopened at confirm step
-        // No pending booking — open from scratch
-        BookingModal.open();
-      } else if (typeof ClassModal !== 'undefined') {
-        ClassModal.open(null, null, null);
-      }
-    }, 300);
+    // Resume a booking that was interrupted by sign-in; otherwise the visitor
+    // signed in from the header icon — take them to their account.
+    setTimeout(() => svsAfterSignIn(), 300);
   }
 
   return { open, close, switchTab, togglePw };
 })();
+
+// After a successful sign-in from the header: continue an interrupted booking
+// (it is saved in localStorage before the sign-in screen opens), otherwise open
+// the account page — not the booking window.
+async function svsAfterSignIn() {
+  if (typeof BookingModal !== 'undefined' && BookingModal.resumePendingBooking) {
+    try { if (await BookingModal.resumePendingBooking()) return; } catch (_) {}
+  }
+  if (/^\/account(\.html)?$/.test(location.pathname)) location.reload();
+  else location.href = '/account';
+}
 
 // ── Google Sign-In callback (global) ─────────────────────────────
 async function handleGoogleSignIn(response) {
@@ -309,15 +312,7 @@ async function handleGoogleSignIn(response) {
     _updateHeaderBtn(clientName.split(' ')[0], true);
     AuthModal.close();
 
-    setTimeout(async () => {
-      if (typeof BookingModal !== 'undefined') {
-        const resumed = await BookingModal.resumePendingBooking();
-        if (resumed) return;
-        BookingModal.open();
-      } else if (typeof ClassModal !== 'undefined') {
-        ClassModal.open(null, null, null);
-      }
-    }, 300);
+    setTimeout(() => svsAfterSignIn(), 300);
 
   } catch (err) {
     // A network or CORS failure surfaces as the terse "Failed to fetch".
@@ -436,8 +431,8 @@ function svsGoogleButtonHtml(label) {
 }
 
 function svsGoogleButtonLabel() {
-  const lang = document.documentElement.getAttribute('lang')
-    || document.documentElement.lang || 'en';
+  const lang = (window.SVS_I18N && SVS_I18N.getLang && SVS_I18N.getLang())
+    || document.documentElement.getAttribute('lang') || 'en';
   return { en: 'Continue with Google', ru: 'Войти через Google', el: 'Συνέχεια με Google' }[lang]
     || 'Continue with Google';
 }
@@ -690,4 +685,9 @@ document.addEventListener('DOMContentLoaded', () => {
       _updateHeaderBtn('', false);
     });
   });
+});
+
+// Our own Google button keeps its label in the page language.
+window.addEventListener('svs:langchange', () => {
+  document.querySelectorAll('.svs-google-btn span').forEach(el => { el.textContent = svsGoogleButtonLabel(); });
 });
