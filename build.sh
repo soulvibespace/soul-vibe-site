@@ -9,9 +9,11 @@ mkdir -p dist
 rsync -a ./ dist/ \
   --exclude 'dist/' \
   --exclude '.git/' \
+  --exclude '.git' \
   --exclude '.github/' \
   --exclude 'node_modules/' \
   --exclude 'build.sh' \
+  --exclude 'tools/' \
   --exclude 'deploy.py' \
   --exclude 'README.md' \
   --exclude 'netlify.toml' \
@@ -19,6 +21,15 @@ rsync -a ./ dist/ \
   --exclude '__pycache__/' \
   --exclude '*.pyc' \
   --exclude '.DS_Store'
+
+# Единая шапка: вставляем tools/header.html во все страницы dist/ и проверяем,
+# что меню одинаковое везде (сборка падает, если нет).
+if command -v python3 >/dev/null 2>&1; then
+  python3 tools/header.py dist
+  python3 tools/header.py --check dist
+else
+  echo "ВНИМАНИЕ: python3 не найден — шапка не синхронизирована" >&2
+fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"
 find dist -type f | sed 's|^dist|  |' | sort
