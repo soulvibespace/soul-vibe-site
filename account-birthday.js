@@ -7,7 +7,7 @@
  * Использует общие функции account.js: apiFetch, escHtml, vt, isTokenValid, getToken.
  */
 var _bday = null;               // last answer of GET /api/me/birthday
-var _bdayUi = { pending: '', msg: '', err: false, busy: false, gift: false };
+var _bdayUi = { pending: '', msg: '', err: false, busy: false };
 
 function bdayLocale() {
   var l = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
@@ -41,14 +41,13 @@ function renderBirthday() {
     h += '<div class="bday-set"><span class="bday-icon" aria-hidden="true">'
        + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3M12 8v3M17 8v3"/><path d="M7 4h.01M12 4h.01M17 4h.01"/></svg>'
        + '</span><span class="bday-date">' + escHtml(bdayFormat(d.birth_date)) + '</span></div>';
-    if (_bdayUi.gift) h += '<p class="bday-msg" role="status">' + escHtml(vt('bday_gift_now', 'Happy birthday! 10 bonus VIBES are already on your balance.')) + '</p>';
-    else if (_bdayUi.msg) h += '<p class="bday-msg" role="status">' + escHtml(_bdayUi.msg) + '</p>';
+    if (_bdayUi.msg) h += '<p class="bday-msg" role="status">' + escHtml(_bdayUi.msg) + '</p>';
     h += '<p class="bday-note">' + escHtml(vt('bday_bonus_hint', 'On your birthday you get 10 bonus VIBES as a gift — automatically, once a year.')) + '</p>';
     h += '<p class="bday-note bday-locked">' + escHtml(vt('bday_locked', 'To change the date, please contact the studio administrator.')) + '</p>';
     box.innerHTML = h;
     return;
   }
-  h += '<p class="bday-note">' + escHtml(vt('bday_intro', 'Add your date of birth — on your birthday we will give you 10 bonus VIBES. The bonus is added automatically once a year.')) + '</p>';
+  h += '<p class="bday-note">' + escHtml(vt('bday_intro', 'Add your date of birth — on your birthday we will give you 10 bonus VIBES. The bonus is added automatically once a year, if the date is entered in advance, before your birthday.')) + '</p>';
   if (_bdayUi.pending) {
     h += '<p class="bday-confirm" role="status">' + escHtml(vt('bday_confirm_q', 'Save {d}? After that the date can only be changed by the studio administrator.').replace('{d}', bdayFormat(_bdayUi.pending))) + '</p>'
        + '<div class="bday-actions"><button type="button" class="btn btn-primary btn-sm" onclick="bdaySubmit()"' + (_bdayUi.busy ? ' disabled' : '') + '>' + escHtml(vt('bday_confirm', 'Yes, save')) + '</button>'
@@ -101,8 +100,7 @@ async function bdaySubmit() {
   try {
     var r = await apiFetch('/api/me/birthday', { method: 'POST', body: JSON.stringify({ birth_date: _bdayUi.pending }) });
     _bday = { linked: true, birth_date: r.birth_date, can_set: false, bonus_awarded_this_year: !!r.bonus_awarded_this_year, range: _bday && _bday.range };
-    _bdayUi = { pending: '', msg: vt('bday_saved', 'Date of birth saved.'), err: false, busy: false, gift: !!r.bonus_awarded_this_year };
-    if (r.bonus_awarded_this_year && typeof loadVibes === 'function') loadVibes(true);
+    _bdayUi = { pending: '', msg: vt('bday_saved', 'Date of birth saved.'), err: false, busy: false };
   } catch (err) {
     var code = err.data && err.data.code;
     _bdayUi.busy = false; _bdayUi.err = true;
@@ -119,7 +117,7 @@ async function bdaySubmit() {
   renderBirthday();
 }
 function resetBirthday() {
-  _bday = null; _bdayUi = { pending: '', msg: '', err: false, busy: false, gift: false };
+  _bday = null; _bdayUi = { pending: '', msg: '', err: false, busy: false };
   var s = document.getElementById('bdaySection'); if (s) s.hidden = true;
 }
 window.addEventListener('svs:langchange', function () { renderBirthday(); });
