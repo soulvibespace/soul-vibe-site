@@ -33,7 +33,7 @@
 
   <style>
     /* ── Page layout ── */
-    .contact-page { padding: 100px 0 80px; min-height: 100vh; }
+    .contact-page { padding: var(--page-pt) 0 var(--page-pb); }
     .page-eyebrow {
       font-family: var(--font-sans);
       font-size: 11px;
@@ -54,7 +54,7 @@
     .page-subtitle {
       font-size: 1rem;
       color: var(--text-secondary);
-      margin-bottom: 48px;
+      margin-bottom: var(--head-gap);
       max-width: 500px;
     }
 
@@ -62,7 +62,7 @@
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
-      gap: 64px;
+      gap: var(--split-gap);
       align-items: start;
     }
 
@@ -152,12 +152,12 @@
 
     /* ── Form section ── */
     .contact-form-section {
-      margin-top: 64px;
-      padding-top: 64px;
+      margin-top: var(--block-gap);
+      padding-top: var(--block-gap);
       border-top: 1px solid var(--border);
       display: grid;
       grid-template-columns: 1fr 1.4fr;
-      gap: 64px;
+      gap: var(--split-gap);
       align-items: start;
     }
     .contact-form-intro h2 {
@@ -241,10 +241,11 @@
       .contact-map-wrap { aspect-ratio: 16/9; }
     }
     @media (max-width: 600px) {
-      .contact-page { padding: 90px 0 60px; }
+      .contact-page { padding: var(--page-pt) 0 var(--page-pb); }
       .form-row { grid-template-columns: 1fr; }
     }
-  </style></head>
+  </style>  <link rel="stylesheet" href="/compact.css" />
+</head>
 <body>
 
   <!-- ═══ HEADER ═══ -->
@@ -552,5 +553,6 @@
   })();
   </script>
 <script src="/cookie-banner.js" defer></script>
+  <script src="/compact.js" defer></script>
 </body>
 </html>

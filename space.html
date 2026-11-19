@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    .space-page { padding: 100px 0 80px; min-height: 100vh; }
+    .space-page { padding: var(--page-pt) 0 var(--page-pb); }
     .page-eyebrow {
       font-family: var(--font-sans);
       font-size: 11px;
@@ -53,7 +53,7 @@
     .page-subtitle {
       font-size: 1rem;
       color: var(--text-secondary);
-      margin-bottom: 48px;
+      margin-bottom: var(--head-gap);
       max-width: 520px;
     }
 
@@ -65,7 +65,7 @@
       gap: 12px;
       border-radius: 20px;
       overflow: hidden;
-      margin-bottom: 64px;
+      margin-bottom: var(--block-gap);
     }
     .gallery-item {
       overflow: hidden;
@@ -97,9 +97,9 @@
     .space-section-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      gap: var(--split-gap);
       align-items: start;
-      padding: 64px 0;
+      padding: var(--block-gap) 0;
       border-top: 1px solid var(--border);
     }
     .space-section-grid.reverse { direction: rtl; }
@@ -131,13 +131,13 @@
     }
 
     /* ── Amenities grid ── */
-    .amenities-section { padding: 64px 0; border-top: 1px solid var(--border); }
+    .amenities-section { padding: var(--block-gap) 0; border-top: 1px solid var(--border); }
     .amenities-section h2 {
       font-family: var(--font-serif);
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 400;
       color: var(--text-primary);
-      margin-bottom: 40px;
+      margin-bottom: var(--head-gap);
     }
     .amenities-grid {
       display: grid;
@@ -185,12 +185,12 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 40px;
+      padding: 28px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 32px;
-      margin-bottom: 64px;
+      margin-bottom: var(--block-gap);
       flex-wrap: wrap;
     }
     .space-hours-band h3 {
@@ -218,7 +218,7 @@
     /* ── CTA ── */
     .space-cta {
       text-align: center;
-      padding: 64px 0 0;
+      padding: var(--block-gap) 0 0;
       border-top: 1px solid var(--border);
     }
     .space-cta h2 {
@@ -242,13 +242,14 @@
       .space-section-img { order: -1; }
     }
     @media (max-width: 600px) {
-      .space-page { padding: 90px 0 60px; }
+      .space-page { padding: var(--page-pt) 0 var(--page-pb); }
       .space-gallery { grid-template-columns: 1fr; grid-template-rows: 220px 180px 180px 180px 180px; }
       .space-gallery .gallery-item:first-child { grid-row: 1; grid-column: 1; }
       .amenities-grid { grid-template-columns: 1fr 1fr; }
       .space-hours-band { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
     }
-  </style></head>
+  </style>  <link rel="stylesheet" href="/compact.css" />
+</head>
 <body>
 
   <!-- ═══ HEADER ═══ -->
@@ -609,5 +610,6 @@
   })();
   </script>
 <script src="/cookie-banner.js" defer></script>
+  <script src="/compact.js" defer></script>
 </body>
 </html>

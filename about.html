@@ -33,7 +33,7 @@
 
   <style>
     /* ── Page ── */
-    .about-page { padding: 100px 0 80px; min-height: 100vh; }
+    .about-page { padding: var(--page-pt) 0 var(--page-pb); }
     .page-eyebrow {
       font-family: var(--font-sans);
       font-size: 11px;
@@ -63,9 +63,9 @@
     .about-story {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      gap: var(--split-gap);
       align-items: center;
-      padding: 64px 0;
+      padding: var(--block-gap) 0;
       border-bottom: 1px solid var(--border);
     }
     .about-story-text h2 {
@@ -102,7 +102,7 @@
       gap: 0;
       border: 1px solid var(--border);
       border-radius: 16px;
-      margin: 48px 0;
+      margin: var(--block-gap) 0;
       overflow: hidden;
     }
     .stat-item {
@@ -127,7 +127,7 @@
 
     /* ── Team section ── */
     .about-team-header {
-      padding: 64px 0 40px;
+      padding: var(--block-gap) 0 var(--space-6);
     }
     .about-team-header h2 {
       font-family: var(--font-serif);
@@ -146,7 +146,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 24px;
-      padding-bottom: 64px;
+      padding-bottom: var(--block-gap);
     }
 
     /* ── Instructor card ── */
@@ -200,7 +200,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 24px;
-      padding-bottom: 64px;
+      padding-bottom: var(--block-gap);
     }
     .skel-instructor {
       background: var(--surface);
@@ -229,14 +229,14 @@
     /* ── Values section ── */
     .about-values {
       border-top: 1px solid var(--border);
-      padding: 64px 0;
+      padding: var(--block-gap) 0;
     }
     .about-values h2 {
       font-family: var(--font-serif);
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 400;
       color: var(--text-primary);
-      margin-bottom: 40px;
+      margin-bottom: var(--head-gap);
     }
     .values-grid {
       display: grid;
@@ -274,12 +274,12 @@
     .about-cta-band {
       background: var(--accent);
       border-radius: 20px;
-      padding: 48px 40px;
+      padding: 32px 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      margin-bottom: 64px;
+      margin-bottom: var(--block-gap);
       flex-wrap: wrap;
     }
     .about-cta-band h3 {
@@ -320,13 +320,14 @@
       .values-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
-      .about-page { padding: 90px 0 60px; }
+      .about-page { padding: var(--page-pt) 0 var(--page-pb); }
       .about-stats { grid-template-columns: repeat(2, 1fr); }
       .values-grid { grid-template-columns: 1fr; }
       .about-cta-band { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
       .team-grid, .team-skeleton { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     }
-  </style></head>
+  </style>  <link rel="stylesheet" href="/compact.css" />
+</head>
 <body>
 
   <!-- ═══ HEADER ═══ -->
@@ -716,5 +717,6 @@
   })();
   </script>
 <script src="/cookie-banner.js" defer></script>
+  <script src="/compact.js" defer></script>
 </body>
 </html>
