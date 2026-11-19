@@ -27,6 +27,14 @@ rsync -a ./ dist/ \
 if command -v python3 >/dev/null 2>&1; then
   python3 tools/header.py dist
   python3 tools/header.py --check dist
+  # Единый подвал (tools/footer.html) — так же, как шапка.
+  python3 tools/footer.py dist
+  python3 tools/footer.py --check dist
+  # OG/Twitter-мета-теги: абсолютные адреса от SITE_URL (по умолчанию — адрес в tools/meta.py,
+  # https://soul-vibe-space.netlify.app). $URL Netlify НЕ используем: там уже стоит
+  # soulvibespace.com, а домен ещё указывает на старый сайт.
+  # TODO(домен): после переноса soulvibespace.com — см. tools/meta.py (DEFAULT_BASE, CANONICAL).
+  python3 tools/meta.py dist ${SITE_URL:+--base "$SITE_URL"}
 else
   echo "ВНИМАНИЕ: python3 не найден — шапка не синхронизирована" >&2
 fi

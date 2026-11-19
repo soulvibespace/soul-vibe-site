@@ -44,7 +44,7 @@ const SVS_TRANSLATIONS = {
     about_story_title:  'A space born from intention',
     about_story_p1:     'We created Soul Vibe Space as a response to the need for a truly multifunctional wellness space in Limassol — a place that brings together diverse practices, teachers, and communities under one roof.',
     about_story_p2:     'From gentle morning yoga to ecstatic dance, from sound healing sessions to mindful co-working — everything at Soul Vibe Space is designed to help you feel more present, connected, and alive.',
-    about_story_p3:     'Located at 50 Agia Zonis, Limassol, our studio is open every day from 9 am to 10 pm. We welcome beginners and experienced practitioners alike.',
+    about_story_p3:     'Located at 50 Agias Zonis, Limassol, our studio holds classes every day from 8 am to 10 pm. We welcome beginners and experienced practitioners alike.',
     stat_practitioners: 'Happy practitioners',
     stat_classes_num:   '7',
     stat_classes_label: 'Days a week',
@@ -79,8 +79,8 @@ const SVS_TRANSLATIONS = {
     feature1_text:      'Yoga, meditation, sound healing and more — 7 days a week',
     feature2_title:     'All Levels Welcome',
     feature2_text:      'Beginners and experienced practitioners alike',
-    feature3_title:     '50 Agia Zonis, Limassol',
-    feature3_text:      'Open Monday–Sunday, 9am–10pm',
+    feature3_title:     '50 Agias Zonis, Limassol',
+    feature3_text:      'Classes daily, 8am–10pm',
     about_cta:          'Learn more',
 
     // ── Schedule ──
@@ -132,8 +132,8 @@ const SVS_TRANSLATIONS = {
     space_feat6_text:   'High-speed internet throughout',
     space_feat7_title:  'Open Daily',
     space_feat8_title:  'Central Location',
-    space_feat8_text:   '50 Agia Zonis, Limassol',
-    space_hours_detail: 'Monday – Sunday · 9:00 am – 10:00 pm',
+    space_feat8_text:   '50 Agias Zonis, Limassol',
+    space_hours_detail: 'Classes daily · 8:00 am – 10:00 pm · Administrator 2:00 pm – 10:00 pm',
     space_cta_title:    'Ready to experience it yourself?',
     space_cta_sub:      'Book a class and come see the space for yourself.',
     space_p:            'Soul Vibe Space also includes a creative co-working area where guests can work, relax and connect with a mindful community.',
@@ -145,7 +145,7 @@ const SVS_TRANSLATIONS = {
     space_feat3_text:   'Refresh after your practice',
     space_feat4_title:  'Premises for Rent',
     space_feat4_text:   'Workshops, meetings and events',
-    space_hours:        'Open every day, 9:00 am – 10:00 pm',
+    space_hours:        'Classes every day, 8:00 am – 10:00 pm',
 
     // ── Gift ──
     gift_title:         'Give the gift of wellness',
@@ -156,7 +156,7 @@ const SVS_TRANSLATIONS = {
     contact_eyebrow:    'Get in touch',
     contact_title:      'Ready to begin?',
     contact_p:          "Book a class, ask a question, or just say hello. We'd love to hear from you.",
-    contact_address:    '50 Agia Zonis, Limassol, Cyprus 3095',
+    contact_address:    '50 Agias Zonis, Limassol 3090, Cyprus',
     contact_whatsapp:   'WhatsApp',
     contact_book_p:     'Book directly via our booking platform:',
     contact_book_btn:   'Book a class →',
@@ -180,7 +180,7 @@ const SVS_TRANSLATIONS = {
     footer_gift:        'Gift Certificates',
     footer_book:        'Book a class',
     footer_visit:       'Visit us',
-    footer_hours:       'Mon – Sun · 9:00 am – 10:00 pm',
+    footer_hours:       'Classes: daily 8:00 am – 10:00 pm',
     footer_copy:        '© 2026 Soul Vibe Space LTD',
 
     // ── Account page ──
@@ -314,7 +314,7 @@ const SVS_TRANSLATIONS = {
     about_story_title:  'Пространство, рождённое с намерением',
     about_story_p1:     'Мы создали Soul Vibe Space как ответ на потребность в полноценном велнес-пространстве в Лимасоле — месте, где собираются разные практики, преподаватели и сообщества.',
     about_story_p2:     'От утренней йоги до экстатического танца, от звукотерапии до осознанного коворкинга — всё в Soul Vibe Space создано, чтобы вы чувствовали себя живыми и связанными.',
-    about_story_p3:     'Студия находится по адресу: ул. Агиа Зонис, 50, Лимасол. Открыта ежедневно с 9:00 до 22:00.',
+    about_story_p3:     'Студия находится по адресу: ул. Агиас Зонис, 50, Лимасол. Занятия проходят ежедневно с 8:00 до 22:00.',
     stat_practitioners: 'Счастливых практиков',
     stat_classes_num:   '7',
     stat_classes_label: 'Дней в неделю',
@@ -349,8 +349,8 @@ const SVS_TRANSLATIONS = {
     feature1_text:      'Йога, медитация, звукотерапия и многое другое — 7 дней в неделю',
     feature2_title:     'Для любого уровня',
     feature2_text:      'Начинающие и опытные практики одинаково приветствуются',
-    feature3_title:     'ул. Агиа Зонис, 50, Лимасол',
-    feature3_text:      'Открыто пн–вс, с 9:00 до 22:00',
+    feature3_title:     'ул. Агиас Зонис, 50, Лимасол',
+    feature3_text:      'Занятия ежедневно, 8:00–22:00',
     about_cta:          'Узнать больше',
 
     // ── Schedule ──
@@ -402,8 +402,8 @@ const SVS_TRANSLATIONS = {
     space_feat6_text:   'Быстрый интернет по всей студии',
     space_feat7_title:  'Открыто ежедневно',
     space_feat8_title:  'Центральное расположение',
-    space_feat8_text:   'ул. Агиа Зонис, 50, Лимасол',
-    space_hours_detail: 'Понедельник – Воскресенье · 9:00 – 22:00',
+    space_feat8_text:   'ул. Агиас Зонис, 50, Лимасол',
+    space_hours_detail: 'Занятия ежедневно · 8:00–22:00 · Администратор 14:00–22:00',
     space_cta_title:    'Готовы почувствовать это сами?',
     space_cta_sub:      'Запишитесь на занятие и приходите посмотреть.',
     space_p:            'Soul Vibe Space включает творческую зону коворкинга, где гости могут работать, отдыхать и общаться в осознанном сообществе.',
@@ -415,7 +415,7 @@ const SVS_TRANSLATIONS = {
     space_feat3_text:   'Освежитесь после практики',
     space_feat4_title:  'Аренда помещений',
     space_feat4_text:   'Воркшопы, встречи и мероприятия',
-    space_hours:        'Открыто ежедневно, 9:00 – 22:00',
+    space_hours:        'Занятия ежедневно, 8:00–22:00',
 
     // ── Gift ──
     gift_title:         'Подарите велнес',
@@ -426,7 +426,7 @@ const SVS_TRANSLATIONS = {
     contact_eyebrow:    'Свяжитесь с нами',
     contact_title:      'Готовы начать?',
     contact_p:          'Запишитесь на занятие, задайте вопрос или просто поздоровайтесь. Будем рады вас видеть!',
-    contact_address:    'ул. Агиа Зонис, 50, Лимасол, Кипр 3095',
+    contact_address:    'ул. Агиас Зонис, 50, Лимасол 3090, Кипр',
     contact_whatsapp:   'WhatsApp',
     contact_book_p:     'Записывайтесь напрямую через нашу платформу:',
     contact_book_btn:   'Записаться на занятие →',
@@ -450,7 +450,7 @@ const SVS_TRANSLATIONS = {
     footer_gift:        'Подарочные сертификаты',
     footer_book:        'Записаться на занятие',
     footer_visit:       'Адрес и контакты',
-    footer_hours:       'Пн – Вс · 9:00 – 22:00',
+    footer_hours:       'Занятия: ежедневно 8:00–22:00',
     footer_copy:        '© 2026 Soul Vibe Space LTD',
 
     // ── Account page ──
@@ -584,7 +584,7 @@ const SVS_TRANSLATIONS = {
     about_story_title:  'Χώρος που γεννήθηκε με πρόθεση',
     about_story_p1:     'Δημιουργήσαμε το Soul Vibe Space ως απάντηση στην ανάγκη για έναν πλήρη χώρο ευεξίας στη Λεμεσό.',
     about_story_p2:     'Από πρωινή yoga έως εκστατικό χορό, από ηχοθεραπεία έως co-working — όλα σχεδιάστηκαν για να νιώθετε πιο ζωντανοί και συνδεδεμένοι.',
-    about_story_p3:     'Το στούντιο βρίσκεται στην οδό Αγία Ζώνης 50, Λεμεσός. Είναι ανοιχτό κάθε μέρα από 9:00 έως 22:00.',
+    about_story_p3:     'Το στούντιο βρίσκεται στην οδό Αγίας Ζώνης 50, Λεμεσός. Τα μαθήματα γίνονται κάθε μέρα από 8:00 έως 22:00.',
     stat_practitioners: 'Ευχαριστημένοι ασκούμενοι',
     stat_classes_num:   '7',
     stat_classes_label: 'Ημέρες την εβδομάδα',
@@ -619,8 +619,8 @@ const SVS_TRANSLATIONS = {
     feature1_text:      'Yoga, διαλογισμός, ηχοθεραπεία και άλλα — 7 ημέρες την εβδομάδα',
     feature2_title:     'Για όλα τα επίπεδα',
     feature2_text:      'Αρχάριοι και έμπειροι ασκούμενοι είναι ευπρόσδεκτοι',
-    feature3_title:     '50 Αγία Ζώνης, Λεμεσός',
-    feature3_text:      'Ανοιχτά Δευτέρα–Κυριακή, 9:00–22:00',
+    feature3_title:     'Αγίας Ζώνης 50, Λεμεσός',
+    feature3_text:      'Μαθήματα καθημερινά, 8:00–22:00',
     about_cta:          'Μάθετε περισσότερα',
 
     // ── Schedule ──
@@ -672,8 +672,8 @@ const SVS_TRANSLATIONS = {
     space_feat6_text:   'Γρήγορο ιντερνετ σε όλο το χώρο',
     space_feat7_title:  'Ανοιχτό καθημερινά',
     space_feat8_title:  'Κεντρική τοποθεσία',
-    space_feat8_text:   '50 Αγία Ζώνης, Λεμεσός',
-    space_hours_detail: 'Δευτέρα – Κυριακή · 9:00 π.μ. – 10:00 μ.μ.',
+    space_feat8_text:   'Αγίας Ζώνης 50, Λεμεσός',
+    space_hours_detail: 'Μαθήματα καθημερινά · 8:00–22:00 · Διαχειριστής 14:00–22:00',
     space_cta_title:    'Έτοιμοι να το ζήσετε ο ίδιοι;',
     space_cta_sub:      'Κλείστε ένα μάθημα και ελάτε να δείτε τον χώρο.',
     space_p:            'Το Soul Vibe Space διαθέτει επίσης μια δημιουργική ζώνη co-working όπου οι επισκέπτες μπορούν να εργαστούν, να χαλαρώσουν και να συνδεθούν με μια ενσυνείδητη κοινότητα.',
@@ -685,7 +685,7 @@ const SVS_TRANSLATIONS = {
     space_feat3_text:   'Χαλαρώστε μετά την άσκηση',
     space_feat4_title:  'Ενοικίαση χώρου',
     space_feat4_text:   'Εργαστήρια, συναντήσεις και εκδηλώσεις',
-    space_hours:        'Ανοιχτά καθημερινά, 9:00 π.μ. – 10:00 μ.μ.',
+    space_hours:        'Μαθήματα καθημερινά, 8:00–22:00',
 
     // ── Gift ──
     gift_title:         'Δώστε το δώρο της ευεξίας',
@@ -696,7 +696,7 @@ const SVS_TRANSLATIONS = {
     contact_eyebrow:    'Επικοινωνήστε μαζί μας',
     contact_title:      'Έτοιμοι να ξεκινήσετε;',
     contact_p:          'Κλείστε μάθημα, κάντε μια ερώτηση ή απλά πείτε γεια. Θα χαρούμε να σας ακούσουμε.',
-    contact_address:    '50 Αγία Ζώνης, Λεμεσός, Κύπρος 3095',
+    contact_address:    'Αγίας Ζώνης 50, Λεμεσός 3090, Κύπρος',
     contact_whatsapp:   'WhatsApp',
     contact_book_p:     'Κλείστε απευθείας μέσω της πλατφόρμας κρατήσεών μας:',
     contact_book_btn:   'Κλείστε μάθημα →',
@@ -720,7 +720,7 @@ const SVS_TRANSLATIONS = {
     footer_gift:        'Δωροκάρτες',
     footer_book:        'Κλείστε μάθημα',
     footer_visit:       'Επισκεφθείτε μας',
-    footer_hours:       'Δευ – Κυρ · 9:00 π.μ. – 10:00 μ.μ.',
+    footer_hours:       'Μαθήματα: καθημερινά 8:00–22:00',
     footer_copy:        '© 2026 Soul Vibe Space LTD',
 
     // ── Account page ──
@@ -1640,6 +1640,40 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_rental_desc:       'Αίθουσες, ωριαίες τιμές, διατάξεις εκδηλώσεων και τι περιλαμβάνεται — σε ξεχωριστή σελίδα.',
   pv_rental_go:         'Ενοικίαση χώρου →',
 });
+
+// ── Footer: legal links (единый подвал, tools/footer.html) ──
+Object.assign(SVS_TRANSLATIONS.en, {
+  footer_hours_admin: 'Administrator at the studio: 2:00 pm – 10:00 pm',
+  contact_hours_classes: 'Classes: daily',
+  contact_hours_admin: 'Administrator at the studio',
+  footer_terms:   'Terms & Conditions',
+  footer_privacy: 'Privacy Policy',
+  footer_cookies: 'Cookies',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  footer_hours_admin: 'Администратор в студии: 14:00–22:00',
+  contact_hours_classes: 'Занятия: ежедневно',
+  contact_hours_admin: 'Администратор в студии',
+  footer_terms:   'Условия использования',
+  footer_privacy: 'Политика конфиденциальности',
+  footer_cookies: 'Cookies',
+});
+Object.assign(SVS_TRANSLATIONS.el, {
+  footer_hours_admin: 'Διαχειριστής στο στούντιο: 14:00–22:00',
+  contact_hours_classes: 'Μαθήματα: καθημερινά',
+  contact_hours_admin: 'Διαχειριστής στο στούντιο',
+  footer_terms:   'Όροι & Προϋποθέσεις',
+  footer_privacy: 'Πολιτική Απορρήτου',
+  footer_cookies: 'Cookies',
+});
+
+// Extra translations registered by page-specific scripts loaded BEFORE i18n.js
+// (e.g. i18n-legal.js on /terms and /privacy): window.SVS_I18N_EXTRA = { en:{}, ru:{}, el:{} }.
+if (window.SVS_I18N_EXTRA) {
+  Object.keys(window.SVS_I18N_EXTRA).forEach(function (lang) {
+    if (SVS_TRANSLATIONS[lang]) Object.assign(SVS_TRANSLATIONS[lang], window.SVS_I18N_EXTRA[lang]);
+  });
+}
 
 // Auto-init after DOM ready — must run after all Object.assign blocks
 if (document.readyState === 'loading') {

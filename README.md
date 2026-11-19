@@ -68,3 +68,19 @@ git push origin main   # Netlify подхватит и опубликует са
 Домен `soulvibespace.com` пока указывает на старый сайт на Squarespace. Перенос —
 отдельная задача после того как новый сайт будет доделан.
 
+## Общие части страниц
+
+Шапка, подвал и OG-мета-теги собираются из одного источника — руками на страницах их не правьте:
+
+| Что | Источник | Обновить | Проверить |
+|---|---|---|---|
+| Шапка (меню) | `tools/header.html` | `python3 tools/header.py` | `python3 tools/header.py --check` |
+| Подвал | `tools/footer.html` (переводы — `footer_*` в `i18n.js`) | `python3 tools/footer.py` | `python3 tools/footer.py --check` |
+| OG/Twitter-теги | `<title>` и `<meta name="description">` страницы, картинка — `IMAGES` в `tools/meta.py` | `python3 tools/meta.py` | `python3 tools/meta.py --check` |
+
+`build.sh` прогоняет всё это для `dist/` при каждой сборке на Netlify. Абсолютные адреса в
+мета-тегах — от `DEFAULT_BASE` в `tools/meta.py` (сейчас https://soul-vibe-space.netlify.app)
+или от переменной `SITE_URL`. `canonical`/`hreflang` пока не выводятся — домен
+`soulvibespace.com` ещё на Squarespace (см. TODO в `tools/meta.py`).
+
+Тексты `/terms` и `/privacy`: английский — в разметке страниц, русский и греческий — в `i18n-legal.js`.
