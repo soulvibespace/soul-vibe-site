@@ -363,6 +363,17 @@ function vibesTxName(tx) {
   return vt('vibes_src_' + c, vt('vibes_src_bonus', 'Bonus VIBES'));
 }
 
+// «≈ 1 занятие / 2 занятия / 5 занятий» — plural form for the page language (Intl.PluralRules).
+function vibesClassesLeft(n) {
+  var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+  var form = 'other';
+  try { form = new Intl.PluralRules(lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB').select(n); } catch (_) {}
+  var key = 'vibes_classes_left_' + form;
+  var s = vt(key, '');
+  if (!s || s === key) s = vt('vibes_classes_left_other', '') || vt('vibes_classes_left', '≈ {n} classes');
+  return s.replace('{n}', n);
+}
+
 async function loadVibes(silent) {
   var section = document.getElementById('vibesSection');
   var box = document.getElementById('vibesContainer');
@@ -416,7 +427,7 @@ function renderVibes() {
   var bal = Number(d.balance_vibes || 0);
   var classes = Math.floor(bal / VIBES_PER_CLASS);
   var h = '<div class="vibes-balance"><span class="vibes-balance-num">' + bal + '</span><span class="vibes-balance-unit">VIBES</span>'
-        + '<span class="vibes-balance-hint">' + escHtml(vt('vibes_classes_left', '≈ {n} classes').replace('{n}', classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
+        + '<span class="vibes-balance-hint">' + escHtml(vibesClassesLeft(classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
 
   var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
   // Bonus VIBES (e.g. a birthday gift) are not a Class Pass: neutral heading when there are any.
