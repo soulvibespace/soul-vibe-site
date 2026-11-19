@@ -316,6 +316,7 @@ function showDashboard(client) {
 
   updateHeaderBtn(firstName);
   loadVibes();
+  if (typeof loadBirthday === 'function') loadBirthday(); // account-birthday.js
   loadBookings(true);
   // /account#bookings (link «Мои записи» from the booking window) → scroll to the list
   if (location.hash === '#bookings') setTimeout(function () { var el = document.getElementById('bookings'); if (el) el.scrollIntoView({ block: 'start' }); }, 300);
@@ -819,6 +820,7 @@ function logout() {
   _ev = { sent: false, wait: 0, timer: null, msg: '', err: false, busy: false, noMail: false };
   if (_vibesTimer) { clearInterval(_vibesTimer); _vibesTimer = null; }
   var vs = document.getElementById('vibesSection'); if (vs) vs.hidden = true;
+  if (typeof resetBirthday === 'function') resetBirthday();
   const dashEl  = document.getElementById('accDashboard');
   const authEl  = document.getElementById('accAuth');
   const rightEl = document.getElementById('accRight');

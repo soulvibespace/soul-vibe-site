@@ -548,6 +548,28 @@
   }
 
 
+  /* Date of birth (account-birthday.js) */
+  .bday-section { margin-bottom: 2rem; }
+  .bday-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .bday-note, .bday-hint, .bday-confirm { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+  .bday-hint { font-size: 0.8rem; }
+  .bday-confirm { color: var(--text); }
+  .bday-form { display: flex; gap: 0.5rem; align-items: stretch; flex-wrap: wrap; }
+  .bday-input { flex: 0 1 11rem; min-width: 0; font: inherit; font-size: 0.95rem; color: var(--text); background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 0.45rem 0.6rem; color-scheme: light dark; }
+  .bday-input:focus { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+  .bday-input[aria-invalid="true"] { border-color: #b3261e; }
+  .bday-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .bday-set { display: flex; align-items: center; gap: 0.55rem; }
+  .bday-icon { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--surface); color: var(--color-primary); flex: 0 0 auto; }
+  .bday-date { font-family: 'Work Sans', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  .bday-locked { font-size: 0.8rem; }
+  .bday-msg { font-size: 0.85rem; margin: 0; color: #2f8a4c; }
+  .bday-msg.err { color: #b3261e; }
+  @media (max-width: 480px) {
+    .bday-form .bday-input { flex: 1 1 100%; }
+    .bday-form .btn, .bday-actions .btn { flex: 1 1 0; justify-content: center; }
+  }
+
   /* VIBES (loyalty) */
   .vibes-section { margin-bottom: 2rem; }
   .vibes-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.1rem 1.2rem; }
@@ -1246,6 +1268,14 @@
             </div>
           </section>
 
+          <!-- Date of birth (account-birthday.js) -->
+          <section class="bday-section" id="bdaySection" hidden aria-live="polite">
+            <div class="dash-section-head">
+              <p class="dash-section-title" data-i18n="bday_title">Date of birth</p>
+            </div>
+            <div class="bday-card" id="bdayContainer"></div>
+          </section>
+
           <!-- Bookings -->
           <div class="dash-section-head" id="bookings">
             <p class="dash-section-title" data-i18n="acc_section_bookings">My bookings</p>
@@ -1359,6 +1389,7 @@
   <script defer src="booking-modal.js"></script>
   <script defer src="app.js"></script>
   <script defer src="account.js"></script>
+  <script defer src="account-birthday.js"></script>
 
 <script src="/cookie-banner.js" defer></script>
   <script src="/compact.js" defer></script>
