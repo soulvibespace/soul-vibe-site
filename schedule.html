@@ -426,51 +426,16 @@
       .schedule-filters { gap: 8px; }
     }
   
-    /* ── Price asterisk tooltip ── */
-    .price-asterisk {
-      font-size: .65em;
-      vertical-align: super;
-      cursor: pointer;
-      color: var(--color-primary, #7b6fca);
-      text-decoration: none;
-      margin-left: 1px;
-      position: relative;
+    /* ── Drop-in price in plain words (was "€20*" with a hover tooltip) ── */
+    .card-price.drop-in { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; text-align: right; }
+    .price-dropin { white-space: nowrap; }
+    .price-hint {
+      font-size: .72rem; font-weight: 500; color: var(--color-primary, #7b6fca);
+      text-decoration: underline; text-underline-offset: 2px; white-space: nowrap;
     }
-    .price-asterisk:hover::after,
-    .price-asterisk:focus::after {
-      content: attr(title);
-      position: absolute;
-      bottom: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(30,24,50,.92);
-      color: #fff;
-      font-size: .78rem;
-      font-family: var(--font-sans, 'Work Sans', sans-serif);
-      font-weight: 400;
-      white-space: nowrap;
-      padding: 6px 10px;
-      border-radius: 6px;
-      pointer-events: none;
-      z-index: 10;
-      letter-spacing: 0;
-    }
-    .price-asterisk:hover::before,
-    .price-asterisk:focus::before {
-      content: '';
-      position: absolute;
-      bottom: calc(100% + 1px);
-      left: 50%;
-      transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: rgba(30,24,50,.92);
-      pointer-events: none;
-      z-index: 10;
-    }
-    /* mobile: show on tap */
-    @media (hover: none) {
-      .price-asterisk:active::after,
-      .price-asterisk:active::before { display: block; }
+    .price-hint:hover { text-decoration-thickness: 2px; }
+    @media (max-width: 600px) {
+      .card-price.drop-in { flex-direction: row; align-items: baseline; gap: 6px; flex-wrap: wrap; text-align: left; }
     }
 
     /* ── View toggle (Week / Month) ── */
@@ -669,7 +634,7 @@
           <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
           <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
         </div>
-        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book Now</a>
+        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book a class</a>
         <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
@@ -1182,6 +1147,10 @@
     // ── Populate instructor dropdown ─────────────────────────────
     function populateInstructorSelect(instructors) {
       const prev = instSelect.value || _activeUnit;
+      // Only real people: SimplyBook resources like "Hatha Yoga (rus)" or
+      // "Soul Vibe Space LTD" are not teachers and are not shown on the site.
+      const isPerson = window.svsIsPersonName || (() => true);
+      instructors = (instructors || []).filter(u => isPerson(u.name));
 
       // Keep only instructors who have slots in the shown period
       const activeIds = new Set(_allSlots.map(s => String(s.unit_id)).filter(Boolean));
@@ -1197,6 +1166,10 @@
         opt.textContent = u.name;
         instSelect.appendChild(opt);
       }
+
+      // A filter with a single teacher is useless — hide it.
+      const grp = instSelect.closest('.filter-group');
+      if (grp) grp.hidden = active.length < 2;
 
       if (prev && active.find(u => String(u.id) === prev)) {
         instSelect.value = prev;
@@ -1379,9 +1352,9 @@
           return `<button type="button" class="mcal-chip${past ? ' is-past' : ''}"
               ${past ? 'disabled' : ''}
               data-service="${escapeHtml(s.service_id)}" data-date="${escapeHtml(s.date)}" data-time="${escapeHtml(s.time)}"
-              title="${escapeHtml(s.time.slice(0, 5) + ' · ' + s.service_name + (s.unit_name ? ' · ' + s.unit_name : ''))}">
+              title="${escapeHtml(s.time.slice(0, 5) + ' · ' + classFullName(s, lang))}">
               <span class="mcal-chip-time">${s.time.slice(0, 5)}</span>
-              <span class="mcal-chip-name">${escapeHtml(s.service_name)}</span>
+              <span class="mcal-chip-name">${escapeHtml(classInfo(s, lang).title)}</span>
             </button>`;
         }).join('');
         const more = daySlots.length > MAX_CHIPS
@@ -1476,16 +1449,32 @@
       });
     }
 
+    // Class title in the page language, keeping the class language and teacher
+    // (svsClassInfo in i18n.js): «Инь йога (рус.)» + «Елена».
+    function classInfo(s, lang) {
+      return window.svsClassInfo ? svsClassInfo(s.service_id, s.service_name, lang) : { title: s.service_name, teacher: '' };
+    }
+    function classTeacher(s, lang) {
+      return window.svsTeacherName ? svsTeacherName(s.service_id, s.service_name, s.unit_name, lang) : (s.unit_name || '');
+    }
+    function classFullName(s, lang) {
+      const tch = classTeacher(s, lang);
+      return classInfo(s, lang).title + (tch ? ' · ' + tch : '');
+    }
+
     function renderCard(s, lang, today) {
       const isPast = isPastSlot(s, today);
+      const info = classInfo(s, lang);
+      const teacher = classTeacher(s, lang);
+      const showPic = s.unit_picture && window.svsIsPersonName && svsIsPersonName(s.unit_name);
 
       const timeStart = s.time.slice(0, 5);
       const timeEnd   = s.end_time ? s.end_time.slice(0, 5) : '';
       const durLabel  = `${s.duration} ${lang === 'ru' ? 'мин' : lang === 'el' ? 'λεπ' : 'min'}`;
 
       let avatarHtml = '';
-      if (s.unit_picture) {
-        avatarHtml = `<img class="card-instructor-pic" src="${s.unit_picture}" alt="${escapeHtml(s.unit_name || '')}" loading="lazy" onerror="this.style.display='none'">`;
+      if (showPic) {
+        avatarHtml = `<img class="card-instructor-pic" src="${s.unit_picture}" alt="${escapeHtml(teacher)}" loading="lazy" onerror="this.style.display='none'">`;
       } else {
         avatarHtml = `<span class="card-instructor-pic-placeholder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>`;
       }
@@ -1498,14 +1487,10 @@
         if (cat) catLabel = cat[`label_${lang}`] || cat.label_en;
       }
 
-      const passTooltip = {
-        en: 'Pass holders pay less. See pricing.',
-        ru: 'По абонементу дешевле. Смотреть цены.',
-        el: 'Με πάσο φθηνότερα. Δείτε τιμές.'
-      }[lang];
+      // Drop-in price in plain words instead of "€20*": «Разово €20 · с абонементом дешевле».
       const priceLabel = s.price > 0
         ? `€${s.price}`
-        : `€20<sup class="price-asterisk" title="${passTooltip}" aria-label="${passTooltip}" onclick="event.stopPropagation();window.location='/pricing'" tabindex="0">*</sup>`;
+        : `<span class="price-dropin">${escapeHtml(t('sched_price_dropin'))}</span><a class="price-hint" href="/pricing" onclick="event.stopPropagation()">${escapeHtml(t('sched_price_hint'))}</a>`;
       const priceClass = s.price > 0 ? '' : 'drop-in';
 
       const bookLabel = isPast
@@ -1520,9 +1505,9 @@
             <span class="card-time-dur">${durLabel}</span>
           </div>
           <div class="card-info">
-            <div class="card-name" title="${escapeHtml(s.service_name)}">${escapeHtml(s.service_name)}</div>
+            <div class="card-name" title="${escapeHtml(info.title)}">${escapeHtml(info.title)}</div>
             <div class="card-meta">
-              ${s.unit_name ? `<span class="card-instructor">${avatarHtml}${escapeHtml(s.unit_name)}</span>` : ''}
+              ${teacher ? `<span class="card-instructor">${avatarHtml}${escapeHtml(teacher)}</span>` : ''}
               ${catLabel ? `<span class="card-category-badge">${catLabel}</span>` : ''}
             </div>
           </div>
@@ -1533,7 +1518,7 @@
               data-service="${escapeHtml(s.service_id)}"
               data-date="${escapeHtml(s.date)}"
               data-time="${escapeHtml(s.time)}"
-              aria-label="Book ${escapeHtml(s.service_name)}">
+              aria-label="${escapeHtml(t('sched_book_aria').replace('{name}', classFullName(s, lang)).replace('{date}', s.date).replace('{time}', timeStart))}">
               ${bookLabel}
             </button>
           </div>
