@@ -339,12 +339,13 @@ function vibesDate(iso, withTime) {
   if (withTime) { o.hour = '2-digit'; o.minute = '2-digit'; }
   return d.toLocaleString(vibesLocale(), o);
 }
-// Package code (MP4, SP2 …) is the part of the panel label before " · ".
+// Class Pass / Starter Pack code (MP4, SP2 …) is the part of the panel label before " · ".
+// Product names come from the terms dictionary (SVS_TERMS in i18n.js): {{pass_line}} / {{starter_line}}.
 function vibesLotName(lot) {
   var code = String(lot.source_label || '').split(' · ')[0].trim();
   if (lot.source_type === 'membership' || lot.source_type === 'starter_pack') {
     var key = lot.source_type === 'membership' ? 'vibes_multipass' : 'vibes_starter';
-    return t(key, lot.source_type === 'membership' ? 'Multi Pass' : 'Starter Pack') + (code ? ' ' + code : '');
+    return vt(key, lot.source_type === 'membership' ? 'Class Pass' : 'Starter Pack') + (code ? ' ' + code : '');
   }
   return vt('vibes_src_' + lot.source_type, vt('vibes_src_bonus', 'Bonus VIBES'));
 }
@@ -390,7 +391,7 @@ function renderVibes() {
     var key = d.reason === 'verify_email' ? 'vibes_verify_email' : d.reason === 'ambiguous' ? 'vibes_ambiguous' : 'vibes_not_found';
     var fb = d.reason === 'verify_email' ? 'To see your VIBES, sign in with Google using the email you gave the studio.'
       : d.reason === 'ambiguous' ? 'We found more than one studio card with your email. Please contact the studio so we can link the right one.'
-      : 'You have no VIBES yet. Buy a Multi Pass or Starter Pack at the studio — your balance will appear here.';
+      : 'You have no VIBES yet. Buy a Class Pass at the studio — your balance will appear here.';
     if (d.reason === 'verify_email') { renderVibesVerify(); return; }
     box.innerHTML = '<p class="vibes-note">' + escHtml(t(key, fb)) + '</p>';
     return;
@@ -401,8 +402,8 @@ function renderVibes() {
         + '<span class="vibes-balance-hint">' + escHtml(vt('vibes_classes_left', '≈ {n} classes').replace('{n}', classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
 
   var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
-  h += '<p class="vibes-sub">' + escHtml(vt('vibes_active', 'Active packages')) + '</p>';
-  if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active packages.')) + '</p>';
+  h += '<p class="vibes-sub">' + escHtml(vt('vibes_active', 'Active Class Passes and Starter Packs')) + '</p>';
+  if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active Class Pass or Starter Pack.')) + '</p>';
   else {
     h += '<ul class="vibes-list">' + active.map(function (l) {
       var meta = l.expires_at ? vt('vibes_until', 'valid until {d}').replace('{d}', vibesDate(l.expires_at)) : vt('vibes_no_expiry', 'no expiry date');

@@ -16,6 +16,57 @@
   (document.head || document.documentElement).appendChild(s);
 })();
 
+// ── Термины: единый словарь ──────────────────────────────────────────────────
+// Названия продуктов студии живут ТОЛЬКО здесь. В переводах ниже вместо слов
+// пишем плейсхолдеры, а движок подставляет нужную форму на языке страницы:
+//   {{pass}}          → абонемент / Class Pass       (MP4, MP8, MP12, MP20)
+//   {{pass:gen}}      → абонемента (падеж; формы — см. ниже)
+//   {{Pass:pl}}       → Абонементы (заглавная первая буква — пишем ключ с заглавной)
+//   {{starter}}       → Стартер пак / Starter Pack   (SP1, SP2, SP4 — только для новых клиентов, один раз)
+//   {{pass_line}}     → название рядом с кодом: «Абонемент MP8», «Class Pass MP8»
+//   {{starter_line}}  → «Стартер пак SP2», «Starter Pack SP2»
+// Формы: nom gen dat acc ins prep, pl pl_gen pl_dat pl_ins pl_prep. Если формы нет,
+// берётся nom. Чтобы переименовать продукт (например, при новой коммуникации VIBES),
+// достаточно поменять значения здесь — тексты сайта, кабинета и окна записи обновятся.
+// EL — предварительно латиницей (как бренд), ждёт подтверждения владелицы.
+const SVS_TERMS = {
+  ru: {
+    pass:    { nom: 'абонемент', gen: 'абонемента', dat: 'абонементу', acc: 'абонемент', ins: 'абонементом', prep: 'абонементе',
+               pl: 'абонементы', pl_gen: 'абонементов', pl_dat: 'абонементам', pl_ins: 'абонементами', pl_prep: 'абонементах' },
+    starter: { nom: 'Стартер пак', gen: 'Стартер пака', dat: 'Стартер паку', acc: 'Стартер пак', ins: 'Стартер паком', prep: 'Стартер паке',
+               pl: 'Стартер паки', pl_gen: 'Стартер паков', pl_dat: 'Стартер пакам', pl_ins: 'Стартер паками', pl_prep: 'Стартер паках' },
+    pass_line:    { nom: 'Абонемент' },
+    starter_line: { nom: 'Стартер пак' },
+  },
+  en: {
+    pass:    { nom: 'Class Pass', pl: 'Class Passes' },
+    starter: { nom: 'Starter Pack', pl: 'Starter Packs' },
+    pass_line:    { nom: 'Class Pass' },
+    starter_line: { nom: 'Starter Pack' },
+  },
+  el: {
+    // TODO(владелица): подтвердить. Возможный греческий вариант — «κάρτα μαθημάτων»; пока оставляем латиницу, как бренд.
+    pass:    { nom: 'Class Pass', pl: 'Class Pass' },
+    starter: { nom: 'Starter Pack', pl: 'Starter Pack' },
+    pass_line:    { nom: 'Class Pass' },
+    starter_line: { nom: 'Starter Pack' },
+  },
+};
+window.SVS_TERMS = SVS_TERMS;
+
+// Подставляет термины в строку: '{{pass:gen}}' → 'абонемента'.
+function svsExpandTerms(str, lang) {
+  if (typeof str !== 'string' || str.indexOf('{{') < 0) return str;
+  return str.replace(/\{\{([A-Za-z_]+)(?::([a-z_]+))?\}\}/g, function (m, key, form) {
+    var k = key.toLowerCase();
+    var e = (SVS_TERMS[lang] && SVS_TERMS[lang][k]) || SVS_TERMS.en[k];
+    if (!e) return m;
+    var v = e[form || 'nom'] || e.nom;
+    return key.charAt(0) !== key.charAt(0).toLowerCase() ? v.charAt(0).toUpperCase() + v.slice(1) : v;
+  });
+}
+window.svsExpandTerms = svsExpandTerms;
+
 const SVS_TRANSLATIONS = {
   en: {
     // ── Nav ──
@@ -232,12 +283,12 @@ const SVS_TRANSLATIONS = {
     vibes_title: 'My VIBES',
     vibes_classes_left: '≈ {n} classes',
     vibes_rate: '1 class = 20 VIBES',
-    vibes_active: 'Active packages',
-    vibes_no_active: 'No active packages.',
+    vibes_active: 'Active {{pass:pl}} and {{starter:pl}}',
+    vibes_no_active: 'No active {{pass}} or {{starter}}.',
     vibes_until: 'valid until {d}',
     vibes_no_expiry: 'no expiry date',
-    vibes_multipass: 'Multi Pass',
-    vibes_starter: 'Starter Pack',
+    vibes_multipass: '{{pass_line}}',
+    vibes_starter: '{{starter_line}}',
     vibes_src_bonus: 'Bonus VIBES',
     vibes_src_manual: 'Bonus VIBES',
     vibes_src_reward: 'Google review bonus',
@@ -260,7 +311,7 @@ const SVS_TRANSLATIONS = {
     vibes_unavailable: 'VIBES are temporarily unavailable. Please try again later.',
     vibes_verify_email: 'To see your VIBES, sign in with Google using the email you gave the studio.',
     vibes_ambiguous: 'We found more than one studio card with your email. Please contact the studio so we can link the right one.',
-    vibes_not_found: 'You have no VIBES yet. Buy a Multi Pass or Starter Pack at the studio — your balance will appear here.',
+    vibes_not_found: 'You have no VIBES yet. Buy a {{pass}} at the studio (new clients can start with a one-time {{starter}}) — your balance will appear here.',
     vibes_ev_intro: 'Confirm your email to see your VIBES. We will send a 6-digit code to {email}.',
     vibes_ev_send: 'Send code',
     vibes_ev_code: 'Code from the email',
@@ -502,12 +553,12 @@ const SVS_TRANSLATIONS = {
     vibes_title: 'Мои VIBES',
     vibes_classes_left: '≈ {n} занятий',
     vibes_rate: '1 занятие = 20 VIBES',
-    vibes_active: 'Активные пакеты',
-    vibes_no_active: 'Активных пакетов нет.',
+    vibes_active: 'Активные {{pass:pl}} и {{starter:pl}}',
+    vibes_no_active: 'Активных {{pass:pl_gen}} и {{starter:pl_gen}} нет.',
     vibes_until: 'действует до {d}',
     vibes_no_expiry: 'без срока',
-    vibes_multipass: 'Multi Pass',
-    vibes_starter: 'Starter Pack',
+    vibes_multipass: '{{pass_line}}',
+    vibes_starter: '{{starter_line}}',
     vibes_src_bonus: 'Бонусные VIBES',
     vibes_src_manual: 'Бонусные VIBES',
     vibes_src_reward: 'Бонус за отзыв в Google',
@@ -530,7 +581,7 @@ const SVS_TRANSLATIONS = {
     vibes_unavailable: 'VIBES временно недоступны. Попробуйте позже.',
     vibes_verify_email: 'Чтобы увидеть VIBES, войдите через Google с той почтой, которую вы оставили в студии.',
     vibes_ambiguous: 'С вашей почтой найдено несколько карточек. Напишите в студию — мы привяжем нужную.',
-    vibes_not_found: 'У вас пока нет VIBES. Купите Multi Pass или Starter Pack в студии — баланс появится здесь.',
+    vibes_not_found: 'У вас пока нет VIBES. Купите {{pass}} в студии (новым клиентам — разовый {{starter}}), и баланс появится здесь.',
     vibes_ev_intro: 'Подтвердите почту, чтобы увидеть свои VIBES. Мы отправим 6-значный код на {email}.',
     vibes_ev_send: 'Отправить код',
     vibes_ev_code: 'Код из письма',
@@ -772,12 +823,12 @@ const SVS_TRANSLATIONS = {
     vibes_title: 'Τα VIBES μου',
     vibes_classes_left: '≈ {n} μαθήματα',
     vibes_rate: '1 μάθημα = 20 VIBES',
-    vibes_active: 'Ενεργά πακέτα',
-    vibes_no_active: 'Δεν υπάρχουν ενεργά πακέτα.',
+    vibes_active: 'Ενεργά {{pass:pl}} και {{starter:pl}}',
+    vibes_no_active: 'Δεν υπάρχει ενεργό {{pass}} ή {{starter}}.',
     vibes_until: 'ισχύει έως {d}',
     vibes_no_expiry: 'χωρίς λήξη',
-    vibes_multipass: 'Multi Pass',
-    vibes_starter: 'Starter Pack',
+    vibes_multipass: '{{pass_line}}',
+    vibes_starter: '{{starter_line}}',
     vibes_src_bonus: 'Μπόνους VIBES',
     vibes_src_manual: 'Μπόνους VIBES',
     vibes_src_reward: 'Μπόνους για κριτική Google',
@@ -800,7 +851,7 @@ const SVS_TRANSLATIONS = {
     vibes_unavailable: 'Τα VIBES δεν είναι διαθέσιμα προσωρινά. Δοκιμάστε ξανά αργότερα.',
     vibes_verify_email: 'Για να δείτε τα VIBES σας, συνδεθείτε με Google με το email που δώσατε στο στούντιο.',
     vibes_ambiguous: 'Βρέθηκαν περισσότερες από μία κάρτες με το email σας. Επικοινωνήστε με το στούντιο για να συνδέσουμε τη σωστή.',
-    vibes_not_found: 'Δεν έχετε ακόμη VIBES. Αγοράστε Multi Pass ή Starter Pack στο στούντιο — το υπόλοιπο θα εμφανιστεί εδώ.',
+    vibes_not_found: 'Δεν έχετε ακόμη VIBES. Αγοράστε ένα {{pass}} στο στούντιο (οι νέοι πελάτες μπορούν να ξεκινήσουν με ένα εφάπαξ {{starter}}) — το υπόλοιπο θα εμφανιστεί εδώ.',
     vibes_ev_intro: 'Επιβεβαιώστε το email σας για να δείτε τα VIBES σας. Θα στείλουμε έναν 6ψήφιο κωδικό στο {email}.',
     vibes_ev_send: 'Αποστολή κωδικού',
     vibes_ev_code: 'Κωδικός από το email',
@@ -862,7 +913,13 @@ const SVS_I18N = (function() {
 
   function t(key) {
     const dict = SVS_TRANSLATIONS[current] || SVS_TRANSLATIONS.en;
-    return dict[key] !== undefined ? dict[key] : (SVS_TRANSLATIONS.en[key] || key);
+    const raw = dict[key] !== undefined ? dict[key] : (SVS_TRANSLATIONS.en[key] || key);
+    return svsExpandTerms(raw, SVS_TRANSLATIONS[current] ? current : 'en');
+  }
+
+  // Термин из словаря SVS_TERMS на текущем языке: term('pass', 'dat') → 'абонементу'.
+  function term(key, form) {
+    return svsExpandTerms('{{' + key + (form ? ':' + form : '') + '}}', current);
   }
 
   function applyLang(lang) {
@@ -906,7 +963,7 @@ const SVS_I18N = (function() {
     setLang(lang);
   }
 
-  return { init, setLang, t, getLang };
+  return { init, setLang, t, term, getLang };
 })();
 
 // Expose on window: this is a top-level `const`, so without this assignment
@@ -1085,19 +1142,19 @@ Object.assign(SVS_TRANSLATIONS.en, {
   nav_pricing:          'Pricing',
 
   pricing_eyebrow:      'PRICING · VIBES',
-  pricing_h1:           'Classes, Packages & VIBES',
-  pricing_lead:         'At Soul Vibe Space you pay for classes with VIBES — our studio currency. One regular class is 20 VIBES. Choose a package, top up any amount or simply drop in.',
+  pricing_h1:           'Classes, {{pass:pl}} & VIBES',
+  pricing_lead:         'At Soul Vibe Space you pay for classes with VIBES — our studio currency. One regular class is 20 VIBES. Choose a {{pass}}, top up any amount or simply drop in.',
 
   // Drop-in
   pricing_drop_label:   'DROP-IN',
   pricing_drop_name:    'Single Class',
   pricing_drop_desc:    'Try any class without commitment. Perfect for visitors or a spontaneous practice.',
 
-  // Starter Pack
+  // Starter Pack ({{starter}})
   pricing_starter_badge:'NEW STUDENTS ONLY',
-  pricing_starter_label:'STARTER PACK',
+  pricing_starter_label:'{{starter}}',
   pricing_starter_title:'Begin Your Journey',
-  pricing_starter_sub:  'One-time offer for first-time students. Choose the pack that fits your start.',
+  pricing_starter_sub:  'One-time offer for new clients only, purchased once. Choose the {{starter}} that fits your start.',
   pricing_s1_name:      '1 Class',
   pricing_s1_saving:    'Save €5 vs drop-in',
   pricing_s2_name:      '2 Classes',
@@ -1105,9 +1162,9 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pricing_s4_name:      '4 Classes',
   pricing_s4_saving:    'Save €40 vs drop-in',
 
-  // Multi Pass
+  // Class Pass ({{pass}})
   pricing_multi_badge:  'BEST VALUE',
-  pricing_multi_label:  'MULTI PASS',
+  pricing_multi_label:  '{{pass}}',
   pricing_multi_title:  'Commit to Your Practice',
   pricing_multi_sub:    'The more you practice, the more you save. Valid for all regular classes.',
   pricing_m4_name:      '4 Classes',
@@ -1140,11 +1197,11 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pricing_how_title:    'How It Works',
   pricing_how1_title:   'Choose a Class',
   pricing_how1_desc:    'Browse the schedule and pick a session that speaks to you.',
-  pricing_how2_title:   'Book Your Spot',
-  pricing_how2_desc:    'Sign in and reserve your place in a few taps — no redirects, no extra steps.',
+  pricing_how2_title:   'Book a class',
+  pricing_how2_desc:    'Sign in and book your place in a few taps — no extra steps.',
   pricing_how3_title:   'Show Up & Practice',
   pricing_how3_desc:    'Arrive 5–10 min early. Your mat is waiting.',
-  pricing_how_note:     'Packages are not intended to be transferred to third parties. If you can’t make it, please cancel your booking in advance — that way someone else can take your spot.',
+  pricing_how_note:     '{{Pass:pl}} and {{starter:pl}} are personal and cannot be transferred to other people. If you can’t make it, please cancel your booking in advance — that way someone else can take your spot.',
   pricing_class_word:   'class',
   pricing_classes_word: 'classes',
   btn_view_schedule:    'View Schedule',
@@ -1154,17 +1211,17 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   nav_pricing:          'Цены',
 
   pricing_eyebrow:      'ЦЕНЫ · VIBES',
-  pricing_h1:           'Классы, пакеты и VIBES',
-  pricing_lead:         'В Soul Vibe Space занятия оплачиваются VIBES — внутренней валютой студии. Один регулярный класс — 20 VIBES. Выбери пакет, пополни баланс на любую сумму или приходи на разовый визит.',
+  pricing_h1:           'Классы, {{pass:pl}} и VIBES',
+  pricing_lead:         'В Soul Vibe Space занятия оплачиваются VIBES — внутренней валютой студии. Один регулярный класс — 20 VIBES. Выберите {{pass}}, пополните баланс на любую сумму или приходите на разовое занятие.',
 
   pricing_drop_label:   'РАЗОВОЕ ЗАНЯТИЕ',
   pricing_drop_name:    'Один класс',
-  pricing_drop_desc:    'Попробуй любой класс без обязательств. Идеально для гостей города или спонтанной практики.',
+  pricing_drop_desc:    'Попробуйте любой класс без обязательств. Подойдёт гостям города и для спонтанной практики.',
 
   pricing_starter_badge:'ТОЛЬКО ДЛЯ НОВЫХ',
-  pricing_starter_label:'СТАРТЕР-ПАК',
-  pricing_starter_title:'Начни свой путь',
-  pricing_starter_sub:  'Разовое предложение для новых студентов. Выбери пак, который подходит именно тебе.',
+  pricing_starter_label:'{{starter}}',
+  pricing_starter_title:'Начните свой путь',
+  pricing_starter_sub:  'Разовое предложение только для новых клиентов: купить можно один раз. Выберите {{starter}}, который подходит вам.',
   pricing_s1_name:      '1 занятие',
   pricing_s1_saving:    'Экономия €5 vs разовое',
   pricing_s2_name:      '2 занятия',
@@ -1173,9 +1230,9 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_s4_saving:    'Экономия €40 vs разовое',
 
   pricing_multi_badge:  'ВЫГОДНО',
-  pricing_multi_label:  'МУЛЬТИ-ПАСС',
+  pricing_multi_label:  '{{Pass}}',
   pricing_multi_title:  'Полная практика',
-  pricing_multi_sub:    'Чем больше практикуешь — тем выгоднее. Действует на все регулярные классы.',
+  pricing_multi_sub:    'Чем больше вы практикуете, тем выгоднее. Действует на все регулярные классы.',
   pricing_m4_name:      '4 занятия',
   pricing_m4_saving:    '€17,50 / класс',
   pricing_m8_name:      '8 занятий',
@@ -1186,7 +1243,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_m20_saving:   '€15 / класс',
 
   pricing_events_title: 'Воркшопы и события',
-  pricing_events_desc:  'У воркшопов, звуковых практик и других специальных классов своя цена в VIBES — она задаётся отдельно для каждого события. Смотри афишу или напиши нам.',
+  pricing_events_desc:  'У воркшопов, звуковых практик и других специальных классов своя цена в VIBES — она задаётся отдельно для каждого события. Смотрите афишу или напишите нам.',
 
 
   pricing_coworking_title: 'Коворкинг',
@@ -1194,18 +1251,18 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_coworking_from:  'От €2 / час с чел.',
   pricing_coworking_link:  'Смотреть тарифы коворкинга',
 
-  pricing_extras_title: 'Ищешь что-то другое?',
+  pricing_extras_title: 'Ищете что-то другое?',
   pricing_extras_desc:  'Индивидуальные программы и специальные события оплачиваются отдельно.',
   pricing_extras_link:  'Смотреть доп. услуги и цены',
 
   pricing_how_title:    'Как это работает',
-  pricing_how1_title:   'Выбери класс',
-  pricing_how1_desc:    'Просмотри расписание и выбери занятие, которое тебя вдохновляет.',
-  pricing_how2_title:   'Забронируй место',
-  pricing_how2_desc:    'Войди в аккаунт и забронируй место в пару кликов — без редиректов.',
-  pricing_how3_title:   'Приходи и практикуй',
-  pricing_how3_desc:    'Приходи за 5–10 минут до начала. Коврик ждёт тебя.',
-  pricing_how_note:     'Пакеты не предназначены для передачи третьим лицам. Если не можете прийти, пожалуйста, отмените запись заранее — так место достанется другому.',
+  pricing_how1_title:   'Выберите класс',
+  pricing_how1_desc:    'Посмотрите расписание и выберите занятие, которое вам откликается.',
+  pricing_how2_title:   'Запишитесь',
+  pricing_how2_desc:    'Войдите в аккаунт и запишитесь в пару нажатий — без лишних шагов.',
+  pricing_how3_title:   'Приходите и практикуйте',
+  pricing_how3_desc:    'Приходите за 5–10 минут до начала. Коврик уже ждёт вас.',
+  pricing_how_note:     '{{Pass:pl}} и {{starter:pl}} именные и не передаются другим людям. Если не можете прийти, пожалуйста, отмените запись заранее — так место достанется другому.',
   pricing_class_word:   'занятие',
   pricing_classes_word: 'занятия',
   btn_view_schedule:    'Расписание',
@@ -1215,17 +1272,17 @@ Object.assign(SVS_TRANSLATIONS.el, {
   nav_pricing:          'Τιμές',
 
   pricing_eyebrow:      'ΤΙΜΕΣ · VIBES',
-  pricing_h1:           'Μαθήματα, Πακέτα & VIBES',
-  pricing_lead:         'Στο Soul Vibe Space πληρώνεις τα μαθήματα με VIBES — το νόμισμα του studio. Ένα τακτικό μάθημα κοστίζει 20 VIBES. Διάλεξε πακέτο, φόρτισε οποιοδήποτε ποσό ή έλα για μία επίσκεψη.',
+  pricing_h1:           'Μαθήματα, {{pass}} & VIBES',
+  pricing_lead:         'Στο Soul Vibe Space πληρώνεις τα μαθήματα με VIBES — το νόμισμα του studio. Ένα τακτικό μάθημα κοστίζει 20 VIBES. Διάλεξε ένα {{pass}}, φόρτισε οποιοδήποτε ποσό ή έλα για μία επίσκεψη.',
 
   pricing_drop_label:   'ΜΕΜΟΝΩΜΕΝΟ',
   pricing_drop_name:    'Ένα Μάθημα',
   pricing_drop_desc:    'Δοκίμασε οποιοδήποτε μάθημα χωρίς δέσμευση. Ιδανικό για επισκέπτες ή αυθόρμητη πρακτική.',
 
   pricing_starter_badge:'ΜΟΝΟ ΓΙΑ ΝΕΟΥΣ',
-  pricing_starter_label:'ΠΑΚΕΤΟ ΕΚΚΙΝΗΣΗΣ',
+  pricing_starter_label:'{{starter}}',
   pricing_starter_title:'Ξεκίνα το Ταξίδι σου',
-  pricing_starter_sub:  'Εφάπαξ προσφορά για νέους σπουδαστές. Διάλεξε το πακέτο που σου ταιριάζει.',
+  pricing_starter_sub:  'Εφάπαξ προσφορά μόνο για νέους πελάτες, αγοράζεται μία φορά. Διάλεξε το {{starter}} που σου ταιριάζει.',
   pricing_s1_name:      '1 Μάθημα',
   pricing_s1_saving:    'Εξοικονόμηση €5',
   pricing_s2_name:      '2 Μαθήματα',
@@ -1234,7 +1291,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pricing_s4_saving:    'Εξοικονόμηση €40',
 
   pricing_multi_badge:  'ΚΑΛΥΤΕΡΗ ΑΞΙΑ',
-  pricing_multi_label:  'MULTI PASS',
+  pricing_multi_label:  '{{pass}}',
   pricing_multi_title:  'Αφοσιώσου στην Πρακτική',
   pricing_multi_sub:    'Όσο περισσότερο εξασκείσαι, τόσο περισσότερο εξοικονομείς.',
   pricing_m4_name:      '4 Μαθήματα',
@@ -1263,10 +1320,10 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pricing_how1_title:   'Διάλεξε Μάθημα',
   pricing_how1_desc:    'Περιήγησου στο πρόγραμμα και επίλεξε ένα μάθημα που σε εκφράζει.',
   pricing_how2_title:   'Κράτησε Θέση',
-  pricing_how2_desc:    'Συνδέσου και κράτα τη θέση σου με λίγα κλικ — χωρίς ανακατευθύνσεις.',
+  pricing_how2_desc:    'Συνδέσου και κράτα τη θέση σου με λίγα κλικ — χωρίς περιττά βήματα.',
   pricing_how3_title:   'Έλα & Εξάσκησε',
   pricing_how3_desc:    'Φτάσε 5–10 λεπτά νωρίτερα. Το χαλάκι σε περιμένει.',
-  pricing_how_note:     'Τα πακέτα δεν προορίζονται για μεταβίβαση σε τρίτους. Αν δεν μπορείτε να έρθετε, παρακαλούμε ακυρώστε την κράτησή σας εκ των προτέρων — έτσι τη θέση θα την πάρει κάποιος άλλος.',
+  pricing_how_note:     'Τα {{pass}} και τα {{starter}} είναι προσωπικά και δεν μεταβιβάζονται σε τρίτους. Αν δεν μπορείτε να έρθετε, παρακαλούμε ακυρώστε την κράτησή σας εκ των προτέρων — έτσι τη θέση θα την πάρει κάποιος άλλος.',
   pricing_class_word:   'μάθημα',
   pricing_classes_word: 'μαθήματα',
   btn_view_schedule:    'Πρόγραμμα',
@@ -1379,7 +1436,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   home_reviews_cta:     'Δείτε όλες τις αξιολογήσεις',
 });
 
-// ── Pricing page: VIBES programme (packages, rules, bonuses, FAQ) + /rental ─────
+// ── Pricing page: VIBES programme (Class Pass / Starter Pack, rules, bonuses, FAQ) + /rental ─────
 Object.assign(SVS_TRANSLATIONS.en, {
   pricing_page_title:   'Pricing & VIBES | Soul Vibe Space Limassol',
   rental_page_title:    'Studio & Venue Rental | Soul Vibe Space Limassol',
@@ -1388,25 +1445,25 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pv_rate_special:      'Special class',
   pv_rate_special_val:  'Own price in VIBES',
   pv_rate_topup:        'Top-up',
-  pv_rate_dropin:       'Drop-in, no package',
+  pv_rate_dropin:       'Drop-in, without a {{pass}}',
 
   pv_how_title:         'How VIBES Work',
-  pv_how_sub:           'Four simple steps — from your first package to your next class.',
-  pv_how1_title:        'Choose a package or top up',
-  pv_how1_desc:         'Pick a Multi Pass or a Starter Pack — or top up any amount, €1 = 1 VIBE. Pay at the studio; the administrator confirms the payment.',
+  pv_how_sub:           'Four simple steps — from your first {{pass}} to your next class.',
+  pv_how1_title:        'Choose a {{pass}} or top up',
+  pv_how1_desc:         'Pick a {{pass}}, a one-time {{starter}} (new clients only) or top up any amount, €1 = 1 VIBE. Pay at the studio; the administrator confirms the payment.',
   pv_how2_title:        'VIBES land on your balance',
   pv_how2_desc:         'Your balance and the full history of credits and visits are always in your <a href="/account">personal account</a>.',
   pv_how3_title:        'Come to class',
   pv_how3_desc:         'Each visit is paid in VIBES: a regular class is 20 VIBES, a special class has its own price in VIBES.',
   pv_how4_title:        'Validity starts with your first visit',
-  pv_how4_desc:         'The package period starts from your first visit, not from the purchase date. With several packages, VIBES are used from the earliest one first.',
+  pv_how4_desc:         'The validity period starts from your first visit, not from the purchase date. If you have several {{pass:pl}} or {{starter:pl}}, VIBES are used from the earliest one first.',
 
-  pv_mp_title:          'Multi Pass',
-  pv_mp_sub:            'For a regular practice. The bigger the package, the lower the price per class.',
+  pv_mp_title:          '{{Pass}}',
+  pv_mp_sub:            'For a regular practice. The bigger the {{pass}}, the lower the price per class.',
   pv_badge_popular:     'Popular',
-  pv_sp_title:          'Starter Pack',
-  pv_sp_badge:          'One time only',
-  pv_sp_sub:            'A gentle start for your first classes. A Starter Pack can be purchased only once — choose one of the three options.',
+  pv_sp_title:          '{{Starter}}',
+  pv_sp_badge:          'New clients · once',
+  pv_sp_sub:            'A gentle start for new clients. A {{starter}} can be purchased only once — choose one of the three options.',
 
   pv_eq_1:              '= 1 regular class',
   pv_eq_2:              '= 2 regular classes',
@@ -1423,10 +1480,10 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pv_topup_name:        'Any amount',
   pv_topup_desc:        'Add exactly as many VIBES as you need — any amount, at the studio.',
   pv_drop_name:         'Single visit',
-  pv_drop_desc:         'One regular class without a package, paid in euros at the studio.',
+  pv_drop_desc:         'One regular class without a {{pass}}, paid in euros at the studio.',
 
   pv_pay_title:         'Payment at the studio',
-  pv_pay_text:          'Online payment is not available yet. Pay for packages, top-ups and drop-ins at the studio — the administrator confirms the payment and credits VIBES to your balance.',
+  pv_pay_text:          'Online payment is not available yet. Pay for {{pass:pl}}, {{starter:pl}}, top-ups and drop-ins at the studio — the administrator confirms the payment and credits VIBES to your balance.',
 
   pv_bonus_title:       'Bonus VIBES',
   pv_bonus_sub:         'Practise, share and celebrate — we add VIBES to your balance.',
@@ -1438,29 +1495,29 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pv_bonus_bday_desc:   '+10 VIBES as a birthday gift — once a year.',
 
   pv_faq_title:         'Questions & Answers',
-  pv_faq_sub:           'Everything about VIBES, packages and payment.',
+  pv_faq_sub:           'Everything about VIBES, {{pass:pl}} and payment.',
   pv_faq1_q:            'What are VIBES?',
   pv_faq1_a:            'VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs 20 VIBES, special classes have their own price in VIBES.',
-  pv_faq2_q:            'When does my package start?',
-  pv_faq2_a:            'The validity period starts from your first visit, not from the day you buy the package. For example, MP8 is valid for 60 days counting from the first class you attend with it.',
-  pv_faq3_q:            'I have several packages. Which one is used first?',
-  pv_faq3_a:            'VIBES are always debited from the earliest package first, so nothing expires unused while a newer package waits.',
-  pv_faq4_q:            'Can I buy a Starter Pack more than once?',
-  pv_faq4_a:            'No. A Starter Pack can be purchased only once per client — choose SP1, SP2 or SP4. After that, Multi Pass packages and top-ups are available.',
+  pv_faq2_q:            'When does my {{pass}} start?',
+  pv_faq2_a:            'The validity period starts from your first visit, not from the day you buy the {{pass}}. For example, MP8 is valid for 60 days counting from the first class you attend with it.',
+  pv_faq3_q:            'I have several {{pass:pl}}. Which one is used first?',
+  pv_faq3_a:            'VIBES are always debited from the earliest {{pass}} or {{starter}} first, so nothing expires unused while a newer one waits.',
+  pv_faq4_q:            'Can I buy a {{starter}} more than once?',
+  pv_faq4_a:            'No. A {{starter}} is for new clients and can be purchased only once — choose SP1, SP2 or SP4. After that, {{pass:pl}} and top-ups are available.',
   pv_faq5_q:            'Can I top up a small amount?',
   pv_faq5_a:            'Yes — any amount, at the rate €1 = 1 VIBE.',
   pv_faq6_q:            'How much is a special class?',
   pv_faq6_a:            'Special classes, workshops and events have their own price in VIBES, set separately for each one. Check the schedule or ask the administrator.',
-  pv_faq7_q:            'Can I come without a package?',
-  pv_faq7_a:            'Of course. A single visit to a regular class without a package costs €20, paid at the studio.',
+  pv_faq7_q:            'Can I come without a {{pass}}?',
+  pv_faq7_a:            'Of course. A single visit to a regular class without a {{pass}} costs €20, paid at the studio.',
   pv_faq8_q:            'Can I pay online?',
   pv_faq8_a:            'Not yet. Payment is made at the studio, and the administrator confirms it. VIBES then appear on your balance.',
-  pv_faq9_q:            'Can I freeze my package?',
-  pv_faq9_a:            'Yes. Submit a freeze request from your <a href="/account">personal account</a>; the administrator reviews it. A freeze can last up to 90 days, and the package validity is extended by the number of frozen days.',
+  pv_faq9_q:            'Can I freeze my {{pass}}?',
+  pv_faq9_a:            'Yes. Submit a freeze request from your <a href="/account">personal account</a>; the administrator reviews it. A freeze can last up to 90 days, and the validity of your {{pass}} is extended by the number of frozen days.',
   pv_faq11_q:           'Can I get a refund for unused VIBES?',
   pv_faq11_a:           'Refunds for unused VIBES are possible at the studio’s discretion, at the rate of 1 VIBE = €0.75. Bonus VIBES (for referring a friend, a review or your birthday) are not refundable.',
   pv_faq10_q:           'Where can I see my balance and history?',
-  pv_faq10_a:           'In your <a href="/account">personal account</a>: current VIBES balance, packages and their expiry dates, freezes, and the full history of credits, bonuses and visits.',
+  pv_faq10_a:           'In your <a href="/account">personal account</a>: current VIBES balance, your {{pass:pl}} and {{starter:pl}} with expiry dates, freezes, and the full history of credits, bonuses and visits.',
 
   pv_rental_title:      'Studio & Space Rental',
   pv_rental_desc:       'Rooms, hourly rates, event setups and what’s included — on a separate page.',
@@ -1475,25 +1532,25 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pv_rate_special:      'Специальный класс',
   pv_rate_special_val:  'Своя цена в VIBES',
   pv_rate_topup:        'Пополнение',
-  pv_rate_dropin:       'Разовый визит без пакета',
+  pv_rate_dropin:       'Разовое занятие без {{pass:gen}}',
 
   pv_how_title:         'Как работают VIBES',
-  pv_how_sub:           'Четыре простых шага — от первого пакета до следующего класса.',
-  pv_how1_title:        'Выбери пакет или пополни баланс',
-  pv_how1_desc:         'Multi Pass, Starter Pack или пополнение на любую сумму: €1 = 1 VIBE. Оплата в студии — администратор подтверждает платёж.',
-  pv_how2_title:        'VIBES на твоём балансе',
+  pv_how_sub:           'Четыре простых шага — от первого {{pass:gen}} до следующего класса.',
+  pv_how1_title:        'Выберите {{pass}} или пополните баланс',
+  pv_how1_desc:         '{{Pass}}, разовый {{starter}} для новых клиентов или пополнение на любую сумму: €1 = 1 VIBE. Оплата в студии — администратор подтверждает платёж.',
+  pv_how2_title:        'VIBES на вашем балансе',
   pv_how2_desc:         'Баланс и вся история начислений и посещений — всегда в <a href="/account">личном кабинете</a>.',
-  pv_how3_title:        'Приходи на класс',
+  pv_how3_title:        'Приходите на класс',
   pv_how3_desc:         'Каждое посещение списывается в VIBES: регулярный класс — 20 VIBES, у специальных классов своя цена в VIBES.',
   pv_how4_title:        'Срок — с первого посещения',
-  pv_how4_desc:         'Срок пакета начинается с первого посещения, а не с даты покупки. Если пакетов несколько, VIBES списываются сначала из самого раннего.',
+  pv_how4_desc:         'Срок действия начинается с первого посещения, а не с даты покупки. Если у вас несколько {{pass:pl_gen}} или {{starter:pl_gen}}, VIBES списываются сначала из самого раннего.',
 
-  pv_mp_title:          'Multi Pass',
-  pv_mp_sub:            'Для регулярной практики. Чем больше пакет — тем ниже цена одного класса.',
+  pv_mp_title:          '{{Pass:pl}}',
+  pv_mp_sub:            'Для регулярной практики. Чем больше {{pass}}, тем ниже цена одного класса.',
   pv_badge_popular:     'Популярный',
-  pv_sp_title:          'Starter Pack',
-  pv_sp_badge:          'Только один раз',
-  pv_sp_sub:            'Мягкий старт для первых занятий. Starter Pack можно купить только один раз — выбери один из трёх вариантов.',
+  pv_sp_title:          '{{Starter}}',
+  pv_sp_badge:          'Для новых · один раз',
+  pv_sp_sub:            'Мягкий старт для новых клиентов. {{Starter}} можно купить только один раз — выберите один из трёх вариантов.',
 
   pv_eq_1:              '= 1 регулярный класс',
   pv_eq_2:              '= 2 регулярных класса',
@@ -1508,46 +1565,46 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 
   pv_topup_label:       'ПОПОЛНЕНИЕ',
   pv_topup_name:        'На любую сумму',
-  pv_topup_desc:        'Добавь ровно столько VIBES, сколько нужно, — любая сумма, в студии.',
-  pv_drop_name:         'Разовый визит',
-  pv_drop_desc:         'Один регулярный класс без пакета, оплата в евро в студии.',
+  pv_topup_desc:        'Добавьте ровно столько VIBES, сколько нужно, — любая сумма, в студии.',
+  pv_drop_name:         'Разовое занятие',
+  pv_drop_desc:         'Один регулярный класс без {{pass:gen}}, оплата в евро в студии.',
 
   pv_pay_title:         'Оплата в студии',
-  pv_pay_text:          'Онлайн-оплата пока недоступна. Пакеты, пополнения и разовые визиты оплачиваются в студии — администратор подтверждает оплату и начисляет VIBES на баланс.',
+  pv_pay_text:          'Онлайн-оплата пока недоступна. {{Pass:pl}}, {{starter:pl}}, пополнения и разовые занятия оплачиваются в студии — администратор подтверждает оплату и начисляет VIBES на баланс.',
 
   pv_bonus_title:       'Бонусные VIBES',
-  pv_bonus_sub:         'Практикуй, делись и празднуй — мы добавим VIBES на твой баланс.',
-  pv_bonus_friend_title:'Приведи друга',
-  pv_bonus_friend_desc: '+7 VIBES за каждого друга, которого ты приведёшь в студию.',
+  pv_bonus_sub:         'Практикуйте, делитесь и празднуйте — мы добавим VIBES на ваш баланс.',
+  pv_bonus_friend_title:'Приведите друга',
+  pv_bonus_friend_desc: '+7 VIBES за каждого друга, которого вы приведёте в студию.',
   pv_bonus_review_title:'Отзыв в Google Maps',
   pv_bonus_review_desc: '+5 VIBES за отзыв о студии в Google Maps.',
   pv_bonus_bday_title:  'День рождения',
   pv_bonus_bday_desc:   '+10 VIBES в подарок на день рождения — раз в год.',
 
   pv_faq_title:         'Вопросы и ответы',
-  pv_faq_sub:           'Всё о VIBES, пакетах и оплате.',
+  pv_faq_sub:           'Всё о VIBES, {{pass:pl_prep}} и оплате.',
   pv_faq1_q:            'Что такое VIBES?',
   pv_faq1_a:            'VIBES — внутренняя валюта студии. Ими оплачиваются занятия: регулярный класс стоит 20 VIBES, у специальных классов своя цена в VIBES.',
-  pv_faq2_q:            'Когда начинается срок пакета?',
-  pv_faq2_a:            'Срок действия начинается с первого посещения, а не с даты покупки. Например, MP8 действует 60 дней, считая от первого класса по этому пакету.',
-  pv_faq3_q:            'У меня несколько пакетов. Какой списывается первым?',
-  pv_faq3_a:            'VIBES всегда списываются сначала из самого раннего пакета — так ничего не сгорает, пока новый пакет ждёт своей очереди.',
-  pv_faq4_q:            'Можно купить Starter Pack ещё раз?',
-  pv_faq4_a:            'Нет. Starter Pack можно купить только один раз — выбери SP1, SP2 или SP4. Дальше доступны пакеты Multi Pass и пополнение баланса.',
+  pv_faq2_q:            'Когда начинается срок {{pass:gen}}?',
+  pv_faq2_a:            'Срок действия начинается с первого посещения, а не с даты покупки. Например, MP8 действует 60 дней, считая от первого класса по этому {{pass:dat}}.',
+  pv_faq3_q:            'У меня несколько {{pass:pl_gen}}. Какой списывается первым?',
+  pv_faq3_a:            'VIBES всегда списываются сначала из самого раннего {{pass:gen}} или {{starter:gen}} — так ничего не сгорает, пока новый ждёт своей очереди.',
+  pv_faq4_q:            'Можно купить {{starter}} ещё раз?',
+  pv_faq4_a:            'Нет. {{Starter}} — для новых клиентов, купить его можно только один раз: выберите SP1, SP2 или SP4. Дальше доступны {{pass:pl}} и пополнение баланса.',
   pv_faq5_q:            'Можно пополнить баланс на небольшую сумму?',
   pv_faq5_a:            'Да — на любую сумму по курсу €1 = 1 VIBE.',
   pv_faq6_q:            'Сколько стоит специальный класс?',
-  pv_faq6_a:            'У специальных классов, воркшопов и событий своя цена в VIBES, она задаётся отдельно для каждого. Смотри расписание или уточни у администратора.',
-  pv_faq7_q:            'Можно прийти без пакета?',
-  pv_faq7_a:            'Конечно. Разовый визит на регулярный класс без пакета стоит €20, оплата в студии.',
+  pv_faq6_a:            'У специальных классов, воркшопов и событий своя цена в VIBES, она задаётся отдельно для каждого. Смотрите расписание или уточните у администратора.',
+  pv_faq7_q:            'Можно прийти без {{pass:gen}}?',
+  pv_faq7_a:            'Конечно. Разовое занятие на регулярном классе без {{pass:gen}} стоит €20, оплата в студии.',
   pv_faq8_q:            'Можно оплатить онлайн?',
   pv_faq8_a:            'Пока нет. Оплата проходит в студии, администратор её подтверждает — после этого VIBES появляются на балансе.',
-  pv_faq9_q:            'Можно заморозить пакет?',
-  pv_faq9_a:            'Да. Подай заявление на заморозку из <a href="/account">личного кабинета</a> — его рассмотрит администратор. Заморозка — до 90 дней, срок пакета продлевается на количество дней заморозки.',
+  pv_faq9_q:            'Можно заморозить {{pass}}?',
+  pv_faq9_a:            'Да. Подайте заявление на заморозку из <a href="/account">личного кабинета</a> — его рассмотрит администратор. Заморозка — до 90 дней, срок {{pass:gen}} продлевается на количество дней заморозки.',
   pv_faq11_q:           'Можно ли вернуть деньги за неиспользованные VIBES?',
   pv_faq11_a:           'Возврат денег за неиспользованные VIBES возможен по решению студии по курсу 1 VIBE = €0,75. Бонусные VIBES (за друга, отзыв, день рождения) не возвращаются.',
   pv_faq10_q:           'Где посмотреть баланс и историю?',
-  pv_faq10_a:           'В <a href="/account">личном кабинете</a>: текущий баланс VIBES, пакеты и сроки их действия, заморозки и полная история начислений, бонусов и посещений.',
+  pv_faq10_a:           'В <a href="/account">личном кабинете</a>: текущий баланс VIBES, {{pass:pl}} и {{starter:pl}} со сроками действия, заморозки и полная история начислений, бонусов и посещений.',
 
   pv_rental_title:      'Аренда пространства',
   pv_rental_desc:       'Залы, почасовые тарифы, варианты расстановки и что включено — на отдельной странице.',
@@ -1562,25 +1619,25 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_rate_special:      'Ειδικό μάθημα',
   pv_rate_special_val:  'Δική του τιμή σε VIBES',
   pv_rate_topup:        'Φόρτιση',
-  pv_rate_dropin:       'Μεμονωμένη επίσκεψη',
+  pv_rate_dropin:       'Μεμονωμένη επίσκεψη χωρίς {{pass}}',
 
   pv_how_title:         'Πώς Λειτουργούν τα VIBES',
-  pv_how_sub:           'Τέσσερα απλά βήματα — από το πρώτο πακέτο μέχρι το επόμενο μάθημα.',
-  pv_how1_title:        'Διάλεξε πακέτο ή φόρτισε',
-  pv_how1_desc:         'Multi Pass, Starter Pack ή φόρτιση οποιουδήποτε ποσού: €1 = 1 VIBE. Η πληρωμή γίνεται στο studio — ο διαχειριστής την επιβεβαιώνει.',
+  pv_how_sub:           'Τέσσερα απλά βήματα — από το πρώτο {{pass}} μέχρι το επόμενο μάθημα.',
+  pv_how1_title:        'Διάλεξε {{pass}} ή φόρτισε',
+  pv_how1_desc:         '{{pass}}, ένα εφάπαξ {{starter}} (μόνο για νέους πελάτες) ή φόρτιση οποιουδήποτε ποσού: €1 = 1 VIBE. Η πληρωμή γίνεται στο studio — ο διαχειριστής την επιβεβαιώνει.',
   pv_how2_title:        'Τα VIBES στο υπόλοιπό σου',
   pv_how2_desc:         'Το υπόλοιπο και όλο το ιστορικό πιστώσεων και επισκέψεων είναι πάντα στον <a href="/account">προσωπικό σου λογαριασμό</a>.',
   pv_how3_title:        'Έλα στο μάθημα',
   pv_how3_desc:         'Κάθε επίσκεψη χρεώνεται σε VIBES: το τακτικό μάθημα κοστίζει 20 VIBES, τα ειδικά μαθήματα έχουν δική τους τιμή σε VIBES.',
   pv_how4_title:        'Η ισχύς ξεκινά με την πρώτη επίσκεψη',
-  pv_how4_desc:         'Η διάρκεια του πακέτου ξεκινά από την πρώτη επίσκεψη, όχι από την ημερομηνία αγοράς. Με πολλά πακέτα, τα VIBES χρεώνονται πρώτα από το παλαιότερο.',
+  pv_how4_desc:         'Η διάρκεια ισχύος ξεκινά από την πρώτη επίσκεψη, όχι από την ημερομηνία αγοράς. Αν έχεις περισσότερα από ένα {{pass}} ή {{starter}}, τα VIBES χρεώνονται πρώτα από το παλαιότερο.',
 
-  pv_mp_title:          'Multi Pass',
-  pv_mp_sub:            'Για τακτική πρακτική. Όσο μεγαλύτερο το πακέτο, τόσο χαμηλότερη η τιμή ανά μάθημα.',
+  pv_mp_title:          '{{Pass}}',
+  pv_mp_sub:            'Για τακτική πρακτική. Όσο μεγαλύτερο το {{pass}}, τόσο χαμηλότερη η τιμή ανά μάθημα.',
   pv_badge_popular:     'Δημοφιλές',
-  pv_sp_title:          'Starter Pack',
-  pv_sp_badge:          'Μόνο μία φορά',
-  pv_sp_sub:            'Ένα ήπιο ξεκίνημα για τα πρώτα σου μαθήματα. Το Starter Pack αγοράζεται μόνο μία φορά — διάλεξε μία από τις τρεις επιλογές.',
+  pv_sp_title:          '{{Starter}}',
+  pv_sp_badge:          'Νέοι πελάτες · μία φορά',
+  pv_sp_sub:            'Ένα ήπιο ξεκίνημα για νέους πελάτες. Το {{starter}} αγοράζεται μόνο μία φορά — διάλεξε μία από τις τρεις επιλογές.',
 
   pv_eq_1:              '= 1 τακτικό μάθημα',
   pv_eq_2:              '= 2 τακτικά μαθήματα',
@@ -1597,10 +1654,10 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_topup_name:        'Οποιοδήποτε ποσό',
   pv_topup_desc:        'Πρόσθεσε ακριβώς όσα VIBES χρειάζεσαι — οποιοδήποτε ποσό, στο studio.',
   pv_drop_name:         'Μεμονωμένη επίσκεψη',
-  pv_drop_desc:         'Ένα τακτικό μάθημα χωρίς πακέτο, με πληρωμή σε ευρώ στο studio.',
+  pv_drop_desc:         'Ένα τακτικό μάθημα χωρίς {{pass}}, με πληρωμή σε ευρώ στο studio.',
 
   pv_pay_title:         'Πληρωμή στο studio',
-  pv_pay_text:          'Η online πληρωμή δεν είναι ακόμη διαθέσιμη. Πακέτα, φορτίσεις και μεμονωμένες επισκέψεις πληρώνονται στο studio — ο διαχειριστής επιβεβαιώνει την πληρωμή και πιστώνει τα VIBES στο υπόλοιπό σου.',
+  pv_pay_text:          'Η online πληρωμή δεν είναι ακόμη διαθέσιμη. Τα {{pass}}, τα {{starter}}, οι φορτίσεις και οι μεμονωμένες επισκέψεις πληρώνονται στο studio — ο διαχειριστής επιβεβαιώνει την πληρωμή και πιστώνει τα VIBES στο υπόλοιπό σου.',
 
   pv_bonus_title:       'Bonus VIBES',
   pv_bonus_sub:         'Εξασκήσου, μοιράσου και γιόρτασε — προσθέτουμε VIBES στο υπόλοιπό σου.',
@@ -1612,29 +1669,29 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_bonus_bday_desc:   '+10 VIBES δώρο γενεθλίων — μία φορά τον χρόνο.',
 
   pv_faq_title:         'Ερωτήσεις & Απαντήσεις',
-  pv_faq_sub:           'Όλα για τα VIBES, τα πακέτα και την πληρωμή.',
+  pv_faq_sub:           'Όλα για τα VIBES, τα {{pass}} και την πληρωμή.',
   pv_faq1_q:            'Τι είναι τα VIBES;',
   pv_faq1_a:            'Τα VIBES είναι το εσωτερικό νόμισμα του studio. Με αυτά πληρώνεις τα μαθήματα: το τακτικό μάθημα κοστίζει 20 VIBES, τα ειδικά μαθήματα έχουν δική τους τιμή σε VIBES.',
-  pv_faq2_q:            'Πότε ξεκινά η ισχύς του πακέτου;',
+  pv_faq2_q:            'Πότε ξεκινά η ισχύς του {{pass}};',
   pv_faq2_a:            'Η διάρκεια ισχύος ξεκινά από την πρώτη επίσκεψη, όχι από την ημέρα αγοράς. Για παράδειγμα, το MP8 ισχύει 60 ημέρες από το πρώτο μάθημα που παρακολουθείς με αυτό.',
-  pv_faq3_q:            'Έχω πολλά πακέτα. Ποιο χρησιμοποιείται πρώτο;',
-  pv_faq3_a:            'Τα VIBES χρεώνονται πάντα πρώτα από το παλαιότερο πακέτο, ώστε να μη χάνεται τίποτα όσο το νεότερο περιμένει.',
-  pv_faq4_q:            'Μπορώ να αγοράσω Starter Pack ξανά;',
-  pv_faq4_a:            'Όχι. Το Starter Pack αγοράζεται μόνο μία φορά — διάλεξε SP1, SP2 ή SP4. Στη συνέχεια είναι διαθέσιμα τα πακέτα Multi Pass και οι φορτίσεις.',
+  pv_faq3_q:            'Έχω περισσότερα από ένα {{pass}}. Ποιο χρησιμοποιείται πρώτο;',
+  pv_faq3_a:            'Τα VIBES χρεώνονται πάντα πρώτα από το παλαιότερο {{pass}} ή {{starter}}, ώστε να μη χάνεται τίποτα όσο το νεότερο περιμένει.',
+  pv_faq4_q:            'Μπορώ να αγοράσω {{starter}} ξανά;',
+  pv_faq4_a:            'Όχι. Το {{starter}} είναι για νέους πελάτες και αγοράζεται μόνο μία φορά — διάλεξε SP1, SP2 ή SP4. Στη συνέχεια είναι διαθέσιμα τα {{pass}} και οι φορτίσεις.',
   pv_faq5_q:            'Μπορώ να φορτίσω μικρό ποσό;',
   pv_faq5_a:            'Ναι — οποιοδήποτε ποσό, με ισοτιμία €1 = 1 VIBE.',
   pv_faq6_q:            'Πόσο κοστίζει ένα ειδικό μάθημα;',
   pv_faq6_a:            'Τα ειδικά μαθήματα, τα εργαστήρια και οι εκδηλώσεις έχουν δική τους τιμή σε VIBES, που ορίζεται ξεχωριστά για το καθένα. Δες το πρόγραμμα ή ρώτησε τον διαχειριστή.',
-  pv_faq7_q:            'Μπορώ να έρθω χωρίς πακέτο;',
-  pv_faq7_a:            'Φυσικά. Μια μεμονωμένη επίσκεψη σε τακτικό μάθημα χωρίς πακέτο κοστίζει €20, με πληρωμή στο studio.',
+  pv_faq7_q:            'Μπορώ να έρθω χωρίς {{pass}};',
+  pv_faq7_a:            'Φυσικά. Μια μεμονωμένη επίσκεψη σε τακτικό μάθημα χωρίς {{pass}} κοστίζει €20, με πληρωμή στο studio.',
   pv_faq8_q:            'Μπορώ να πληρώσω online;',
   pv_faq8_a:            'Όχι ακόμη. Η πληρωμή γίνεται στο studio και ο διαχειριστής την επιβεβαιώνει — έπειτα τα VIBES εμφανίζονται στο υπόλοιπό σου.',
-  pv_faq9_q:            'Μπορώ να παγώσω το πακέτο μου;',
-  pv_faq9_a:            'Ναι. Υπόβαλε αίτημα παγώματος από τον <a href="/account">προσωπικό σου λογαριασμό</a> — το εξετάζει ο διαχειριστής. Το πάγωμα διαρκεί έως 90 ημέρες και η ισχύς του πακέτου παρατείνεται κατά τις ημέρες παγώματος.',
+  pv_faq9_q:            'Μπορώ να παγώσω το {{pass}} μου;',
+  pv_faq9_a:            'Ναι. Υπόβαλε αίτημα παγώματος από τον <a href="/account">προσωπικό σου λογαριασμό</a> — το εξετάζει ο διαχειριστής. Το πάγωμα διαρκεί έως 90 ημέρες και η ισχύς του {{pass}} παρατείνεται κατά τις ημέρες παγώματος.',
   pv_faq11_q:           'Μπορώ να πάρω πίσω χρήματα για αχρησιμοποίητα VIBES;',
   pv_faq11_a:           'Η επιστροφή χρημάτων για αχρησιμοποίητα VIBES είναι δυνατή κατά την κρίση του στούντιο, με ισοτιμία 1 VIBE = €0,75. Τα bonus VIBES (για σύσταση φίλου, κριτική ή γενέθλια) δεν επιστρέφονται.',
   pv_faq10_q:           'Πού βλέπω το υπόλοιπο και το ιστορικό;',
-  pv_faq10_a:           'Στον <a href="/account">προσωπικό σου λογαριασμό</a>: τρέχον υπόλοιπο VIBES, πακέτα και ημερομηνίες λήξης, παγώματα και πλήρες ιστορικό πιστώσεων, bonus και επισκέψεων.',
+  pv_faq10_a:           'Στον <a href="/account">προσωπικό σου λογαριασμό</a>: τρέχον υπόλοιπο VIBES, τα {{pass}} και τα {{starter}} με ημερομηνίες λήξης, παγώματα και πλήρες ιστορικό πιστώσεων, bonus και επισκέψεων.',
 
   pv_rental_title:      'Ενοικίαση Χώρου',
   pv_rental_desc:       'Αίθουσες, ωριαίες τιμές, διατάξεις εκδηλώσεων και τι περιλαμβάνεται — σε ξεχωριστή σελίδα.',
