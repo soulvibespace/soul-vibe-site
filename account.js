@@ -479,7 +479,7 @@ function renderVibes() {
   box.innerHTML = h;
 }
 // ── Freeze request (заявление на заморозку) ──────────────────────────────────
-// A linked client with an active package can ask the studio to freeze it.
+// A linked client with an active Class Pass can ask the studio to freeze it.
 // Requests live in the VIBES panel; an administrator approves or rejects them.
 // Only one request can be pending at a time. If the API does not offer the
 // endpoint yet, the block simply stays hidden.
@@ -510,7 +510,7 @@ function fzCanRequest(d) {
   return (d.lots || []).some(function (l) { return l.status === 'active' && l.remaining_vibes > 0 && l.expires_at; });
 }
 
-// Block inside «My VIBES»: latest request card + «Freeze package» button.
+// Block inside «My VIBES»: latest request card + «Freeze Class Pass» button.
 function renderFreezeBlock(d) {
   if (!_fzReqs) return '';
   var pending = _fzReqs.filter(function (r) { return r.status === 'pending'; })[0];
@@ -535,7 +535,7 @@ function renderFreezeBlock(d) {
     h += '</div>';
   }
   if (_fzNotice) h += '<p class="vibes-ev-msg" role="status">' + escHtml(_fzNotice) + '</p>';
-  if (!pending && canRequest) h += '<button type="button" class="btn btn-outline btn-sm fz-open" onclick="openFreezeModal(this)">' + escHtml(vt('fz_open', 'Freeze package')) + '</button>';
+  if (!pending && canRequest) h += '<button type="button" class="btn btn-outline btn-sm fz-open" onclick="openFreezeModal(this)">' + escHtml(vt('fz_open', 'Freeze Class Pass')) + '</button>';
   return h;
 }
 
@@ -594,7 +594,7 @@ function renderFreezeModal() {
   }).join('');
   var summary = n ? vt('fz_summary', '{n} days: {from} – {to}').replace('{n}', n).replace('{from}', fzDate(_fz.start)).replace('{to}', fzDate(_fz.end)) : '';
   body.innerHTML =
-    '<div class="fz-head"><h2 id="fzTitle" class="fz-title">' + escHtml(vt('fz_modal_title', 'Freeze your package')) + '</h2>'
+    '<div class="fz-head"><h2 id="fzTitle" class="fz-title">' + escHtml(vt('fz_modal_title', 'Freeze your Class Pass')) + '</h2>'
     + '<button type="button" class="fz-x" data-fz-close aria-label="' + escHtml(vt('fz_close', 'Close')) + '">&times;</button></div>'
     + '<form class="fz-form" onsubmit="event.preventDefault();submitFreezeRequest()" novalidate>'
     + '<fieldset class="fz-field"><legend>' + escHtml(vt('fz_period', 'Period')) + '</legend><div class="fz-chips">' + chips + '</div>'
@@ -603,7 +603,7 @@ function renderFreezeModal() {
     + (summary ? '<p class="fz-summary">' + escHtml(summary) + '</p>' : '') + '</fieldset>'
     + '<fieldset class="fz-field"><legend>' + escHtml(vt('fz_reason', 'Reason')) + '</legend><div class="fz-radios">' + reasons + '</div></fieldset>'
     + '<label class="fz-field fz-comment">' + escHtml(vt('fz_comment', 'Comment (optional)')) + '<textarea id="fzComment" rows="3" maxlength="' + FZ_COMMENT_MAX + '" oninput="_fz.comment=this.value" placeholder="' + escHtml(vt('fz_comment_ph', 'Anything the studio should know')) + '">' + escHtml(_fz.comment) + '</textarea></label>'
-    + '<ul class="fz-rules"><li>' + escHtml(vt('fz_rule_1', 'Your active packages are extended by the number of freeze days; your VIBES balance does not change.')) + '</li>'
+    + '<ul class="fz-rules"><li>' + escHtml(vt('fz_rule_1', 'Your active Class Passes are extended by the number of freeze days; your VIBES balance does not change.')) + '</li>'
     + '<li>' + escHtml(vt('fz_rule_2', 'The freeze starts today at the earliest and lasts up to {n} days.').replace('{n}', FZ_MAX_DAYS)) + '</li>'
     + '<li>' + escHtml(vt('fz_rule_3', 'An administrator reviews the request and you get the decision by email. Only one request can be under review at a time.')) + '</li></ul>'
     + (_fz.err ? '<p class="vibes-ev-msg err" role="alert">' + escHtml(_fz.err) + '</p>' : '')
