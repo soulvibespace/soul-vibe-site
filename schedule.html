@@ -111,6 +111,9 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      /* allow the pills row to shrink and scroll inside instead of widening the page */
+      min-width: 0;
+      max-width: 100%;
     }
     .filter-label {
       font-size: .78rem;
@@ -131,7 +134,8 @@
     }
     .filter-pills::-webkit-scrollbar { display: none; }
     @media (max-width: 480px) {
-      .filter-pills { flex-wrap: nowrap; }
+      .filter-group { flex: 1 1 100%; }
+      .filter-pills { flex-wrap: nowrap; min-width: 0; max-width: 100%; }
       .filter-pill { font-size: .72rem; padding: 4px 10px; }
     }
     .filter-pill {
@@ -169,10 +173,6 @@
       transition: border-color .18s;
     }
     .filter-select:hover, .filter-select:focus { border-color: var(--accent); outline: none; }
-    [data-theme="dark"] .filter-select {
-      background-color: var(--bg-secondary);
-      color: var(--text-primary);
-    }
 
     /* ── Schedule grid ── */
     .schedule-grid {
@@ -284,9 +284,10 @@
       color: var(--text-primary);
       margin-bottom: 4px;
       line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      /* Full class name, wrapped by words — never truncated */
+      white-space: normal;
+      overflow-wrap: break-word;
+      hyphens: manual;
     }
     .card-meta {
       display: flex;
@@ -467,6 +468,166 @@
       .price-asterisk:active::after,
       .price-asterisk:active::before { display: block; }
     }
+
+    /* ── View toggle (Week / Month) ── */
+    .schedule-view-toggle {
+      display: inline-flex;
+      padding: 4px;
+      gap: 2px;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-card);
+      margin-bottom: 20px;
+    }
+    .schedule-view-btn {
+      font-family: var(--font-sans);
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      min-width: 96px;
+      min-height: 36px;
+      padding: 6px 18px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background .18s, color .18s;
+    }
+    .schedule-view-btn:hover { color: var(--accent); }
+    .schedule-view-btn.active { background: var(--accent); color: #fff; }
+    .schedule-view-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ── Month calendar ── */
+    .mcal {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+    .mcal-heads, .mcal-body {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+    .mcal-head {
+      font-family: var(--font-sans);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 10px 4px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .mcal-head.is-weekend { color: var(--accent); }
+    .mcal-cell {
+      min-height: 118px;
+      padding: 6px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .mcal-cell:nth-child(7n) { border-right: 0; }
+    .mcal-cell.is-outside { background: color-mix(in srgb, var(--border) 25%, transparent); cursor: default; }
+    .mcal-cell.is-outside .mcal-num { opacity: .4; }
+    .mcal-cell:not(.is-outside):hover { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+    .mcal-cell.is-selected { background: color-mix(in srgb, var(--accent) 9%, transparent); box-shadow: inset 0 0 0 2px var(--accent); }
+    .mcal-day-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: none; border: 0; padding: 0; margin: 0;
+      cursor: pointer; color: inherit; font: inherit; text-align: left;
+    }
+    .mcal-num {
+      font-family: var(--font-sans);
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      width: 26px; height: 26px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+    }
+    .mcal-cell.is-past-day .mcal-num { color: var(--text-secondary); font-weight: 500; }
+    .mcal-cell.is-today .mcal-num { background: var(--accent); color: #fff; }
+    .mcal-dots { display: none; }
+    .mcal-day-btn.is-static { cursor: default; }
+    .mcal-chips { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .mcal-chip {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+      width: 100%; min-width: 0;
+      padding: 3px 6px;
+      border: 0; border-radius: 6px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: .72rem;
+      line-height: 1.3;
+      text-align: left;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    .mcal-chip:hover:not(:disabled) { background: var(--accent); color: #fff; }
+    .mcal-chip:hover:not(:disabled) .mcal-chip-time { color: #fff; }
+    .mcal-chip.is-past { opacity: .5; cursor: default; }
+    .mcal-chip-time { font-weight: 700; color: var(--accent); flex-shrink: 0; }
+    /* Full name under the time, wrapped by words; the cell grows in height */
+    .mcal-chip-name { white-space: normal; overflow-wrap: break-word; hyphens: manual; max-width: 100%; min-width: 0; }
+    @media (max-width: 1024px) and (min-width: 601px) {
+      .mcal-chip { font-size: .66rem; padding: 3px 4px; }
+      .mcal-cell { padding: 4px; }
+    }
+    .mcal-more {
+      font-size: .7rem; font-weight: 600; color: var(--accent);
+      padding: 0 6px; cursor: pointer;
+    }
+    .mcal-more:hover { text-decoration: underline; }
+    .mcal-empty-note {
+      margin-top: 16px;
+      font-size: .9rem;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+    .mcal-daylist { margin-top: 28px; scroll-margin-top: 90px; }
+
+    /* Mobile month: compact grid with dots + list of the selected day */
+    @media (max-width: 600px) {
+      .schedule-view-toggle { display: flex; width: 100%; }
+      .schedule-view-btn { flex: 1; min-height: 40px; }
+      .mcal { border-radius: 12px; }
+      .mcal-head { font-size: .62rem; letter-spacing: .04em; padding: 8px 0; }
+      .mcal-cell {
+        min-height: 0;
+        padding: 4px 0;
+        border: 0;
+        align-items: center;
+        justify-content: center;
+      }
+      .mcal-cell.is-outside { background: transparent; }
+      .mcal-cell.is-selected { background: transparent; box-shadow: none; }
+      .mcal-chips { display: none; }
+      .mcal-day-btn {
+        flex-direction: column; gap: 2px;
+        width: 40px; height: 48px;
+        justify-content: center;
+        border-radius: 12px;
+      }
+      .mcal-cell.is-selected .mcal-day-btn { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+      .mcal-cell.is-selected.is-today .mcal-day-btn { box-shadow: inset 0 0 0 2px var(--accent); }
+      .mcal-num { width: 28px; height: 28px; font-size: .9rem; }
+      .mcal-dots { display: flex; gap: 2px; height: 5px; }
+      .mcal-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: block; }
+      .mcal-cell.is-past-day .mcal-dots i { opacity: .45; }
+      .mcal-daylist { margin-top: 20px; }
+      .week-nav { gap: 8px; flex-wrap: nowrap; }
+      .week-label { min-width: 0; flex: 1; font-size: .85rem; }
+      .week-today-btn { flex-shrink: 0; }
+    }
 </style></head>
 <body>
 
@@ -540,6 +701,12 @@
       <p class="page-eyebrow" data-i18n="schedule_eyebrow">Live Schedule</p>
       <h1 class="page-title" data-i18n="schedule_title">Weekly Classes</h1>
       <p class="page-subtitle" data-i18n="schedule_subtitle">Real-time from our studio — updated automatically.</p>
+
+      <!-- View toggle: Week / Month -->
+      <div class="schedule-view-toggle" role="group" data-i18n-aria="schedule_view_aria" aria-label="Schedule view">
+        <button type="button" class="schedule-view-btn active" data-schedule-view="week" aria-pressed="true" data-i18n="schedule_view_week">Week</button>
+        <button type="button" class="schedule-view-btn" data-schedule-view="month" aria-pressed="false" data-i18n="schedule_view_month">Month</button>
+      </div>
 
       <!-- Week navigation -->
       <div class="week-nav">
@@ -771,24 +938,58 @@
   <script>
   (() => {
     const API_BASE = window.SVS_API_BASE || 'https://soul-vibe-api.onrender.com';
+    const STUDIO_TZ = 'Europe/Nicosia';
+    // SimplyBook rejects/times out on long ranges (~31 days max), so the month
+    // view is fetched in short chunks — same approach as the booking calendar.
+    const CHUNK_DAYS = 21;
+    const VIEW_KEY = 'svs_schedule_view';
 
     // ── Date helpers ─────────────────────────────────────────────
-    function toISO(date) {
-      return date.toISOString().slice(0, 10);
+    // All calendar maths works on 'YYYY-MM-DD' strings backed by UTC-midnight
+    // Date objects, so the visitor's browser time zone can never shift a day.
+    // (Old code formatted *local* midnight with toISOString(), which in Cyprus
+    // (UTC+2/+3) turned Monday 00:00 into Sunday — the week moved by one day.)
+    function parseISO(s) {
+      const [y, m, d] = s.split('-').map(Number);
+      return new Date(Date.UTC(y, m - 1, d));
     }
-    function addDays(date, n) {
-      const d = new Date(date);
-      d.setDate(d.getDate() + n);
-      return d;
+    function fmtISO(d) { return d.toISOString().slice(0, 10); }
+    function addDaysISO(s, n) {
+      const d = parseISO(s);
+      d.setUTCDate(d.getUTCDate() + n);
+      return fmtISO(d);
     }
-    // Monday of the week containing `date`
-    function weekStart(date) {
-      const d = new Date(date);
-      const day = d.getDay(); // 0=Sun
-      const diff = day === 0 ? -6 : 1 - day;
-      d.setDate(d.getDate() + diff);
-      d.setHours(0, 0, 0, 0);
-      return d;
+    function dowMon0(s) { return (parseISO(s).getUTCDay() + 6) % 7; } // 0=Mon … 6=Sun
+    // Monday of the week containing ISO date `s`
+    function weekStartISO(s) { return addDaysISO(s, -dowMon0(s)); }
+    function monthStartISO(s, offset = 0) {
+      const d = parseISO(s);
+      return fmtISO(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + offset, 1)));
+    }
+    function monthEndISO(firstISO) {
+      const d = parseISO(firstISO);
+      return fmtISO(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)));
+    }
+    // "Now" in the studio's time zone (Cyprus), independent of the visitor.
+    function studioParts() {
+      const parts = {};
+      try {
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone: STUDIO_TZ, year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+        }).formatToParts(new Date()).forEach(p => { parts[p.type] = p.value; });
+      } catch {
+        const n = new Date();
+        const p2 = v => String(v).padStart(2, '0');
+        Object.assign(parts, { year: n.getFullYear(), month: p2(n.getMonth() + 1), day: p2(n.getDate()),
+          hour: p2(n.getHours()), minute: p2(n.getMinutes()), second: p2(n.getSeconds()) });
+      }
+      return parts;
+    }
+    function todayISO() { const p = studioParts(); return `${p.year}-${p.month}-${p.day}`; }
+    function nowTime()  { const p = studioParts(); return `${p.hour === '24' ? '00' : p.hour}:${p.minute}:${p.second}`; }
+    function isPastSlot(s, today) {
+      return s.date < today || (s.date === today && s.time < nowTime());
     }
 
     const DAY_NAMES = {
@@ -796,19 +997,36 @@
       ru: ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'],
       el: ['Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο','Κυριακή'],
     };
+    const DAY_SHORT = {
+      en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      ru: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
+      el: ['Δευ','Τρι','Τετ','Πεμ','Παρ','Σαβ','Κυρ'],
+    };
     const MONTH_NAMES = {
       en: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
       ru: ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'],
       el: ['Ιαν','Φεβ','Μαρ','Απρ','Μάι','Ιούν','Ιούλ','Αύγ','Σεπ','Οκτ','Νοε','Δεκ'],
     };
+    const MONTH_FULL = {
+      en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      ru: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+      el: ['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος'],
+    };
 
     // ── State ────────────────────────────────────────────────────
-    let _weekOffset = 0;   // 0 = current week
-    let _activeCat  = '';  // '' = all
-    let _activeUnit = '';  // '' = all
-    let _allSlots   = [];  // raw from API
-    let _categories = [];
-    let _lang       = () => (window.SVS_I18N?.currentLang?.() || localStorage.getItem('svs_lang') || 'en');
+    let _view        = 'week'; // 'week' | 'month'
+    let _weekOffset  = 0;      // 0 = current week
+    let _monthOffset = 0;      // 0 = current month
+    let _selectedDay = '';     // month view: selected ISO date
+    let _activeCat   = '';     // '' = all
+    let _activeUnit  = '';     // '' = all
+    let _allSlots    = [];     // raw from API (current range)
+    let _categories  = [];
+    let _instructors = null;   // loaded once
+    let _reqSeq      = 0;      // guards against out-of-order responses
+    const _rangeCache = new Map();
+    const _lang = () => (window.SVS_I18N?.getLang?.() || localStorage.getItem('svs_lang') || 'en');
+    const t = (key) => (window.SVS_I18N?.t ? SVS_I18N.t(key) : key);
 
     // ── DOM refs ─────────────────────────────────────────────────
     const grid       = document.getElementById('scheduleGrid');
@@ -817,32 +1035,52 @@
     const meta       = document.getElementById('scheduleMeta');
     const catPills   = document.getElementById('catPills');
     const instSelect = document.getElementById('instructorSelect');
+    const prevBtn    = document.getElementById('weekPrev');
+    const nextBtn    = document.getElementById('weekNext');
+    const viewBtns   = document.querySelectorAll('[data-schedule-view]');
 
-    // ── Week range ───────────────────────────────────────────────
-    function currentFrom() {
-      if (_weekOffset === 0) {
-        // Start from today so user sees upcoming classes immediately
-        const d = new Date();
-        d.setHours(0, 0, 0, 0);
-        return d;
+    // ── Initial view: ?view= / #month  →  saved choice  →  week ──
+    (function initView() {
+      let v = '';
+      try { v = new URLSearchParams(location.search).get('view') || ''; } catch {}
+      if (!v && /month/.test(location.hash)) v = 'month';
+      if (!v) { try { v = localStorage.getItem(VIEW_KEY) || ''; } catch {} }
+      _view = v === 'month' ? 'month' : 'week';
+    })();
+
+    // ── Ranges ───────────────────────────────────────────────────
+    function currentRange() {
+      const today = todayISO();
+      if (_view === 'month') {
+        const from = monthStartISO(today, _monthOffset);
+        return { from, to: monthEndISO(from) };
       }
-      return weekStart(addDays(new Date(), _weekOffset * 7));
-    }
-    function currentTo() {
-      if (_weekOffset === 0) {
-        return addDays(currentFrom(), 6);
-      }
-      return addDays(weekStart(addDays(new Date(), _weekOffset * 7)), 6);
+      // Week always runs Monday → Sunday (studio time).
+      const from = addDaysISO(weekStartISO(today), _weekOffset * 7);
+      return { from, to: addDaysISO(from, 6) };
     }
 
-    function updateWeekLabel() {
-      const from = currentFrom();
-      const to   = currentTo();
+    function updateNavLabel() {
+      const { from, to } = currentRange();
       const lang = _lang();
-      const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
-      const fromStr = `${from.getDate()} ${months[from.getMonth()]}`;
-      const toStr   = `${to.getDate()} ${months[to.getMonth()]} ${to.getFullYear()}`;
-      weekLabel.textContent = `${fromStr} – ${toStr}`;
+      const f = parseISO(from), e = parseISO(to);
+      if (_view === 'month') {
+        weekLabel.textContent = `${(MONTH_FULL[lang] || MONTH_FULL.en)[f.getUTCMonth()]} ${f.getUTCFullYear()}`;
+      } else {
+        const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
+        weekLabel.textContent = `${f.getUTCDate()} ${months[f.getUTCMonth()]} – ${e.getUTCDate()} ${months[e.getUTCMonth()]} ${e.getUTCFullYear()}`;
+      }
+      prevBtn.setAttribute('aria-label', t(_view === 'month' ? 'schedule_prev_month' : 'schedule_prev_week'));
+      nextBtn.setAttribute('aria-label', t(_view === 'month' ? 'schedule_next_month' : 'schedule_next_week'));
+    }
+
+    function updateViewToggle() {
+      viewBtns.forEach(b => {
+        const on = b.dataset.scheduleView === _view;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      grid.classList.toggle('is-month', _view === 'month');
     }
 
     // ── Fetch with retry (handles Render cold start ~20s) ───────
@@ -862,49 +1100,80 @@
       }
     }
 
+    // Split [from, to] into chunks of at most CHUNK_DAYS days.
+    function splitRange(from, to) {
+      const chunks = [];
+      let cur = from;
+      while (cur <= to) {
+        let end = addDaysISO(cur, CHUNK_DAYS - 1);
+        if (end > to) end = to;
+        chunks.push([cur, end]);
+        cur = addDaysISO(end, 1);
+      }
+      return chunks;
+    }
+
+    async function loadRange(from, to) {
+      const key = `${from}_${to}`;
+      if (_rangeCache.has(key)) return _rangeCache.get(key);
+      const parts = await Promise.all(splitRange(from, to).map(([f, e]) =>
+        fetchWithRetry(`${API_BASE}/api/schedule?from=${f}&to=${e}`)
+          .then(r => (r && r.ok ? r.schedule : []))
+      ));
+      // De-duplicate (chunk borders) and sort chronologically
+      const seen = new Set();
+      const slots = [];
+      for (const s of parts.flat()) {
+        const k = `${s.date}|${s.time}|${s.service_id}|${s.unit_id || ''}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        slots.push(s);
+      }
+      slots.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+      _rangeCache.set(key, slots);
+      return slots;
+    }
+
+    async function loadInstructors() {
+      if (_instructors) return _instructors;
+      try {
+        const r = await fetchWithRetry(`${API_BASE}/api/instructors`);
+        _instructors = r && r.ok ? r.instructors : [];
+      } catch { _instructors = []; }
+      return _instructors;
+    }
+
     // ── Fetch schedule ───────────────────────────────────────────
     async function fetchSchedule() {
+      const seq = ++_reqSeq;
       showSkeleton();
-      const from = toISO(currentFrom());
-      const to   = toISO(currentTo());
-
+      const { from, to } = currentRange();
       try {
-        // Parallel: schedule + instructors for this week
-        const [schedRes, instRes] = await Promise.all([
-          fetchWithRetry(`${API_BASE}/api/schedule?from=${from}&to=${to}`),
-          fetchWithRetry(`${API_BASE}/api/instructors?active_only=true&from=${from}&to=${to}`),
-        ]);
-
-        _allSlots = schedRes.ok ? schedRes.schedule : [];
-
-        // Rebuild instructor dropdown for this week's actual instructors
-        populateInstructorSelect(instRes.ok ? instRes.instructors : []);
-
+        const [slots, instructors] = await Promise.all([loadRange(from, to), loadInstructors()]);
+        if (seq !== _reqSeq) return; // user already navigated elsewhere
+        _allSlots = slots;
+        populateInstructorSelect(instructors);
         render();
       } catch (e) {
+        if (seq !== _reqSeq) return;
         console.error('Schedule fetch error:', e);
         showError();
       }
     }
+    window.fetchSchedule = fetchSchedule; // used by the inline "Try again" button
 
     // ── Populate instructor dropdown ─────────────────────────────
     function populateInstructorSelect(instructors) {
-      const lang   = _lang();
-      const prev   = instSelect.value;
+      const prev = instSelect.value || _activeUnit;
 
-      // Keep only instructors who have slots this week
+      // Keep only instructors who have slots in the shown period
       const activeIds = new Set(_allSlots.map(s => String(s.unit_id)).filter(Boolean));
-      // Also add ids from unit_ids array
       _allSlots.forEach(s => (s.unit_ids || []).forEach(uid => activeIds.add(String(uid))));
 
       const active = instructors.filter(u => activeIds.has(String(u.id)));
-
-      // Sort alphabetically
       active.sort((a, b) => a.name.localeCompare(b.name));
 
-      const allLabel = { en: 'All instructors', ru: 'Все преподаватели', el: 'Όλοι' };
-      instSelect.innerHTML = `<option value="">${allLabel[lang] || allLabel.en}</option>`;
-
+      instSelect.innerHTML = `<option value="">${t('schedule_all_instructors')}</option>`;
       for (const u of active) {
         const opt = document.createElement('option');
         opt.value = u.id;
@@ -912,7 +1181,6 @@
         instSelect.appendChild(opt);
       }
 
-      // Restore previous selection if still valid
       if (prev && active.find(u => String(u.id) === prev)) {
         instSelect.value = prev;
         _activeUnit = prev;
@@ -933,10 +1201,8 @@
     function rebuildCatPills() {
       const lang = _lang();
       const labelKey = `label_${lang}`;
-
       catPills.innerHTML = '';
 
-      // "All" pill
       const allBtn = document.createElement('button');
       allBtn.className = 'filter-pill' + (_activeCat === '' ? ' active' : '');
       allBtn.dataset.cat = '';
@@ -960,15 +1226,8 @@
       });
     }
 
-    // ── Render ───────────────────────────────────────────────────
-    function render() {
-      hideSkeleton();
-
-      const lang   = _lang();
-      const today  = toISO(new Date());
-      let slots    = _allSlots;
-
-      // Apply category filter client-side
+    function filteredSlots() {
+      let slots = _allSlots;
       if (_activeCat) {
         const cat = _categories.find(c => c.key === _activeCat);
         if (cat) {
@@ -977,94 +1236,243 @@
           );
         }
       }
-
-      // Apply instructor filter client-side
       if (_activeUnit) {
         slots = slots.filter(s =>
           String(s.unit_id) === _activeUnit ||
           (Array.isArray(s.unit_ids) && s.unit_ids.map(String).includes(_activeUnit))
         );
       }
+      return slots;
+    }
 
-      // Update meta count
+    function groupByDate(slots) {
+      const byDate = {};
+      for (const s of slots) (byDate[s.date] = byDate[s.date] || []).push(s);
+      return byDate;
+    }
+
+    function escapeHtml(v) {
+      return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    // ── Render ───────────────────────────────────────────────────
+    function render() {
+      hideSkeleton();
+      updateNavLabel();
+      updateViewToggle();
+
+      const lang  = _lang();
+      const slots = filteredSlots();
+
       const countLabel = {
         en: n => `${n} class${n !== 1 ? 'es' : ''} found`,
-        ru: n => `Найдено: ${n} ${n === 1 ? 'занятие' : n < 5 ? 'занятия' : 'занятий'}`,
+        ru: n => {
+          const m10 = n % 10, m100 = n % 100;
+          const w = (m10 === 1 && m100 !== 11) ? 'занятие'
+            : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 'занятия' : 'занятий';
+          return `Найдено: ${n} ${w}`;
+        },
         el: n => `${n} μαθήματα`,
       };
       meta.textContent = (countLabel[lang] || countLabel.en)(slots.length);
 
+      if (_view === 'month') renderMonth(slots, lang);
+      else renderWeek(slots, lang);
+    }
+
+    function renderEmpty(title, hint) {
+      grid.innerHTML = `
+        <div class="schedule-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <p>${title}</p>
+          <small>${hint}</small>
+        </div>`;
+    }
+
+    function dayBlockHtml(date, daySlots, lang, today) {
+      const d = parseISO(date);
+      const dayName = (DAY_NAMES[lang] || DAY_NAMES.en)[dowMon0(date)];
+      const dateStr = `${d.getUTCDate()} ${(MONTH_NAMES[lang] || MONTH_NAMES.en)[d.getUTCMonth()]}`;
+      const isToday = date === today;
+      return `
+        <div class="schedule-day">
+          <div class="schedule-day-header">
+            <span class="day-name">${dayName}</span>
+            <span class="day-date">${dateStr}</span>
+            ${isToday ? `<span class="day-today-badge">${{en:'Today',ru:'Сегодня',el:'Σήμερα'}[lang] || 'Today'}</span>` : ''}
+          </div>
+          <div class="day-slots">
+            ${daySlots.length
+              ? daySlots.map(s => renderCard(s, lang, today)).join('')
+              : `<p class="day-empty">${t('schedule_no_classes_day')}</p>`}
+          </div>
+        </div>`;
+    }
+
+    function renderWeek(slots, lang) {
+      const today = todayISO();
       if (!slots.length) {
-        grid.innerHTML = `
-          <div class="schedule-empty">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            <p>${{ en: 'No classes this week', ru: 'На этой неделе занятий нет', el: 'Δεν υπάρχουν μαθήματα' }[lang]}</p>
-            <small>${{ en: 'Try changing the filters or pick another week', ru: 'Попробуйте сменить фильтр или выбрать другую неделю', el: 'Δοκιμάστε άλλα φίλτρα' }[lang]}</small>
-          </div>`;
+        renderEmpty(
+          { en: 'No classes this week', ru: 'На этой неделе занятий нет', el: 'Δεν υπάρχουν μαθήματα' }[lang] || 'No classes this week',
+          { en: 'Try changing the filters or pick another week', ru: 'Попробуйте сменить фильтр или выбрать другую неделю', el: 'Δοκιμάστε άλλα φίλτρα' }[lang] || ''
+        );
         return;
       }
+      const byDate = groupByDate(slots);
+      grid.innerHTML = Object.keys(byDate).sort()
+        .map(date => dayBlockHtml(date, byDate[date], lang, today)).join('');
+      bindBookButtons(grid);
+    }
 
-      // Group by date
-      const byDate = {};
-      for (const s of slots) {
-        if (!byDate[s.date]) byDate[s.date] = [];
-        byDate[s.date].push(s);
+    function renderMonth(slots, lang) {
+      const today = todayISO();
+      const { from, to } = currentRange();
+      const byDate = groupByDate(slots);
+
+      // Keep the selected day inside the shown month; default to today (if in
+      // this month and has/may have classes) or the first day with classes.
+      if (!_selectedDay || _selectedDay < from || _selectedDay > to) {
+        const upcoming = Object.keys(byDate).sort().find(d => d >= today);
+        _selectedDay = (today >= from && today <= to) ? today
+          : (upcoming || Object.keys(byDate).sort()[0] || from);
       }
 
-      const days = DAY_NAMES[lang] || DAY_NAMES.en;
-      const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
+      const gridStart = weekStartISO(from);
+      const gridEnd   = addDaysISO(weekStartISO(to), 6);
+      const heads = (DAY_SHORT[lang] || DAY_SHORT.en)
+        .map((n, i) => `<div class="mcal-head${i >= 5 ? ' is-weekend' : ''}">${n}</div>`).join('');
 
-      let html = '';
-      for (const [date, daySlots] of Object.entries(byDate).sort()) {
-        const d = new Date(date + 'T00:00:00');
-        const dayIdx = (d.getDay() + 6) % 7; // 0=Mon
-        const dayName = days[dayIdx];
-        const dateStr = `${d.getDate()} ${months[d.getMonth()]}`;
-        const isToday = date === today;
+      const MAX_CHIPS = 3;
+      let cells = '';
+      for (let d = gridStart; d <= gridEnd; d = addDaysISO(d, 1)) {
+        const inMonth = d >= from && d <= to;
+        const daySlots = inMonth ? (byDate[d] || []) : [];
+        const num = parseISO(d).getUTCDate();
+        const classes = ['mcal-cell'];
+        if (!inMonth) classes.push('is-outside');
+        if (d === today) classes.push('is-today');
+        if (d < today) classes.push('is-past-day');
+        if (inMonth && d === _selectedDay) classes.push('is-selected');
+        if (daySlots.length) classes.push('has-classes');
 
-        html += `
-          <div class="schedule-day">
-            <div class="schedule-day-header">
-              <span class="day-name">${dayName}</span>
-              <span class="day-date">${dateStr}</span>
-              ${isToday ? `<span class="day-today-badge">${{en:'Today',ru:'Сегодня',el:'Σήμερα'}[lang]}</span>` : ''}
-            </div>
-            <div class="day-slots">
-              ${daySlots.map(s => renderCard(s, lang, today)).join('')}
-            </div>
+        if (!inMonth) { cells += `<div class="${classes.join(' ')}" aria-hidden="true"><span class="mcal-day-btn is-static"><span class="mcal-num">${num}</span><span class="mcal-dots"></span></span></div>`; continue; }
+
+        const chips = daySlots.slice(0, MAX_CHIPS).map(s => {
+          const past = isPastSlot(s, today);
+          return `<button type="button" class="mcal-chip${past ? ' is-past' : ''}"
+              ${past ? 'disabled' : ''}
+              data-service="${escapeHtml(s.service_id)}" data-date="${escapeHtml(s.date)}" data-time="${escapeHtml(s.time)}"
+              title="${escapeHtml(s.time.slice(0, 5) + ' · ' + s.service_name + (s.unit_name ? ' · ' + s.unit_name : ''))}">
+              <span class="mcal-chip-time">${s.time.slice(0, 5)}</span>
+              <span class="mcal-chip-name">${escapeHtml(s.service_name)}</span>
+            </button>`;
+        }).join('');
+        const more = daySlots.length > MAX_CHIPS
+          ? `<span class="mcal-more">${t('schedule_more').replace('{n}', daySlots.length - MAX_CHIPS)}</span>` : '';
+        // Always render the dots row so days with/without classes stay aligned
+        const dots = `<span class="mcal-dots" aria-hidden="true">${daySlots.slice(0, 4).map(() => '<i></i>').join('')}</span>`;
+        const dayLabel = `${(DAY_NAMES[lang] || DAY_NAMES.en)[dowMon0(d)]}, ${num} ${(MONTH_NAMES[lang] || MONTH_NAMES.en)[parseISO(d).getUTCMonth()]}`;
+
+        cells += `
+          <div class="${classes.join(' ')}" data-day="${d}" role="gridcell">
+            <button type="button" class="mcal-day-btn" data-day="${d}"
+              aria-label="${escapeHtml(dayLabel)} — ${(countLabelShort(lang))(daySlots.length)}"
+              aria-pressed="${d === _selectedDay ? 'true' : 'false'}">
+              <span class="mcal-num">${num}</span>${dots}
+            </button>
+            <div class="mcal-chips">${chips}${more}</div>
           </div>`;
       }
 
-      grid.innerHTML = html;
+      const hasAny = slots.length > 0;
+      grid.innerHTML = `
+        <div class="mcal" role="grid" aria-label="${escapeHtml(weekLabel.textContent)}">
+          <div class="mcal-heads" role="row">${heads}</div>
+          <div class="mcal-body">${cells}</div>
+        </div>
+        ${hasAny ? '' : `<p class="mcal-empty-note">${t('schedule_no_classes_month')}</p>`}
+        <div class="mcal-daylist" id="mcalDayList" aria-live="polite">
+          ${dayBlockHtml(_selectedDay, byDate[_selectedDay] || [], lang, today)}
+        </div>`;
 
-      // Attach book button listeners
-      grid.querySelectorAll('.card-book-btn[data-service]').forEach(btn => {
+      // Day selection (desktop: click cell background / number; mobile: tap day)
+      grid.querySelectorAll('.mcal-day-btn, .mcal-more').forEach(el => {
+        el.addEventListener('click', () => {
+          const day = el.closest('.mcal-cell').dataset.day;
+          selectDay(day, true);
+        });
+      });
+      grid.querySelectorAll('.mcal-cell[data-day]').forEach(cell => {
+        cell.addEventListener('click', (e) => {
+          if (e.target.closest('.mcal-chip, .mcal-day-btn, .mcal-more')) return;
+          selectDay(cell.dataset.day, false);
+        });
+      });
+      // Chips open the same booking flow as the week cards
+      grid.querySelectorAll('.mcal-chip[data-service]').forEach(chip => {
+        chip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          BookingModal.open(chip.dataset.service, chip.dataset.date, chip.dataset.time);
+        });
+      });
+      bindBookButtons(grid.querySelector('#mcalDayList'));
+    }
+
+    function countLabelShort(lang) {
+      return {
+        en: n => `${n} class${n !== 1 ? 'es' : ''}`,
+        ru: n => {
+          const m10 = n % 10, m100 = n % 100;
+          return `${n} ${(m10 === 1 && m100 !== 11) ? 'занятие' : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 'занятия' : 'занятий'}`;
+        },
+        el: n => `${n} μαθήματα`,
+      }[lang] || (n => `${n}`);
+    }
+
+    function selectDay(day, scroll) {
+      if (!day) return;
+      _selectedDay = day;
+      const lang = _lang();
+      const today = todayISO();
+      grid.querySelectorAll('.mcal-cell[data-day]').forEach(c => {
+        const on = c.dataset.day === day;
+        c.classList.toggle('is-selected', on);
+        const b = c.querySelector('.mcal-day-btn');
+        if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      const list = grid.querySelector('#mcalDayList');
+      if (!list) return;
+      const byDate = groupByDate(filteredSlots());
+      list.innerHTML = dayBlockHtml(day, byDate[day] || [], lang, today);
+      bindBookButtons(list);
+      if (scroll && window.matchMedia('(max-width: 600px)').matches) {
+        list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function bindBookButtons(root) {
+      if (!root) return;
+      root.querySelectorAll('.card-book-btn[data-service]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const serviceId = btn.dataset.service;
-          const date      = btn.dataset.date;
-          const time      = btn.dataset.time;
-          BookingModal.open(serviceId, date, time);
+          BookingModal.open(btn.dataset.service, btn.dataset.date, btn.dataset.time);
         });
       });
     }
 
     function renderCard(s, lang, today) {
-      const isPast = s.date < today || (s.date === today && s.time < new Date().toTimeString().slice(0, 8));
+      const isPast = isPastSlot(s, today);
 
-      // Time display
       const timeStart = s.time.slice(0, 5);
       const timeEnd   = s.end_time ? s.end_time.slice(0, 5) : '';
       const durLabel  = `${s.duration} ${lang === 'ru' ? 'мин' : lang === 'el' ? 'λεπ' : 'min'}`;
 
-      // Instructor avatar
       let avatarHtml = '';
       if (s.unit_picture) {
-        avatarHtml = `<img class="card-instructor-pic" src="${s.unit_picture}" alt="${s.unit_name || ''}" loading="lazy" onerror="this.style.display='none'">`;
+        avatarHtml = `<img class="card-instructor-pic" src="${s.unit_picture}" alt="${escapeHtml(s.unit_name || '')}" loading="lazy" onerror="this.style.display='none'">`;
       } else {
         avatarHtml = `<span class="card-instructor-pic-placeholder"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>`;
       }
 
-      // Category badge — find name
       let catLabel = '';
       if (s.category_ids && s.category_ids.length && _categories.length) {
         const cat = _categories.find(c =>
@@ -1073,7 +1481,6 @@
         if (cat) catLabel = cat[`label_${lang}`] || cat.label_en;
       }
 
-      // Price
       const passTooltip = {
         en: 'Pass holders pay less. See pricing.',
         ru: 'По абонементу дешевле. Смотреть цены.',
@@ -1084,7 +1491,6 @@
         : `€20<sup class="price-asterisk" title="${passTooltip}" aria-label="${passTooltip}" onclick="event.stopPropagation();window.location='/pricing'" tabindex="0">*</sup>`;
       const priceClass = s.price > 0 ? '' : 'drop-in';
 
-      // Book button
       const bookLabel = isPast
         ? { en: 'Past', ru: 'Прошло', el: 'Πέρασε' }[lang]
         : { en: 'Book', ru: 'Записаться', el: 'Κράτηση' }[lang];
@@ -1097,9 +1503,9 @@
             <span class="card-time-dur">${durLabel}</span>
           </div>
           <div class="card-info">
-            <div class="card-name" title="${s.service_name}">${s.service_name}</div>
+            <div class="card-name" title="${escapeHtml(s.service_name)}">${escapeHtml(s.service_name)}</div>
             <div class="card-meta">
-              ${s.unit_name ? `<span class="card-instructor">${avatarHtml}${s.unit_name}</span>` : ''}
+              ${s.unit_name ? `<span class="card-instructor">${avatarHtml}${escapeHtml(s.unit_name)}</span>` : ''}
               ${catLabel ? `<span class="card-category-badge">${catLabel}</span>` : ''}
             </div>
           </div>
@@ -1107,10 +1513,10 @@
             <span class="card-price ${priceClass}">${priceLabel}</span>
             <button class="card-book-btn"
               ${isPast ? 'disabled' : ''}
-              data-service="${s.service_id}"
-              data-date="${s.date}"
-              data-time="${s.time}"
-              aria-label="Book ${s.service_name}">
+              data-service="${escapeHtml(s.service_id)}"
+              data-date="${escapeHtml(s.date)}"
+              data-time="${escapeHtml(s.time)}"
+              aria-label="Book ${escapeHtml(s.service_name)}">
               ${bookLabel}
             </button>
           </div>
@@ -1119,9 +1525,12 @@
 
     // ── Skeleton / error ─────────────────────────────────────────
     function showSkeleton() {
-      if (skeleton) skeleton.style.display = '';
       // Remove previous real content but keep skeleton
-      grid.querySelectorAll('.schedule-day, .schedule-empty, .schedule-error').forEach(el => el.remove());
+      Array.from(grid.children).forEach(el => { if (el !== skeleton) el.remove(); });
+      if (skeleton) {
+        if (!skeleton.parentNode) grid.appendChild(skeleton);
+        skeleton.style.display = '';
+      }
     }
     function hideSkeleton() {
       if (skeleton) skeleton.style.display = 'none';
@@ -1138,35 +1547,61 @@
     }
 
     // ── Event listeners ──────────────────────────────────────────
-    document.getElementById('weekPrev').addEventListener('click', () => {
-      _weekOffset--;
-      updateWeekLabel();
+    function shift(delta) {
+      if (_view === 'month') _monthOffset += delta; else _weekOffset += delta;
+      updateNavLabel();
       fetchSchedule();
-    });
-    document.getElementById('weekNext').addEventListener('click', () => {
-      _weekOffset++;
-      updateWeekLabel();
-      fetchSchedule();
-    });
+    }
+    prevBtn.addEventListener('click', () => shift(-1));
+    nextBtn.addEventListener('click', () => shift(1));
     document.getElementById('weekToday').addEventListener('click', () => {
       _weekOffset = 0;
-      updateWeekLabel();
+      _monthOffset = 0;
+      _selectedDay = todayISO();
+      updateNavLabel();
       fetchSchedule();
     });
+
+    viewBtns.forEach(btn => btn.addEventListener('click', () => {
+      const v = btn.dataset.scheduleView === 'month' ? 'month' : 'week';
+      if (v === _view) return;
+      // Keep the user roughly where they were when switching views.
+      const today = todayISO();
+      if (v === 'month') {
+        const { from } = currentRange(); // current week's Monday
+        const ref = (_weekOffset === 0) ? today : from;
+        const tm = parseISO(today), rm = parseISO(ref);
+        _monthOffset = (rm.getUTCFullYear() - tm.getUTCFullYear()) * 12 + (rm.getUTCMonth() - tm.getUTCMonth());
+        _selectedDay = ref;
+      } else {
+        const ref = _selectedDay || currentRange().from;
+        const diff = (parseISO(weekStartISO(ref)) - parseISO(weekStartISO(today))) / 86400000;
+        _weekOffset = Math.round(diff / 7);
+      }
+      _view = v;
+      try { localStorage.setItem(VIEW_KEY, v); } catch {}
+      updateViewToggle();
+      updateNavLabel();
+      fetchSchedule();
+    }));
 
     instSelect.addEventListener('change', () => {
       _activeUnit = instSelect.value;
       render();
     });
 
-    // Re-render on language change
-    document.addEventListener('svs:langChange', () => {
+    // Re-render on language change (i18n.js dispatches `svs:langchange` on window)
+    function onLang() {
       rebuildCatPills();
+      if (instSelect.options[0]) instSelect.options[0].textContent = t('schedule_all_instructors');
+      if (skeleton && skeleton.style.display !== 'none' && skeleton.isConnected) { updateNavLabel(); return; }
       render();
-    });
+    }
+    window.addEventListener('svs:langchange', onLang);
 
     // ── Init ─────────────────────────────────────────────────────
-    updateWeekLabel();
+    updateViewToggle();
+    updateNavLabel();
     initCategories().then(() => fetchSchedule());
 
     // Auth header label
@@ -1196,17 +1631,6 @@
       nav.setAttribute('aria-hidden', !open);
     });
 
-    // Theme toggle
-    document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const html = document.documentElement;
-        const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('svs_theme', next);
-      });
-    });
-    const saved = localStorage.getItem('svs_theme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
   })();
   </script>
 <script src="/cookie-banner.js" defer></script>
