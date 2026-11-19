@@ -1987,7 +1987,13 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pay_unknown:      'Payment: with your {{pass}} or €20 at the studio',
   pay_success_full: '{n} VIBES from your {lot} will be used at the visit.',
   pay_bonus:        'Bonus VIBES',
+  pay_full_bonus:   'Paid with bonus VIBES: {n} VIBES will be used, {left} left{note}.',
+  pay_partial_bonus:'Bonus VIBES: {have}{note} — {miss} short. Pay the difference at the studio: €{miss}',
+  pay_used_bonus:   'Your bonus VIBES are already reserved for your other bookings. Pay at the studio: €20',
+  pay_expired_bonus:'Your bonus VIBES are valid until {d}, and the class is on {c}. Pay at the studio: €20.',
+  pay_success_full_bonus:'{n} bonus VIBES will be used at the visit.',
   vibes_see_passes: 'See Class Passes',
+  vibes_active_mixed: 'Active VIBES',
   vibes_none_lead:  'Classes are cheaper with a {{pass}}.',
 });
 Object.assign(SVS_TRANSLATIONS.ru, {
@@ -2009,7 +2015,13 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pay_unknown:      'Оплата: по {{pass:dat}} или €20 в студии',
   pay_success_full: 'При посещении с {lot:gen} спишется {n} VIBES.',
   pay_bonus:        'бонусные VIBES',
+  pay_full_bonus:   'Оплата бонусными VIBES: спишется {n} VIBES, останется {left}{note}.',
+  pay_partial_bonus:'Бонусных VIBES: {have}{note} — не хватает {miss}. Доплата в студии: €{miss}',
+  pay_used_bonus:   'Бонусные VIBES уже учтены в ваших записях. Оплата в студии: €20',
+  pay_expired_bonus:'Бонусные VIBES действуют до {d}, а занятие {c}. Оплата в студии: €20.',
+  pay_success_full_bonus:'При посещении спишется {n} бонусных VIBES.',
   vibes_see_passes: 'Посмотреть {{pass:pl}}',
+  vibes_active_mixed: 'Активные VIBES',
   vibes_none_lead:  'С {{pass:ins}} занятия дешевле.',
 });
 // EL: формулировки на «εσύ», как в остальном греческом тексте сайта.
@@ -2032,7 +2044,13 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pay_unknown:      'Πληρωμή: με {{pass}} ή €20 στο στούντιο',
   pay_success_full: 'Στην επίσκεψη θα χρησιμοποιηθούν {n} VIBES από το {lot}.',
   pay_bonus:        'Bonus VIBES',
+  pay_full_bonus:   'Πληρωμή με bonus VIBES: θα χρησιμοποιηθούν {n} VIBES, θα μείνουν {left}{note}.',
+  pay_partial_bonus:'Bonus VIBES: {have}{note} — λείπουν {miss}. Συμπλήρωση στο στούντιο: €{miss}',
+  pay_used_bonus:   'Τα bonus VIBES σου έχουν ήδη δεσμευτεί για τις άλλες κρατήσεις σου. Πληρωμή στο στούντιο: €20',
+  pay_expired_bonus:'Τα bonus VIBES σου ισχύουν έως {d}, ενώ το μάθημα είναι στις {c}. Πληρωμή στο στούντιο: €20.',
+  pay_success_full_bonus:'Στην επίσκεψη θα χρησιμοποιηθούν {n} bonus VIBES.',
   vibes_see_passes: 'Δες τα {{pass:pl}}',
+  vibes_active_mixed: 'Ενεργά VIBES',
   vibes_none_lead:  'Με {{pass}} τα μαθήματα κοστίζουν λιγότερο.',
 });
 

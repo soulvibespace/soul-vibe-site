@@ -835,30 +835,34 @@ const BookingModal = (() => {
       note: '',
     };
     const pricing = (txt) => `<a class="bm-pay-link" href="/pricing">${_esc(txt)}</a>`;
+    // Bonus VIBES (e.g. a birthday gift) are the client's real balance: shown, own wording,
+    // and no "buy a Class Pass" push.
+    const bonus = !!plan.lot && plan.lot.source_type !== 'membership' && plan.lot.source_type !== 'starter_pack';
+    const K = (key) => (bonus && _k(key + '_bonus') !== key + '_bonus') ? _k(key + '_bonus') : _k(key);
     let main = '', extra = '', tone = 'studio';
     switch (plan.kind) {
       case 'full':
         tone = 'pass';
-        if (ctx === 'success') { main = _payFill(_esc(_k('pay_success_full')), v); break; }
+        if (ctx === 'success') { main = _payFill(_esc(K('pay_success_full')), v); break; }
         v.note = plan.withBookings ? _esc(_k('pay_with_bookings')) : '';
-        main = _payFill(_esc(_k('pay_full')), v);
+        main = _payFill(_esc(K('pay_full')), v);
         if (plan.expiry) main += ' ' + _payFill(_esc(_k('pay_until')), v);
         extra = `<p class="bm-pay-alt">${_esc(_k('pay_or_studio'))}</p>`;
         break;
       case 'partial':
         tone = 'warn';
         v.note = plan.withBookings ? _esc(_k('pay_partial_note')) : '';
-        main = _payFill(_esc(_k('pay_partial')), v);
+        main = _payFill(_esc(K('pay_partial')), v);
         break;
       case 'used':
         tone = 'warn';
-        main = _payFill(_esc(_k('pay_used')), v);
+        main = _payFill(_esc(K('pay_used')), v);
         break;
       case 'expired': {
         tone = 'warn';
         const act = plan.lot && plan.lot.source_type === 'membership' ? 'pay_renew' : 'pay_buy';
         v.action = pricing(_k(act));
-        main = _payFill(_esc(_k('pay_expired')), v);
+        main = _payFill(_esc(K('pay_expired')), v);
         break;
       }
       case 'unknown':

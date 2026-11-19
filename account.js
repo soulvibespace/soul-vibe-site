@@ -419,7 +419,9 @@ function renderVibes() {
         + '<span class="vibes-balance-hint">' + escHtml(vt('vibes_classes_left', '≈ {n} classes').replace('{n}', classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
 
   var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
-  h += '<p class="vibes-sub">' + escHtml(vt('vibes_active', 'Active Class Passes and Starter Packs')) + '</p>';
+  // Bonus VIBES (e.g. a birthday gift) are not a Class Pass: neutral heading when there are any.
+  var anyBonus = active.some(function (l) { return l.source_type !== 'membership' && l.source_type !== 'starter_pack'; });
+  h += '<p class="vibes-sub">' + escHtml(anyBonus ? vt('vibes_active_mixed', 'Active VIBES') : vt('vibes_active', 'Active Class Passes and Starter Packs')) + '</p>';
   if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active Class Pass or Starter Pack.')) + '</p>';
   else {
     h += '<ul class="vibes-list">' + active.map(function (l) {
