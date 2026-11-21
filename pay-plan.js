@@ -21,7 +21,9 @@
 (function (root) {
   'use strict';
 
-  var CLASS_VIBES = 20;
+  // 1 class = SVS_PRICES.class_vibes (i18n.js loads first); 20 is only a fallback for tests.
+  var G = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : {});
+  var CLASS_VIBES = (G.SVS_PRICES && Number(G.SVS_PRICES.class_vibes)) || 20;
   var TZ = 'Asia/Nicosia';
 
   // Studio-local calendar date "YYYY-MM-DD" of an ISO timestamp or a plain date.

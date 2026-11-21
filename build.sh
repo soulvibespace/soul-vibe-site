@@ -30,6 +30,9 @@ rsync -a ./ dist/ \
 # Единая шапка: вставляем tools/header.html во все страницы dist/ и проверяем,
 # что меню одинаковое везде (сборка падает, если нет).
 if command -v python3 >/dev/null 2>&1; then
+  # Цифры цен и VIBES: токены %%…%% в HTML → значения из SVS_PRICES (i18n.js). До meta.py,
+  # чтобы в og:description попали готовые цифры.
+  python3 tools/prices.py $STRICT dist
   python3 tools/header.py dist
   python3 tools/header.py --check dist
   # Единый подвал (tools/footer.html) — так же, как шапка.
@@ -51,6 +54,8 @@ fi
 if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
   node tests/pay-plan.test.js >/dev/null || { echo "ОШИБКА: tests/pay-plan.test.js" >&2; exit 1; }
   echo "тесты оплаты: ок"
+  node tests/prices.test.js >/dev/null || { echo "ОШИБКА: tests/prices.test.js" >&2; exit 1; }
+  echo "тесты цен: ок"
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"
