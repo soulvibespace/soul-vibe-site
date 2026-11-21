@@ -548,6 +548,23 @@
   }
 
 
+  /* Activity bonus (account-activity.js) */
+  .act-section { margin-bottom: 2rem; }
+  .act-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; }
+  .act-lead { font-family: 'Work Sans', sans-serif; font-weight: 600; font-size: 1rem; color: var(--text); margin: 0; line-height: 1.4; }
+  .act-status { font-size: 0.95rem; color: var(--color-primary); font-weight: 600; margin: 0; line-height: 1.45; }
+  .act-status--max { color: #2f8a4c; }
+  .act-bar { padding: 0.35rem 0 1.45rem; }
+  .act-bar-track { position: relative; height: 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); }
+  .act-bar-fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--color-primary); transition: width .4s ease; }
+  .act-mark { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--border); transform: translateX(-50%); }
+  .act-mark.done { background: var(--card-bg); }
+  .act-mark-label { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+  .act-mark.end .act-mark-label { left: auto; right: 0; transform: none; }
+  .act-mark.done .act-mark-label { color: #2f8a4c; }
+  .act-note { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+  .act-rule { font-size: 0.8rem; }
+
   /* Date of birth (account-birthday.js) */
   .bday-section { margin-bottom: 2rem; }
   .bday-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -1318,6 +1335,14 @@
             </div>
           </section>
 
+          <!-- Activity bonus (account-activity.js) -->
+          <section class="act-section" id="activitySection" hidden aria-live="polite">
+            <div class="dash-section-head">
+              <p class="dash-section-title" data-i18n="act_title">Activity bonus</p>
+            </div>
+            <div class="act-card" id="activityContainer"></div>
+          </section>
+
           <!-- Date of birth (account-birthday.js) -->
           <section class="bday-section" id="bdaySection" hidden aria-live="polite">
             <div class="dash-section-head">
@@ -1442,6 +1467,7 @@
   <script defer src="app.js"></script>
   <script defer src="account.js"></script>
   <script defer src="account-birthday.js"></script>
+  <script defer src="account-activity.js"></script>
 
 <script src="/cookie-banner.js" defer></script>
   <script src="/compact.js" defer></script>
