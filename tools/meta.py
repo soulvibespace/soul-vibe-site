@@ -32,6 +32,7 @@ DEFAULT_IMAGE = '/images/hero.webp'
 IMAGES = {
     'price-list.html': '/images/coworking.webp',
     'reviews.html': '/images/studio-entrance.webp',
+    'about.html': '/images/studio-entrance.webp',
 }
 
 START, END = '<!-- meta:start -->', '<!-- meta:end -->'

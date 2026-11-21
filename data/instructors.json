@@ -1,0 +1,255 @@
+{
+  "_note": "Команда для страницы /about. Источник — этот файл (не SimplyBook). Показываются только active:true, порядок — по order. Пустой languages не выводится. bio — черновик, ждёт текстов от преподавателей.",
+  "instructors": [
+    {
+      "slug": "larisa",
+      "name": {
+        "en": "Larisa",
+        "ru": "Лариса",
+        "el": "Larisa"
+      },
+      "role": "founder",
+      "title": {
+        "en": "Teacher & Founder",
+        "ru": "Преподаватель и основательница",
+        "el": "Δασκάλα & ιδρύτρια"
+      },
+      "styles": [
+        {
+          "en": "Kundalini Yoga (KRI II)",
+          "ru": "Кундалини йога (KRI II)",
+          "el": "Kundalini Yoga (KRI II)"
+        },
+        {
+          "en": "Sound Healing",
+          "ru": "Звукотерапия",
+          "el": "Ηχοθεραπεία"
+        },
+        {
+          "en": "Ecstatic Dance DJ & Facilitator",
+          "ru": "Ecstatic Dance: диджей и ведущая",
+          "el": "Ecstatic Dance: DJ & καθοδήγηση"
+        },
+        {
+          "en": "Energy Breathing",
+          "ru": "Энергетическое дыхание",
+          "el": "Ενεργειακή αναπνοή"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Leads Kundalini Yoga, sound healing, Ecstatic Dance and energy breathing sessions — and holds the space for the whole Soul Vibe community.",
+        "ru": "Ведёт кундалини йогу, звукотерапию, Ecstatic Dance и практики энергетического дыхания — и держит пространство для всего сообщества Soul Vibe.",
+        "el": "Διδάσκει Kundalini Yoga, ηχοθεραπεία, Ecstatic Dance και ενεργειακή αναπνοή — και κρατά τον χώρο για όλη την κοινότητα του Soul Vibe."
+      },
+      "photo": "/images/team/larisa.webp",
+      "active": true,
+      "order": 1
+    },
+    {
+      "slug": "olga-ermakova",
+      "name": {
+        "en": "Olga Ermakova",
+        "ru": "Ольга Ермакова",
+        "el": "Olga Ermakova"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Black Lotus Yoga",
+          "ru": "Black Lotus Yoga",
+          "el": "Black Lotus Yoga"
+        },
+        {
+          "en": "Vinyasa Yoga",
+          "ru": "Виньяса йога",
+          "el": "Vinyasa Yoga"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Black Lotus Yoga and Vinyasa Yoga.",
+        "ru": "Ведёт Black Lotus Yoga и виньяса йогу.",
+        "el": "Διδάσκει Black Lotus Yoga και Vinyasa Yoga."
+      },
+      "photo": "/images/team/olga-ermakova.webp",
+      "active": true,
+      "order": 2
+    },
+    {
+      "slug": "elena-mehteeva",
+      "name": {
+        "en": "Elena Mehteeva",
+        "ru": "Елена Мехтеева",
+        "el": "Elena Mehteeva"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Sleep Well Yoga",
+          "ru": "Sleep Well Yoga",
+          "el": "Sleep Well Yoga"
+        },
+        {
+          "en": "Yin Yoga",
+          "ru": "Инь йога",
+          "el": "Yin Yoga"
+        },
+        {
+          "en": "Smart Body",
+          "ru": "Smart Body",
+          "el": "Smart Body"
+        },
+        {
+          "en": "Prenatal Yoga",
+          "ru": "Йога для беременных",
+          "el": "Yoga εγκυμοσύνης"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Sleep Well Yoga, Yin Yoga, Smart Body and Prenatal Yoga.",
+        "ru": "Ведёт Sleep Well Yoga, инь йогу, Smart Body и йогу для беременных.",
+        "el": "Διδάσκει Sleep Well Yoga, Yin Yoga, Smart Body και yoga εγκυμοσύνης."
+      },
+      "photo": "/images/team/elena-mehteeva.webp",
+      "active": true,
+      "order": 3
+    },
+    {
+      "slug": "ilya-kuliashou",
+      "name": {
+        "en": "Ilya Kuliashou",
+        "ru": "Ilya Kuliashou",
+        "el": "Ilya Kuliashou"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Hatha Yoga",
+          "ru": "Хатха йога",
+          "el": "Hatha Yoga"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Hatha Yoga.",
+        "ru": "Ведёт хатха йогу.",
+        "el": "Διδάσκει Hatha Yoga."
+      },
+      "photo": "/images/team/ilya-kuliashou.webp",
+      "active": true,
+      "order": 4
+    },
+    {
+      "slug": "marina",
+      "name": {
+        "en": "Marina",
+        "ru": "Марина",
+        "el": "Marina"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Qigong «Fire of Everlasting Life»",
+          "ru": "Цигун «Огонь вечной жизни»",
+          "el": "Qigong «Fire of Everlasting Life»"
+        },
+        {
+          "en": "Neuro Qigong",
+          "ru": "Нейроцигун",
+          "el": "Neuro Qigong"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Qigong «Fire of Everlasting Life» and Neuro Qigong.",
+        "ru": "Ведёт цигун «Огонь вечной жизни» и нейроцигун.",
+        "el": "Διδάσκει Qigong «Fire of Everlasting Life» και Neuro Qigong."
+      },
+      "photo": "/images/team/marina.webp",
+      "active": true,
+      "order": 5
+    },
+    {
+      "slug": "fedor-sosnin",
+      "name": {
+        "en": "Fedor Sosnin",
+        "ru": "Фёдор Соснин",
+        "el": "Fedor Sosnin"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Hatha Yoga",
+          "ru": "Хатха йога",
+          "el": "Hatha Yoga"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Hatha Yoga.",
+        "ru": "Ведёт хатха йогу.",
+        "el": "Διδάσκει Hatha Yoga."
+      },
+      "photo": "/images/team/fedor-sosnin.webp",
+      "active": true,
+      "order": 6
+    },
+    {
+      "slug": "tati-shoykhet",
+      "name": {
+        "en": "Tati Shoykhet",
+        "ru": "Tati Shoykhet",
+        "el": "Tati Shoykhet"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Kundalini Yoga",
+          "ru": "Кундалини йога",
+          "el": "Kundalini Yoga"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Kundalini Yoga.",
+        "ru": "Ведёт кундалини йогу.",
+        "el": "Διδάσκει Kundalini Yoga."
+      },
+      "photo": "/images/team/tati-shoykhet.webp",
+      "active": true,
+      "order": 7
+    },
+    {
+      "slug": "stephanie",
+      "name": {
+        "en": "Stephanie",
+        "ru": "Стефани",
+        "el": "Stephanie"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Vinyasa Yoga",
+          "ru": "Виньяса йога",
+          "el": "Vinyasa Yoga"
+        },
+        {
+          "en": "Yin Yoga",
+          "ru": "Инь йога",
+          "el": "Yin Yoga"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Vinyasa Yoga and Yin Yoga.",
+        "ru": "Ведёт виньяса йогу и инь йогу.",
+        "el": "Διδάσκει Vinyasa Yoga και Yin Yoga."
+      },
+      "photo": "/images/team/stephanie.webp",
+      "active": true,
+      "order": 8
+    }
+  ]
+}
