@@ -78,7 +78,7 @@
       case 'name': return t('ec_err_name');
       case 'terms_required': return t('err_terms_required');
     }
-    return err.status >= 500 ? t('ec_err_unavailable') : t('ec_err_generic');
+    return (err.status >= 500 || err.status === 404) ? t('ec_err_unavailable') : t('ec_err_generic');
   }
 
   function Widget(host, opts) {
