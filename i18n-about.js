@@ -98,7 +98,11 @@
     ab_rancho3_title: 'Ecstatic Dance',
     ab_rancho3_text: 'Free movement to a live DJ set in the open air.',
     ab_rancho3_link: 'About Ecstatic Dance →',
-    ab_diff3_link: 'Summers at the ranch →'
+    ab_diff3_link: 'Summers at the ranch →',
+    ab_social_eyebrow: 'Community on Instagram',
+    ab_social_title: 'More than 3,500 people follow life at the studio',
+    ab_social_sub: 'Schedule updates, events, Ecstatic Dance and moments from our classes.',
+    ab_social_ig: 'Open Instagram'
   });
 
   /* ═══════════════════════════════ RU ═══════════════════════════════ */
@@ -188,7 +192,11 @@
     ab_rancho3_title: 'Ecstatic Dance',
     ab_rancho3_text: 'Свободный танец под живой диджей-сет на открытом воздухе.',
     ab_rancho3_link: 'Об Ecstatic Dance →',
-    ab_diff3_link: 'Летом на ранчо →'
+    ab_diff3_link: 'Летом на ранчо →',
+    ab_social_eyebrow: 'Сообщество в Instagram',
+    ab_social_title: 'Более 3\xa0500 человек следят за жизнью студии',
+    ab_social_sub: 'Новости расписания, события, Ecstatic Dance и моменты с наших занятий.',
+    ab_social_ig: 'Открыть Instagram'
   });
 
   /* ═══════════════════════════════ EL ═══════════════════════════════ */
@@ -278,6 +286,10 @@
     ab_rancho3_title: 'Ecstatic Dance',
     ab_rancho3_text: 'Ελεύθερη κίνηση με ζωντανό DJ set στην ύπαιθρο.',
     ab_rancho3_link: 'Για το Ecstatic Dance →',
-    ab_diff3_link: 'Το καλοκαίρι στο ράντσο →'
+    ab_diff3_link: 'Το καλοκαίρι στο ράντσο →',
+    ab_social_eyebrow: 'Η κοινότητα στο Instagram',
+    ab_social_title: 'Περισσότεροι από 3.500 άνθρωποι ακολουθούν τη ζωή του στούντιο',
+    ab_social_sub: 'Νέα του προγράμματος, εκδηλώσεις, Ecstatic Dance και στιγμές από τα μαθήματά μας.',
+    ab_social_ig: 'Άνοιγμα Instagram'
   });
 })();

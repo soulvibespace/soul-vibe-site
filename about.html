@@ -181,6 +181,24 @@
     @media (max-width: 860px) { .ab-rancho { padding: 30px 26px; } .ab-rancho-grid { grid-template-columns: 1fr; gap: 12px; } }
     @media (max-width: 600px) { .ab-rancho { padding: 24px 18px; border-radius: 16px; } .ab-rancho-card { padding: 16px; } }
 
+    /* Сообщество в Instagram — без встраивания постов и внешних скриптов */
+    .ab-social { margin-top: var(--block-gap-lg); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 32px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+    .ab-social h2 { font-family: var(--font-serif); font-size: clamp(1.35rem, 2.4vw, 1.8rem); font-weight: 400; color: var(--text-primary); line-height: 1.25; margin: 0 0 8px; }
+    .ab-social-sub { font-size: .92rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-social-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .ab-social-actions .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; }
+    /* Мозаика: фото в родных пропорциях (flex-grow = ширина/высота) — одинаковая высота, без кропа */
+    .ab-mosaic { display: flex; gap: 8px; margin: 0; }
+    .ab-mosaic a { flex: var(--r) 1 0; min-width: 0; display: block; border-radius: 12px; overflow: hidden; background: var(--color-surface-offset); }
+    .ab-mosaic img { display: block; width: 100%; height: auto; transition: transform .3s ease; }
+    .ab-mosaic a:hover img { transform: scale(1.03); }
+    @media (max-width: 860px) { .ab-social { grid-template-columns: 1fr; gap: 20px; } }
+    @media (max-width: 600px) {
+      .ab-social { padding: 20px 18px; border-radius: 16px; }
+      .ab-mosaic { gap: 6px; } .ab-mosaic a { border-radius: 10px; }
+      .ab-social-actions .btn { flex: 1 1 auto; justify-content: center; }
+    }
+
     /* Умное и гибкое пространство */
     .ab-space { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--split-gap); align-items: center; }
     .ab-space-img { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; background: var(--color-surface-offset); }
@@ -540,6 +558,24 @@
           <div class="ab-fv"><span class="ab-fv-num">02</span><h3 data-i18n="ab_fv2_title">Arrive 5–10 minutes early</h3><p data-i18n="ab_fv2_text">Time to meet the teacher, change and settle in calmly before the class begins.</p></div>
           <div class="ab-fv"><span class="ab-fv-num">03</span><h3 data-i18n="ab_fv3_title">Starter Pack for new clients</h3><p data-i18n="ab_fv3_text">A one-time offer for your first classes — from %%SP1.price%%.</p><a class="ab-link" href="/pricing" data-i18n="ab_fv3_link">See prices →</a></div>
           <div class="ab-fv"><span class="ab-fv-num">04</span><h3 data-i18n="ab_fv4_title">Where to find us</h3><p data-i18n="ab_fv4_text">50 Agias Zonis, Limassol 3090, Cyprus.</p><a class="ab-link" href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" data-i18n="ab_fv4_link">Open in maps →</a></div>
+        </div>
+
+        <!-- Сообщество в Instagram (без встраивания постов) -->
+        <div class="ab-social" aria-labelledby="abSocialTitle">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_social_eyebrow">Community on Instagram</p>
+            <h2 id="abSocialTitle" data-i18n="ab_social_title">More than 3,500 people follow life at the studio</h2>
+            <p class="ab-social-sub" data-i18n="ab_social_sub">Schedule updates, events, Ecstatic Dance and moments from our classes.</p>
+            <div class="ab-social-actions">
+              <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg><span data-i18n="ab_social_ig">Open Instagram</span></a>
+              <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="btn btn-outline"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg><span>TikTok</span></a>
+            </div>
+          </div>
+          <div class="ab-mosaic">
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" style="--r:1.3393" tabindex="-1" aria-hidden="true"><img src="/images/sound-healing-900.webp" width="900" height="672" loading="lazy" decoding="async" alt="" /></a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" style="--r:1.0000" tabindex="-1" aria-hidden="true"><img src="/images/coworking.webp" width="1024" height="1024" loading="lazy" decoding="async" alt="" /></a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" style="--r:0.8011" tabindex="-1" aria-hidden="true"><img src="/images/rental-room-white.webp" width="435" height="543" loading="lazy" decoding="async" alt="" /></a>
+          </div>
         </div>
 
         <div class="ab-cta">
