@@ -27,7 +27,7 @@ t('цена занятия и выгода', () => {
   assert.strictEqual(ru.min_per, '€15'); assert.strictEqual(ru.max_save, '25%');
 });
 t('пример MP20 + бонусы', () => {
-  assert.deepStrictEqual([ru['ex.total'], ru['ex.classes'], ru['ex.per']], [422, 21, '€14,20']);
+  assert.deepStrictEqual([ru['ex.total'], ru['ex.classes'], ru['ex.per']], [422, 21, '€14,29']);
 });
 t('склонение «занятие»', () => {
   assert.strictEqual(ru['ex.classes_word'], 'занятие');

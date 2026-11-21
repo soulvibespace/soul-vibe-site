@@ -76,7 +76,7 @@ def values(P, lang='en'):
     total = ex['vibes'] + bonus
     v.update({'ex.plan': P['example']['plan'], 'ex.price': eur(ex['price']), 'ex.base': ex['vibes'],
               'ex.bonus': bonus, 'ex.total': total, 'ex.classes': total // P['class_vibes'],
-              'ex.per': eur(math.floor(ex['price'] / (total / P['class_vibes']) * 10 + 0.5) / 10)})
+              'ex.per': eur(math.floor(ex['price'] / (total // P['class_vibes']) * 100 + 0.5) / 100)})
     v['ex.classes_word'] = class_word(v['ex.classes'], lang)
     return {k: str(x) for k, x in v.items()}
 

@@ -128,7 +128,7 @@ function svsPriceValues(lang) {
   var total = ex.vibes + bonus;
   v['ex.plan'] = P.example.plan; v['ex.price'] = eur(ex.price); v['ex.base'] = ex.vibes;
   v['ex.bonus'] = bonus; v['ex.total'] = total; v['ex.classes'] = Math.floor(total / P.class_vibes);
-  v['ex.per'] = eur(Math.round(ex.price / (total / P.class_vibes) * 10) / 10);
+  v['ex.per'] = eur(Math.round(ex.price / v['ex.classes'] * 100) / 100);
   v['ex.classes_word'] = svsClassWord(v['ex.classes'], lang);
   return v;
 }
