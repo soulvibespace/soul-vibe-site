@@ -2276,7 +2276,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
 // Цифры — только токены %%…%% (SVS_PRICES выше), термины — {{pass}} / {{starter}}.
 Object.assign(SVS_TRANSLATIONS.en, {
   nav_vibes:            'VIBES',
-  footer_vibes:         'VIBES Loyalty',
+  footer_vibes:         'VIBES',
   vibes_how_link:       'How VIBES work →',
   vb_page_title:         'VIBES — your practice currency | Soul Vibe Space Limassol',
   vb_eyebrow:            'VIBES · your practice currency',
@@ -2381,7 +2381,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
 });
 Object.assign(SVS_TRANSLATIONS.ru, {
   nav_vibes:            'VIBES',
-  footer_vibes:         'Программа VIBES',
+  footer_vibes:         'VIBES',
   vibes_how_link:       'Как работают VIBES →',
   vb_page_title:         'VIBES — ваша валюта практики | Soul Vibe Space Лимасол',
   vb_eyebrow:            'VIBES · ваша валюта практики',
@@ -2486,7 +2486,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 });
 Object.assign(SVS_TRANSLATIONS.el, {
   nav_vibes:            'VIBES',
-  footer_vibes:         'Πρόγραμμα VIBES',
+  footer_vibes:         'VIBES',
   vibes_how_link:       'Πώς λειτουργούν τα VIBES →',
   vb_page_title:         'VIBES — το νόμισμα της εξάσκησής σας | Soul Vibe Space Λεμεσός',
   vb_eyebrow:            'VIBES · το νόμισμα της εξάσκησής σας',

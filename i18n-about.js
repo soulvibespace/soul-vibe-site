@@ -48,8 +48,8 @@
     ab_diff2_text:    'Free movement to a live DJ set — no steps to learn, just you, the music and the people around you.',
     ab_diff3_title:   'Classes in nature',
     ab_diff3_text:    'Yoga, meditation and Ecstatic Dance under the open sky at Rancho Meadow Paradise.',
-    ab_diff4_title:   'VIBES programme',
-    ab_diff4_text:    'Our studio currency: pay for classes with VIBES and collect bonus VIBES for bringing a friend, a review and your birthday.',
+    ab_diff4_title:   'VIBES',
+    ab_diff4_text:    'Top up your balance and practise at your own pace: each class is deducted when you visit. Plus gift VIBES for regular practice, a friend, a review and your birthday.',
     ab_diff4_link:    'How VIBES work →',
     ab_diff_sched:    'See the schedule →',
 
@@ -178,8 +178,8 @@
     ab_diff2_text:    'Свободное движение под живой диджей-сет — без шагов и правил: только вы, музыка и люди вокруг.',
     ab_diff3_title:   'Занятия на природе',
     ab_diff3_text:    'Йога, медитация и Ecstatic Dance под открытым небом на Ранчо Meadow Paradise.',
-    ab_diff4_title:   'Программа VIBES',
-    ab_diff4_text:    'Валюта студии: вы оплачиваете занятия в VIBES и получаете бонусные VIBES за приведённого друга, отзыв и в день рождения.',
+    ab_diff4_title:   'VIBES',
+    ab_diff4_text:    'Пополните баланс и практикуйте в своём ритме: каждое занятие списывается при посещении. А за регулярную практику, друга, отзыв и день рождения — VIBES в подарок.',
     ab_diff4_link:    'Как работают VIBES →',
     ab_diff_sched:    'Смотреть расписание →',
 
@@ -308,8 +308,8 @@
     ab_diff2_text:    'Ελεύθερη κίνηση με ζωντανό DJ set — χωρίς βήματα και κανόνες: μόνο εσείς, η μουσική και οι άνθρωποι γύρω σας.',
     ab_diff3_title:   'Μαθήματα στη φύση',
     ab_diff3_text:    'Yoga, διαλογισμός και Ecstatic Dance στην ύπαιθρο, στο Rancho Meadow Paradise.',
-    ab_diff4_title:   'Πρόγραμμα VIBES',
-    ab_diff4_text:    'Το νόμισμα του στούντιο: πληρώνετε τα μαθήματα με VIBES και κερδίζετε bonus VIBES για έναν φίλο που φέρνετε, μια κριτική και τα γενέθλιά σας.',
+    ab_diff4_title:   'VIBES',
+    ab_diff4_text:    'Γεμίστε το υπόλοιπό σας και εξασκηθείτε στον δικό σας ρυθμό: κάθε μάθημα αφαιρείται όταν έρχεστε. Και VIBES δώρο για τακτική εξάσκηση, έναν φίλο, μια κριτική και τα γενέθλιά σας.',
     ab_diff4_link:    'Πώς λειτουργούν τα VIBES →',
     ab_diff_sched:    'Δείτε το πρόγραμμα →',
 
