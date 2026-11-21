@@ -65,7 +65,7 @@ def values(P, lang='en'):
         per, save = p['price'] / classes, (full - p['price']) / full * 100
         v.update({code + '.price': eur(p['price']), code + '.price_n': num(p['price']), code + '.vibes': p['vibes'], code + '.days': p['days'],
                   code + '.classes': int(classes), code + '.per': eur(per), code + '.save': pct(save),
-                  code + '.save_eur': eur(full - p['price'])})
+                  code + '.save_eur': eur(full - p['price']), code + '.full': eur(full)})
         if p['kind'] == 'pass':
             min_per, max_save = min(min_per, per), max(max_save, save)
     v['min_per'], v['max_save'] = eur(min_per), pct(max_save)
