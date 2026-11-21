@@ -2330,7 +2330,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   vb_faq3_q:            'Do VIBES expire?',
   vb_faq3_a:             'VIBES from a {{pass}} or {{Starter}} are valid for its period, which starts from your first visit. Gift VIBES never expire.',
   vb_faq4_q:            'Can I give or transfer VIBES?',
-  vb_faq4_a:            'A {{pass}} is personal and is not intended to be transferred to other people. To give a class as a present, choose a <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener">gift certificate</a>.',
+  vb_faq4_a:            'A {{pass}} is personal and is not intended to be transferred to other people. To give a class as a present, choose a <a href="/gift-certificates">gift certificate</a>.',
   vb_faq5_q:            'What if I don’t have enough VIBES?',
   vb_faq5_a:             'Pay the difference at the studio or top up your balance: when you top up, %%topup%% becomes 1\u00a0VIBE. With a new {{pass}}, each class costs less.',
   vb_faq6_q:            'Where can I see my balance?',
@@ -2435,7 +2435,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   vb_faq3_q:            'Сгорают ли VIBES?',
   vb_faq3_a:             'VIBES из {{pass:gen}} или {{Starter:gen}} действуют в его срок, который отсчитывается с первого посещения. VIBES в подарок не сгорают.',
   vb_faq4_q:            'Можно ли подарить или передать VIBES?',
-  vb_faq4_a:            '{{Pass}} именной и не предназначен для передачи третьим лицам. Чтобы подарить занятие, выберите <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener">подарочный сертификат</a>.',
+  vb_faq4_a:            '{{Pass}} именной и не предназначен для передачи третьим лицам. Чтобы подарить занятие, выберите <a href="/gift-certificates">подарочный сертификат</a>.',
   vb_faq5_q:            'Что если не хватает VIBES?',
   vb_faq5_a:             'Доплатите разницу в студии или пополните баланс: при пополнении %%topup%% превращается в 1\u00a0VIBE. С новым {{pass:ins}} каждое занятие обходится дешевле.',
   vb_faq6_q:            'Где посмотреть баланс?',
@@ -2540,7 +2540,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   vb_faq3_q:            'Λήγουν τα VIBES;',
   vb_faq3_a:             'Τα VIBES από ένα {{pass}} ή {{Starter}} ισχύουν για τη διάρκειά του, που ξεκινά από την πρώτη σας επίσκεψη. Τα VIBES δώρο δεν λήγουν.',
   vb_faq4_q:            'Μπορώ να χαρίσω ή να μεταβιβάσω VIBES;',
-  vb_faq4_a:            'Το {{pass}} είναι προσωπικό και δεν προορίζεται για μεταβίβαση σε τρίτους. Για να χαρίσετε ένα μάθημα, επιλέξτε μια <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener">δωροκάρτα</a>.',
+  vb_faq4_a:            'Το {{pass}} είναι προσωπικό και δεν προορίζεται για μεταβίβαση σε τρίτους. Για να χαρίσετε ένα μάθημα, επιλέξτε μια <a href="/gift-certificates">δωροκάρτα</a>.',
   vb_faq5_q:            'Τι γίνεται αν δεν μου φτάνουν τα VIBES;',
   vb_faq5_a:             'Πληρώστε τη διαφορά στο στούντιο ή φορτίστε το υπόλοιπό σας: κατά τη φόρτιση %%topup%% γίνεται 1\u00a0VIBE. Με νέο {{pass}} κάθε μάθημα κοστίζει λιγότερο.',
   vb_faq6_q:            'Πού βλέπω το υπόλοιπό μου;',
@@ -2700,6 +2700,69 @@ if (window.SVS_I18N_EXTRA) {
 }
 
 // Auto-init after DOM ready — must run after all Object.assign blocks
+// ── Страница /gift-certificates: подарочный сертификат (оформление через администратора) ──
+// GR — машинный перевод, нужна вычитка носителем.
+Object.assign(SVS_TRANSLATIONS.en, {
+  gc_eyebrow:      'Gift certificates',
+  gc_title:        'Give the gift of time',
+  gc_lead:         'A moment to slow down, move and enjoy a practice they love.',
+  gc_hero_wa:      'Message us on WhatsApp',
+  gc_hero_ig:      'DM us on Instagram',
+  gc_what_eyebrow: 'For classes and practices',
+  gc_what_title:   'What is a gift certificate',
+  gc_what_p1:      'With a Soul Vibe Space gift certificate, they can choose a class from our regular schedule — and make a little time for themselves.',
+  gc_what_p2:      'Any class or practice they like, whenever it suits them.',
+  gc_what_link:    'See the schedule',
+  gc_how_eyebrow:  'WhatsApp · Instagram',
+  gc_how_title:    'How to arrange a gift certificate',
+  gc_how_p:        'DM us or message us on WhatsApp to arrange your gift certificate. Our administrator will take care of the rest.',
+  gc_how_phone:    'Or call us:',
+  gc_cap1:         'For a birthday. Or just because.',
+  gc_cap2:         'A thoughtful gift for someone you care about.',
+  gc_cap3:         'Their practice. Their choice.',
+  gc_gallery_title:'Soul Vibe Space gift certificates',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  gc_eyebrow:      'Подарочные сертификаты',
+  gc_title:        'Подарите близким время для себя',
+  gc_lead:         'Возможность выдохнуть, размяться и сходить на любимую практику.',
+  gc_hero_wa:      'Написать в WhatsApp',
+  gc_hero_ig:      'Написать в директ',
+  gc_what_eyebrow: 'На занятия и практики',
+  gc_what_title:   'Что такое подарочный сертификат',
+  gc_what_p1:      'С подарочным сертификатом Soul Vibe Space можно выбрать занятие из регулярного расписания студии — по настроению и в удобное время.',
+  gc_what_p2:      'Подойдут любые занятия и практики из расписания.',
+  gc_what_link:    'Посмотреть расписание',
+  gc_how_eyebrow:  'WhatsApp · Instagram',
+  gc_how_title:    'Как оформить сертификат',
+  gc_how_p:        'Чтобы оформить сертификат, напишите нам в директ или WhatsApp. Администратор всё оформит.',
+  gc_how_phone:    'Или позвоните:',
+  gc_cap1:         'На день рождения. Или просто так.',
+  gc_cap2:         'Для тех, о ком хочется позаботиться.',
+  gc_cap3:         'Пусть выберут любимую практику.',
+  gc_gallery_title:'Подарочные сертификаты Soul Vibe Space',
+});
+Object.assign(SVS_TRANSLATIONS.el, {
+  gc_eyebrow:      'Δωροκάρτες',
+  gc_title:        'Χαρίστε το δώρο του χρόνου',
+  gc_lead:         'Μια στιγμή για να χαλαρώσουν, να κινηθούν και να απολαύσουν μια πρακτική που αγαπούν.',
+  gc_hero_wa:      'Γράψτε μας στο WhatsApp',
+  gc_hero_ig:      'Στείλτε μας μήνυμα στο Instagram',
+  gc_what_eyebrow: 'Για μαθήματα και πρακτικές',
+  gc_what_title:   'Τι είναι η δωροκάρτα',
+  gc_what_p1:      'Με μια δωροκάρτα Soul Vibe Space μπορούν να επιλέξουν ένα μάθημα από το τακτικό πρόγραμμα του στούντιο — και να βρουν λίγο χρόνο για τον εαυτό τους.',
+  gc_what_p2:      'Όποιο μάθημα ή πρακτική θέλουν, όποτε τους βολεύει.',
+  gc_what_link:    'Δείτε το πρόγραμμα',
+  gc_how_eyebrow:  'WhatsApp · Instagram',
+  gc_how_title:    'Πώς να αποκτήσετε μια δωροκάρτα',
+  gc_how_p:        'Στείλτε μας μήνυμα στο Instagram ή στο WhatsApp για να κανονίσουμε τη δωροκάρτα σας. Ο διαχειριστής μας θα φροντίσει για τα υπόλοιπα.',
+  gc_how_phone:    'Ή καλέστε μας:',
+  gc_cap1:         'Για γενέθλια. Ή απλώς έτσι.',
+  gc_cap2:         'Ένα δώρο με νόημα για κάποιον που αγαπάτε.',
+  gc_cap3:         'Η πρακτική τους. Η επιλογή τους.',
+  gc_gallery_title:'Δωροκάρτες Soul Vibe Space',
+});
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', SVS_I18N.init);
 } else {

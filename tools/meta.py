@@ -33,6 +33,7 @@ IMAGES = {
     'price-list.html': '/images/coworking.webp',
     'reviews.html': '/images/studio-entrance.webp',
     'about.html': '/images/studio-entrance.webp',
+    'gift-certificates.html': '/images/gift-hero-960.webp',
 }
 
 START, END = '<!-- meta:start -->', '<!-- meta:end -->'
