@@ -56,6 +56,54 @@ const AuthModal = (() => {
       e.preventDefault();
       await _handleRegister();
     });
+
+    _mountEmailCode();
+  }
+
+  // Main way in: a one-time code by email (email-login.js). Google stays below it,
+  // the old password tabs open from the small «Войти по паролю» link at the bottom.
+  function _mountEmailCode() {
+    const body = _modal && _modal.querySelector('.auth-modal-body');
+    const tabs = document.getElementById('authTabs');
+    if (!body || !tabs || !window.SVSEmailLogin) return;
+    const host = document.createElement('div');
+    host.className = 'svs-ec';
+    host.id = 'authEmailCode';
+    const divider = document.createElement('div');
+    divider.className = 'auth-divider svs-ec-divider';
+    divider.innerHTML = '<span data-i18n="auth_or">' + _t('auth_or', 'or') + '</span>';
+    const footer = document.createElement('div');
+    footer.className = 'svs-ec-footer';
+    body.insertBefore(host, tabs);
+    body.insertBefore(divider, tabs);
+    body.appendChild(footer);
+    const googleWrap = body.querySelector('.google-signin-wrap');
+    const googleDivider = googleWrap && googleWrap.querySelector('.auth-divider');
+    // In code mode Google sits right under the code form, so its own «or» moves above it.
+    if (googleWrap) body.insertBefore(googleWrap, divider.nextSibling);
+    const pwParts = [tabs, document.getElementById('authLoginForm'), document.getElementById('authRegisterForm')].filter(Boolean);
+    pwParts.forEach(el => el.classList.add('svs-ec-pw'));
+    SVSEmailLogin.mount(host, {
+      cls: { field: 'form-group', label: 'form-label', input: 'form-input', button: 'btn-auth', error: 'auth-error' },
+      footer,
+      onModeChange(m) {
+        // m: 'code' (main), 'forgot' (reset form inside the widget), 'password' (old tabs)
+        const pw = m === 'password';
+        _clearMessages();
+        pwParts.forEach(el => { el.hidden = !pw; });
+        divider.hidden = m !== 'code';
+        if (googleWrap) {
+          googleWrap.hidden = m === 'forgot' || m === 'profile';
+          if (googleDivider) googleDivider.hidden = !pw;   // its «or» separates Google from the password form
+          body.insertBefore(googleWrap, pw ? tabs.nextSibling : divider.nextSibling);
+        }
+        if (pw) switchTab('login');
+      },
+      onSuccess(token, client) {
+        saveToken(token);
+        _onAuthSuccess(client);
+      },
+    });
   }
 
   function open(tab = 'login') {

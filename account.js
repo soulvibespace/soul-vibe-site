@@ -1018,6 +1018,52 @@ function logout() {
   updateHeaderBtn(t('nav_signin', 'Sign In'));
 }
 
+// ── Вход по коду из письма (email-login.js) ─────────────────────────────────
+// Main way in. The old tabs with the password forms move into a wrapper that opens
+// from the small «Войти по паролю» link at the bottom; Google stays right below the code.
+(function mountEmailCode() {
+  const auth = document.getElementById('accAuth');
+  const tabs = auth && auth.querySelector('.acc-tabs');
+  if (!auth || !tabs || !window.SVSEmailLogin) return;
+  const gwrap = auth.querySelector('.acc-google-wrap');
+  const gdiv  = gwrap && gwrap.querySelector('.acc-divider');
+  const host = document.createElement('div');
+  host.className = 'svs-ec'; host.id = 'accEmailCode';
+  const divider = document.createElement('div');
+  divider.className = 'acc-divider svs-ec-divider';
+  divider.innerHTML = '<span data-i18n="auth_or">' + t('auth_or', 'or') + '</span>';
+  const pw = document.createElement('div');
+  pw.className = 'svs-ec-pw'; pw.id = 'accPwArea';
+  const footer = document.createElement('div');
+  footer.className = 'svs-ec-footer';
+  auth.insertBefore(host, tabs);
+  auth.insertBefore(divider, tabs);
+  if (gwrap) auth.insertBefore(gwrap, tabs);
+  ['authError', 'authSuccess'].forEach(id => { const el = document.getElementById(id); if (el) auth.insertBefore(el, tabs); });
+  auth.insertBefore(pw, tabs);
+  [tabs, 'loginForm', 'forgotPasswordForm', 'registerForm'].forEach(x => {
+    const el = typeof x === 'string' ? document.getElementById(x) : x;
+    if (el) pw.appendChild(el);
+  });
+  pw.after(footer);
+  SVSEmailLogin.mount(host, {
+    cls: { field: 'acc-field', label: 'acc-label', input: 'acc-input', button: 'acc-btn-submit', error: 'acc-msg-error' },
+    footer,
+    onModeChange(mode) {
+      clearMessages();
+      pw.hidden = mode !== 'password';
+      divider.hidden = mode !== 'code';
+      if (gdiv) gdiv.hidden = mode !== 'password';
+      if (gwrap) gwrap.hidden = mode === 'forgot' || mode === 'profile';
+      if (mode === 'password') { backToLogin(); switchTab('login'); }
+    },
+    onSuccess(token, client) {
+      saveToken(token);
+      showDashboard(client || {});
+    },
+  });
+})();
+
 // ── Init ───────────────────────────────────────────────────────────────────────
 (async function init() {
   const token = getToken();

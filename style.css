@@ -3003,3 +3003,39 @@ a.bm-confirm-btn:hover { color: #fff; }
 .nav-link[aria-current="page"] { color: var(--color-primary); }
 .nav-link[aria-current="page"]::after { width: 100%; }
 .mobile-nav-link[aria-current="page"] { color: var(--color-primary); font-weight: 600; }
+
+/* ═══ Вход по коду из письма (email-login.js) ═══════════════════════ */
+.svs-ec[hidden], .svs-ec-divider[hidden], .svs-ec-pw[hidden],
+.auth-divider[hidden], .acc-divider[hidden], .google-signin-wrap[hidden], .bm-ia-divider[hidden] { display: none !important; }
+.svs-ec-form { display: flex; flex-direction: column; gap: 14px; }
+.svs-ec-hint { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--color-text-muted, #6b6b6b); }
+.svs-ec-sent { margin: 0; font-size: 0.92rem; line-height: 1.5; color: var(--color-text, #1a1a1a); overflow-wrap: anywhere; }
+.svs-ec-sent strong { font-weight: 600; }
+.svs-ec-welcome { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--color-text, #1a1a1a); }
+.svs-ec-form .svs-ec-code {
+  font-size: 1.6rem; letter-spacing: 0.45em; text-align: center; font-variant-numeric: tabular-nums;
+  padding-left: 0.45em; font-weight: 600;
+}
+.svs-ec-form .svs-ec-code::placeholder { letter-spacing: 0.3em; color: rgba(107,79,160,0.35); }
+.svs-ec-form .svs-ec-primary { width: 100%; margin-top: 2px; min-height: 48px; }
+.svs-ec-row { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; }
+.svs-ec-link {
+  background: none; border: none; padding: 4px 0; cursor: pointer; font-family: inherit;
+  color: var(--color-primary, #6B4FA0); font-size: 0.88rem; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.svs-ec-link:disabled { color: var(--color-text-muted, #777); text-decoration: none; cursor: default; font-weight: 500; }
+.svs-ec-note { margin: 0; font-size: 0.8rem; line-height: 1.45; color: var(--color-text-muted, #777); }
+.svs-ec-consent { display: flex; flex-direction: column; gap: 6px; }
+.svs-ec-check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; line-height: 1.5; color: var(--color-text-muted, #666); cursor: pointer; }
+.svs-ec-check input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; accent-color: var(--color-primary, #6B4FA0); }
+.svs-ec-check a { color: var(--color-primary, #6B4FA0); }
+.svs-ec-err:empty { display: none; }
+.svs-ec-err.svs-ec-ok, .svs-ec-err.svs-ec-ok:not(:empty) { color: #1f7a4d; background: #eaf7f0; border-color: #bfe5cf; }
+.svs-ec-footer { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4px 10px; margin-top: 18px; }
+.svs-ec-footer:empty { display: none; }
+.svs-ec-footer .svs-ec-small { font-size: 0.82rem; font-weight: 500; color: var(--color-text-muted, #6b6b6b); }
+.svs-ec-footer .svs-ec-small:hover { color: var(--color-primary, #6B4FA0); }
+.svs-ec-dot { color: var(--color-text-muted, #aaa); font-size: 0.82rem; }
+.svs-ec-divider { margin: 18px 0 14px; }
+@media (max-width: 600px) { .svs-ec-form input { font-size: 16px; } .svs-ec-form .svs-ec-code { font-size: 1.5rem; } }
