@@ -39,5 +39,62 @@
     });
   }
 
+
+  // ── Группы классов и порядок ─────────────────────────────────────────────
+  // Группа нужна только для пилюль-фильтров. Берём поле group из API
+  // (/api/booking/services — по имени категории SimplyBook); если его нет —
+  // классифицируем здесь по category_names / имени услуги теми же словами.
+  // Класс НИКОГДА не скрывается из-за неизвестной категории: идёт в «Другое».
+  var API_GROUP = { Yoga: 'yoga', Spiritual: 'spirit', Dance: 'dance', Events: 'events', Other: 'other', Coworking: 'coworking' };
+  var GROUP_ORDER = ['yoga', 'spirit', 'dance', 'events', 'other'];
+  var GROUP_LABELS = {
+    yoga:   { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
+    spirit: { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές Πρακτικές' },
+    dance:  { en: 'Dance & Movement', ru: 'Танец и движение', el: 'Χορός & Κίνηση' },
+    events: { en: 'Events', ru: 'События', el: 'Εκδηλώσεις' },
+    other:  { en: 'Other', ru: 'Другое', el: 'Άλλα' }
+  };
+
+  function classifyName(name) {
+    var n = String(name || '').toLowerCase();
+    if (/coworking|коворкинг|hot\s*desk|day\s*pass/.test(n)) return 'coworking';
+    if (/\byoga\b|йог|γιόγκα/.test(n)) return 'yoga';
+    if (/dance|hip[-\s]?hop|choreo|ecstatic|movement|танц|движение|χορός/.test(n)) return 'dance';
+    if (/sound|healing|meditat|gong|reiki|breath|qigong|chi\s?kung|цигун|звук|целит|медит|дыхан|θεραπεία|διαλογ/.test(n)) return 'spirit';
+    if (/kundalini|hatha|vinyasa|aerial|hammock|гамак|spine|therapy|flow|mobility|asana|pranayama|асан/.test(n)) return 'yoga';
+    if (/event|workshop|retreat|festival|lila|лила|game|игра|событи|воркшоп|ретрит|εκδήλωσ|σεμινάριο/.test(n)) return 'events';
+    return 'other';
+  }
+
+  function groupOf(svc) {
+    if (!svc) return 'other';
+    if (svc.group && API_GROUP[svc.group]) return API_GROUP[svc.group];
+    var names = Array.isArray(svc.category_names) ? svc.category_names : [];
+    for (var i = 0; i < names.length; i++) {
+      var g = classifyName(names[i]);
+      if (g !== 'other') return g;
+    }
+    return classifyName(svc.name);
+  }
+
+  // Порядок = как отдаёт API (порядок услуг SimplyBook). Старый API без поля
+  // order сортировал по категориям — тогда сортируем сами: position, затем id.
+  function orderServices(services, apiOrder) {
+    var list = (services || []).slice();
+    if (apiOrder) return list;
+    function n(v, d) { var x = parseInt(v, 10); return isFinite(x) ? x : d; }
+    return list.sort(function (a, b) {
+      return (n(a.position, 9999) - n(b.position, 9999)) || (n(a.id, 0) - n(b.id, 0));
+    });
+  }
+
+  function groupLabel(key, lang) {
+    var l = GROUP_LABELS[key];
+    return (l && (l[lang] || l.en)) || key;
+  }
+
+  global.SvsGroups = { groupOf: groupOf, classifyName: classifyName, orderServices: orderServices,
+                       order: GROUP_ORDER, label: groupLabel };
+
   global.SvsFilter = { filterVisibleServices: filterVisibleServices };
 })(window);

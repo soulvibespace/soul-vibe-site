@@ -5,23 +5,23 @@
   <!-- Saved light/dark theme, applied before first paint -->
   <script src="/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About | Soul Vibe Space</title>
-  <meta name="description" content="Soul Vibe Space — yoga and wellness studio in Limassol, Cyprus. Meet our teachers, learn our story." />
+  <title>About us &amp; teachers | Soul Vibe Space</title>
+  <meta name="description" content="Soul Vibe Space — a 170 m² yoga and wellness studio in Limassol, Cyprus, open daily 8:00–22:00. Our story, our teachers, Ecstatic Dance, classes in nature and tips for your first visit." />
   <!-- meta:start -->
   <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Soul Vibe Space" />
-  <meta property="og:title" content="About | Soul Vibe Space" />
-  <meta property="og:description" content="Soul Vibe Space — yoga and wellness studio in Limassol, Cyprus. Meet our teachers, learn our story." />
+  <meta property="og:title" content="About us &amp; teachers | Soul Vibe Space" />
+  <meta property="og:description" content="Soul Vibe Space — a 170 m² yoga and wellness studio in Limassol, Cyprus, open daily 8:00–22:00. Our story, our teachers, Ecstatic Dance, classes in nature and tips for your first visit." />
   <meta property="og:url" content="https://soul-vibe-space.netlify.app/about" />
-  <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
+  <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/studio-entrance.webp" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="ru_RU" />
   <meta property="og:locale:alternate" content="el_GR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="About | Soul Vibe Space" />
-  <meta name="twitter:description" content="Soul Vibe Space — yoga and wellness studio in Limassol, Cyprus. Meet our teachers, learn our story." />
-  <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
+  <meta name="twitter:title" content="About us &amp; teachers | Soul Vibe Space" />
+  <meta name="twitter:description" content="Soul Vibe Space — a 170 m² yoga and wellness studio in Limassol, Cyprus, open daily 8:00–22:00. Our story, our teachers, Ecstatic Dance, classes in nature and tips for your first visit." />
+  <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/studio-entrance.webp" />
   <!-- meta:end -->
 
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -32,301 +32,301 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* ── Page ── */
-    .about-page { padding: var(--page-pt) 0 var(--page-pb); }
-    .page-eyebrow {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
+    /* ── /about — история, цифры, команда (data/instructors.json), отличия, отзывы, первый визит ── */
+    .ab-page { padding: var(--page-pt) 0 var(--page-pb); }
+    .ab-eyebrow {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px;
     }
-    .page-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-      line-height: 1.15;
+    .ab-h2 {
+      font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 400;
+      color: var(--text-primary); line-height: 1.2; margin: 0 0 12px;
     }
-    .page-lead {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 600px;
-      margin-bottom: 0;
+    .ab-lead { font-size: .97rem; color: var(--text-secondary); line-height: 1.7; max-width: 620px; margin: 0; }
+    .ab-section { padding: var(--block-gap-lg) 0 0; }
+    .ab-section-head { margin-bottom: var(--head-gap); }
+    .ab-section-head--row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .ab-link { color: var(--accent); font-weight: 600; font-size: .88rem; text-decoration: none; }
+    .ab-link:hover { text-decoration: underline; }
+
+    /* Hero */
+    .ab-hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: var(--split-gap); align-items: center; }
+    .ab-hero h1 {
+      font-family: var(--font-serif); font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 400;
+      color: var(--text-primary); line-height: 1.12; margin: 0 0 18px; text-wrap: balance;
+    }
+    .ab-hero-lead { font-size: 1.08rem; color: var(--text-primary); line-height: 1.65; margin: 0 0 14px; }
+    .ab-hero p.ab-story { font-size: .95rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 12px; }
+    .ab-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+    .ab-hero-media { position: relative; padding: 0 0 48px 0; }
+    .ab-hero-main { border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; background: var(--color-surface-offset); }
+    .ab-hero-main img, .ab-hero-inset img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ab-hero-inset {
+      position: absolute; left: -28px; bottom: 0; width: 32%; aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
+      border: 5px solid var(--bg); box-shadow: var(--shadow-lg); background: var(--color-surface-offset);
+    }
+    .ab-hero-caption {
+      position: absolute; right: 14px; bottom: 62px; background: rgba(255,255,255,.92); color: #27231b;
+      font-size: .74rem; font-weight: 600; letter-spacing: .04em; padding: 7px 12px; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 6px;
     }
 
-    /* ── Studio story section ── */
-    .about-story {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--split-gap);
-      align-items: center;
-      padding: var(--block-gap) 0;
-      border-bottom: 1px solid var(--border);
+    /* Stats */
+    .ab-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; margin-top: var(--block-gap-lg); background: var(--surface);
     }
-    .about-story-text h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-      line-height: 1.2;
+    .ab-stat { padding: 24px 20px; text-align: center; border-right: 1px solid var(--border); min-width: 0; }
+    .ab-stat:last-child { border-right: none; }
+    .ab-stat-num {
+      font-family: var(--font-serif); font-size: clamp(1.45rem, 2.4vw, 2rem); font-weight: 400;
+      color: var(--text-primary); line-height: 1.1; margin: 0 0 6px; white-space: nowrap;
     }
-    .about-story-text p {
-      font-size: .97rem;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      margin-bottom: 16px;
+    .ab-stat-label { font-size: .8rem; color: var(--text-secondary); font-weight: 500; margin: 0; }
+
+    /* Team */
+    .ab-founder {
+      display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: clamp(20px, 4vw, 48px); align-items: center;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: clamp(14px, 2vw, 20px);
+      margin-bottom: 24px;
     }
-    .about-story-text p:last-child { margin-bottom: 0; }
-    .about-story-img {
-      border-radius: 20px;
-      overflow: hidden;
-      aspect-ratio: 4/3;
+    .ab-founder .ab-tphoto { border-radius: 14px; }
+    .ab-founder-name { font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 400; color: var(--text-primary); margin: 10px 0 4px; }
+    .ab-founder-title { font-size: .9rem; color: var(--accent); font-weight: 600; margin: 0 0 14px; }
+    .ab-founder-bio { font-size: .95rem; color: var(--text-secondary); line-height: 1.7; margin: 0 0 16px; max-width: 560px; }
+    .ab-badge {
+      display: inline-block; background: var(--accent); color: #fff; font-size: 10.5px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px;
     }
-    .about-story-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .ab-team-grid { --cols: 4; --gap: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+    .ab-team-grid > * { flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); min-width: 0; }
+    .ab-tcard {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s;
+    }
+    .ab-tcard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    /* Фото — карточка-шаблон целиком (1080×1350, имя и направления на картинке): ничего не обрезаем */
+    .ab-tphoto { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: contain; background: var(--color-surface-offset); }
+    .ab-tbody { padding: 12px 16px 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 6px 12px; flex-wrap: wrap; }
+    .ab-tname { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 400; color: var(--text-primary); margin: 0; line-height: 1.25; }
+    .ab-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .ab-chip {
+      font-size: .74rem; line-height: 1.3; color: var(--text-primary); background: var(--color-primary-light);
+      border-radius: 999px; padding: 4px 10px; text-decoration: none; transition: background .2s;
+    }
+    a.ab-chip:hover { background: var(--color-primary-highlight); }
+    .ab-tlangs { font-size: .76rem; color: var(--text-secondary); margin: 0; flex-basis: 100%; order: 2; }
+    .ab-tbody .ab-link { font-size: .82rem; white-space: nowrap; }
+    .ab-team-msg { color: var(--text-secondary); padding: 24px 0; }
+    .ab-skel { background: var(--border); border-radius: 16px; aspect-ratio: 4/6; animation: abpulse 1.5s infinite; }
+    @keyframes abpulse { 0%,100% { opacity: 1 } 50% { opacity: .45 } }
+
+    /* Differences */
+    .ab-diff-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .ab-diff {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ab-diff-icon {
+      width: 42px; height: 42px; border-radius: 12px; background: var(--color-primary-light); color: var(--accent);
+      display: flex; align-items: center; justify-content: center; flex: none;
+    }
+    .ab-diff h3 { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 400; color: var(--text-primary); margin: 4px 0 0; }
+    .ab-diff p { font-size: .87rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-diff-body { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+    .ab-diff .ab-link { margin-top: auto; padding-top: 4px; font-size: .82rem; }
+
+    /* Reviews */
+    .ab-rev-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .ab-rev {
+      margin: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .ab-rev-stars { color: #d9a441; display: flex; gap: 2px; }
+    .ab-rev blockquote { margin: 0; font-size: .9rem; line-height: 1.6; color: var(--text-primary); }
+    .ab-rev figcaption { margin-top: auto; font-size: .8rem; color: var(--text-secondary); font-weight: 600; }
+
+    /* First visit */
+    .ab-fv-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .ab-fv { border-top: 2px solid var(--accent); padding: 16px 4px 0; display: flex; flex-direction: column; gap: 8px; }
+    .ab-fv-num { font-family: var(--font-serif); font-size: 1.5rem; color: var(--accent); line-height: 1; }
+    .ab-fv h3 { font-family: var(--font-serif); font-size: 1.08rem; font-weight: 400; color: var(--text-primary); margin: 0; }
+    .ab-fv p { font-size: .87rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-cta {
+      margin-top: var(--block-gap-lg); background: var(--accent); border-radius: 20px; padding: 30px 36px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .ab-cta h2 { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 400; color: #fff; margin: 0 0 6px; }
+    .ab-cta p { font-size: .9rem; color: rgba(255,255,255,.85); margin: 0; }
+
+    /* Слово основательницы — типографская цитата, без фото */
+    .ab-word { margin-top: var(--block-gap-lg); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 44px 48px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 40px; align-items: center; }
+    .ab-word blockquote { margin: 0; position: relative; padding-top: 34px; }
+    .ab-word blockquote::before { content: "\201C"; position: absolute; top: -18px; left: -4px; font-family: var(--font-serif); font-size: 5.5rem; line-height: 1; color: var(--accent); opacity: .35; }
+    .ab-word blockquote p { font-family: var(--font-serif); font-size: clamp(1.35rem, 2.3vw, 1.8rem); line-height: 1.38; color: var(--text-primary); margin: 0; text-wrap: pretty; }
+    .ab-word figcaption { margin-top: 18px; font-size: .88rem; color: var(--text-secondary); }
+    .ab-word figcaption strong { color: var(--accent); font-weight: 600; }
+    .ab-word-text p { font-size: .95rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 12px; }
+    .ab-word-text p:last-child { margin-bottom: 0; }
+
+    /* Летом — на ранчо (фото ранчо в images/ нет — типографский блок) */
+    .ab-rancho { background: linear-gradient(135deg, rgba(110,140,90,.12), rgba(110,140,90,.04)); border: 1px solid var(--border); border-radius: 20px; padding: 40px 44px; }
+    .ab-rancho .ab-section-head { max-width: 680px; }
+    .ab-rancho-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .ab-rancho-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .ab-rancho-card h3 { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 400; color: var(--text-primary); margin: 0; }
+    .ab-rancho-card p { font-size: .87rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-rancho-card .ab-link { margin-top: auto; padding-top: 4px; font-size: .85rem; }
+    .ab-rancho-tag { align-self: flex-start; font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4f6b3c; background: rgba(110,140,90,.16); border-radius: 999px; padding: 4px 10px; }
+    @media (max-width: 860px) { .ab-rancho { padding: 30px 26px; } .ab-rancho-grid { grid-template-columns: 1fr; gap: 12px; } }
+    @media (max-width: 600px) { .ab-rancho { padding: 24px 18px; border-radius: 16px; } .ab-rancho-card { padding: 16px; } }
+
+    /* Сообщество в Instagram — без встраивания постов и внешних скриптов */
+    .ab-social { margin-top: var(--block-gap-lg); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 32px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; }
+    .ab-social h2 { font-family: var(--font-serif); font-size: clamp(1.35rem, 2.4vw, 1.8rem); font-weight: 400; color: var(--text-primary); line-height: 1.25; margin: 0 0 8px; }
+    .ab-social-sub { font-size: .92rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-social-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .ab-social-actions .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; }
+    /* Мозаика: фото в родных пропорциях (flex-grow = ширина/высота) — одинаковая высота, без кропа */
+    .ab-mosaic { display: flex; gap: 8px; margin: 0; }
+    .ab-mosaic a { flex: var(--r) 1 0; min-width: 0; display: block; border-radius: 12px; overflow: hidden; background: var(--color-surface-offset); }
+    .ab-mosaic img { display: block; width: 100%; height: auto; transition: transform .3s ease; }
+    .ab-mosaic a:hover img { transform: scale(1.03); }
+    @media (max-width: 860px) { .ab-social { grid-template-columns: 1fr; gap: 20px; } }
+    @media (max-width: 600px) {
+      .ab-social { padding: 20px 18px; border-radius: 16px; }
+      .ab-mosaic { gap: 6px; } .ab-mosaic a { border-radius: 10px; }
+      .ab-social-actions .btn { flex: 1 1 auto; justify-content: center; }
     }
 
-    /* ── Stats bar ── */
-    .about-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin: var(--block-gap) 0;
-      overflow: hidden;
-    }
-    .stat-item {
-      padding: 28px 24px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-family: var(--font-serif);
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-label {
-      font-size: .8rem;
-      color: var(--text-secondary);
-      font-weight: 500;
+    /* Удобства — компактная сетка пунктов с иконками */
+    .ab-amen-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .ab-amen { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .ab-amen > svg { flex: none; width: 36px; height: 36px; padding: 8px; border-radius: 10px; background: var(--color-primary-light); color: var(--accent); }
+    .ab-amen h3 { font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--text-primary); margin: 2px 0 3px; line-height: 1.3; }
+    .ab-amen p { font-size: .8rem; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+    /* Преподавателям и практикам */
+    .ab-join { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 48px; align-items: center; background: var(--color-primary-light); border-radius: 20px; padding: 36px 40px; }
+    .ab-join-values { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .ab-join-values li { position: relative; padding-left: 26px; font-size: .95rem; color: var(--text-primary); line-height: 1.5; }
+    .ab-join-values li::before { content: ""; position: absolute; left: 0; top: .35em; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); box-shadow: inset 0 0 0 4px var(--color-primary-light); border: 2px solid var(--accent); box-sizing: border-box; }
+    .ab-join-cta { font-size: .95rem; color: var(--text-secondary); margin: 0; }
+    .ab-join .ab-social-actions { margin-top: 16px; }
+    @media (max-width: 1024px) { .ab-amen-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 860px) { .ab-amen-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ab-join { grid-template-columns: 1fr; gap: 18px; padding: 28px; } }
+    @media (max-width: 600px) {
+      .ab-amen-grid { grid-template-columns: 1fr; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 4px 14px; }
+      .ab-amen { gap: 12px; padding: 11px 0; border: 0; border-radius: 0; background: none; align-items: center; }
+      .ab-amen + .ab-amen { border-top: 1px solid var(--border); }
+      .ab-amen > svg { width: 32px; height: 32px; padding: 7px; }
+      .ab-amen h3 { font-size: .84rem; margin: 0 0 2px; }
+      .ab-amen p { font-size: .76rem; }
+      .ab-join { padding: 22px 18px; border-radius: 16px; }
     }
 
-    /* ── Team section ── */
-    .about-team-header {
-      padding: var(--block-gap) 0 var(--space-6);
-    }
-    .about-team-header h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-    }
-    .about-team-header p {
-      font-size: .97rem;
-      color: var(--text-secondary);
-      max-width: 520px;
-    }
+    /* Умное и гибкое пространство */
+    .ab-space { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--split-gap); align-items: center; }
+    .ab-space-img { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; background: var(--color-surface-offset); }
+    .ab-space-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .ab-space-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .ab-space-card h3 { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 400; color: var(--text-primary); margin: 0; }
+    .ab-space-card p { font-size: .87rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-space-card .ab-link { margin-top: auto; padding-top: 4px; font-size: .85rem; }
 
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 24px;
-      padding-bottom: var(--block-gap);
-    }
-
-    /* ── Instructor card ── */
-    .instructor-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .instructor-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,.08);
-    }
-    .instructor-photo {
-      width: 100%;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      object-position: top;
-      display: block;
-      background: var(--surface-alt, #f3f0eb);
-    }
-    .instructor-photo-placeholder {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: linear-gradient(160deg, var(--surface-alt,#f3f0eb) 0%, var(--border) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .instructor-photo-placeholder svg { opacity: .25; }
-    .instructor-body {
-      padding: 16px 18px 18px;
-    }
-    .instructor-name {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-    .instructor-specialty {
-      font-size: .8rem;
-      color: var(--accent);
-      font-weight: 500;
-      letter-spacing: .04em;
-    }
-
-    /* ── Skeleton ── */
-    .team-skeleton {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 24px;
-      padding-bottom: var(--block-gap);
-    }
-    .skel-instructor {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-    .skel-photo {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--border);
-      animation: skelpulse 1.5s infinite;
-    }
-    .skel-inst-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
-    .skel-iline {
-      height: 11px;
-      border-radius: 6px;
-      background: var(--border);
-      animation: skelpulse 1.5s infinite;
-    }
-    @keyframes skelpulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .45; }
-    }
-
-    /* ── Values section ── */
-    .about-values {
-      border-top: 1px solid var(--border);
-      padding: var(--block-gap) 0;
-    }
-    .about-values h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: var(--head-gap);
-    }
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-    .value-card {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .value-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--surface-alt, #f3f0eb);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent);
-    }
-    .value-title {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--text-primary);
-    }
-    .value-text {
-      font-size: .88rem;
-      color: var(--text-secondary);
-      line-height: 1.65;
-    }
-
-    /* ── CTA banner ── */
-    .about-cta-band {
-      background: var(--accent);
-      border-radius: 20px;
-      padding: 32px 36px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: var(--block-gap);
-      flex-wrap: wrap;
-    }
-    .about-cta-band h3 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-      font-weight: 400;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    .about-cta-band p {
-      font-size: .9rem;
-      color: rgba(255,255,255,.8);
-    }
-    .about-cta-band .btn-white {
-      background: #fff;
-      color: var(--accent);
-      border: none;
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-family: var(--font-sans);
-      font-size: .88rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      text-decoration: none;
-      display: inline-block;
-      transition: opacity .2s;
-    }
-    .about-cta-band .btn-white:hover { opacity: .9; }
-
-    @media (max-width: 900px) {
-      .about-story { grid-template-columns: 1fr; gap: 32px; }
-      .about-story-img { order: -1; }
-      .about-stats { grid-template-columns: repeat(2, 1fr); }
-      .about-stats .stat-item:nth-child(2) { border-right: none; }
-      .about-stats .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
-      .about-stats .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
-      .values-grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 860px) {
+      .ab-word { grid-template-columns: 1fr; gap: 20px; padding: 32px 28px; }
+      .ab-space { grid-template-columns: 1fr; gap: 20px; }
+      .ab-space-media { max-width: 420px; }
     }
     @media (max-width: 600px) {
-      .about-page { padding: var(--page-pt) 0 var(--page-pb); }
-      .about-stats { grid-template-columns: repeat(2, 1fr); }
-      .values-grid { grid-template-columns: 1fr; }
-      .about-cta-band { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
-      .team-grid, .team-skeleton { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .ab-word { padding: 26px 20px; border-radius: 16px; }
+      .ab-word blockquote { padding-top: 26px; }
+      .ab-word blockquote::before { font-size: 4.4rem; top: -14px; }
+      .ab-word blockquote p { font-size: 1.28rem; }
+      .ab-word-text p { font-size: .9rem; line-height: 1.65; }
+      .ab-space-cards { grid-template-columns: 1fr; gap: 12px; }
+      .ab-space-card { padding: 16px; }
+      .ab-space-media { max-width: none; }
+      .ab-space-img { aspect-ratio: 4/3; border-radius: 16px; }
     }
-  </style>  <link rel="stylesheet" href="/compact.css" />
+
+    @media (max-width: 1024px) {
+      .ab-team-grid { --cols: 3; }
+      .ab-diff-grid, .ab-rev-grid, .ab-fv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .ab-hero { grid-template-columns: 1fr; gap: 20px; }
+      .ab-hero-media { order: -1; padding: 0; }
+      .ab-hero-main { aspect-ratio: 16/9; border-radius: 16px; }
+      .ab-hero-inset { display: none; }
+      .ab-hero-caption { bottom: 12px; right: 12px; }
+      .ab-stats { grid-template-columns: repeat(2, 1fr); }
+      .ab-stat:nth-child(2) { border-right: none; }
+      .ab-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
+      .ab-founder { grid-template-columns: minmax(0, 220px) 1fr; }
+    }
+    @media (max-width: 600px) {
+      /* Телефон: карточки-шаблоны целиком, по одной крупной — лента с прокруткой (как .team-grid в compact.css), чтобы текст на карточке читался */
+      .ab-team-grid {
+        --gap: 12px; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; overflow-y: hidden;
+        scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; margin-inline: -1rem; padding: 0 1rem 6px;
+        overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      }
+      .ab-team-grid::-webkit-scrollbar { display: none; }
+      .ab-team-grid > * { flex: 0 0 82%; scroll-snap-align: start; }
+      .ab-tbody { padding: 10px 14px 12px; }
+      .ab-tname { font-size: .95rem; }
+      .ab-chip { font-size: .7rem; padding: 3px 8px; }
+      .ab-founder { grid-template-columns: 1fr; padding: 12px; }
+      .ab-founder-body { padding: 0 4px 6px; }
+      .ab-diff-grid, .ab-rev-grid, .ab-fv-grid { grid-template-columns: 1fr; gap: 12px; }
+      .ab-diff { flex-direction: row; flex-wrap: wrap; align-items: flex-start; padding: 16px; gap: 6px 14px; }
+      .ab-diff > div:not(.ab-diff-icon) { flex: 1; min-width: 0; }
+      .ab-diff h3 { margin: 0 0 4px; }
+      .ab-stat { padding: 18px 10px; }
+      .ab-hero h1 { font-size: 1.85rem; margin-bottom: 12px; }
+      .ab-hero-lead { font-size: 1rem; }
+      .ab-hero p.ab-story { font-size: .9rem; line-height: 1.65; }
+      .ab-hero-actions { margin-top: 16px; gap: 10px; }
+      .ab-hero-actions .btn { flex: 1 1 auto; justify-content: center; padding: 12px 18px; }
+      .ab-cta { padding: 26px 22px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+  <!-- Организация и основательница — только публичные поля (имя, должность, фото с этой страницы). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://soul-vibe-space.netlify.app/#organization",
+    "name": "Soul Vibe Space",
+    "legalName": "Soul Vibe Space LTD",
+    "url": "https://soul-vibe-space.netlify.app/",
+    "logo": "https://soul-vibe-space.netlify.app/images/logo.png",
+    "image": "https://soul-vibe-space.netlify.app/images/studio-entrance.webp",
+    "description": "Yoga and wellness studio in Limassol, Cyprus: yoga, meditation, qigong, sound healing and Ecstatic Dance.",
+    "email": "soulvibespace@gmail.com",
+    "telephone": "+35795642888",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "50 Agias Zonis",
+      "addressLocality": "Limassol",
+      "postalCode": "3090",
+      "addressCountry": "CY"
+    },
+    "sameAs": [
+      "https://www.instagram.com/soul.vibe.space_cyprus",
+      "https://www.tiktok.com/@soul.vibe.space.y"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Larisa",
+      "jobTitle": "Founder & Teacher",
+      "image": "https://soul-vibe-space.netlify.app/images/team/larisa.webp",
+      "knowsAbout": ["Kundalini Yoga", "Sound Healing", "Ecstatic Dance", "Energy Breathing"]
+    }
+  }
+  </script>
+  <link rel="stylesheet" href="/compact.css" />
 </head>
 <body>
 
@@ -396,103 +396,269 @@
   </header>
 
   <!-- ═══ ABOUT PAGE ═══ -->
-  <main class="about-page">
+  <main class="ab-page">
     <div class="container">
 
-      <!-- Hero header -->
-      <p class="page-eyebrow" data-i18n="about_eyebrow">Who we are</p>
-      <h1 class="page-title" data-i18n="about_title_full">About Soul Vibe Space</h1>
-      <p class="page-lead" data-i18n="about_p1">Soul Vibe Space is a yoga and wellness studio in Limassol offering yoga classes, meditation, ecstatic dance and sound healing.</p>
-
-      <!-- Story section -->
-      <div class="about-story">
-        <div class="about-story-text">
-          <h2 data-i18n="about_story_title">A space born from intention</h2>
-          <p data-i18n="about_story_p1">We created Soul Vibe Space as a response to the need for a truly multifunctional wellness space in Limassol — a place that brings together diverse practices, teachers, and communities under one roof.</p>
-          <p data-i18n="about_story_p2">From gentle morning yoga to ecstatic dance, from sound healing sessions to mindful co-working — everything at Soul Vibe Space is designed to help you feel more present, connected, and alive.</p>
-          <p data-i18n="about_story_p3">Located at 50 Agias Zonis, Limassol, our studio holds classes every day from 8 am to 10 pm. We welcome beginners and experienced practitioners alike.</p>
-        </div>
-        <div class="about-story-img">
-          <img src="images/studio-entrance.webp"
-               onerror="this.parentNode.style.background='linear-gradient(135deg,#f3f0eb,#e5e0d8)';this.style.display='none'"
-               alt="Soul Vibe Space studio interior"
-               srcset="images/studio-entrance.webp 700w, images/studio-entrance.webp 350w"
-               sizes="(max-width:768px) 100vw, 50vw" loading="lazy"/>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="about-stats">
-        <div class="stat-item">
-          <p class="stat-num" data-i18n="about_badge_num">500+</p>
-          <p class="stat-label" data-i18n="stat_practitioners">Happy practitioners</p>
-        </div>
-        <div class="stat-item">
-          <p class="stat-num" data-i18n="stat_classes_num">7</p>
-          <p class="stat-label" data-i18n="stat_classes_label">Days a week</p>
-        </div>
-        <div class="stat-item">
-          <p class="stat-num" data-i18n="stat_teachers_num">19</p>
-          <p class="stat-label" data-i18n="stat_teachers_label">Teachers</p>
-        </div>
-        <div class="stat-item">
-          <p class="stat-num" data-i18n="stat_since_num">2022</p>
-          <p class="stat-label" data-i18n="stat_since_label">Founded</p>
-        </div>
-      </div>
-
-      <!-- Team -->
-      <div class="about-team-header">
-        <p class="page-eyebrow" data-i18n="team_eyebrow">Our teachers</p>
-        <h2 data-i18n="team_title">Meet the instructors</h2>
-        <p data-i18n="team_lead">Our team of experienced practitioners brings heart, expertise and dedication to every class.</p>
-      </div>
-
-      <div class="team-skeleton" id="teamSkeleton">
-        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
-        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
-        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
-        <div class="skel-instructor"><div class="skel-photo"></div><div class="skel-inst-body"><div class="skel-iline" style="width:70%"></div><div class="skel-iline" style="width:45%"></div></div></div>
-      </div>
-
-      <div id="teamContainer"></div>
-
-      <!-- Values -->
-      <div class="about-values">
-        <h2 data-i18n="about_values_title">What we stand for</h2>
-        <div class="values-grid">
-          <div class="value-card">
-            <div class="value-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z"/><path d="M12 6v6l4 2"/></svg>
-            </div>
-            <h3 class="value-title" data-i18n="value1_title">Daily practice</h3>
-            <p class="value-text" data-i18n="value1_text">We believe wellness is a daily commitment, not a weekend luxury. That's why we're open 7 days a week with a rich schedule of classes for every level.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h3 class="value-title" data-i18n="value2_title">Community first</h3>
-            <p class="value-text" data-i18n="value2_text">A studio is only as vibrant as its people. We cultivate a warm, inclusive community where every practitioner — from beginner to advanced — feels at home.</p>
-          </div>
-          <div class="value-card">
-            <div class="value-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <h3 class="value-title" data-i18n="value3_title">Intentional space</h3>
-            <p class="value-text" data-i18n="value3_text">Every detail of our studio — from the lighting to the layout — is designed to support your practice, creativity, and inner calm.</p>
+      <!-- (a) История пространства -->
+      <section class="ab-hero" aria-labelledby="abTitle">
+        <div class="ab-hero-text">
+          <p class="ab-eyebrow" data-i18n="ab_eyebrow">About us</p>
+          <h1 id="abTitle" data-i18n="ab_h1">A home for practice, sound and community in Limassol</h1>
+          <p class="ab-hero-lead" data-i18n="ab_lead">We created Soul Vibe Space as a truly multifunctional wellness space in Limassol — one home for many practices, teachers and communities.</p>
+          <p class="ab-story" data-i18n="ab_story_p1">From gentle morning yoga to Ecstatic Dance, from sound healing and qigong to mindful co-working — every class here is designed to help you feel more present, connected and alive.</p>
+          <p class="ab-story" data-i18n="ab_story_p2">The studio is open every day from 8:00 to 22:00. Beginners and experienced practitioners are equally welcome — we will help you find a practice that suits you.</p>
+          <div class="ab-hero-actions">
+            <a href="/schedule" class="btn btn-primary" data-i18n="ab_btn_book">Book a class</a>
+            <a href="#team" class="btn btn-outline" data-i18n="ab_btn_team">Meet the team</a>
           </div>
         </div>
+        <div class="ab-hero-media">
+          <div class="ab-hero-main">
+            <img src="/images/studio-entrance.webp" width="1400" height="1050" alt="Soul Vibe Space studio entrance, 50 Agias Zonis, Limassol" fetchpriority="high" />
+          </div>
+          <div class="ab-hero-inset">
+            <img src="/images/rental-room-mirror.webp" width="800" height="1000" alt="Yoga hall at Soul Vibe Space" loading="lazy" />
+          </div>
+          <span class="ab-hero-caption">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-i18n="ab_photo_caption">50 Agias Zonis, Limassol</span>
+          </span>
+        </div>
+      </section>
+
+      <!-- (b) Цифры -->
+      <div class="ab-stats">
+        <div class="ab-stat"><p class="ab-stat-num" data-i18n="ab_stat1_num">170 m²</p><p class="ab-stat-label" data-i18n="ab_stat1_label">over two floors</p></div>
+        <div class="ab-stat"><p class="ab-stat-num" data-i18n="ab_stat2_num">8:00–22:00</p><p class="ab-stat-label" data-i18n="ab_stat2_label">classes every day</p></div>
+        <div class="ab-stat"><p class="ab-stat-num" data-i18n="ab_stat3_num">RU · EN · EL</p><p class="ab-stat-label" data-i18n="ab_stat3_label">3 languages of our community</p></div>
+        <!-- Число преподавателей — активные из data/instructors.json -->
+        <div class="ab-stat" id="abStatTeachers"><p class="ab-stat-num" id="abTeachersNum">&nbsp;</p><p class="ab-stat-label" id="abTeachersLabel">teachers in the team</p></div>
       </div>
 
-      <!-- CTA band -->
-      <div class="about-cta-band">
+      <!-- Слово основательницы (из интервью с Ларисой) -->
+      <figure class="ab-word" aria-labelledby="abWordTitle">
         <div>
-          <h3 data-i18n="about_cta_band_title">Ready to join us?</h3>
-          <p data-i18n="about_cta_band_sub">Book your first class today — no experience needed.</p>
+          <p class="ab-eyebrow" id="abWordTitle" data-i18n="ab_word_eyebrow">A word from our founder</p>
+          <blockquote><p data-i18n="ab_word_quote">Soul Vibe Space is more than a place to practise. It is a community where everyone can feel part of something bigger.</p></blockquote>
+          <figcaption><strong data-i18n="ab_word_name">Larisa</strong>, <span data-i18n="ab_word_role">founder of Soul Vibe Space</span></figcaption>
         </div>
-        <button class="btn-white" onclick="ClassModal.open(null,null,null)" data-i18n="btn_book_now">Book a class</button>
-      </div>
+        <div class="ab-word-text">
+          <p data-i18n="ab_word_p1">After the pandemic and long months of remote work, many people miss real, face-to-face connection.</p>
+          <p data-i18n="ab_word_p2">Larisa created Soul Vibe Space as a place for live communication and sharing experience, where everyone feels part of the community. The studio’s aim is to help you build inner confidence and balance.</p>
+        </div>
+      </figure>
+
+      <!-- (c) Команда -->
+      <section class="ab-section" id="team" aria-labelledby="abTeamTitle">
+        <div class="ab-section-head">
+          <p class="ab-eyebrow" data-i18n="ab_team_eyebrow">Our team</p>
+          <h2 class="ab-h2" id="abTeamTitle" data-i18n="ab_team_title">The teachers of Soul Vibe Space</h2>
+          <p class="ab-lead" data-i18n="ab_team_lead">All our teachers are certified — attentive and caring professionals. Each teacher brings their own path and practice. Find the one that resonates with you — and see when they teach in the schedule.</p>
+        </div>
+        <div id="abTeam" aria-live="polite">
+          <div class="ab-team-grid"><div class="ab-skel"></div><div class="ab-skel"></div><div class="ab-skel"></div><div class="ab-skel"></div></div>
+        </div>
+      </section>
+
+      <!-- (d) Чем мы отличаемся -->
+      <section class="ab-section" aria-labelledby="abDiffTitle">
+        <div class="ab-section-head">
+          <p class="ab-eyebrow" data-i18n="ab_diff_eyebrow">What makes us different</p>
+          <h2 class="ab-h2" id="abDiffTitle" data-i18n="ab_diff_title">More than a yoga studio</h2>
+        </div>
+        <div class="ab-diff-grid">
+          <article class="ab-diff">
+            <div class="ab-diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div>
+            <div class="ab-diff-body">
+              <h3 data-i18n="ab_diff1_title">Multilingual community</h3>
+              <p data-i18n="ab_diff1_text">Russian, English and Greek speakers practise side by side. The language of each class is shown in the schedule.</p>
+              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+            </div>
+          </article>
+          <article class="ab-diff">
+            <div class="ab-diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+            <div class="ab-diff-body">
+              <h3 data-i18n="ab_diff2_title">Ecstatic Dance</h3>
+              <p data-i18n="ab_diff2_text">Free movement to a live DJ set — no steps to learn, just you, the music and the people around you.</p>
+              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+            </div>
+          </article>
+          <article class="ab-diff">
+            <div class="ab-diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12"/><path d="M5 12a7 7 0 0 1 14 0z"/><path d="M3 22h18"/><circle cx="18" cy="5" r="2"/></svg></div>
+            <div class="ab-diff-body">
+              <h3 data-i18n="ab_diff3_title">Classes in nature</h3>
+              <p data-i18n="ab_diff3_text">Yoga, meditation and Ecstatic Dance under the open sky at Rancho Meadow Paradise.</p>
+              <a class="ab-link" href="#rancho" data-i18n="ab_diff3_link">Summers at the ranch →</a>
+            </div>
+          </article>
+          <article class="ab-diff">
+            <div class="ab-diff-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div class="ab-diff-body">
+              <h3 data-i18n="ab_diff4_title">VIBES programme</h3>
+              <p data-i18n="ab_diff4_text">Our studio currency: pay for classes with VIBES and collect bonus VIBES for bringing a friend, a review and your birthday.</p>
+              <a class="ab-link" href="/vibes" data-i18n="ab_diff4_link">How VIBES work →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Летом — на Ранчо Meadow Paradise -->
+      <section class="ab-section" id="rancho" aria-labelledby="abRanchoTitle">
+        <div class="ab-rancho">
+          <div class="ab-section-head">
+            <p class="ab-eyebrow" data-i18n="ab_rancho_eyebrow">Summer season</p>
+            <h2 class="ab-h2" id="abRanchoTitle" data-i18n="ab_rancho_title">Summers at Rancho Meadow Paradise</h2>
+            <p class="ab-lead" data-i18n="ab_rancho_lead">In the summer season, practices that are already much loved in Cyprus take place at Rancho Meadow Paradise.</p>
+          </div>
+          <div class="ab-rancho-grid">
+            <article class="ab-rancho-card">
+              <span class="ab-rancho-tag" data-i18n="ab_rancho_tag">Open air</span>
+              <h3 data-i18n="ab_rancho1_title">Kundalini Yoga &amp; Gong at the Ranch</h3>
+              <p data-i18n="ab_rancho1_text">Kundalini Yoga and gong meditation under the open sky.</p>
+              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+            </article>
+            <article class="ab-rancho-card">
+              <span class="ab-rancho-tag" data-i18n="ab_rancho_tag">Open air</span>
+              <h3 data-i18n="ab_rancho2_title">Hatha Yoga at the Ranch</h3>
+              <p data-i18n="ab_rancho2_text">A calm Hatha practice in the fresh air, surrounded by nature.</p>
+              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+            </article>
+            <article class="ab-rancho-card">
+              <span class="ab-rancho-tag" data-i18n="ab_rancho_tag">Open air</span>
+              <h3 data-i18n="ab_rancho3_title">Ecstatic Dance</h3>
+              <p data-i18n="ab_rancho3_text">Free movement to a live DJ set in the open air.</p>
+              <a class="ab-link" href="https://ecstatic.soulvibespace.com" target="_blank" rel="noopener" data-i18n="ab_rancho3_link">About Ecstatic Dance →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Умное и гибкое пространство -->
+      <section class="ab-section" aria-labelledby="abSpaceTitle">
+        <div class="ab-space">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_space_eyebrow">The space</p>
+            <h2 class="ab-h2" id="abSpaceTitle" data-i18n="ab_space_title">A smart, flexible space</h2>
+            <p class="ab-lead" data-i18n="ab_space_lead">Yoga studio, co-working and rental — all in one place. The space adapts to the format: from dance classes and workshops to board games and corporate meetings.</p>
+            <div class="ab-space-cards">
+              <article class="ab-space-card">
+                <h3 data-i18n="ab_space_rent_title">Rental for teachers and organisers</h3>
+                <!-- Вместимость — по data/rental.json: залы 10–20 и 10–15, всё пространство — до 50 -->
+                <p data-i18n="ab_space_rent_text">Halls for groups of up to 20 people; the whole space hosts up to 50 guests.</p>
+                <a class="ab-link" href="/rental" data-i18n="ab_space_rent_link">About rental →</a>
+              </article>
+              <article class="ab-space-card">
+                <h3 data-i18n="ab_space_cw_title">Co-working</h3>
+                <p data-i18n="ab_space_cw_text">A calm place to work, rest and connect between classes.</p>
+                <a class="ab-link" href="/space" data-i18n="ab_space_cw_link">About co-working →</a>
+              </article>
+            </div>
+          </div>
+          <div class="ab-space-media">
+            <img class="ab-space-img" id="abSpaceImg" src="/images/rental-room-mirror.webp" width="800" height="1000" loading="lazy" decoding="async" alt="Mirror hall at Soul Vibe Space, Limassol" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Удобства (кратко; подробности — на /space; площади — по data/rental.json) -->
+      <section class="ab-section" id="amenities" aria-labelledby="abAmenTitle">
+        <div class="ab-section-head ab-section-head--row">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_amen_eyebrow">Facilities</p>
+            <h2 class="ab-h2" id="abAmenTitle" data-i18n="ab_amen_title">Everything for a comfortable practice</h2>
+          </div>
+          <a class="ab-link" href="/space" data-i18n="ab_amen_link">More about the space →</a>
+        </div>
+        <ul class="ab-amen-grid">
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="8" height="16" rx="1.5"/><rect x="13" y="4" width="8" height="16" rx="1.5"/></svg><div><h3 data-i18n="ab_amen1_t">Two bright halls</h3><p data-i18n="ab_amen1_d">Mirror hall — 35 m², White hall — 35 m²</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg><div><h3 data-i18n="ab_amen2_t">Open space, 100 m²</h3><p data-i18n="ab_amen2_d">Ground floor for work, meetings and small groups — co-working</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M7 16c-1.5-2 1.5-4 0-6s1.5-4 0-6"/><path d="M12 16c-1.5-2 1.5-4 0-6s1.5-4 0-6"/><path d="M17 16c-1.5-2 1.5-4 0-6s1.5-4 0-6"/></svg><div><h3 data-i18n="ab_amen3_t">Underfloor heating</h3><p data-i18n="ab_amen3_d">Comfortable practice in any season</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h7"/></svg><div><h3 data-i18n="ab_amen4_t">Clean air</h3><p data-i18n="ab_amen4_d">Air purifiers and ionisers in the halls</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><div><h3 data-i18n="ab_amen5_t">Adjustable lighting</h3><p data-i18n="ab_amen5_d">From bright to soft, to suit the practice</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V8a4 4 0 0 1 8 0"/><path d="M9 11h6"/><path d="M10 15v.01M13 15v.01M16 15v.01M11 18v.01M14 18v.01"/></svg><div><h3 data-i18n="ab_amen6_t">Showers & changing rooms</h3><p data-i18n="ab_amen6_d">Shower cabins, men’s and women’s changing rooms</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M12 3v18"/><path d="M9 10v2M15 10v2"/></svg><div><h3 data-i18n="ab_amen7_t">Lockers</h3><p data-i18n="ab_amen7_d">For your personal belongings</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="6" rx="3"/><path d="M7 9v6M17 9v6"/></svg><div><h3 data-i18n="ab_amen8_t">Props</h3><p data-i18n="ab_amen8_d">Mats, bolsters, blocks and blankets — always fresh</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M17 10h1.5a2 2 0 0 1 0 4H17"/><path d="M8 3c0 1-1 1-1 2M12 3c0 1-1 1-1 2"/></svg><div><h3 data-i18n="ab_amen9_t">Coffee point</h3><p data-i18n="ab_amen9_d">Plus healthy snacks for guests</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z"/><path d="M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z"/></svg><div><h3 data-i18n="ab_amen10_t">Cleanliness</h3><p data-i18n="ab_amen10_d">Regular antibacterial cleaning</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><div><h3 data-i18n="ab_amen11_t">Central Limassol</h3><p data-i18n="ab_amen11_d">50 Agias Zonis</p></div></li>
+          <li class="ab-amen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg><div><h3 data-i18n="ab_amen12_t">Licensed</h3><p data-i18n="ab_amen12_d">A licensed yoga studio</p></div></li>
+        </ul>
+      </section>
+
+      <!-- Преподавателям и практикам -->
+      <section class="ab-section" aria-labelledby="abJoinTitle">
+        <div class="ab-join">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_join_eyebrow">Join us</p>
+            <h2 class="ab-h2" id="abJoinTitle" data-i18n="ab_join_title">For teachers and practitioners</h2>
+            <p class="ab-lead" data-i18n="ab_join_p1">We are always glad to meet certified teachers and practitioners who share our values:</p>
+          </div>
+          <div>
+            <ul class="ab-join-values">
+              <li data-i18n="ab_join_v1">Professionalism and mindfulness</li>
+              <li data-i18n="ab_join_v2">Kindness and a sense of community</li>
+              <li data-i18n="ab_join_v3">Growth for both teachers and students</li>
+            </ul>
+            <p class="ab-join-cta" data-i18n="ab_join_p2">If this resonates with you, write to us.</p>
+            <div class="ab-social-actions">
+              <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span data-i18n="ab_join_wa">Message us on WhatsApp</span></a>
+              <a href="/rental" class="btn btn-outline" data-i18n="ab_join_rent">Hall rental</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- (e) Отзывы (data/reviews.json, цитаты как есть) -->
+      <section class="ab-section" aria-labelledby="abRevTitle" id="abReviewsSection">
+        <div class="ab-section-head ab-section-head--row">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_rev_eyebrow">Reviews</p>
+            <h2 class="ab-h2" id="abRevTitle" data-i18n="ab_rev_title">What our guests say</h2>
+          </div>
+          <a class="ab-link" href="/reviews" data-i18n="ab_rev_all">All reviews →</a>
+        </div>
+        <div class="ab-rev-grid" id="abReviews"></div>
+      </section>
+
+      <!-- (f) Первый визит -->
+      <section class="ab-section" aria-labelledby="abFvTitle">
+        <div class="ab-section-head">
+          <p class="ab-eyebrow" data-i18n="ab_fv_eyebrow">Your first visit</p>
+          <h2 class="ab-h2" id="abFvTitle" data-i18n="ab_fv_title">Coming for the first time?</h2>
+        </div>
+        <div class="ab-fv-grid">
+          <div class="ab-fv"><span class="ab-fv-num">01</span><h3 data-i18n="ab_fv1_title">What to bring</h3><p data-i18n="ab_fv1_text">Comfortable clothes and a bottle of water. Mats, blocks and straps are provided at the studio.</p></div>
+          <div class="ab-fv"><span class="ab-fv-num">02</span><h3 data-i18n="ab_fv2_title">Arrive 5–10 minutes early</h3><p data-i18n="ab_fv2_text">Time to meet the teacher, change and settle in calmly before the class begins.</p></div>
+          <div class="ab-fv"><span class="ab-fv-num">03</span><h3 data-i18n="ab_fv3_title">Starter Pack for new clients</h3><p data-i18n="ab_fv3_text">A one-time offer for your first classes — from %%SP1.price%%.</p><a class="ab-link" href="/pricing" data-i18n="ab_fv3_link">See prices →</a></div>
+          <div class="ab-fv"><span class="ab-fv-num">04</span><h3 data-i18n="ab_fv4_title">Where to find us</h3><p data-i18n="ab_fv4_text">50 Agias Zonis, Limassol 3090, Cyprus.</p><a class="ab-link" href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" data-i18n="ab_fv4_link">Open in maps →</a></div>
+        </div>
+
+        <!-- Сообщество в Instagram (без встраивания постов) -->
+        <div class="ab-social" aria-labelledby="abSocialTitle">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_social_eyebrow">Community on Instagram</p>
+            <h2 id="abSocialTitle" data-i18n="ab_social_title">More than 3,500 people follow life at the studio</h2>
+            <p class="ab-social-sub" data-i18n="ab_social_sub">Schedule updates, events, Ecstatic Dance and moments from our classes.</p>
+            <div class="ab-social-actions">
+              <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg><span data-i18n="ab_social_ig">Open Instagram</span></a>
+              <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="btn btn-outline"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg><span>TikTok</span></a>
+            </div>
+          </div>
+          <div class="ab-mosaic">
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" style="--r:1.3393" tabindex="-1" aria-hidden="true"><img src="/images/sound-healing-900.webp" width="900" height="672" loading="lazy" decoding="async" alt="" /></a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" style="--r:1.0000" tabindex="-1" aria-hidden="true"><img src="/images/coworking.webp" width="1024" height="1024" loading="lazy" decoding="async" alt="" /></a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus/" target="_blank" rel="noopener" style="--r:0.8011" tabindex="-1" aria-hidden="true"><img src="/images/rental-room-white.webp" width="435" height="543" loading="lazy" decoding="async" alt="" /></a>
+          </div>
+        </div>
+
+        <div class="ab-cta">
+          <div>
+            <h2 data-i18n="ab_cta_title">Ready for your first class?</h2>
+            <p data-i18n="ab_cta_sub">Choose a class in the schedule and book your place in a few taps.</p>
+          </div>
+          <a href="/schedule" class="btn btn-white" data-i18n="ab_btn_book">Book a class</a>
+        </div>
+      </section>
 
     </div>
   </main>
@@ -579,6 +745,7 @@
     </div>
   </div>
 
+  <script src="i18n-about.js"></script>
   <script src="i18n.js"></script>
   <script src="services-filter.js"></script>
   <script defer src="pay-plan.js"></script>
@@ -588,104 +755,123 @@
 
   <script>
   (() => {
-    const API_BASE = window.SVS_API_BASE || 'https://soul-vibe-api.onrender.com';
-    const SB_CDN   = 'https://simplybook.me';
+    // Команда — из data/instructors.json (не SimplyBook: там вместо людей роли вроде «Hatha Yoga (rus)»).
+    // Фильтра расписания по преподавателю через URL пока нет — ссылки ведут на /schedule.
+    const SCHEDULE_URL = '/schedule';
+    // Отзывы на /about: цитаты из data/reviews.json как есть (по id).
+    const REVIEW_IDS = ['280082', '379889', '383633', '340362'];
 
-    const SKIP_IDS = new Set([10]); // SoulVibeSpace LTD technical account
+    let TEAM = null, REVIEWS = null;
+    const lang = () => (window.SVS_I18N ? SVS_I18N.getLang() : 'en');
+    const t = (k) => (window.SVS_I18N ? SVS_I18N.t(k) : k);
+    const tr = (f) => (f ? (f[lang()] || f.en || '') : '');
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-    function photoURL(inst) {
-      const p = inst.picture_path || inst.picture || '';
-      if (!p) return null;
-      if (p.startsWith('http')) return p;
-      // Instructor preview path
-      return SB_CDN + '/uploads/soulvibespace/image_files/preview/' + p.replace(/^.*\//, '');
+    function plural(n) {
+      if (lang() === 'ru') {
+        const m10 = n % 10, m100 = n % 100;
+        if (m10 === 1 && m100 !== 11) return 'one';
+        if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'few';
+        return 'many';
+      }
+      return n === 1 ? 'one' : 'many';
     }
 
-    function renderTeam(instructors) {
-      const container = document.getElementById('teamContainer');
-      const skel = document.getElementById('teamSkeleton');
-      if (!container) {
-        console.error('[about] #teamContainer is missing from the page — team section cannot render');
-        if (skel) skel.remove();
-        return;
-      }
-      if (skel) skel.remove();
+    function chips(p) {
+      return '<ul class="ab-chips">' + (p.styles || []).map(s =>
+        `<li><a class="ab-chip" href="${SCHEDULE_URL}">${esc(tr(s))}</a></li>`).join('') + '</ul>';
+    }
+    function langsLine(p) {
+      return (p.languages && p.languages.length)
+        ? `<p class="ab-tlangs">${esc(t('ab_team_langs'))}: ${esc(p.languages.join(' · '))}</p>` : '';
+    }
+    function photo(p, eager) {
+      // alt: имя и направления — на картинке они написаны, дублируем для доступности и поиска
+      const alt = [tr(p.name), (p.styles || []).map(tr).join(', ')].filter(Boolean).join(' — ');
+      return `<img class="ab-tphoto" src="${esc(p.photo)}" width="1080" height="1350" alt="${esc(alt)}"${eager ? '' : ' loading="lazy"'} />`;
+    }
 
-      const visible = instructors.filter(i => !SKIP_IDS.has(Number(i.id)));
-
-      if (!visible.length) {
-        container.innerHTML = '<p style="color:var(--text-secondary);padding:32px 0">No instructors found.</p>';
-        return;
-      }
-
-      const grid = document.createElement('div');
-      grid.className = 'team-grid';
-      grid.innerHTML = visible.map(inst => {
-        const photo = photoURL(inst);
-        const imgHTML = photo
-          ? `<img class="instructor-photo lazy" data-src="${escapeHtml(photo)}" alt="${escapeHtml(inst.name)}" loading="lazy" />`
-          : INSTRUCTOR_PLACEHOLDER;
-
-        return `<div class="instructor-card">
-          ${imgHTML}
-          <div class="instructor-body">
-            <p class="instructor-name">${escapeHtml(inst.name)}</p>
-            ${inst.position ? `<p class="instructor-specialty">${escapeHtml(inst.position)}</p>` : ''}
+    function renderTeam() {
+      const box = document.getElementById('abTeam');
+      if (!box || !TEAM) return;
+      const list = TEAM.filter(p => p.active !== false)
+        .sort((a, b) => (a.role === 'founder' ? -1 : 0) - (b.role === 'founder' ? -1 : 0) || (a.order || 99) - (b.order || 99));
+      const founder = list.find(p => p.role === 'founder');
+      const rest = list.filter(p => p !== founder);
+      let html = '';
+      if (founder) {
+        html += `<article class="ab-founder">
+          ${photo(founder, false)}
+          <div class="ab-founder-body">
+            <span class="ab-badge">${esc(t('ab_founder_badge'))}</span>
+            <h3 class="ab-founder-name">${esc(tr(founder.name))}</h3>
+            ${founder.title ? `<p class="ab-founder-title">${esc(tr(founder.title))}</p>` : ''}
+            ${founder.bio ? `<p class="ab-founder-bio">${esc(tr(founder.bio))}</p>` : ''}
+            ${chips(founder)}
+            ${langsLine(founder)}
+            <p style="margin:18px 0 0"><a class="btn btn-primary btn-sm" href="${SCHEDULE_URL}">${esc(t('ab_team_schedule').replace(/\s*→$/, ''))}</a></p>
           </div>
-        </div>`;
-      }).join('');
-
-      container.appendChild(grid);
-
-      // Lazy load. The broken-image fallback lives here rather than in an inline
-      // onerror attribute, where the quoting silently collapsed and threw.
-      const lazyImgs = grid.querySelectorAll('img.lazy');
-
-      lazyImgs.forEach(img => {
-        img.addEventListener('error', () => {
-          const holder = img.parentNode;
-          if (holder) holder.innerHTML = INSTRUCTOR_PLACEHOLDER;
-        }, { once: true });
-      });
-
-      if ('IntersectionObserver' in window) {
-        lazyImgs.forEach(img => {
-          const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-              if (e.isIntersecting) { img.src = img.dataset.src; img.classList.remove('lazy'); obs.disconnect(); }
-            });
-          }, { rootMargin: '200px' });
-          obs.observe(img);
-        });
-      } else {
-        lazyImgs.forEach(img => { img.src = img.dataset.src; });
+        </article>`;
       }
+      html += '<div class="ab-team-grid">' + rest.map(p => `<article class="ab-tcard">
+          ${photo(p, false)}
+          <div class="ab-tbody">
+            <h3 class="ab-tname">${esc(tr(p.name))}</h3>
+            ${langsLine(p)}
+            <a class="ab-link" href="${SCHEDULE_URL}">${esc(t('ab_team_schedule'))}</a>
+          </div>
+        </article>`).join('') + '</div>';
+      box.innerHTML = html;
+
+      const n = list.length;
+      document.getElementById('abTeachersNum').textContent = String(n);
+      document.getElementById('abTeachersLabel').textContent = t('ab_stat4_' + plural(n));
     }
 
-    // Shown when an instructor has no photo, and when a photo fails to load.
-    const INSTRUCTOR_PLACEHOLDER = '<div class="instructor-photo-placeholder">'
-      + '<svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">'
-      + '<circle cx="12" cy="8" r="4"/>'
-      + '<path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>'
-      + '</svg></div>';
-
-    function escapeHtml(str) {
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    const STAR = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    function renderReviews() {
+      const box = document.getElementById('abReviews');
+      if (!box || !REVIEWS) return;
+      const byId = new Map(REVIEWS.map(r => [String(r.id), r]));
+      const pick = REVIEW_IDS.map(id => byId.get(id)).filter(Boolean);
+      if (!pick.length) { document.getElementById('abReviewsSection').hidden = true; return; }
+      box.innerHTML = pick.map(r => `<figure class="ab-rev">
+          <div class="ab-rev-stars" aria-label="${r.rating}/5">${STAR.repeat(Math.max(0, Math.min(5, r.rating || 5)))}</div>
+          <blockquote>«${esc(tr(r.text))}»</blockquote>
+          <figcaption>${esc(r.name)}</figcaption>
+        </figure>`).join('');
     }
 
-    async function init() {
+    async function load() {
       try {
-        const resp = await fetch(`${API_BASE}/api/instructors`);
-        if (!resp.ok) throw new Error(resp.status);
-        const data = await resp.json();
-        const instructors = Array.isArray(data) ? data : (data.instructors || []);
-        renderTeam(instructors);
-      } catch (err) {
-        const skel = document.getElementById('teamSkeleton');
-        if (skel) skel.innerHTML = '<p style="color:var(--text-secondary);padding:32px 0">Could not load instructors.</p>';
-        console.error('Instructors load error:', err);
+        const r = await fetch('/data/instructors.json', { cache: 'no-cache' });
+        if (!r.ok) throw new Error(r.status);
+        const d = await r.json();
+        TEAM = Array.isArray(d) ? d : (d.instructors || []);
+        renderTeam();
+      } catch (e) {
+        console.warn('[about] team:', e);
+        const box = document.getElementById('abTeam');
+        if (box) box.innerHTML = `<p class="ab-team-msg">${esc(t('ab_team_error'))}</p>`;
+        document.getElementById('abStatTeachers')?.setAttribute('hidden', '');
+      }
+      try {
+        const r = await fetch('/data/reviews.json', { cache: 'no-cache' });
+        if (!r.ok) throw new Error(r.status);
+        REVIEWS = (await r.json()).reviews || [];
+        renderReviews();
+      } catch (e) {
+        console.warn('[about] reviews:', e);
+        document.getElementById('abReviewsSection').hidden = true;
       }
     }
+
+    function renderSpaceAlt() {
+      const img = document.getElementById('abSpaceImg');
+      if (img) img.alt = t('ab_space_img_alt');
+    }
+    window.addEventListener('svs:langchange', () => { renderTeam(); renderReviews(); renderSpaceAlt(); });
+    renderSpaceAlt();
 
     // Header auth
     function updateHeaderAuth() {
@@ -708,8 +894,6 @@
       });
     }
 
-    // Theme: handled by /theme.js (saved choice is shared by all pages)
-
     // Scroll header
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => { header?.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
@@ -717,7 +901,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       if (window.SVS_I18N) { const s = localStorage.getItem('svs_lang') || 'en'; SVS_I18N.setLang(s); }
       updateHeaderAuth();
-      init();
+      load();
     });
   })();
   </script>
