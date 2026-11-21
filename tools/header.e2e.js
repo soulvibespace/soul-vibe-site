@@ -3,9 +3,9 @@ const { chromium } = require('playwright');
 // Запуск: bash build.sh, раздать dist/ с pretty URLs на :8090, затем node tools/header.e2e.js
 const B=process.env.BASE||'http://localhost:8090', SH=process.env.SHOTS||'/tmp/header-shots/';
 require('fs').mkdirSync(SH,{recursive:true});
-const pages=['/','/about','/classes','/schedule','/pricing','/price-list','/reviews','/space','/contact','/account','/privacy','/terms'];
-const EXP=['/about','/classes','/schedule','/pricing','/space','/rental','/contact'];
-const EXP_RU=['О нас','Занятия','Расписание','Цены','Пространство','Аренда','Контакты'];
+const pages=['/','/about','/classes','/schedule','/pricing','/vibes','/price-list','/reviews','/space','/contact','/account','/privacy','/terms'];
+const EXP=['/about','/classes','/schedule','/pricing','/vibes','/space','/rental','/contact'];
+const EXP_RU=['О нас','Занятия','Расписание','Цены','VIBES','Пространство','Аренда','Контакты'];
 const nm=p=>p==='/'?'home':p.slice(1);
 const R=[]; const ok=(n,c,x='')=>R.push(`${c?'PASS':'FAIL'} ${n} ${x}`);
 (async()=>{const b=await chromium.launch(); const errs=[];
@@ -32,7 +32,7 @@ const R=[]; const ok=(n,c,x='')=>R.push(`${c?'PASS':'FAIL'} ${n} ${x}`);
     lists.actions=lists.actions||r.actions; ok(`${tag} same right side`, r.actions===lists.actions, r.actions);
     await p.screenshot({path:SH+`hdr-ru-1366-${nm(pg)}.png`,clip:{x:0,y:0,width:w,height:110}});
    } else {
-    ok(`${tag} mobile nav starts with main 7`, JSON.stringify(r.mob.slice(0,7).map(x=>x[0]))===JSON.stringify(EXP), JSON.stringify(r.mob.map(x=>x[0])));
+    ok(`${tag} mobile nav starts with main 8`, JSON.stringify(r.mob.slice(0,8).map(x=>x[0]))===JSON.stringify(EXP), JSON.stringify(r.mob.map(x=>x[0])));
     lists.mob=lists.mob||JSON.stringify(r.mob.map(x=>x[0])); ok(`${tag} mobile nav identical`, JSON.stringify(r.mob.map(x=>x[0]))===lists.mob);
     await p.click('#mobileMenuBtn'); await p.waitForTimeout(450);
     await p.screenshot({path:SH+`menu-ru-375-${nm(pg)}.png`});

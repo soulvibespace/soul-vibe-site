@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-title="vb_page_title">VIBES Loyalty Program | Soul Vibe Space Limassol</title>
+  <meta name="description" content="VIBES loyalty program at Soul Vibe Space, Limassol: 1 class = %%class%% VIBES, single visit %%dropin%%, from %%min_per%% per class with a Class Pass. Bonus VIBES for friends, reviews and your birthday." />
+  <!-- meta:start -->
+  <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Soul Vibe Space" />
+  <meta property="og:title" content="VIBES Loyalty Program | Soul Vibe Space Limassol" />
+  <meta property="og:description" content="VIBES loyalty program at Soul Vibe Space, Limassol: 1 class = %%class%% VIBES, single visit %%dropin%%, from %%min_per%% per class with a Class Pass. Bonus VIBES for friends, reviews and your birthday." />
+  <meta property="og:url" content="https://soul-vibe-space.netlify.app/vibes" />
+  <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ru_RU" />
+  <meta property="og:locale:alternate" content="el_GR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="VIBES Loyalty Program | Soul Vibe Space Limassol" />
+  <meta name="twitter:description" content="VIBES loyalty program at Soul Vibe Space, Limassol: 1 class = %%class%% VIBES, single visit %%dropin%%, from %%min_per%% per class with a Class Pass. Bonus VIBES for friends, reviews and your birthday." />
+  <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
+  <!-- meta:end -->
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── /vibes — программа лояльности VIBES ── */
+    .vibes-page { padding: var(--page-pt) 0 var(--page-pb); }
+    .page-eyebrow {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .vb-section { margin-top: var(--block-gap-lg); }
+    .vb-h2 {
+      font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 400;
+      color: var(--text-primary); margin-bottom: 6px; line-height: 1.2;
+    }
+    .vb-sub { font-size: .95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; max-width: 640px; }
+    .vb-note { margin-top: 14px; font-size: .85rem; color: var(--text-secondary); line-height: 1.6; }
+    .vb-note a, .vb-step-desc a, .vb-bonus-desc a, .vb-rules a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Hero */
+    .vb-hero {
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center;
+      padding: clamp(24px, 4vw, 44px); border-radius: 24px; border: 1px solid var(--border);
+      background:
+        radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+        var(--surface);
+    }
+    .vb-title {
+      font-family: var(--font-serif); font-size: clamp(2rem, 4.2vw, 3.1rem); font-weight: 400;
+      color: var(--text-primary); line-height: 1.1; margin-bottom: 16px; text-wrap: balance;
+    }
+    .vb-lead { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+    .vb-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .vb-stats { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .vb-stat {
+      display: flex; align-items: baseline; gap: 14px; padding: 16px 20px; border-radius: 16px;
+      background: var(--bg, var(--color-bg)); border: 1px solid var(--border);
+    }
+    .vb-stat-num {
+      font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.3rem); color: var(--text-primary);
+      line-height: 1; white-space: nowrap; min-width: 6.2ch;
+    }
+    .vb-stat-num span { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--accent); margin-left: 6px; }
+    .vb-stat-num small { font-family: var(--font-sans); font-size: .85rem; color: var(--text-secondary); }
+    .vb-stat-label { font-size: .92rem; color: var(--text-secondary); line-height: 1.4; }
+    .vb-stat--accent { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+    .vb-stat--accent .vb-stat-num { color: var(--accent); }
+
+    /* Steps */
+    .vb-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vb-step { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+    .vb-step-num {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-family: var(--font-serif); font-size: 1.05rem;
+    }
+    .vb-step-title { font-family: var(--font-sans); font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 4px; }
+    .vb-step-desc { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Value table */
+    .vb-table-wrap { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--surface); }
+    .vb-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    .vb-table th, .vb-table td { padding: 14px 20px; text-align: left; border-top: 1px solid var(--border); vertical-align: middle; }
+    .vb-table thead th {
+      border-top: none; font-family: var(--font-sans); font-size: 10px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text-secondary); padding-top: 16px; padding-bottom: 12px;
+    }
+    .vb-table tbody th { font-weight: 500; color: var(--text-primary); }
+    .vb-num { text-align: right !important; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .vb-table td { color: var(--text-secondary); }
+    .vb-name { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .vb-meta { display: block; font-size: .8rem; color: var(--text-secondary); font-weight: 400; margin-top: 2px; }
+    .vb-code {
+      font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em; color: var(--text-secondary);
+      border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px;
+    }
+    .vb-per { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text-primary) !important; }
+    .vb-save { font-weight: 600; color: #1a7a6e !important; }
+    .vb-save--none { font-weight: 400; color: var(--text-secondary) !important; }
+    .vb-row--base th, .vb-row--base td { background: color-mix(in srgb, var(--text-secondary) 5%, transparent); }
+    .vb-row--best th, .vb-row--best td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+    .vb-row--best .vb-per { color: var(--accent) !important; }
+    .vb-row--group th {
+      padding-top: 18px; padding-bottom: 10px; font-family: var(--font-sans); font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-primary) !important;
+    }
+    .vb-badge {
+      display: inline-flex; font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 20px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);
+    }
+    .vb-badge--new { background: color-mix(in srgb, #2a9d8f 12%, transparent); color: #1a7a6e; margin-left: 6px; }
+    .vb-show-sm { display: none; }
+    .vb-meta--2 { margin-top: 0; }
+
+    /* Bonuses */
+    .vb-bonus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vb-bonus { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; display: flex; gap: 16px; align-items: flex-start; }
+    .vb-bonus-amt {
+      flex-shrink: 0; width: 64px; height: 64px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-family: var(--font-serif); font-size: 1.45rem; line-height: 1;
+    }
+    .vb-bonus-amt small { font-family: var(--font-sans); font-size: .55rem; font-weight: 700; letter-spacing: .12em; margin-top: 3px; }
+    .vb-bonus-title { font-family: var(--font-sans); font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 4px; line-height: 1.35; }
+    .vb-bonus-desc { font-size: .88rem; color: var(--text-secondary); line-height: 1.55; }
+    .vb-howget {
+      margin-top: 16px; padding: 14px 18px; border-radius: 12px; border-left: 3px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, var(--surface)); font-size: .92rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    .vb-howget strong { color: var(--text-primary); }
+
+    /* Example */
+    .vb-example {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: center;
+      padding: clamp(22px, 3.5vw, 36px); border-radius: 20px; border: 1px solid var(--border); background: var(--surface);
+    }
+    .vb-example .vb-sub { margin-bottom: 0; }
+    .vb-calc { margin: 0; border-radius: 14px; border: 1px solid var(--border); background: var(--bg, var(--color-bg)); padding: 6px 20px 18px; }
+    .vb-calc-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: .93rem; }
+    .vb-calc-row dt { color: var(--text-secondary); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .vb-calc-row dd { margin: 0; font-weight: 600; color: var(--text-primary); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .vb-nw { white-space: nowrap; color: var(--text-primary); }
+    .vb-calc-total { border-bottom: 1px solid var(--border); }
+    .vb-calc-total dt, .vb-calc-total dd { color: var(--text-primary); font-weight: 700; }
+    .vb-calc-result { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-top: 14px; }
+    .vb-calc-result p { font-size: .95rem; color: var(--text-secondary); }
+    .vb-calc-per { font-family: var(--font-serif); font-size: 1.35rem !important; color: var(--accent) !important; }
+
+    /* Rules */
+    .vb-rules { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+    .vb-rules li {
+      position: relative; padding: 12px 0 12px 22px; border-bottom: 1px solid var(--border);
+      font-size: .93rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    .vb-rules li::before { content: ''; position: absolute; left: 2px; top: 21px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: .7; }
+    .vb-rules strong { color: var(--text-primary); font-weight: 600; }
+
+    /* FAQ (как на /pricing) */
+    .vp-faq { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+    .vp-faq details { border-bottom: 1px solid var(--border); }
+    .vp-faq summary {
+      list-style: none; cursor: pointer; padding: 18px 40px 18px 0; position: relative;
+      font-family: var(--font-sans); font-weight: 600; font-size: 1rem; color: var(--text-primary); line-height: 1.45;
+    }
+    .vp-faq summary::-webkit-details-marker { display: none; }
+    .vp-faq summary::after {
+      content: '+'; position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-sans); font-weight: 400; font-size: 1.5rem; color: var(--accent); transition: transform .2s;
+    }
+    .vp-faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+    .vp-faq-a { padding: 0 40px 20px 0; font-size: .93rem; color: var(--text-secondary); line-height: 1.7; max-width: 760px; }
+    .vp-faq-a a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Final CTA */
+    .vb-final {
+      margin-top: var(--block-gap-lg); display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: clamp(22px, 3.5vw, 36px); border-radius: 20px;
+      background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+    }
+    .vb-final .vb-cta { margin-top: 0; flex-shrink: 0; }
+    .vb-final-title { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.8rem); font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
+    .vb-final-text { font-size: .95rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .vb-hero, .vb-example { grid-template-columns: 1fr; }
+      .vb-steps, .vb-bonus-grid { grid-template-columns: 1fr; }
+      .vb-final { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 720px) {
+      .vb-hide-sm { display: none; }
+      .vb-show-sm { display: block; }
+      .vb-table th, .vb-table td { padding: 12px 14px; }
+      .vb-table thead th { padding-top: 12px; padding-bottom: 10px; }
+      .vb-rules { grid-template-columns: 1fr; gap: 0; }
+      .vb-table td.vb-num { padding-left: 6px; }
+    }
+    @media (max-width: 540px) {
+      .vb-hero { padding: 20px; border-radius: 18px; }
+      .vb-lead { font-size: 1rem; }
+      .vb-cta .btn { flex: 1 1 auto; justify-content: center; text-align: center; }
+      .vb-stat { padding: 12px 16px; gap: 12px; }
+      .vb-stat-num { font-size: 1.6rem; min-width: 5.6ch; }
+      .vb-step, .vb-bonus { padding: 16px 18px; gap: 14px; }
+      .vb-bonus-amt { width: 52px; height: 52px; font-size: 1.2rem; }
+      .vb-steps, .vb-bonus-grid { gap: 10px; }
+      .vb-per { font-size: 1.05rem; }
+      .vb-table { font-size: .9rem; }
+      .vb-table th, .vb-table td { padding: 11px 12px; }
+      .vb-meta { font-size: .74rem; }
+      .vb-table thead th { letter-spacing: .08em; }
+      .vb-calc { padding: 4px 14px 14px; }
+      .vb-final .vb-cta { width: 100%; }
+      .vb-hide-xs { display: none; }
+    }
+  </style>
+  <!-- FAQ для поисковиков: тексты = ответы vb_faq*_a (EN) на странице. Цифры — токены %%…%% (tools/prices.py). -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are VIBES?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs %%class%% VIBES, special classes have their own price in VIBES."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to join the program?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is nothing extra to sign up for. Your VIBES card is created automatically when you register on the website; VIBES appear on it after you buy a Class Pass or a Starter Pack. You can also come without a Class Pass — a single visit costs %%dropin%%."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do VIBES expire?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "VIBES from a Class Pass or Starter Pack are valid for its period, which starts from your first visit. Bonus VIBES never expire."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I give or transfer VIBES?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Class Pass is personal and is not intended to be transferred to other people. To give a class as a present, choose a gift certificate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I don’t have enough VIBES?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pay the difference at the studio: %%topup%% = 1 VIBE. Or top up your balance or choose a new Class Pass — VIBES are cheaper with it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where can I see my balance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In your personal account: current VIBES balance, your Class Passes with expiry dates and the history of credits, bonuses and visits."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I freeze my Class Pass?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Submit a request in your personal account — the administrator reviews it. A freeze lasts up to %%freeze%% days, and the validity is extended by the frozen days."
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="/compact.css" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <!-- Единая шапка: источник tools/header.html, вставляется tools/header.py. Не правьте вручную на страницах. -->
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="/images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+        <a aria-current="page" href="/vibes" class="nav-link nav-link--active" data-i18n="nav_vibes">VIBES</a>
+        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
+        <a href="/rental" class="nav-link" data-i18n="nav_rent">Rental</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+        <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book a class</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a>
+      <a aria-current="page" href="/vibes" class="mobile-nav-link active" data-i18n="nav_vibes">VIBES</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
+      <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@soul.vibe.space.y" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="vibes-page">
+    <div class="container">
+
+      <!-- ── HERO ── -->
+      <section class="vb-hero" aria-labelledby="vbTitle">
+        <div class="vb-hero-text">
+          <p class="page-eyebrow" data-i18n="vb_eyebrow">VIBES · Loyalty program</p>
+          <h1 class="vb-title" id="vbTitle" data-i18n="vb_h1">VIBES Loyalty Program</h1>
+          <p class="vb-lead" data-i18n="vb_lead">VIBES are the studio’s currency. One class is %%class%% VIBES. Buy VIBES at a better rate with a Class Pass and get them as a gift for your actions.</p>
+          <div class="vb-cta">
+            <a href="/pricing#multi-pass" class="btn btn-primary" data-i18n="vb_cta_pass">Choose a Class Pass</a>
+            <a href="/schedule" class="btn btn-outline" data-i18n="vb_cta_book">Book a class</a>
+          </div>
+        </div>
+        <div class="vb-stats" role="list">
+          <div class="vb-stat" role="listitem">
+            <p class="vb-stat-num">%%class%%<span>VIBES</span></p>
+            <p class="vb-stat-label" data-i18n="vb_stat_class">= 1 class</p>
+          </div>
+          <div class="vb-stat" role="listitem">
+            <p class="vb-stat-num">%%dropin%%</p>
+            <p class="vb-stat-label" data-i18n="vb_stat_dropin">single visit</p>
+          </div>
+          <div class="vb-stat vb-stat--accent" role="listitem">
+            <p class="vb-stat-num"><small data-i18n="vb_from">from</small> %%min_per%%</p>
+            <p class="vb-stat-label" data-i18n="vb_stat_pass">per class with a Class Pass</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── HOW IT WORKS ── -->
+      <section class="vb-section" id="how" aria-labelledby="vbHowTitle">
+        <h2 class="vb-h2" id="vbHowTitle" data-i18n="vb_how_title">How it works</h2>
+        <ol class="vb-steps">
+          <li class="vb-step">
+            <span class="vb-step-num">1</span>
+            <div>
+              <p class="vb-step-title" data-i18n="vb_how1_title">Join</p>
+              <p class="vb-step-desc" data-i18n="vb_how1_desc">Buy a Class Pass or a Starter Pack. Your VIBES card is created automatically when you register on the website.</p>
+            </div>
+          </li>
+          <li class="vb-step">
+            <span class="vb-step-num">2</span>
+            <div>
+              <p class="vb-step-title" data-i18n="vb_how2_title">Collect</p>
+              <p class="vb-step-desc" data-i18n="vb_how2_desc">VIBES are credited when you buy a Class Pass — and as a gift for bringing friends, leaving a review and on your birthday.</p>
+            </div>
+          </li>
+          <li class="vb-step">
+            <span class="vb-step-num">3</span>
+            <div>
+              <p class="vb-step-title" data-i18n="vb_how3_title">Spend</p>
+              <p class="vb-step-desc" data-i18n="vb_how3_desc">Each visit uses %%class%% VIBES. Your balance and history are in your <a href="/account">personal account</a>.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ── VALUE TABLE ── -->
+      <section class="vb-section" id="value" aria-labelledby="vbValueTitle">
+        <h2 class="vb-h2" id="vbValueTitle" data-i18n="vb_value_title">Price of one class</h2>
+        <p class="vb-sub" data-i18n="vb_value_sub">The bigger the Class Pass, the lower the price per class. Savings are compared with a single visit.</p>
+        <div class="vb-table-wrap">
+          <table class="vb-table">
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="vb_col_option">Option</th>
+                <th scope="col" class="vb-num vb-hide-sm" data-i18n="vb_col_price">Price</th>
+                <th scope="col" class="vb-num vb-hide-sm">VIBES</th>
+                <th scope="col" class="vb-num vb-hide-sm" data-i18n="vb_col_days">Valid</th>
+                <th scope="col" class="vb-num" data-i18n="vb_col_per">Per class</th>
+                <th scope="col" class="vb-num" data-i18n="vb_col_save">Savings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="vb-row--base">
+                <th scope="row"><span class="vb-name" data-i18n="vb_row_dropin">Single visit</span><span class="vb-meta" data-i18n="vb_row_dropin_meta">without a Class Pass</span></th>
+                <td class="vb-num vb-hide-sm">%%dropin%%</td>
+                <td class="vb-num vb-hide-sm">—</td>
+                <td class="vb-num vb-hide-sm">—</td>
+                <td class="vb-num vb-per">%%dropin%%</td>
+                <td class="vb-num vb-save vb-save--none">—</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="vb-name"><span class="vb-code">MP4</span> <span data-i18n="vb_row_pass">Class Pass</span></span><span class="vb-meta vb-show-sm">%%MP4.price%% · %%MP4.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP4.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%MP4.price%%</td>
+                <td class="vb-num vb-hide-sm">%%MP4.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%MP4.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="MP4.per">%%MP4.per%%</td>
+                <td class="vb-num vb-save">−%%MP4.save%%</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="vb-name"><span class="vb-code">MP8</span> <span data-i18n="vb_row_pass">Class Pass</span></span><span class="vb-meta vb-show-sm">%%MP8.price%% · %%MP8.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP8.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%MP8.price%%</td>
+                <td class="vb-num vb-hide-sm">%%MP8.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%MP8.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="MP8.per">%%MP8.per%%</td>
+                <td class="vb-num vb-save">−%%MP8.save%%</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="vb-name"><span class="vb-code">MP12</span> <span data-i18n="vb_row_pass">Class Pass</span></span><span class="vb-meta vb-show-sm">%%MP12.price%% · %%MP12.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP12.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%MP12.price%%</td>
+                <td class="vb-num vb-hide-sm">%%MP12.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%MP12.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="MP12.per">%%MP12.per%%</td>
+                <td class="vb-num vb-save">−%%MP12.save%%</td>
+              </tr>
+              <tr class="vb-row--best">
+                <th scope="row"><span class="vb-name"><span class="vb-code">MP20</span> <span data-i18n="vb_row_pass">Class Pass</span> <span class="vb-badge" data-i18n="vb_badge_best">Best price</span></span><span class="vb-meta vb-show-sm">%%MP20.price%% · %%MP20.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP20.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%MP20.price%%</td>
+                <td class="vb-num vb-hide-sm">%%MP20.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%MP20.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="MP20.per">%%MP20.per%%</td>
+                <td class="vb-num vb-save">−%%MP20.save%%</td>
+              </tr>
+              <tr class="vb-row--group">
+                <th scope="rowgroup" colspan="6"><span data-i18n="vb_row_starter_group">Starter Pack</span> <span class="vb-badge vb-badge--new" data-i18n="vb_badge_new">New clients only · once</span></th>
+              </tr>
+              <tr>
+                <th scope="row"><span class="vb-name"><span class="vb-code">SP1</span> <span data-i18n="vb_row_starter">Starter Pack</span></span><span class="vb-meta vb-show-sm">%%SP1.price%% · %%SP1.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%SP1.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%SP1.price%%</td>
+                <td class="vb-num vb-hide-sm">%%SP1.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%SP1.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="SP1.per">%%SP1.per%%</td>
+                <td class="vb-num vb-save">−%%SP1.save%%</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="vb-name"><span class="vb-code">SP2</span> <span data-i18n="vb_row_starter">Starter Pack</span></span><span class="vb-meta vb-show-sm">%%SP2.price%% · %%SP2.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%SP2.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%SP2.price%%</td>
+                <td class="vb-num vb-hide-sm">%%SP2.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%SP2.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="SP2.per">%%SP2.per%%</td>
+                <td class="vb-num vb-save">−%%SP2.save%%</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="vb-name"><span class="vb-code">SP4</span> <span data-i18n="vb_row_starter">Starter Pack</span></span><span class="vb-meta vb-show-sm">%%SP4.price%% · %%SP4.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%SP4.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
+                <td class="vb-num vb-hide-sm">%%SP4.price%%</td>
+                <td class="vb-num vb-hide-sm">%%SP4.vibes%%</td>
+                <td class="vb-num vb-hide-sm">%%SP4.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
+                <td class="vb-num vb-per" data-price="SP4.per">%%SP4.per%%</td>
+                <td class="vb-num vb-save">−%%SP4.save%%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="vb-note" data-i18n="vb_value_note">Validity starts from your first visit. Prices and purchase — on the <a href="/pricing">Pricing</a> page.</p>
+      </section>
+
+      <!-- ── BONUS VIBES ── -->
+      <section class="vb-section" id="bonus" aria-labelledby="vbBonusTitle">
+        <h2 class="vb-h2" id="vbBonusTitle" data-i18n="vb_bonus_title">Bonus VIBES for your actions</h2>
+        <p class="vb-sub" data-i18n="vb_bonus_sub">Gifts from the studio on top of your Class Pass. Bonus VIBES never expire.</p>
+        <div class="vb-bonus-grid">
+          <div class="vb-bonus">
+            <p class="vb-bonus-amt">+%%bonus.friend%%<small>VIBES</small></p>
+            <div>
+              <p class="vb-bonus-title" data-i18n="vb_bonus_friend_title">For each friend you bring</p>
+              <p class="vb-bonus-desc" data-i18n="vb_bonus_friend_desc">Come together — and get VIBES for every new guest.</p>
+            </div>
+          </div>
+          <div class="vb-bonus">
+            <p class="vb-bonus-amt">+%%bonus.review%%<small>VIBES</small></p>
+            <div>
+              <p class="vb-bonus-title" data-i18n="vb_bonus_review_title">For a Google Maps review</p>
+              <p class="vb-bonus-desc" data-i18n="vb_bonus_review_desc">Share your experience — it helps others find the studio.</p>
+            </div>
+          </div>
+          <div class="vb-bonus">
+            <p class="vb-bonus-amt">+%%bonus.birthday%%<small>VIBES</small></p>
+            <div>
+              <p class="vb-bonus-title" data-i18n="vb_bonus_bday_title">On your birthday</p>
+              <p class="vb-bonus-desc" data-i18n="vb_bonus_bday_desc">Add your date of birth in your <a href="/account">personal account</a> in advance.</p>
+            </div>
+          </div>
+        </div>
+        <p class="vb-howget" data-i18n="vb_bonus_how"><strong>How to get them:</strong> just tell the administrator at the studio — bonus VIBES will be added to your balance.</p>
+      </section>
+
+      <!-- ── EXAMPLE ── -->
+      <section class="vb-section" id="example" aria-labelledby="vbExTitle">
+        <div class="vb-example">
+          <div class="vb-example-text">
+            <p class="page-eyebrow" data-i18n="vb_ex_eyebrow">Example</p>
+            <h2 class="vb-h2" id="vbExTitle" data-i18n="vb_ex_title">How it adds up</h2>
+            <p class="vb-sub" data-i18n="vb_ex_lead">From %%min_per%% per class with a Class Pass — and even better with bonus VIBES.</p>
+          </div>
+          <dl class="vb-calc">
+            <div class="vb-calc-row"><dt><span class="vb-code">%%ex.plan%%</span> <span class="vb-hide-xs" data-i18n="vb_ex_pass">Class Pass</span> <span class="vb-nw">%%ex.price%%</span></dt><dd>%%ex.base%% VIBES</dd></div>
+            <div class="vb-calc-row"><dt data-i18n="vb_ex_friend">A friend you brought</dt><dd>+%%bonus.friend%%</dd></div>
+            <div class="vb-calc-row"><dt data-i18n="vb_ex_review">Google Maps review</dt><dd>+%%bonus.review%%</dd></div>
+            <div class="vb-calc-row"><dt data-i18n="vb_ex_bday">Birthday</dt><dd>+%%bonus.birthday%%</dd></div>
+            <div class="vb-calc-row vb-calc-total"><dt data-i18n="vb_ex_total">Total</dt><dd>%%ex.total%% VIBES</dd></div>
+            <div class="vb-calc-result">
+              <p><span data-i18n="vb_ex_classes">≈ %%ex.classes%% classes</span></p>
+              <p class="vb-calc-per"><span data-i18n="vb_ex_per">about %%ex.per%% per class</span></p>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ── RULES ── -->
+      <section class="vb-section" id="rules" aria-labelledby="vbRulesTitle">
+        <h2 class="vb-h2" id="vbRulesTitle" data-i18n="vb_rules_title">Rules in brief</h2>
+        <ul class="vb-rules">
+          <li data-i18n="vb_rule1"><strong>Validity</strong> of a Class Pass starts from your first visit, not from the purchase date.</li>
+          <li data-i18n="vb_rule2"><strong>Order of use:</strong> VIBES are taken from the earliest purchase first.</li>
+          <li data-i18n="vb_rule3"><strong>Top-up:</strong> any amount at the studio, %%topup%% = 1 VIBE.</li>
+          <li data-i18n="vb_rule4"><strong>Freeze:</strong> on request in your personal account, up to %%freeze%% days.</li>
+          <li data-i18n="vb_rule5"><strong>Personal:</strong> a Class Pass is not intended to be transferred to other people.</li>
+          <li data-i18n="vb_rule6"><strong>Cancellation:</strong> please cancel your booking in advance. No penalty while online payment is not available.</li>
+        </ul>
+        <p class="vb-note" data-i18n="vb_rules_terms">Full terms — in the <a href="/terms#booking">Terms &amp; Conditions</a>.</p>
+      </section>
+
+      <!-- ── FAQ ── -->
+      <section class="vb-section" id="faq" aria-labelledby="vbFaqTitle">
+        <h2 class="vb-h2" id="vbFaqTitle" data-i18n="vb_faq_title">Questions &amp; answers</h2>
+        <div class="vp-faq">
+          <details>
+            <summary data-i18n="vb_faq1_q">What are VIBES?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq1_a">VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs %%class%% VIBES, special classes have their own price in VIBES.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq2_q">Do I need to join the program?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq2_a">There is nothing extra to sign up for. Your VIBES card is created automatically when you register on the website; VIBES appear on it after you buy a Class Pass or a Starter Pack. You can also come without a Class Pass — a single visit costs %%dropin%%.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq3_q">Do VIBES expire?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq3_a">VIBES from a Class Pass or Starter Pack are valid for its period, which starts from your first visit. Bonus VIBES never expire.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq4_q">Can I give or transfer VIBES?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq4_a">A Class Pass is personal and is not intended to be transferred to other people. To give a class as a present, choose a <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener">gift certificate</a>.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq5_q">What if I don’t have enough VIBES?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq5_a">Pay the difference at the studio: %%topup%% = 1 VIBE. Or top up your balance or choose a new Class Pass — VIBES are cheaper with it.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq6_q">Where can I see my balance?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq6_a">In your <a href="/account">personal account</a>: current VIBES balance, your Class Passes with expiry dates and the history of credits, bonuses and visits.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq7_q">How do I freeze my Class Pass?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq7_a">Submit a request in your <a href="/account">personal account</a> — the administrator reviews it. A freeze lasts up to %%freeze%% days, and the validity is extended by the frozen days.</div>
+          </details>
+        </div>
+      </section>
+
+      <!-- ── FINAL CTA ── -->
+      <section class="vb-final" aria-labelledby="vbFinalTitle">
+        <div>
+          <h2 class="vb-final-title" id="vbFinalTitle" data-i18n="vb_final_title">Start collecting VIBES</h2>
+          <p class="vb-final-text" data-i18n="vb_final_text">From %%min_per%% per class with a Class Pass — and even better with bonus VIBES.</p>
+        </div>
+        <div class="vb-cta">
+          <a href="/pricing#multi-pass" class="btn btn-primary" data-i18n="vb_cta_pass">Choose a Class Pass</a>
+          <a href="/schedule" class="btn btn-outline" data-i18n="vb_cta_book">Book a class</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="footer">
+    <!-- Единый подвал: источник tools/footer.html, вставляется tools/footer.py. Не правьте вручную на страницах. -->
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="/images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" loading="lazy" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/schedule" data-i18n="nav_schedule">Schedule</a>
+          <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="/vibes" data-i18n="footer_vibes">VIBES Loyalty</a>
+          <a href="/space" data-i18n="footer_coworking">Co-working</a>
+          <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
+          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
+          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
+          <a href="https://soulvibespace.com/gift-certificates" target="_blank" rel="noopener" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agias Zonis<br>Limassol 3090, Cyprus</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours"><span data-i18n="footer_hours">Classes: daily 8:00 am – 10:00 pm</span><br><span data-i18n="footer_hours_admin">Administrator at the studio: 2:00 pm – 10:00 pm</span></p>
+          <p><a href="/contact" data-i18n="nav_contact">Contact</a></p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="/terms" data-i18n="footer_terms">Terms &amp; Conditions</a>
+          <a href="/privacy" data-i18n="footer_privacy">Privacy Policy</a>
+          <a href="/privacy#cookies" data-i18n="footer_cookies">Cookies</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth modal -->
+  <!-- ═══ AUTH MODAL ═══ -->
+  <div id="authModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Sign In" hidden>
+    <div class="booking-modal-backdrop" id="authModalBackdrop"></div>
+    <div class="booking-modal-panel auth-modal-panel">
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title" id="authModalTitle">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="authModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="auth-modal-body">
+        <!-- Tabs -->
+        <div class="auth-tabs" role="tablist" id="authTabs">
+          <button class="auth-tab active" id="authTabLogin" onclick="AuthModal.switchTab('login')" data-i18n="acc_tab_login">Sign In</button>
+          <button class="auth-tab" id="authTabRegister" onclick="AuthModal.switchTab('register')" data-i18n="acc_tab_register">Create Account</button>
+        </div>
+
+        <!-- Google -->
+        <div class="google-signin-wrap">
+          <div id="svsGoogleConfig" data-client_id="201608741686-96ngo0j9vg3190g6satnoaj7e452km4j.apps.googleusercontent.com"></div>
+          <div class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="continue_with"
+            data-size="large"
+            data-logo_alignment="left"
+            data-width="360">
+          </div>
+          <div class="auth-divider"><span data-i18n="auth_or">or</span></div>
+        </div>
+
+        <!-- Messages -->
+        <div class="auth-error" id="authModalError" role="alert"></div>
+        <div class="auth-success" id="authModalSuccess" role="status"></div>
+
+        <!-- Login form -->
+        <form class="auth-form" id="authLoginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authLoginEmail">Email</label>
+            <input class="form-input" type="email" id="authLoginEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authLoginPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authLoginPassword" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authLoginPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn-auth" id="authLoginBtn" data-i18n="acc_tab_login">Sign In</button>
+        </form>
+
+        <!-- Register form -->
+        <form class="auth-form" id="authRegisterForm" style="display:none" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="authRegName" data-i18n="auth_name">Full Name</label>
+            <input class="form-input" type="text" id="authRegName" placeholder="Your name" autocomplete="name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegEmail">Email</label>
+            <input class="form-input" type="email" id="authRegEmail" placeholder="your@email.com" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPhone" data-i18n="auth_phone">Phone</label>
+            <input class="form-input" type="tel" id="authRegPhone" placeholder="+357 ..." autocomplete="tel" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="authRegPassword" data-i18n="auth_password">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="authRegPassword" placeholder="Create a password" autocomplete="new-password" required />
+              <button type="button" class="pw-toggle" onclick="AuthModal.togglePw('authRegPassword', this)" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Consent checkboxes -->
+          <div class="auth-consent">
+            <label class="auth-consent-label">
+              <input type="checkbox" id="authRegTerms" class="auth-checkbox" required />
+              <span data-i18n="consent_terms" data-i18n-html="true">I have read and agree to the <a class="auth-consent-link" href="/terms" target="_blank" rel="noopener">Terms &amp; Conditions</a> and acknowledge the <a class="auth-consent-link" href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>. <span class="req">*</span></span>
+            </label>
+            <label class="auth-consent-label">
+              <input type="checkbox" id="authRegNewsletter" class="auth-checkbox" />
+              <span data-i18n="consent_newsletter">I agree to receive news, offers and updates from Soul Vibe Space by email.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-auth" id="authRegBtn" data-i18n="acc_tab_register">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BOOKING MODAL (Custom) ═══ -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <!-- Header -->
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Booking body -->
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script defer src="pay-plan.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+  <script src="/cookie-banner.js" defer></script>
+
+  <script>
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('is-open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        mobileNav.setAttribute('aria-hidden', String(!open));
+      });
+    }
+    // Check auth on load
+    (function() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const label = document.getElementById('headerAccountLabel');
+        if (token && label) {
+          const payload = JSON.parse(decodeURIComponent(Array.prototype.map.call(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')), function (c) { return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2); }).join('')));
+          if (payload && payload.exp * 1000 > Date.now() && payload.name) {
+            label.removeAttribute('data-i18n');
+            label.textContent = payload.name.split(' ')[0];
+            const btn = document.getElementById('headerAccountBtn');
+            if (btn) btn.href = 'account.html';
+          }
+        }
+      } catch(_) {}
+    })();
+  </script>
+
+  <script src="/compact.js" defer></script>
+</body>
+</html>
