@@ -159,6 +159,42 @@
     .ab-cta h2 { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 400; color: #fff; margin: 0 0 6px; }
     .ab-cta p { font-size: .9rem; color: rgba(255,255,255,.85); margin: 0; }
 
+    /* Слово основательницы — типографская цитата, без фото */
+    .ab-word { margin-top: var(--block-gap-lg); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 44px 48px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 40px; align-items: center; }
+    .ab-word blockquote { margin: 0; position: relative; padding-top: 34px; }
+    .ab-word blockquote::before { content: "\201C"; position: absolute; top: -18px; left: -4px; font-family: var(--font-serif); font-size: 5.5rem; line-height: 1; color: var(--accent); opacity: .35; }
+    .ab-word blockquote p { font-family: var(--font-serif); font-size: clamp(1.35rem, 2.3vw, 1.8rem); line-height: 1.38; color: var(--text-primary); margin: 0; text-wrap: pretty; }
+    .ab-word figcaption { margin-top: 18px; font-size: .88rem; color: var(--text-secondary); }
+    .ab-word figcaption strong { color: var(--accent); font-weight: 600; }
+    .ab-word-text p { font-size: .95rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 12px; }
+    .ab-word-text p:last-child { margin-bottom: 0; }
+
+    /* Умное и гибкое пространство */
+    .ab-space { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--split-gap); align-items: center; }
+    .ab-space-img { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; background: var(--color-surface-offset); }
+    .ab-space-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .ab-space-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .ab-space-card h3 { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 400; color: var(--text-primary); margin: 0; }
+    .ab-space-card p { font-size: .87rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-space-card .ab-link { margin-top: auto; padding-top: 4px; font-size: .85rem; }
+
+    @media (max-width: 860px) {
+      .ab-word { grid-template-columns: 1fr; gap: 20px; padding: 32px 28px; }
+      .ab-space { grid-template-columns: 1fr; gap: 20px; }
+      .ab-space-media { max-width: 420px; }
+    }
+    @media (max-width: 600px) {
+      .ab-word { padding: 26px 20px; border-radius: 16px; }
+      .ab-word blockquote { padding-top: 26px; }
+      .ab-word blockquote::before { font-size: 4.4rem; top: -14px; }
+      .ab-word blockquote p { font-size: 1.28rem; }
+      .ab-word-text p { font-size: .9rem; line-height: 1.65; }
+      .ab-space-cards { grid-template-columns: 1fr; gap: 12px; }
+      .ab-space-card { padding: 16px; }
+      .ab-space-media { max-width: none; }
+      .ab-space-img { aspect-ratio: 4/3; border-radius: 16px; }
+    }
+
     @media (max-width: 1024px) {
       .ab-team-grid { --cols: 3; }
       .ab-diff-grid, .ab-rev-grid, .ab-fv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -344,6 +380,19 @@
         <div class="ab-stat" id="abStatTeachers"><p class="ab-stat-num" id="abTeachersNum">&nbsp;</p><p class="ab-stat-label" id="abTeachersLabel">teachers in the team</p></div>
       </div>
 
+      <!-- Слово основательницы (из интервью с Ларисой) -->
+      <figure class="ab-word" aria-labelledby="abWordTitle">
+        <div>
+          <p class="ab-eyebrow" id="abWordTitle" data-i18n="ab_word_eyebrow">A word from our founder</p>
+          <blockquote><p data-i18n="ab_word_quote">Soul Vibe Space is more than a place to practise. It is a community where everyone can feel part of something bigger.</p></blockquote>
+          <figcaption><strong data-i18n="ab_word_name">Larisa</strong>, <span data-i18n="ab_word_role">founder of Soul Vibe Space</span></figcaption>
+        </div>
+        <div class="ab-word-text">
+          <p data-i18n="ab_word_p1">After the pandemic and long months of remote work, many people miss real, face-to-face connection.</p>
+          <p data-i18n="ab_word_p2">Larisa created Soul Vibe Space as a place for live communication and sharing experience, where everyone feels part of the community. The studio’s aim is to help you build inner confidence and balance.</p>
+        </div>
+      </figure>
+
       <!-- (c) Команда -->
       <section class="ab-section" id="team" aria-labelledby="abTeamTitle">
         <div class="ab-section-head">
@@ -395,6 +444,33 @@
               <a class="ab-link" href="/vibes" data-i18n="ab_diff4_link">How VIBES work →</a>
             </div>
           </article>
+        </div>
+      </section>
+
+      <!-- Умное и гибкое пространство -->
+      <section class="ab-section" aria-labelledby="abSpaceTitle">
+        <div class="ab-space">
+          <div>
+            <p class="ab-eyebrow" data-i18n="ab_space_eyebrow">The space</p>
+            <h2 class="ab-h2" id="abSpaceTitle" data-i18n="ab_space_title">A smart, flexible space</h2>
+            <p class="ab-lead" data-i18n="ab_space_lead">Yoga studio, co-working and rental — all in one place. The space adapts to the format: from dance classes and workshops to board games and corporate meetings.</p>
+            <div class="ab-space-cards">
+              <article class="ab-space-card">
+                <h3 data-i18n="ab_space_rent_title">Rental for teachers and organisers</h3>
+                <!-- Вместимость — по data/rental.json: залы 10–20 и 10–15, всё пространство — до 50 -->
+                <p data-i18n="ab_space_rent_text">Halls for groups of up to 20 people; the whole space hosts up to 50 guests.</p>
+                <a class="ab-link" href="/rental" data-i18n="ab_space_rent_link">About rental →</a>
+              </article>
+              <article class="ab-space-card">
+                <h3 data-i18n="ab_space_cw_title">Co-working</h3>
+                <p data-i18n="ab_space_cw_text">A calm place to work, rest and connect between classes.</p>
+                <a class="ab-link" href="/space" data-i18n="ab_space_cw_link">About co-working →</a>
+              </article>
+            </div>
+          </div>
+          <div class="ab-space-media">
+            <img class="ab-space-img" id="abSpaceImg" src="/images/rental-room-mirror.webp" width="800" height="1000" loading="lazy" decoding="async" alt="Mirror hall at Soul Vibe Space, Limassol" />
+          </div>
         </div>
       </section>
 
@@ -637,7 +713,12 @@
       }
     }
 
-    window.addEventListener('svs:langchange', () => { renderTeam(); renderReviews(); });
+    function renderSpaceAlt() {
+      const img = document.getElementById('abSpaceImg');
+      if (img) img.alt = t('ab_space_img_alt');
+    }
+    window.addEventListener('svs:langchange', () => { renderTeam(); renderReviews(); renderSpaceAlt(); });
+    renderSpaceAlt();
 
     // Header auth
     function updateHeaderAuth() {

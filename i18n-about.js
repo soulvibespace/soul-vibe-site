@@ -70,7 +70,23 @@
     ab_fv4_text:      '50 Agias Zonis, Limassol 3090, Cyprus.',
     ab_fv4_link:      'Open in maps →',
     ab_cta_title:     'Ready for your first class?',
-    ab_cta_sub:       'Choose a class in the schedule and book your place in a few taps.'
+    ab_cta_sub:       'Choose a class in the schedule and book your place in a few taps.',
+    ab_word_eyebrow: 'A word from our founder',
+    ab_word_quote: 'Soul Vibe Space is more than a place to practise. It is a community where everyone can feel part of something bigger.',
+    ab_word_name: 'Larisa',
+    ab_word_role: 'founder of Soul Vibe Space',
+    ab_word_p1: 'After the pandemic and long months of remote work, many people miss real, face-to-face connection.',
+    ab_word_p2: 'Larisa created Soul Vibe Space as a place for live communication and sharing experience, where everyone feels part of the community. The studio’s aim is to help you build inner confidence and balance.',
+    ab_space_eyebrow: 'The space',
+    ab_space_title: 'A smart, flexible space',
+    ab_space_lead: 'Yoga studio, co-working and rental — all in one place. The space adapts to the format: from dance classes and workshops to board games and corporate meetings.',
+    ab_space_rent_title: 'Rental for teachers and organisers',
+    ab_space_rent_text: 'Halls for groups of up to 20 people; the whole space hosts up to 50 guests.',
+    ab_space_rent_link: 'About rental →',
+    ab_space_cw_title: 'Co-working',
+    ab_space_cw_text: 'A calm place to work, rest and connect between classes.',
+    ab_space_cw_link: 'About co-working →',
+    ab_space_img_alt: 'Mirror hall at Soul Vibe Space, Limassol'
   });
 
   /* ═══════════════════════════════ RU ═══════════════════════════════ */
@@ -132,7 +148,23 @@
     ab_fv4_text:      'ул. Агиас Зонис, 50, Лимасол 3090, Кипр.',
     ab_fv4_link:      'Открыть на карте →',
     ab_cta_title:     'Готовы к первому занятию?',
-    ab_cta_sub:       'Выберите занятие в расписании и запишитесь в пару касаний.'
+    ab_cta_sub:       'Выберите занятие в расписании и запишитесь в пару касаний.',
+    ab_word_eyebrow: 'Слово основательницы',
+    ab_word_quote: 'Soul Vibe Space — это не просто место для занятий. Это сообщество, где каждый может почувствовать себя частью чего⁠-⁠то большего.',
+    ab_word_name: 'Лариса',
+    ab_word_role: 'основательница Soul Vibe Space',
+    ab_word_p1: 'После пандемии и долгих месяцев удалёнки многим стало не хватать живого общения.',
+    ab_word_p2: 'Лариса создала Soul Vibe Space как место для живой коммуникации и обмена опытом, где каждый чувствует себя частью сообщества. Цель студии — помогать вам развивать внутреннюю уверенность и баланс.',
+    ab_space_eyebrow: 'Пространство',
+    ab_space_title: 'Умное и гибкое пространство',
+    ab_space_lead: 'Йога-студия, коворкинг и аренда — в одном месте. Пространство трансформируется под формат: от танцевальных классов и мастер-классов до настольных игр и корпоративных встреч.',
+    ab_space_rent_title: 'Аренда для инструкторов и организаторов',
+    ab_space_rent_text: 'Залы для групп до 20 человек, всё пространство — до 50 гостей.',
+    ab_space_rent_link: 'Об аренде →',
+    ab_space_cw_title: 'Коворкинг',
+    ab_space_cw_text: 'Спокойное место, где можно поработать, отдохнуть и пообщаться между занятиями.',
+    ab_space_cw_link: 'О коворкинге →',
+    ab_space_img_alt: 'Зеркальный зал Soul Vibe Space, Лимасол'
   });
 
   /* ═══════════════════════════════ EL ═══════════════════════════════ */
@@ -194,6 +226,22 @@
     ab_fv4_text:      'Αγίας Ζώνης 50, Λεμεσός 3090, Κύπρος.',
     ab_fv4_link:      'Άνοιγμα στον χάρτη →',
     ab_cta_title:     'Έτοιμοι για το πρώτο σας μάθημα;',
-    ab_cta_sub:       'Επιλέξτε μάθημα στο πρόγραμμα και κλείστε τη θέση σας με λίγα κλικ.'
+    ab_cta_sub:       'Επιλέξτε μάθημα στο πρόγραμμα και κλείστε τη θέση σας με λίγα κλικ.',
+    ab_word_eyebrow: 'Λίγα λόγια από την ιδρύτρια',
+    ab_word_quote: 'Το Soul Vibe Space δεν είναι απλώς ένας χώρος για μαθήματα. Είναι μια κοινότητα όπου ο καθένας μπορεί να νιώσει μέρος από κάτι μεγαλύτερο.',
+    ab_word_name: 'Larisa',
+    ab_word_role: 'ιδρύτρια του Soul Vibe Space',
+    ab_word_p1: 'Μετά την πανδημία και τους μακρούς μήνες εξ αποστάσεως εργασίας, σε πολλούς λείπει η ζωντανή επικοινωνία.',
+    ab_word_p2: 'Η Larisa δημιούργησε το Soul Vibe Space ως χώρο ζωντανής επικοινωνίας και ανταλλαγής εμπειριών, όπου ο καθένας νιώθει μέρος της κοινότητας. Στόχος του στούντιο είναι να σας βοηθά να αναπτύσσετε εσωτερική αυτοπεποίθηση και ισορροπία.',
+    ab_space_eyebrow: 'Ο χώρος',
+    ab_space_title: 'Ένας έξυπνος, ευέλικτος χώρος',
+    ab_space_lead: 'Στούντιο γιόγκα, χώρος συνεργασίας και ενοικίαση — όλα σε ένα μέρος. Ο χώρος προσαρμόζεται στη μορφή: από μαθήματα χορού και εργαστήρια μέχρι επιτραπέζια παιχνίδια και εταιρικές συναντήσεις.',
+    ab_space_rent_title: 'Ενοικίαση για εκπαιδευτές και διοργανωτές',
+    ab_space_rent_text: 'Αίθουσες για ομάδες έως 20 ατόμων· ολόκληρος ο χώρος φιλοξενεί έως 50 άτομα.',
+    ab_space_rent_link: 'Για την ενοικίαση →',
+    ab_space_cw_title: 'Χώρος Συνεργασίας',
+    ab_space_cw_text: 'Ένας ήρεμος χώρος για δουλειά, ξεκούραση και επικοινωνία ανάμεσα στα μαθήματα.',
+    ab_space_cw_link: 'Για τον χώρο συνεργασίας →',
+    ab_space_img_alt: 'Αίθουσα με καθρέφτες στο Soul Vibe Space, Λεμεσός'
   });
 })();
