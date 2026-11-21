@@ -169,6 +169,18 @@
     .ab-word-text p { font-size: .95rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 12px; }
     .ab-word-text p:last-child { margin-bottom: 0; }
 
+    /* Летом — на ранчо (фото ранчо в images/ нет — типографский блок) */
+    .ab-rancho { background: linear-gradient(135deg, rgba(110,140,90,.12), rgba(110,140,90,.04)); border: 1px solid var(--border); border-radius: 20px; padding: 40px 44px; }
+    .ab-rancho .ab-section-head { max-width: 680px; }
+    .ab-rancho-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .ab-rancho-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .ab-rancho-card h3 { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 400; color: var(--text-primary); margin: 0; }
+    .ab-rancho-card p { font-size: .87rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .ab-rancho-card .ab-link { margin-top: auto; padding-top: 4px; font-size: .85rem; }
+    .ab-rancho-tag { align-self: flex-start; font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4f6b3c; background: rgba(110,140,90,.16); border-radius: 999px; padding: 4px 10px; }
+    @media (max-width: 860px) { .ab-rancho { padding: 30px 26px; } .ab-rancho-grid { grid-template-columns: 1fr; gap: 12px; } }
+    @media (max-width: 600px) { .ab-rancho { padding: 24px 18px; border-radius: 16px; } .ab-rancho-card { padding: 16px; } }
+
     /* Умное и гибкое пространство */
     .ab-space { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--split-gap); align-items: center; }
     .ab-space-img { display: block; width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; background: var(--color-surface-offset); }
@@ -433,7 +445,7 @@
             <div class="ab-diff-body">
               <h3 data-i18n="ab_diff3_title">Classes in nature</h3>
               <p data-i18n="ab_diff3_text">Yoga, meditation and Ecstatic Dance under the open sky at Rancho Meadow Paradise.</p>
-              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+              <a class="ab-link" href="#rancho" data-i18n="ab_diff3_link">Summers at the ranch →</a>
             </div>
           </article>
           <article class="ab-diff">
@@ -444,6 +456,37 @@
               <a class="ab-link" href="/vibes" data-i18n="ab_diff4_link">How VIBES work →</a>
             </div>
           </article>
+        </div>
+      </section>
+
+      <!-- Летом — на Ранчо Meadow Paradise -->
+      <section class="ab-section" id="rancho" aria-labelledby="abRanchoTitle">
+        <div class="ab-rancho">
+          <div class="ab-section-head">
+            <p class="ab-eyebrow" data-i18n="ab_rancho_eyebrow">Summer season</p>
+            <h2 class="ab-h2" id="abRanchoTitle" data-i18n="ab_rancho_title">Summers at Rancho Meadow Paradise</h2>
+            <p class="ab-lead" data-i18n="ab_rancho_lead">In the summer season, practices that are already much loved in Cyprus take place at Rancho Meadow Paradise.</p>
+          </div>
+          <div class="ab-rancho-grid">
+            <article class="ab-rancho-card">
+              <span class="ab-rancho-tag" data-i18n="ab_rancho_tag">Open air</span>
+              <h3 data-i18n="ab_rancho1_title">Kundalini Yoga &amp; Gong at the Ranch</h3>
+              <p data-i18n="ab_rancho1_text">Kundalini Yoga and gong meditation under the open sky.</p>
+              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+            </article>
+            <article class="ab-rancho-card">
+              <span class="ab-rancho-tag" data-i18n="ab_rancho_tag">Open air</span>
+              <h3 data-i18n="ab_rancho2_title">Hatha Yoga at the Ranch</h3>
+              <p data-i18n="ab_rancho2_text">A calm Hatha practice in the fresh air, surrounded by nature.</p>
+              <a class="ab-link" href="/schedule" data-i18n="ab_diff_sched">See the schedule →</a>
+            </article>
+            <article class="ab-rancho-card">
+              <span class="ab-rancho-tag" data-i18n="ab_rancho_tag">Open air</span>
+              <h3 data-i18n="ab_rancho3_title">Ecstatic Dance</h3>
+              <p data-i18n="ab_rancho3_text">Free movement to a live DJ set in the open air.</p>
+              <a class="ab-link" href="https://ecstatic.soulvibespace.com" target="_blank" rel="noopener" data-i18n="ab_rancho3_link">About Ecstatic Dance →</a>
+            </article>
+          </div>
         </div>
       </section>
 

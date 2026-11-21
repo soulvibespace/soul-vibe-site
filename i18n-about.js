@@ -86,7 +86,19 @@
     ab_space_cw_title: 'Co-working',
     ab_space_cw_text: 'A calm place to work, rest and connect between classes.',
     ab_space_cw_link: 'About co-working →',
-    ab_space_img_alt: 'Mirror hall at Soul Vibe Space, Limassol'
+    ab_space_img_alt: 'Mirror hall at Soul Vibe Space, Limassol',
+    ab_rancho_eyebrow: 'Summer season',
+    ab_rancho_title: 'Summers at Rancho Meadow Paradise',
+    ab_rancho_lead: 'In the summer season, practices that are already much loved in Cyprus take place at Rancho Meadow Paradise.',
+    ab_rancho_tag: 'Open air',
+    ab_rancho1_title: 'Kundalini Yoga & Gong at the Ranch',
+    ab_rancho1_text: 'Kundalini Yoga and gong meditation under the open sky.',
+    ab_rancho2_title: 'Hatha Yoga at the Ranch',
+    ab_rancho2_text: 'A calm Hatha practice in the fresh air, surrounded by nature.',
+    ab_rancho3_title: 'Ecstatic Dance',
+    ab_rancho3_text: 'Free movement to a live DJ set in the open air.',
+    ab_rancho3_link: 'About Ecstatic Dance →',
+    ab_diff3_link: 'Summers at the ranch →'
   });
 
   /* ═══════════════════════════════ RU ═══════════════════════════════ */
@@ -125,7 +137,7 @@
     ab_diff2_title:   'Ecstatic Dance',
     ab_diff2_text:    'Свободное движение под живой диджей-сет — без шагов и правил: только вы, музыка и люди вокруг.',
     ab_diff3_title:   'Занятия на природе',
-    ab_diff3_text:    'Йога, медитация и Ecstatic Dance под открытым небом на Rancho Meadow Paradise.',
+    ab_diff3_text:    'Йога, медитация и Ecstatic Dance под открытым небом на Ранчо Meadow Paradise.',
     ab_diff4_title:   'Программа VIBES',
     ab_diff4_text:    'Валюта студии: вы оплачиваете занятия в VIBES и получаете бонусные VIBES за приведённого друга, отзыв и в день рождения.',
     ab_diff4_link:    'Как работают VIBES →',
@@ -164,7 +176,19 @@
     ab_space_cw_title: 'Коворкинг',
     ab_space_cw_text: 'Спокойное место, где можно поработать, отдохнуть и пообщаться между занятиями.',
     ab_space_cw_link: 'О коворкинге →',
-    ab_space_img_alt: 'Зеркальный зал Soul Vibe Space, Лимасол'
+    ab_space_img_alt: 'Зеркальный зал Soul Vibe Space, Лимасол',
+    ab_rancho_eyebrow: 'Летний сезон',
+    ab_rancho_title: 'Летом — на Ранчо Meadow Paradise',
+    ab_rancho_lead: 'В летний сезон на Ранчо Meadow Paradise проходят практики, которые уже очень популярны на Кипре.',
+    ab_rancho_tag: 'Под открытым небом',
+    ab_rancho1_title: 'Кундалини-йога и Гонг на ранчо',
+    ab_rancho1_text: 'Кундалини-йога и медитация под звуки гонга под открытым небом.',
+    ab_rancho2_title: 'Хатха-йога на ранчо',
+    ab_rancho2_text: 'Спокойная хатха-практика на свежем воздухе, среди природы.',
+    ab_rancho3_title: 'Ecstatic Dance',
+    ab_rancho3_text: 'Свободный танец под живой диджей-сет на открытом воздухе.',
+    ab_rancho3_link: 'Об Ecstatic Dance →',
+    ab_diff3_link: 'Летом на ранчо →'
   });
 
   /* ═══════════════════════════════ EL ═══════════════════════════════ */
@@ -242,6 +266,18 @@
     ab_space_cw_title: 'Χώρος Συνεργασίας',
     ab_space_cw_text: 'Ένας ήρεμος χώρος για δουλειά, ξεκούραση και επικοινωνία ανάμεσα στα μαθήματα.',
     ab_space_cw_link: 'Για τον χώρο συνεργασίας →',
-    ab_space_img_alt: 'Αίθουσα με καθρέφτες στο Soul Vibe Space, Λεμεσός'
+    ab_space_img_alt: 'Αίθουσα με καθρέφτες στο Soul Vibe Space, Λεμεσός',
+    ab_rancho_eyebrow: 'Καλοκαιρινή περίοδος',
+    ab_rancho_title: 'Το καλοκαίρι στο Rancho Meadow Paradise',
+    ab_rancho_lead: 'Την καλοκαιρινή περίοδο, στο Rancho Meadow Paradise γίνονται πρακτικές που είναι ήδη πολύ αγαπημένες στην Κύπρο.',
+    ab_rancho_tag: 'Στην ύπαιθρο',
+    ab_rancho1_title: 'Kundalini Yoga & Gong στο ράντσο',
+    ab_rancho1_text: 'Kundalini Yoga και διαλογισμός με γκονγκ κάτω από τον ανοιχτό ουρανό.',
+    ab_rancho2_title: 'Hatha Yoga στο ράντσο',
+    ab_rancho2_text: 'Ήρεμη πρακτική Hatha στον καθαρό αέρα, μέσα στη φύση.',
+    ab_rancho3_title: 'Ecstatic Dance',
+    ab_rancho3_text: 'Ελεύθερη κίνηση με ζωντανό DJ set στην ύπαιθρο.',
+    ab_rancho3_link: 'Για το Ecstatic Dance →',
+    ab_diff3_link: 'Το καλοκαίρι στο ράντσο →'
   });
 })();
