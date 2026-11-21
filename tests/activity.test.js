@@ -1,4 +1,4 @@
-// node tests/activity.test.js — тексты блока «Бонус за активность» (account-activity.js) на RU/EN/EL.
+// node tests/activity.test.js — тексты блока «Регулярная практика» (account-activity.js) на RU/EN/EL.
 'use strict';
 const assert = require('assert');
 global.window = { dispatchEvent() {}, addEventListener() {} };
@@ -23,26 +23,26 @@ let n = 0; const t = (name, fn) => { fn(); n++; console.log('ok -', name); };
 
 t('RU: 3 / 7 / 12 / 0 / 1 / 22 посещения', () => {
   assert.strictEqual(view('ru', 3), 'В ноябре вы были на занятиях 3 раза. Ещё 1 — и получите +10 VIBES.');
-  assert.strictEqual(view('ru', 7), 'В ноябре вы были на занятиях 7 раз. +10 VIBES уже ваши, ещё 3 до +20. Бонус начислится автоматически 1 декабря.');
-  assert.strictEqual(view('ru', 12), 'В ноябре вы были на занятиях 12 раз. Максимальный бонус +20 VIBES за ноябрь. Бонус начислится автоматически 1 декабря.');
+  assert.strictEqual(view('ru', 7), 'В ноябре вы были на занятиях 7 раз. +10 VIBES уже обеспечены, ещё 3 до +20. VIBES начислятся автоматически 1 декабря.');
+  assert.strictEqual(view('ru', 12), 'В ноябре вы были на занятиях 12 раз. Вы получите максимум: +20 VIBES за ноябрь. VIBES начислятся автоматически 1 декабря.');
   assert.strictEqual(view('ru', 0), 'В ноябре вы пока не были на занятиях. 4 посещения — и получите +10 VIBES.');
   assert.match(view('ru', 1), /^В ноябре вы были на занятиях 1 раз\./);
   assert.match(view('ru', 22), /22 раза\./);
 });
 t('EN', () => {
   assert.strictEqual(view('en', 3), 'In November you have been to class 3 times. 1 more and you get +10 VIBES.');
-  assert.strictEqual(view('en', 4), 'In November you have been to class 4 times. +10 VIBES are already yours, 6 more to +20. The bonus is added automatically on 1 December.');
+  assert.strictEqual(view('en', 4), 'In November you have been to class 4 times. +10 VIBES secured, 6 more to +20. VIBES will be credited automatically on 1 December.');
   assert.match(view('en', 1), /1 time\./);
-  assert.match(view('en', 10), /Maximum bonus \+20 VIBES for November\./);
+  assert.match(view('en', 10), /You’ll get the maximum: \+20 VIBES for November\./);
 });
 t('EL', () => {
   assert.strictEqual(view('el', 3), 'Τον Νοέμβριο ήρθατε σε μαθήματα 3 φορές. Ακόμη 1 και παίρνετε +10 VIBES.');
-  assert.match(view('el', 9), /Τα \+10 VIBES είναι ήδη δικά σας, ακόμη 1 για \+20\./);
-  assert.match(view('el', 15), /Μέγιστο μπόνους \+20 VIBES για τον Νοέμβριο\./);
+  assert.match(view('el', 9), /Τα \+10 VIBES είναι εξασφαλισμένα, ακόμη 1 για \+20\./);
+  assert.match(view('el', 15), /Θα πάρετε το μέγιστο: \+20 VIBES για τον Νοέμβριο\./);
 });
 t('правило из ступеней панели', () => {
   I.setLang('ru');
-  assert.strictEqual(activityView(A(3)).rule, '4–9 посещений за месяц — +10 VIBES, 10 и больше — +20 VIBES. Бонусные VIBES не сгорают.');
+  assert.strictEqual(activityView(A(3)).rule, '4–9 посещений за месяц — +10 VIBES, 10 и больше — всего +20 VIBES. VIBES в подарок не сгорают.');
 });
 t('нет слова «пакет» в текстах блока', () => {
   for (const lang of ['ru', 'en', 'el']) for (const k of [0, 3, 7, 12]) assert.ok(!/пакет/i.test(view(lang, k)));

@@ -1,5 +1,5 @@
 /**
- * Soul Vibe Space — «Бонус за активность» в личном кабинете (/account), ACT-001.
+ * Soul Vibe Space — «Регулярная практика» в личном кабинете (/account), ACT-001.
  * За календарный месяц (по Кипру) 4–9 посещений → +10 VIBES, 10 и больше → +20 VIBES.
  * Бонус начисляет панель VIBES автоматически 1-го числа за прошлый месяц; здесь только
  * прогресс текущего месяца и бонусы прошлых месяцев. Данные — поле `activity` ответа
@@ -42,12 +42,12 @@ function activityView(a) {
     ? actFill(vt('act_visits', 'In {in} you have been to class {n} {times}.'), { in: inM, n: n, times: actPlural('act_times', n) })
     : actFill(vt('act_visits_zero', 'In {in} you have not been to class yet.'), { in: inM }));
   var status;
-  if (!a.next) status = actFill(vt('act_max', 'Maximum bonus +{v} VIBES for {mon}.'), { v: a.earned_vibes || top.vibes, mon: mon, in: inM });
+  if (!a.next) status = actFill(vt('act_max', 'You’ll get the maximum: +{v} VIBES for {mon}.'), { v: a.earned_vibes || top.vibes, mon: mon, in: inM });
   else if (!n) status = actFill(vt('act_next_zero', '{r} {visits} and you get +{v} VIBES.'), { r: a.next.remaining, visits: actPlural('act_visit', a.next.remaining), v: a.next.vibes });
   else if (!a.earned_vibes) status = actFill(vt('act_next_first', '{r} more and you get +{v} VIBES.'), { r: a.next.remaining, v: a.next.vibes });
-  else status = actFill(vt('act_next_more', '+{e} VIBES are already yours, {r} more to +{v}.'), { e: a.earned_vibes, r: a.next.remaining, v: a.next.vibes });
-  var credit = a.earned_vibes && a.credited_on ? actFill(vt('act_credit', 'The bonus is added automatically on {date}.'), { date: actDay(a.credited_on) }) : '';
-  var rule = tiers.length === 2 ? actFill(vt('act_rule', '{a}–{b} visits a month — +{x} VIBES, {c} or more — +{y} VIBES. Bonus VIBES never expire.'),
+  else status = actFill(vt('act_next_more', '+{e} VIBES secured, {r} more to +{v}.'), { e: a.earned_vibes, r: a.next.remaining, v: a.next.vibes });
+  var credit = a.earned_vibes && a.credited_on ? actFill(vt('act_credit', 'VIBES will be credited automatically on {date}.'), { date: actDay(a.credited_on) }) : '';
+  var rule = tiers.length === 2 ? actFill(vt('act_rule', '{a}–{b} visits a month — +{x} VIBES, {c} or more — +{y} VIBES in total. Gift VIBES never expire.'),
     { a: tiers[0].visits, b: tiers[1].visits - 1, x: tiers[0].vibes, c: tiers[1].visits, y: tiers[1].vibes }) : '';
   return { visits: n, top: top.visits, tiers: tiers, lines: lines, status: status, credit: credit, rule: rule, max: !a.next };
 }
