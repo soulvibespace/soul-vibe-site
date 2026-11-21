@@ -325,7 +325,7 @@ function showDashboard(client) {
 // ── VIBES (loyalty programme) ────────────────────────────────────────────────
 // Read-only view of the client's VIBES, served by soul-vibe-api → VIBES panel.
 // 1 regular class = 20 VIBES. Refreshes every 30 s while the tab is visible.
-var VIBES_PER_CLASS = 20;
+var VIBES_PER_CLASS = (window.SVS_PRICES && Number(window.SVS_PRICES.class_vibes)) || 20; // SVS_PRICES in i18n.js
 // i18n lookup that falls back when the key is missing (SVS_I18N.t returns the key itself).
 function vt(key, fb) { var v = t(key, fb); return (v && v !== key) ? v : fb; }
 var _vibesData = null, _vibesTimer = null, _vibesShowAll = false;
@@ -429,7 +429,7 @@ function renderVibes() {
   var bal = Number(d.balance_vibes || 0);
   var classes = Math.floor(bal / VIBES_PER_CLASS);
   var h = '<div class="vibes-balance"><span class="vibes-balance-num">' + bal + '</span><span class="vibes-balance-unit">VIBES</span>'
-        + '<span class="vibes-balance-hint">' + escHtml(vibesClassesLeft(classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = 20 VIBES')) + '</span></div>';
+        + '<span class="vibes-balance-hint">' + escHtml(vibesClassesLeft(classes)) + ' · ' + escHtml(vt('vibes_rate', '1 class = ' + VIBES_PER_CLASS + ' VIBES')) + '</span></div>';
 
   var active = (d.lots || []).filter(function (l) { return l.status === 'active' && l.remaining_vibes > 0; });
   // Bonus VIBES (e.g. a birthday gift) are not a Class Pass: neutral heading when there are any.

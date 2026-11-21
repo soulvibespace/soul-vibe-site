@@ -63,7 +63,7 @@ window.SVS_TERMS = SVS_TERMS;
 //   %%MP8.save_eur%% → €30 (экономия в евро к разовым)
 //   %%min_per%% / %%max_save%% — лучшая цена занятия / выгода по абонементам (MP)
 //   %%bonus.friend%% / %%bonus.review%% / %%bonus.birthday%% — бонусные VIBES
-//   %%ex.plan%% %%ex.price%% %%ex.base%% %%ex.bonus%% %%ex.total%% %%ex.classes%% %%ex.per%% — пример на /vibes
+//   %%ex.plan%% %%ex.price%% %%ex.base%% %%ex.bonus%% %%ex.total%% %%ex.classes%% %%ex.classes_word%% %%ex.per%% — пример на /vibes
 //   %%topup%% → €1 (за 1 VIBE)  %%refund%% → €0,75  %%freeze%% → 90 (дней заморозки)
 // В HTML токены раскрывает tools/prices.py при сборке (build.sh), в переводах — svsExpandPrices().
 // Дробные цифры в HTML вне переводов оборачивайте в <span data-price="MP8.per">%%MP8.per%%</span> —
@@ -89,6 +89,16 @@ const SVS_PRICES = /*prices:start*/{
   "example": { "plan": "MP20", "bonuses": ["friend", "review", "birthday"] }
 }/*prices:end*/;
 window.SVS_PRICES = SVS_PRICES;
+
+// «21 занятие», «22 занятия», «25 занятий» — слово после числа занятий.
+function svsClassWord(n, lang) {
+  if (lang === 'ru') {
+    var m10 = n % 10, m100 = n % 100;
+    return (m10 === 1 && m100 !== 11) ? 'занятие' : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 'занятия' : 'занятий';
+  }
+  if (lang === 'el') return n === 1 ? 'μάθημα' : 'μαθήματα';
+  return n === 1 ? 'class' : 'classes';
+}
 
 // Значения токенов %%…%% для языка lang (ru/el — десятичная запятая).
 function svsPriceValues(lang) {
@@ -119,9 +129,11 @@ function svsPriceValues(lang) {
   v['ex.plan'] = P.example.plan; v['ex.price'] = eur(ex.price); v['ex.base'] = ex.vibes;
   v['ex.bonus'] = bonus; v['ex.total'] = total; v['ex.classes'] = Math.floor(total / P.class_vibes);
   v['ex.per'] = eur(Math.round(ex.price / (total / P.class_vibes) * 10) / 10);
+  v['ex.classes_word'] = svsClassWord(v['ex.classes'], lang);
   return v;
 }
 window.svsPriceValues = svsPriceValues;
+window.svsClassWord = svsClassWord;
 
 // Подставляет цифры в строку: '%%MP20.per%%' → '€15'. Неизвестный токен остаётся как есть.
 function svsExpandPrices(str, lang) {
@@ -375,7 +387,7 @@ const SVS_TRANSLATIONS = {
     vibes_classes_left: '≈ {n} classes',
     vibes_classes_left_one: '≈ {n} class',
     vibes_classes_left_other: '≈ {n} classes',
-    vibes_rate: '1 class = 20 VIBES',
+    vibes_rate: '1 class = %%class%% VIBES',
     vibes_active: 'Active {{pass:pl}} and {{starter:pl}}',
     vibes_no_active: 'No active {{pass}} or {{starter}}.',
     vibes_until: 'valid until {d}',
@@ -700,7 +712,7 @@ const SVS_TRANSLATIONS = {
     vibes_classes_left_few: '≈ {n} занятия',
     vibes_classes_left_many: '≈ {n} занятий',
     vibes_classes_left_other: '≈ {n} занятия',
-    vibes_rate: '1 занятие = 20 VIBES',
+    vibes_rate: '1 занятие = %%class%% VIBES',
     vibes_active: 'Активные {{pass:pl}} и {{starter:pl}}',
     vibes_no_active: 'Активных {{pass:pl_gen}} и {{starter:pl_gen}} нет.',
     vibes_until: 'действует до {d}',
@@ -1023,7 +1035,7 @@ const SVS_TRANSLATIONS = {
     vibes_classes_left: '≈ {n} μαθήματα',
     vibes_classes_left_one: '≈ {n} μάθημα',
     vibes_classes_left_other: '≈ {n} μαθήματα',
-    vibes_rate: '1 μάθημα = 20 VIBES',
+    vibes_rate: '1 μάθημα = %%class%% VIBES',
     vibes_active: 'Ενεργά {{pass:pl}} και {{starter:pl}}',
     vibes_no_active: 'Δεν υπάρχει ενεργό {{pass}} ή {{starter}}.',
     vibes_until: 'ισχύει έως {d}',
@@ -1315,7 +1327,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   sched_full:         'Full schedule →',
   sched_book_spot:    'Book spot',
   sched_see_all:      'Full schedule →',
-  sched_free:         '€20*',
+  sched_free:         '%%dropin%%*',
   sched_aria_days:    'Select day',
   // Classes section
   class_book:         'Book',
@@ -1338,7 +1350,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   sched_full:         'Полное расписание →',
   sched_book_spot:    'Записаться',
   sched_see_all:      'Полное расписание →',
-  sched_free:         '€20*',
+  sched_free:         '%%dropin%%*',
   sched_aria_days:    'Выберите день',
   class_book:         'Записаться',
   cat_yoga:           'Йога',
@@ -1358,7 +1370,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   sched_full:         'Πλήρες πρόγραμμα →',
   sched_book_spot:    'Κράτηση',
   sched_see_all:      'Πλήρες πρόγραμμα →',
-  sched_free:         '€20*',
+  sched_free:         '%%dropin%%*',
   sched_aria_days:    'Επιλέξτε ημέρα',
   class_book:         'Κράτηση',
   cat_yoga:           'Yoga',
@@ -1924,7 +1936,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   bm_another:          'Book another class',
   bm_failed:           'Booking failed. Please try again or message us.',
   // schedule price
-  sched_price_dropin:  '€20 drop-in',
+  sched_price_dropin:  '%%dropin%% drop-in',
   sched_price_hint:    'cheaper with a {{pass}}',
   sched_book_aria:     'Book {name}, {date} at {time}',
 });
@@ -1983,7 +1995,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   bm_done:             'Готово',
   bm_another:          'Записаться ещё',
   bm_failed:           'Не удалось записаться. Попробуйте ещё раз или напишите нам.',
-  sched_price_dropin:  'Разово €20',
+  sched_price_dropin:  'Разово %%dropin%%',
   sched_price_hint:    'с {{pass:ins}} дешевле',
   sched_book_aria:     'Записаться: {name}, {date} в {time}',
 });
@@ -2037,7 +2049,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   bm_done:             'Τέλος',
   bm_another:          'Νέα κράτηση',
   bm_failed:           'Η κράτηση απέτυχε. Δοκίμασε ξανά ή στείλε μας μήνυμα.',
-  sched_price_dropin:  '€20 μεμονωμένα',
+  sched_price_dropin:  '%%dropin%% μεμονωμένα',
   sched_price_hint:    'φθηνότερα με {{pass}}',
   sched_book_aria:     'Κράτηση: {name}, {date} στις {time}',
 });
@@ -2116,27 +2128,27 @@ window.svsTeacherName = svsTeacherName;
 // Слово VIBES показываем только тем, у кого есть абонемент или Стартер пак.
 Object.assign(SVS_TRANSLATIONS.en, {
   pay_title:        'Payment',
-  pay_guest:        'Drop-in class €20, pay at the studio',
+  pay_guest:        'Drop-in class %%dropin%%, pay at the studio',
   pay_guest_login:  'Have a {{pass}}? Sign in to book with it',
-  pay_studio:       'Pay at the studio: €20',
+  pay_studio:       'Pay at the studio: %%dropin%%',
   pay_studio_hint:  'Classes are cheaper with a {{pass}}',
   pay_full:         'Paid with {lot}: {n} VIBES will be used, {left} left{note}.',
   pay_with_bookings:' (including your other bookings)',
   pay_until:        'Valid until {d}.',
-  pay_or_studio:    'Prefer to pay at the studio? €20 — just tell the front desk.',
+  pay_or_studio:    'Prefer to pay at the studio? %%dropin%% — just tell the front desk.',
   pay_partial:      'Your {lot} has {have} VIBES{note} — {miss} short. Pay the difference at the studio: €{miss}',
   pay_partial_note: ' left after your other bookings',
-  pay_used:         'The VIBES on your {lot} are already reserved for your other bookings. Pay at the studio: €20',
-  pay_expired:      'Your {lot} is valid until {d}, and the class is on {c}. Pay €20 at the studio or {action}.',
+  pay_used:         'The VIBES on your {lot} are already reserved for your other bookings. Pay at the studio: %%dropin%%',
+  pay_expired:      'Your {lot} is valid until {d}, and the class is on {c}. Pay %%dropin%% at the studio or {action}.',
   pay_renew:        'renew your {{pass}}',
   pay_buy:          'get a {{pass}}',
-  pay_unknown:      'Payment: with your {{pass}} or €20 at the studio',
+  pay_unknown:      'Payment: with your {{pass}} or %%dropin%% at the studio',
   pay_success_full: '{n} VIBES from your {lot} will be used at the visit.',
   pay_bonus:        'Bonus VIBES',
   pay_full_bonus:   'Paid with bonus VIBES: {n} VIBES will be used, {left} left{note}.',
   pay_partial_bonus:'Bonus VIBES: {have}{note} — {miss} short. Pay the difference at the studio: €{miss}',
-  pay_used_bonus:   'Your bonus VIBES are already reserved for your other bookings. Pay at the studio: €20',
-  pay_expired_bonus:'Your bonus VIBES are valid until {d}, and the class is on {c}. Pay at the studio: €20.',
+  pay_used_bonus:   'Your bonus VIBES are already reserved for your other bookings. Pay at the studio: %%dropin%%',
+  pay_expired_bonus:'Your bonus VIBES are valid until {d}, and the class is on {c}. Pay at the studio: %%dropin%%.',
   pay_success_full_bonus:'{n} bonus VIBES will be used at the visit.',
   vibes_see_passes: 'See Class Passes',
   vibes_active_mixed: 'Active VIBES',
@@ -2144,27 +2156,27 @@ Object.assign(SVS_TRANSLATIONS.en, {
 });
 Object.assign(SVS_TRANSLATIONS.ru, {
   pay_title:        'Оплата',
-  pay_guest:        'Разовое занятие €20, оплата в студии',
+  pay_guest:        'Разовое занятие %%dropin%%, оплата в студии',
   pay_guest_login:  'Есть {{pass}}? Войдите, чтобы записаться по нему',
-  pay_studio:       'Оплата в студии: €20',
+  pay_studio:       'Оплата в студии: %%dropin%%',
   pay_studio_hint:  'С {{pass:ins}} занятие дешевле',
   pay_full:         'Оплата по {lot:dat}: спишется {n} VIBES, останется {left}{note}.',
   pay_with_bookings:' — с учётом ваших записей',
   pay_until:        'Действует до {d}.',
-  pay_or_studio:    'Оплачу в студии: €20 — просто скажите администратору.',
+  pay_or_studio:    'Оплачу в студии: %%dropin%% — просто скажите администратору.',
   pay_partial:      'На {lot:prep} {have} VIBES{note} — не хватает {miss}. Доплата в студии: €{miss}',
   pay_partial_note: ' с учётом ваших записей',
-  pay_used:         'VIBES на {lot:prep} уже учтены в ваших записях. Оплата в студии: €20',
-  pay_expired:      '{Lot} действует до {d}, а занятие {c}. Оплата в студии €20 или {action}.',
+  pay_used:         'VIBES на {lot:prep} уже учтены в ваших записях. Оплата в студии: %%dropin%%',
+  pay_expired:      '{Lot} действует до {d}, а занятие {c}. Оплата в студии %%dropin%% или {action}.',
   pay_renew:        'продлите {{pass:acc}}',
   pay_buy:          'выберите {{pass:acc}}',
-  pay_unknown:      'Оплата: по {{pass:dat}} или €20 в студии',
+  pay_unknown:      'Оплата: по {{pass:dat}} или %%dropin%% в студии',
   pay_success_full: 'При посещении с {lot:gen} спишется {n} VIBES.',
   pay_bonus:        'бонусные VIBES',
   pay_full_bonus:   'Оплата бонусными VIBES: спишется {n} VIBES, останется {left}{note}.',
   pay_partial_bonus:'Бонусных VIBES: {have}{note} — не хватает {miss}. Доплата в студии: €{miss}',
-  pay_used_bonus:   'Бонусные VIBES уже учтены в ваших записях. Оплата в студии: €20',
-  pay_expired_bonus:'Бонусные VIBES действуют до {d}, а занятие {c}. Оплата в студии: €20.',
+  pay_used_bonus:   'Бонусные VIBES уже учтены в ваших записях. Оплата в студии: %%dropin%%',
+  pay_expired_bonus:'Бонусные VIBES действуют до {d}, а занятие {c}. Оплата в студии: %%dropin%%.',
   pay_success_full_bonus:'При посещении спишется {n} бонусных VIBES.',
   vibes_see_passes: 'Посмотреть {{pass:pl}}',
   vibes_active_mixed: 'Активные VIBES',
@@ -2173,27 +2185,27 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 // EL: формулировки на «εσύ», как в остальном греческом тексте сайта.
 Object.assign(SVS_TRANSLATIONS.el, {
   pay_title:        'Πληρωμή',
-  pay_guest:        'Μεμονωμένο μάθημα €20, πληρωμή στο στούντιο',
+  pay_guest:        'Μεμονωμένο μάθημα %%dropin%%, πληρωμή στο στούντιο',
   pay_guest_login:  'Έχεις {{pass}}; Συνδέσου για να κλείσεις με αυτό',
-  pay_studio:       'Πληρωμή στο στούντιο: €20',
+  pay_studio:       'Πληρωμή στο στούντιο: %%dropin%%',
   pay_studio_hint:  'Με {{pass}} το μάθημα κοστίζει λιγότερο',
   pay_full:         'Πληρωμή με {lot}: θα χρησιμοποιηθούν {n} VIBES, θα μείνουν {left}{note}.',
   pay_with_bookings:' (μαζί με τις άλλες κρατήσεις σου)',
   pay_until:        'Ισχύει έως {d}.',
-  pay_or_studio:    'Θα πληρώσω στο στούντιο: €20 — απλώς πες το στη ρεσεψιόν.',
+  pay_or_studio:    'Θα πληρώσω στο στούντιο: %%dropin%% — απλώς πες το στη ρεσεψιόν.',
   pay_partial:      'Στο {lot} έχεις {have} VIBES{note} — λείπουν {miss}. Συμπλήρωση στο στούντιο: €{miss}',
   pay_partial_note: ' μετά τις άλλες κρατήσεις σου',
-  pay_used:         'Τα VIBES του {lot} έχουν ήδη δεσμευτεί για τις άλλες κρατήσεις σου. Πληρωμή στο στούντιο: €20',
-  pay_expired:      'Το {lot} ισχύει έως {d}, ενώ το μάθημα είναι στις {c}. Πλήρωσε €20 στο στούντιο ή {action}.',
+  pay_used:         'Τα VIBES του {lot} έχουν ήδη δεσμευτεί για τις άλλες κρατήσεις σου. Πληρωμή στο στούντιο: %%dropin%%',
+  pay_expired:      'Το {lot} ισχύει έως {d}, ενώ το μάθημα είναι στις {c}. Πλήρωσε %%dropin%% στο στούντιο ή {action}.',
   pay_renew:        'ανανέωσε το {{pass}}',
   pay_buy:          'πάρε ένα {{pass}}',
-  pay_unknown:      'Πληρωμή: με {{pass}} ή €20 στο στούντιο',
+  pay_unknown:      'Πληρωμή: με {{pass}} ή %%dropin%% στο στούντιο',
   pay_success_full: 'Στην επίσκεψη θα χρησιμοποιηθούν {n} VIBES από το {lot}.',
   pay_bonus:        'Bonus VIBES',
   pay_full_bonus:   'Πληρωμή με bonus VIBES: θα χρησιμοποιηθούν {n} VIBES, θα μείνουν {left}{note}.',
   pay_partial_bonus:'Bonus VIBES: {have}{note} — λείπουν {miss}. Συμπλήρωση στο στούντιο: €{miss}',
-  pay_used_bonus:   'Τα bonus VIBES σου έχουν ήδη δεσμευτεί για τις άλλες κρατήσεις σου. Πληρωμή στο στούντιο: €20',
-  pay_expired_bonus:'Τα bonus VIBES σου ισχύουν έως {d}, ενώ το μάθημα είναι στις {c}. Πληρωμή στο στούντιο: €20.',
+  pay_used_bonus:   'Τα bonus VIBES σου έχουν ήδη δεσμευτεί για τις άλλες κρατήσεις σου. Πληρωμή στο στούντιο: %%dropin%%',
+  pay_expired_bonus:'Τα bonus VIBES σου ισχύουν έως {d}, ενώ το μάθημα είναι στις {c}. Πληρωμή στο στούντιο: %%dropin%%.',
   pay_success_full_bonus:'Στην επίσκεψη θα χρησιμοποιηθούν {n} bonus VIBES.',
   vibes_see_passes: 'Δες τα {{pass:pl}}',
   vibes_active_mixed: 'Ενεργά VIBES',
@@ -2218,7 +2230,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   vb_stat_pass:         'per class with a {{pass}}',
   vb_how_title:         'How it works',
   vb_how1_title:        'Join',
-  vb_how1_desc:         'Buy a {{pass}} or a {{starter}}. Your VIBES card is created automatically when you register on the website.',
+  vb_how1_desc:         'Buy a {{pass}} or a {{starter}}. Your VIBES card is created automatically when you register on the website and confirm your email.',
   vb_how2_title:        'Collect',
   vb_how2_desc:         'VIBES are credited when you buy a {{pass}} — and as a gift for bringing friends, leaving a review and on your birthday.',
   vb_how3_title:        'Spend',
@@ -2256,7 +2268,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   vb_ex_review:         'Google Maps review',
   vb_ex_bday:           'Birthday',
   vb_ex_total:          'Total',
-  vb_ex_classes:        '≈ %%ex.classes%% classes',
+  vb_ex_classes:        '≈ %%ex.classes%% %%ex.classes_word%%',
   vb_ex_per:            'about %%ex.per%% per class',
   vb_rules_title:       'Rules in brief',
   vb_rule1:             '<strong>Validity</strong> of a {{pass}} starts from your first visit, not from the purchase date.',
@@ -2270,7 +2282,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   vb_faq1_q:            'What are VIBES?',
   vb_faq1_a:            'VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs %%class%% VIBES, special classes have their own price in VIBES.',
   vb_faq2_q:            'Do I need to join the program?',
-  vb_faq2_a:            'There is nothing extra to sign up for. Your VIBES card is created automatically when you register on the website; VIBES appear on it after you buy a {{pass}} or a {{starter}}. You can also come without a {{pass}} — a single visit costs %%dropin%%.',
+  vb_faq2_a:            'There is nothing extra to sign up for. Your VIBES card is created automatically when you register on the website and confirm your email; VIBES appear on it after you buy a {{pass}} or a {{starter}}. You can also come without a {{pass}} — a single visit costs %%dropin%%.',
   vb_faq3_q:            'Do VIBES expire?',
   vb_faq3_a:            'VIBES from a {{pass}} or {{starter}} are valid for its period, which starts from your first visit. Bonus VIBES never expire.',
   vb_faq4_q:            'Can I give or transfer VIBES?',
@@ -2307,7 +2319,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   vb_stat_pass:         'за занятие с {{pass:ins}}',
   vb_how_title:         'Как это работает',
   vb_how1_title:        'Вступить',
-  vb_how1_desc:         'Купите {{pass}} или {{starter}}. Карточка VIBES заводится автоматически, когда вы регистрируетесь на сайте.',
+  vb_how1_desc:         'Купите {{pass}} или {{starter}}. Карточка VIBES заводится автоматически, когда вы регистрируетесь на сайте и подтверждаете email.',
   vb_how2_title:        'Копить',
   vb_how2_desc:         'VIBES начисляются за покупку {{pass:gen}} — и в подарок: за приведённых друзей, отзыв и в день рождения.',
   vb_how3_title:        'Тратить',
@@ -2345,7 +2357,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   vb_ex_review:         'Отзыв в Google Maps',
   vb_ex_bday:           'День рождения',
   vb_ex_total:          'Итого',
-  vb_ex_classes:        '≈ %%ex.classes%% занятие',
+  vb_ex_classes:        '≈ %%ex.classes%% %%ex.classes_word%%',
   vb_ex_per:            'около %%ex.per%% за занятие',
   vb_rules_title:       'Правила коротко',
   vb_rule1:             '<strong>Срок {{pass:gen}}</strong> отсчитывается с первого посещения, а не с даты покупки.',
@@ -2359,7 +2371,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   vb_faq1_q:            'Что такое VIBES?',
   vb_faq1_a:            'VIBES — внутренняя валюта студии. Ими оплачиваются занятия: обычное занятие стоит %%class%% VIBES, у специальных — своя цена в VIBES.',
   vb_faq2_q:            'Нужно ли вступать в программу?',
-  vb_faq2_a:            'Отдельно вступать не нужно. Карточка VIBES заводится автоматически при регистрации на сайте, а VIBES появляются на ней после покупки {{pass:gen}} или {{starter:gen}}. Можно прийти и без {{pass:gen}} — разовое посещение стоит %%dropin%%.',
+  vb_faq2_a:            'Отдельно вступать не нужно. Карточка VIBES заводится автоматически, когда вы регистрируетесь на сайте и подтверждаете email, а VIBES появляются на ней после покупки {{pass:gen}} или {{starter:gen}}. Можно прийти и без {{pass:gen}} — разовое посещение стоит %%dropin%%.',
   vb_faq3_q:            'Сгорают ли VIBES?',
   vb_faq3_a:            'VIBES из {{pass:gen}} или {{starter:gen}} действуют в течение его срока — он отсчитывается с первого посещения. Бонусные VIBES бессрочные.',
   vb_faq4_q:            'Можно ли подарить или передать VIBES?',
@@ -2396,7 +2408,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   vb_stat_pass:         'ανά μάθημα με {{pass}}',
   vb_how_title:         'Πώς λειτουργεί',
   vb_how1_title:        'Γίνετε μέλος',
-  vb_how1_desc:         'Αγοράστε ένα {{pass}} ή ένα {{starter}}. Η κάρτα VIBES δημιουργείται αυτόματα όταν εγγραφείτε στον ιστότοπο.',
+  vb_how1_desc:         'Αγοράστε ένα {{pass}} ή ένα {{starter}}. Η κάρτα VIBES δημιουργείται αυτόματα όταν εγγραφείτε στον ιστότοπο και επιβεβαιώσετε το email σας.',
   vb_how2_title:        'Συλλέξτε',
   vb_how2_desc:         'Τα VIBES πιστώνονται με την αγορά ενός {{pass}} — και ως δώρο: για φίλους που φέρνετε, για μια κριτική και στα γενέθλιά σας.',
   vb_how3_title:        'Χρησιμοποιήστε',
@@ -2434,7 +2446,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   vb_ex_review:         'Κριτική στο Google Maps',
   vb_ex_bday:           'Γενέθλια',
   vb_ex_total:          'Σύνολο',
-  vb_ex_classes:        '≈ %%ex.classes%% μαθήματα',
+  vb_ex_classes:        '≈ %%ex.classes%% %%ex.classes_word%%',
   vb_ex_per:            'περίπου %%ex.per%% ανά μάθημα',
   vb_rules_title:       'Οι κανόνες με λίγα λόγια',
   vb_rule1:             '<strong>Η ισχύς</strong> ενός {{pass}} μετρά από την πρώτη επίσκεψη, όχι από την ημερομηνία αγοράς.',
@@ -2448,7 +2460,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   vb_faq1_q:            'Τι είναι τα VIBES;',
   vb_faq1_a:            'Τα VIBES είναι το εσωτερικό νόμισμα του στούντιο. Με αυτά πληρώνετε τα μαθήματα: ένα τακτικό μάθημα κοστίζει %%class%% VIBES, τα ειδικά μαθήματα έχουν δική τους τιμή σε VIBES.',
   vb_faq2_q:            'Χρειάζεται να γίνω μέλος;',
-  vb_faq2_a:            'Δεν χρειάζεται ξεχωριστή εγγραφή. Η κάρτα VIBES δημιουργείται αυτόματα με την εγγραφή στον ιστότοπο, και τα VIBES εμφανίζονται μετά την αγορά ενός {{pass}} ή {{starter}}. Μπορείτε να έρθετε και χωρίς {{pass}} — η μεμονωμένη επίσκεψη κοστίζει %%dropin%%.',
+  vb_faq2_a:            'Δεν χρειάζεται ξεχωριστή εγγραφή. Η κάρτα VIBES δημιουργείται αυτόματα όταν εγγραφείτε στον ιστότοπο και επιβεβαιώσετε το email σας, και τα VIBES εμφανίζονται μετά την αγορά ενός {{pass}} ή {{starter}}. Μπορείτε να έρθετε και χωρίς {{pass}} — η μεμονωμένη επίσκεψη κοστίζει %%dropin%%.',
   vb_faq3_q:            'Λήγουν τα VIBES;',
   vb_faq3_a:            'Τα VIBES ενός {{pass}} ή {{starter}} ισχύουν για τη διάρκειά του, που μετρά από την πρώτη επίσκεψη. Τα bonus VIBES δεν λήγουν.',
   vb_faq4_q:            'Μπορώ να χαρίσω ή να μεταβιβάσω VIBES;',

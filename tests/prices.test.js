@@ -29,6 +29,13 @@ t('цена занятия и выгода', () => {
 t('пример MP20 + бонусы', () => {
   assert.deepStrictEqual([ru['ex.total'], ru['ex.classes'], ru['ex.per']], [422, 21, '€14,20']);
 });
+t('склонение «занятие»', () => {
+  assert.strictEqual(ru['ex.classes_word'], 'занятие');
+  const w = (n, l) => window.svsClassWord(n, l);
+  assert.deepStrictEqual([1, 2, 5, 11, 12, 21, 22, 25, 111, 104].map((n) => w(n, 'ru')),
+    ['занятие', 'занятия', 'занятий', 'занятий', 'занятий', 'занятие', 'занятия', 'занятий', 'занятий', 'занятия']);
+  assert.deepStrictEqual([w(1, 'en'), w(21, 'en'), w(1, 'el'), w(21, 'el')], ['class', 'classes', 'μάθημα', 'μαθήματα']);
+});
 t('svsExpandPrices', () => {
   assert.strictEqual(window.svsExpandPrices('%%MP4.per%% / class · %%nope%%', 'en'), '€17.50 / class · %%nope%%');
 });

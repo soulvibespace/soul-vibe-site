@@ -31,6 +31,17 @@ def load():
     return json.loads(m.group(1))
 
 
+def class_word(n, lang):
+    if lang == 'ru':
+        m10, m100 = n % 10, n % 100
+        if m10 == 1 and m100 != 11:
+            return 'занятие'
+        return 'занятия' if 2 <= m10 <= 4 and not 12 <= m100 <= 14 else 'занятий'
+    if lang == 'el':
+        return 'μάθημα' if n == 1 else 'μαθήματα'
+    return 'class' if n == 1 else 'classes'
+
+
 def values(P, lang='en'):
     dec = '.' if lang == 'en' else ','
 
@@ -66,6 +77,7 @@ def values(P, lang='en'):
     v.update({'ex.plan': P['example']['plan'], 'ex.price': eur(ex['price']), 'ex.base': ex['vibes'],
               'ex.bonus': bonus, 'ex.total': total, 'ex.classes': total // P['class_vibes'],
               'ex.per': eur(math.floor(ex['price'] / (total / P['class_vibes']) * 10 + 0.5) / 10)})
+    v['ex.classes_word'] = class_word(v['ex.classes'], lang)
     return {k: str(x) for k, x in v.items()}
 
 

@@ -338,7 +338,7 @@ const BookingModal = (() => {
         <div class="bm-services-grid">`;
       for (const s of groups[cat]) {
         const duration = s.duration ? `${s.duration} ${_s('min')}` : '';
-        const price    = s.price > 0 ? `€${s.price.toFixed(0)}` : _esc(_k('sched_price_dropin', '€20'));
+        const price    = s.price > 0 ? `€${s.price.toFixed(0)}` : _esc(_k('sched_price_dropin', '€' + ((window.SVS_PRICES && SVS_PRICES.dropin_eur) || 20)));
         const imgUrl   = _svcImg(s);
         // Strip HTML + decode entities for clean display
         const rawDesc  = s.description
@@ -830,7 +830,7 @@ const BookingModal = (() => {
     }
     if (!plan) return '';
     const v = {
-      lot: plan.lot, n: Math.min(plan.covered || 0, 20), left: plan.left, have: plan.covered, miss: plan.due,
+      lot: plan.lot, n: Math.min(plan.covered || 0, (window.SVSPayPlan && SVSPayPlan.CLASS_VIBES) || 20), left: plan.left, have: plan.covered, miss: plan.due,
       d: _esc(_payDate(plan.expiry)), c: _esc(_payDate(_selectedDate)),
       note: '',
     };
@@ -862,7 +862,8 @@ const BookingModal = (() => {
         tone = 'warn';
         const act = plan.lot && plan.lot.source_type === 'membership' ? 'pay_renew' : 'pay_buy';
         v.action = pricing(_k(act));
-        main = _payFill(_esc(K('pay_expired')), v);
+        // «действуют до {d}» — только если срок реально задан (бонусные VIBES обычно бессрочные).
+        main = plan.expiry ? _payFill(_esc(K('pay_expired')), v) : _esc(_k('pay_studio'));
         break;
       }
       case 'unknown':
