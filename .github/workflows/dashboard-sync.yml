@@ -1,0 +1,61 @@
+# Синхронизация задач дашборда прогресса с PR.
+# PR ссылается на задачу строкой «Задача: #N» или «Closes #N»:
+#   PR открыт      -> задаче ставится status:in-progress
+#   PR смёржен     -> задача закрывается (готово)
+#   PR закрыт без мёржа -> status:in-progress снимается
+# Закрытие задачи вручную снимает статусные метки.
+name: dashboard-sync
+on:
+  pull_request:
+    types: [opened, reopened, edited, ready_for_review, converted_to_draft, closed]
+  issues:
+    types: [closed, reopened]
+permissions:
+  issues: write
+  pull-requests: read
+concurrency:
+  group: dashboard-sync-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const removeLabel = async (n, name) => {
+              try { await github.rest.issues.removeLabel({ owner, repo, issue_number: n, name }); } catch (e) { if (e.status !== 404) throw e; }
+            };
+            if (context.eventName === 'issues') {
+              const is = context.payload.issue;
+              if (!is.labels.some(l => l.name === 'dashboard')) return;
+              if (context.payload.action === 'closed') {
+                await removeLabel(is.number, 'status:in-progress');
+                await removeLabel(is.number, 'status:blocked');
+              }
+              return;
+            }
+            const pr = context.payload.pull_request;
+            const text = `${pr.title}\n${pr.body || ''}`;
+            const re = /(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?|задачи?|task)\s*:?\s*((?:(?:soulvibespace\/soul-vibe-site)?#\d+[\s,]*)+)/gi;
+            const nums = new Set();
+            for (const m of text.matchAll(re)) for (const n of m[1].matchAll(/#(\d+)/g)) nums.add(+n[1]);
+            if (!nums.size) { core.info('PR не ссылается на задачи'); return; }
+            for (const n of nums) {
+              let is;
+              try { is = (await github.rest.issues.get({ owner, repo, issue_number: n })).data; } catch { continue; }
+              if (is.pull_request || !is.labels.some(l => l.name === 'dashboard')) continue;
+              const blocked = is.labels.some(l => l.name === 'status:blocked');
+              if (pr.state === 'open' && !pr.draft) {
+                if (!blocked && is.state === 'open') await github.rest.issues.addLabels({ owner, repo, issue_number: n, labels: ['status:in-progress'] });
+              } else if (pr.state === 'closed' && pr.merged) {
+                if (is.state === 'open') {
+                  await github.rest.issues.createComment({ owner, repo, issue_number: n, body: `Готово: смёржен PR #${pr.number}.` });
+                  await github.rest.issues.update({ owner, repo, issue_number: n, state: 'closed', state_reason: 'completed' });
+                }
+              } else {
+                await removeLabel(n, 'status:in-progress');
+              }
+              core.info(`#${n} обновлена по PR #${pr.number}`);
+            }
