@@ -630,41 +630,16 @@
     const API_BASE = window.SVS_API_BASE || 'https://soul-vibe-api.onrender.com';
     const SB_CDN   = 'https://simplybook.me';
 
-    // Category label maps
-    const CAT_LABELS = {
-      yoga:     { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
-      spirit:   { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές Πρακτικές' },
-      dance:    { en: 'Dance & Movement', ru: 'Танец и движение', el: 'Χορός & Κίνηση' },
-      events:   { en: 'Events', ru: 'События', el: 'Εκδηλώσεις' },
-    };
-
-    // Simplybook category_id → our group key
-    // 47, 48 = Coworking — NOT shown in Classes (Space page only)
-    const CAT_MAP = {
-      // Yoga
-      2:'yoga',4:'yoga',16:'yoga',17:'yoga',19:'yoga',22:'yoga',23:'yoga',24:'yoga',
-      25:'yoga',26:'yoga',31:'yoga',38:'yoga',29:'yoga',
-      // Spiritual & Healing
-      20:'spirit',30:'spirit',41:'spirit',42:'spirit',
-      // Dance & Movement
-      34:'dance',35:'dance',36:'dance',45:'dance',
-      // Events
-      43:'events',44:'events',46:'events',32:'events',37:'events',
-      // Coworking — excluded from Classes, maps to null to skip
-      47:null, 48:null,
-    };
+    // Группы и порядок классов — services-filter.js (SvsGroups).
+    // Группа (по имени категории SimplyBook) — только для пилюль-фильтров,
+    // порядок карточек = порядок услуг в SimplyBook. Неизвестная категория → «Другое».
 
     let _allServices = [];
     let _activeCat = '';
 
     // ── Resolve category group for a service ──────────────────────
     function serviceGroup(svc) {
-      const cats = svc.category_ids || [];
-      for (const cid of cats) {
-        const g = CAT_MAP[Number(cid)];
-        if (g) return g;
-      }
-      return null; // skip if no known category
+      return SvsGroups.groupOf(svc);
     }
 
     // ── Photo URL ──────────────────────────────────────────────────
@@ -690,7 +665,7 @@
     // ── Category label ────────────────────────────────────────────
     function catLabel(key) {
       const l = lang();
-      return (CAT_LABELS[key] && CAT_LABELS[key][l]) || key;
+      return SvsGroups.label(key, l);
     }
 
     // ── Build category filter pills ───────────────────────────────
@@ -699,8 +674,7 @@
       // remove old dynamic pills
       wrap.querySelectorAll('.cat-pill:not([data-cat=""])').forEach(p => p.remove());
 
-      const order = ['yoga','spirit','dance','events'];
-      order.filter(g => groups.has(g)).forEach(g => {
+      SvsGroups.order.filter(g => groups.has(g)).forEach(g => {
         const btn = document.createElement('button');
         btn.className = 'cat-pill';
         btn.dataset.cat = g;
@@ -885,7 +859,9 @@
         const visibleServices = (typeof SvsFilter !== 'undefined')
           ? await SvsFilter.filterVisibleServices(services)
           : services;
-        _allServices = visibleServices.filter(s => serviceGroup(s) !== null);
+        // Коворкинг API уже исключает; на всякий случай не показываем и здесь.
+        _allServices = SvsGroups.orderServices(visibleServices, data.order)
+          .filter(s => serviceGroup(s) !== 'coworking');
 
         // Gather available groups
         const groups = new Set(_allServices.map(s => serviceGroup(s)).filter(Boolean));

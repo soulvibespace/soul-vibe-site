@@ -1806,6 +1806,23 @@ button { cursor: pointer; background: none; border: none; }
 /* ── Service list ── */
 .bm-services-header { margin-bottom: 8px; }
 .bm-category { margin-bottom: 24px; }
+/* Пилюли-фильтры в «Выберите занятие» (порядок карточек не меняют) */
+.bm-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
+.bm-filter {
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border, #e2ddef);
+  background: transparent;
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--text-secondary, #555);
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+  white-space: nowrap;
+}
+.bm-filter:hover { border-color: var(--color-primary, #6B4FA0); color: var(--color-primary, #6B4FA0); }
+.bm-filter.active { background: var(--color-primary, #6B4FA0); border-color: var(--color-primary, #6B4FA0); color: #fff; }
 .bm-category-label {
   font-size: 0.7rem;
   font-weight: 700;

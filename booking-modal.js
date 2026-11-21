@@ -85,6 +85,8 @@ const BookingModal = (() => {
   let _step = null;     // which screen is on display — used to re-render on language change
   let _services = null;
   let _selectedService = null;
+  let _servicesApiOrder = null; // поле order из /api/booking/services (null = старый API)
+  let _svcFilter = '';          // активная пилюля в «Выберите занятие»
   let _selectedDate = null;
   let _selectedSlot = null;
   let _slots = {};
@@ -192,6 +194,7 @@ const BookingModal = (() => {
           });
           const data = await res.json();
           _services = data.services || [];
+          _servicesApiOrder = data.order || null;
         } catch(e) { _services = []; }
       }
       _selectedService = serviceId;
@@ -289,6 +292,7 @@ const BookingModal = (() => {
         });
         const data = await res.json();
         const rawServices = data.services || [];
+        _servicesApiOrder = data.order || null;
         // Filter by Simplybook CRM visibility (eye toggle = category visibility)
         _services = (typeof SvsFilter !== 'undefined')
           ? await SvsFilter.filterVisibleServices(rawServices)
@@ -302,21 +306,15 @@ const BookingModal = (() => {
     clearTimeout(hintTimer);
 
     const lang = _lang();
-    const catLabels = {
-      yoga:      { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
-      spiritual: { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές' },
-      dance:     { en: 'Dance & Movement', ru: 'Танцы', el: 'Χορός' },
-      events:    { en: 'Events', ru: 'События', el: 'Εκδηλώσεις' },
-      other:     { en: 'Other', ru: 'Другое', el: 'Άλλα' }
-    };
-
-    // Group services by category
-    const groups = {};
-    for (const s of _services) {
-      const cat = s.category || 'other';
-      if (!groups[cat]) groups[cat] = [];
-      groups[cat].push(s);
-    }
+    // Порядок = порядок услуг SimplyBook (как на /classes). Группа — только пилюли.
+    const G = window.SvsGroups;
+    const groupOf = s => (G ? G.groupOf(s) : 'other');
+    const ordered = (G ? G.orderServices(_services, _servicesApiOrder) : _services.slice())
+      .filter(s => groupOf(s) !== 'coworking');
+    const present = new Set(ordered.map(groupOf));
+    const pillKeys = G ? G.order.filter(k => present.has(k)) : [];
+    if (_svcFilter && !present.has(_svcFilter)) _svcFilter = '';
+    const allLabel = lang === 'ru' ? 'Все' : lang === 'el' ? 'Όλα' : 'All';
 
     const SB_CDN = 'https://simplybook.me';
     function _svcImg(s) {
@@ -325,18 +323,20 @@ const BookingModal = (() => {
       return p.startsWith('http') ? p : `${SB_CDN}${p}`;
     }
 
-    const catOrder = ['yoga', 'spiritual', 'dance', 'events', 'other'];
     let html = `<div class="bm-services-header">
       <h2 class="bm-title">${_s('choose_class')}</h2>
     </div>`;
-
-    for (const cat of catOrder) {
-      if (!groups[cat]) continue;
-      const catName = catLabels[cat]?.[lang] || catLabels[cat]?.en || cat;
+    if (pillKeys.length > 1) {
+      html += `<div class="bm-filters" role="group">`
+        + `<button type="button" class="bm-filter${_svcFilter ? '' : ' active'}" aria-pressed="${!_svcFilter}" onclick="BookingModal._filterServices('')">${allLabel}</button>`
+        + pillKeys.map(k => `<button type="button" class="bm-filter${_svcFilter === k ? ' active' : ''}" aria-pressed="${_svcFilter === k}" onclick="BookingModal._filterServices('${k}')">${_esc(G.label(k, lang))}</button>`).join('')
+        + `</div>`;
+    }
+    {
       html += `<div class="bm-category">
-        <div class="bm-category-label">${catName}</div>
         <div class="bm-services-grid">`;
-      for (const s of groups[cat]) {
+      for (const s of ordered) {
+        if (_svcFilter && groupOf(s) !== _svcFilter) continue;
         const duration = s.duration ? `${s.duration} ${_s('min')}` : '';
         const price    = s.price > 0 ? `€${s.price.toFixed(0)}` : _esc(_k('sched_price_dropin', '€' + ((window.SVS_PRICES && SVS_PRICES.dropin_eur) || 20)));
         const imgUrl   = _svcImg(s);
@@ -994,6 +994,7 @@ const BookingModal = (() => {
         });
         const d = await r.json();
         _services = d.services || [];
+        _servicesApiOrder = d.order || null;
       } catch(e) { _services = []; }
     }
 
@@ -1137,6 +1138,13 @@ const BookingModal = (() => {
     _selectedDate = null;
     _selectedSlot = null;
     _renderStep('services');
+  }
+
+  // Пилюля-фильтр в «Выберите занятие»: перерисовываем список без загрузки.
+  function _filterServices(key) {
+    _svcFilter = key || '';
+    const body = _el('bookingModalBody');
+    if (body && _services) _renderServices(body);
   }
 
   function _goToServices() {
@@ -1695,7 +1703,7 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs, _focusLogin,
+  return { open, close, resumePendingBooking, _pickService, _filterServices, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs, _focusLogin,
            _savePendingForRedirect: _savePendingBooking, _rerender };
 })();
 
