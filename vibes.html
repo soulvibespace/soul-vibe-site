@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n-title="vb_page_title">VIBES Loyalty Program | Soul Vibe Space Limassol</title>
-  <meta name="description" content="VIBES loyalty program at Soul Vibe Space, Limassol: 1 class = %%class%% VIBES, single visit %%dropin%%, from %%min_per%% per class with a Class Pass. Bonus VIBES for friends, reviews and your birthday." />
+  <title data-i18n-title="vb_page_title">VIBES: more practice for less | Soul Vibe Space Limassol</title>
+  <meta name="description" content="VIBES loyalty program at Soul Vibe Space, Limassol: %%MP20.classes%% classes for %%MP20.price%% instead of %%MP20.full%% with a Class Pass — %%MP20.per%% per class. Bonus VIBES for friends and your birthday." />
   <!-- meta:start -->
   <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Soul Vibe Space" />
-  <meta property="og:title" content="VIBES Loyalty Program | Soul Vibe Space Limassol" />
-  <meta property="og:description" content="VIBES loyalty program at Soul Vibe Space, Limassol: 1 class = %%class%% VIBES, single visit %%dropin%%, from %%min_per%% per class with a Class Pass. Bonus VIBES for friends, reviews and your birthday." />
+  <meta property="og:title" content="VIBES: more practice for less | Soul Vibe Space Limassol" />
+  <meta property="og:description" content="VIBES loyalty program at Soul Vibe Space, Limassol: %%MP20.classes%% classes for %%MP20.price%% instead of %%MP20.full%% with a Class Pass — %%MP20.per%% per class. Bonus VIBES for friends and your birthday." />
   <meta property="og:url" content="https://soul-vibe-space.netlify.app/vibes" />
   <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="ru_RU" />
   <meta property="og:locale:alternate" content="el_GR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="VIBES Loyalty Program | Soul Vibe Space Limassol" />
-  <meta name="twitter:description" content="VIBES loyalty program at Soul Vibe Space, Limassol: 1 class = %%class%% VIBES, single visit %%dropin%%, from %%min_per%% per class with a Class Pass. Bonus VIBES for friends, reviews and your birthday." />
+  <meta name="twitter:title" content="VIBES: more practice for less | Soul Vibe Space Limassol" />
+  <meta name="twitter:description" content="VIBES loyalty program at Soul Vibe Space, Limassol: %%MP20.classes%% classes for %%MP20.price%% instead of %%MP20.full%% with a Class Pass — %%MP20.per%% per class. Bonus VIBES for friends and your birthday." />
   <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <!-- meta:end -->
 
@@ -231,15 +231,15 @@
         "name": "What are VIBES?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs %%class%% VIBES, special classes have their own price in VIBES."
+          "text": "VIBES are units on your balance that you use to pay for classes. A regular class costs %%class%% VIBES; special events have their own price."
         }
       },
       {
         "@type": "Question",
-        "name": "Do I need to join the program?",
+        "name": "How do I become a VIBES member?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "There is nothing extra to sign up for. Your VIBES card is created automatically when you register on the website and confirm your email; VIBES appear on it after you buy a Class Pass or a Starter Pack. You can also come without a Class Pass — a single visit costs %%dropin%%."
+          "text": "Register on the website and confirm your email — your VIBES card is created automatically. VIBES appear on it after you buy a Class Pass or a Starter Pack, or top up at the studio. You can also come without a Class Pass — a single visit costs %%dropin%%."
         }
       },
       {
@@ -263,7 +263,7 @@
         "name": "What if I don’t have enough VIBES?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pay the difference at the studio: %%topup%% = 1 VIBE. Or top up your balance or choose a new Class Pass — VIBES are cheaper with it."
+          "text": "Pay the difference at the studio or top up your balance: when you top up, %%topup%% becomes 1 VIBE. With a new Class Pass, each class costs less."
         }
       },
       {
@@ -358,64 +358,128 @@
   <main class="vibes-page">
     <div class="container">
 
-      <!-- ── HERO ── -->
+      <!-- ── HERO: выгода ── -->
       <section class="vb-hero" aria-labelledby="vbTitle">
         <div class="vb-hero-text">
           <p class="page-eyebrow" data-i18n="vb_eyebrow">VIBES · Loyalty program</p>
-          <h1 class="vb-title" id="vbTitle" data-i18n="vb_h1">VIBES Loyalty Program</h1>
-          <p class="vb-lead" data-i18n="vb_lead">VIBES are the studio’s currency. One class is %%class%% VIBES. Buy VIBES at a better rate with a Class Pass and get them as a gift for your actions.</p>
+          <h1 class="vb-title" id="vbTitle" data-i18n="vb_h1">More practice for less money</h1>
+          <p class="vb-lead" data-i18n="vb_lead">VIBES is the Soul Vibe Space loyalty program. Members get special prices on classes with a Class Pass and extra VIBES as a gift — for friends they invite and on their birthday. Use the VIBES you collect for your next classes.</p>
           <div class="vb-cta">
-            <a href="/pricing#multi-pass" class="btn btn-primary" data-i18n="vb_cta_pass">Choose a Class Pass</a>
-            <a href="/schedule" class="btn btn-outline" data-i18n="vb_cta_book">Book a class</a>
+            <a href="#example" class="btn btn-primary" data-i18n="vb_cta_benefit">See my savings</a>
+            <a href="#join" class="btn btn-outline" data-i18n="vb_cta_join_how">How to join</a>
           </div>
         </div>
         <div class="vb-stats" role="list">
-          <div class="vb-stat" role="listitem">
-            <p class="vb-stat-num">%%class%%<span>VIBES</span></p>
-            <p class="vb-stat-label" data-i18n="vb_stat_class">= 1 class</p>
-          </div>
-          <div class="vb-stat" role="listitem">
-            <p class="vb-stat-num">%%dropin%%</p>
-            <p class="vb-stat-label" data-i18n="vb_stat_dropin">single visit</p>
-          </div>
           <div class="vb-stat vb-stat--accent" role="listitem">
-            <p class="vb-stat-num"><small data-i18n="vb_from">from</small> %%min_per%%</p>
-            <p class="vb-stat-label" data-i18n="vb_stat_pass">per class with a Class Pass</p>
+            <p class="vb-stat-num">%%MP20.save_eur%%</p>
+            <p class="vb-stat-label" data-i18n="vb_stat_save">saved on %%MP20.classes%% classes with a Class Pass</p>
+          </div>
+          <div class="vb-stat" role="listitem">
+            <p class="vb-stat-num">%%MP20.per%%</p>
+            <p class="vb-stat-label" data-i18n="vb_stat_per">per regular class instead of %%dropin%%</p>
           </div>
         </div>
       </section>
 
-      <!-- ── HOW IT WORKS ── -->
-      <section class="vb-section" id="how" aria-labelledby="vbHowTitle">
-        <h2 class="vb-h2" id="vbHowTitle" data-i18n="vb_how_title">How it works</h2>
+      <!-- ── ПРИМЕР: одна выгода в деньгах ── -->
+      <section class="vb-section" id="example" aria-labelledby="vbExTitle">
+        <div class="vb-example">
+          <div class="vb-example-text">
+            <p class="page-eyebrow" data-i18n="vb_ex_eyebrow">Example</p>
+            <h2 class="vb-h2" id="vbExTitle" data-i18n="vb_ex_title">The same %%MP20.classes%% classes. %%MP20.save_eur%% less.</h2>
+            <p class="vb-sub" data-i18n="vb_ex_lead">You save %%MP20.save_eur%%, and one regular class costs you %%MP20.per%%.</p>
+          </div>
+          <dl class="vb-calc">
+            <div class="vb-calc-row"><dt data-i18n="vb_ex_dropin">Paying per visit</dt><dd>%%MP20.full%%</dd></div>
+            <div class="vb-calc-row"><dt><span data-i18n="vb_ex_pass">With a Class Pass</span> <span class="vb-code">MP20</span></dt><dd>%%MP20.price%%</dd></div>
+            <div class="vb-calc-row vb-calc-total"><dt data-i18n="vb_ex_save">You save</dt><dd>%%MP20.save_eur%%</dd></div>
+            <div class="vb-calc-result">
+              <p class="vb-calc-per"><span data-i18n="vb_ex_per">one class — %%MP20.per%%</span></p>
+              <p><span data-i18n="vb_ex_meta">%%MP20.classes%% classes · %%MP20.days%% days from your first visit · %%MP20.vibes%% VIBES</span></p>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ── БОНУСЫ: действие → начисление → ещё занятие ── -->
+      <section class="vb-section" id="bonus" aria-labelledby="vbBonusTitle">
+        <h2 class="vb-h2" id="vbBonusTitle" data-i18n="vb_bonus_title">How to get even more practice</h2>
+        <p class="vb-sub" data-i18n="vb_bonus_sub">Your actions turn into classes too.</p>
         <ol class="vb-steps">
           <li class="vb-step">
             <span class="vb-step-num">1</span>
             <div>
-              <p class="vb-step-title" data-i18n="vb_how1_title">Join</p>
-              <p class="vb-step-desc" data-i18n="vb_how1_desc">Buy a Class Pass or a Starter Pack. Your VIBES card is created automatically when you register on the website and confirm your email.</p>
+              <p class="vb-step-title" data-i18n="vb_bonus_friend_title">Invite a friend</p>
+              <p class="vb-step-desc" data-i18n="vb_bonus_friend_desc">Get %%bonus.friend%% VIBES for every new guest.</p>
             </div>
           </li>
           <li class="vb-step">
             <span class="vb-step-num">2</span>
             <div>
-              <p class="vb-step-title" data-i18n="vb_how2_title">Collect</p>
-              <p class="vb-step-desc" data-i18n="vb_how2_desc">VIBES are credited when you buy a Class Pass — and as a gift for bringing friends, leaving a review and on your birthday.</p>
+              <p class="vb-step-title" data-i18n="vb_bonus_bday_title">Your birthday</p>
+              <p class="vb-step-desc" data-i18n="vb_bonus_bday_desc">Another %%bonus.birthday%% VIBES as a gift. Add your date of birth in your <a href="/account">personal account</a> in advance.</p>
             </div>
           </li>
           <li class="vb-step">
             <span class="vb-step-num">3</span>
             <div>
-              <p class="vb-step-title" data-i18n="vb_how3_title">Spend</p>
-              <p class="vb-step-desc" data-i18n="vb_how3_desc">Each visit uses %%class%% VIBES. Your balance and history are in your <a href="/account">personal account</a>.</p>
+              <p class="vb-step-title" data-i18n="vb_bonus_class_title">Collect %%class%% bonus VIBES</p>
+              <p class="vb-step-desc" data-i18n="vb_bonus_class_desc">Use them for one more regular class.</p>
             </div>
           </li>
         </ol>
+        <p class="vb-howget" data-i18n="vb_bonus_how"><strong>Bonus VIBES</strong> are added to your balance and never expire. To get them, just tell the administrator at the studio.</p>
+        <p class="vb-note" data-i18n="vb_bonus_review">Plus %%bonus.review%% VIBES for a Google Maps review.</p>
+        <div class="vb-howget">
+          <p><strong data-i18n="vb_more_title">Even better with bonuses</strong></p>
+          <p data-i18n="vb_more_text">Used your %%MP20.classes%% classes on the Class Pass within its validity and collected bonus VIBES for one more? That’s %%ex.classes%% %%ex.classes_word%% for %%MP20.price%% — about %%ex.per%% per class.</p>
+        </div>
       </section>
 
-      <!-- ── VALUE TABLE ── -->
+      <!-- ── ЧТО ТАКОЕ VIBES: два предложения ── -->
+      <section class="vb-section" id="what" aria-labelledby="vbWhatTitle">
+        <h2 class="vb-h2" id="vbWhatTitle" data-i18n="vb_what_title">What are VIBES</h2>
+        <p class="vb-sub" data-i18n="vb_what_text">They are units on your balance that you use to pay for classes at Soul Vibe Space. A regular class costs %%class%% VIBES; special events are priced separately.</p>
+      </section>
+
+      <!-- ── КАК ПРИСОЕДИНИТЬСЯ ── -->
+      <section class="vb-section" id="join" aria-labelledby="vbJoinTitle">
+        <h2 class="vb-h2" id="vbJoinTitle" data-i18n="vb_join_title">Getting started is easy</h2>
+        <ol class="vb-steps">
+          <li class="vb-step">
+            <span class="vb-step-num">1</span>
+            <div>
+              <p class="vb-step-title" data-i18n="vb_join1_title">Sign up</p>
+              <p class="vb-step-desc" data-i18n="vb_join1_desc">Create an account on the website and confirm your email — your VIBES card is created automatically.</p>
+            </div>
+          </li>
+          <li class="vb-step">
+            <span class="vb-step-num">2</span>
+            <div>
+              <p class="vb-step-title" data-i18n="vb_join2_title">Choose a Class Pass</p>
+              <p class="vb-step-desc" data-i18n="vb_join2_desc">Or top up VIBES at the studio, any amount: when you top up, %%topup%% becomes 1&nbsp;VIBE.</p>
+            </div>
+          </li>
+          <li class="vb-step">
+            <span class="vb-step-num">3</span>
+            <div>
+              <p class="vb-step-title" data-i18n="vb_join3_title">Book and collect bonuses</p>
+              <p class="vb-step-desc" data-i18n="vb_join3_desc">Each visit uses %%class%% VIBES, and bonus VIBES build up on your balance.</p>
+            </div>
+          </li>
+        </ol>
+        <p class="vb-note" data-i18n="vb_join_note">Your VIBES, Class Passes expiry dates and visit history are in your <a href="/account">personal account</a>.</p>
+        <div class="vb-cta">
+          <a href="/account" onclick="if(window.AuthModal){event.preventDefault();AuthModal.open('register')}" class="btn btn-primary" data-i18n="vb_cta_join">Join VIBES</a>
+          <a href="/pricing#multi-pass" class="btn btn-outline" data-i18n="vb_cta_pass">Choose a Class Pass</a>
+        </div>
+        <p class="vb-howget"><strong data-i18n="vb_starter_title">New to the studio?</strong> <span data-i18n="vb_starter_text">A Starter Pack is your introduction to the studio: from %%SP1.price%%, for new clients only, once.</span> <a href="/pricing#starter-pack" data-i18n="vb_starter_link">Choose a Starter Pack</a></p>
+      </section>
+
+      <!-- ── ПОДРОБНЫЕ УСЛОВИЯ ── -->
       <section class="vb-section" id="value" aria-labelledby="vbValueTitle">
-        <h2 class="vb-h2" id="vbValueTitle" data-i18n="vb_value_title">Price of one class</h2>
+        <p class="page-eyebrow" data-i18n="vb_terms_eyebrow">Full terms</p>
+        <h2 class="vb-h2" id="vbValueTitle" data-i18n="vb_value_title">All options and price per class</h2>
         <p class="vb-sub" data-i18n="vb_value_sub">The bigger the Class Pass, the lower the price per class. Savings are compared with a single visit.</p>
         <div class="vb-table-wrap">
           <table class="vb-table">
@@ -503,58 +567,6 @@
         <p class="vb-note" data-i18n="vb_value_note">Validity starts from your first visit. Prices and purchase — on the <a href="/pricing">Pricing</a> page.</p>
       </section>
 
-      <!-- ── BONUS VIBES ── -->
-      <section class="vb-section" id="bonus" aria-labelledby="vbBonusTitle">
-        <h2 class="vb-h2" id="vbBonusTitle" data-i18n="vb_bonus_title">Bonus VIBES for your actions</h2>
-        <p class="vb-sub" data-i18n="vb_bonus_sub">Gifts from the studio on top of your Class Pass. Bonus VIBES never expire.</p>
-        <div class="vb-bonus-grid">
-          <div class="vb-bonus">
-            <p class="vb-bonus-amt">+%%bonus.friend%%<small>VIBES</small></p>
-            <div>
-              <p class="vb-bonus-title" data-i18n="vb_bonus_friend_title">For each friend you bring</p>
-              <p class="vb-bonus-desc" data-i18n="vb_bonus_friend_desc">Come together — and get VIBES for every new guest.</p>
-            </div>
-          </div>
-          <div class="vb-bonus">
-            <p class="vb-bonus-amt">+%%bonus.review%%<small>VIBES</small></p>
-            <div>
-              <p class="vb-bonus-title" data-i18n="vb_bonus_review_title">For a Google Maps review</p>
-              <p class="vb-bonus-desc" data-i18n="vb_bonus_review_desc">Share your experience — it helps others find the studio.</p>
-            </div>
-          </div>
-          <div class="vb-bonus">
-            <p class="vb-bonus-amt">+%%bonus.birthday%%<small>VIBES</small></p>
-            <div>
-              <p class="vb-bonus-title" data-i18n="vb_bonus_bday_title">On your birthday</p>
-              <p class="vb-bonus-desc" data-i18n="vb_bonus_bday_desc">Add your date of birth in your <a href="/account">personal account</a> in advance.</p>
-            </div>
-          </div>
-        </div>
-        <p class="vb-howget" data-i18n="vb_bonus_how"><strong>How to get them:</strong> just tell the administrator at the studio — bonus VIBES will be added to your balance.</p>
-      </section>
-
-      <!-- ── EXAMPLE ── -->
-      <section class="vb-section" id="example" aria-labelledby="vbExTitle">
-        <div class="vb-example">
-          <div class="vb-example-text">
-            <p class="page-eyebrow" data-i18n="vb_ex_eyebrow">Example</p>
-            <h2 class="vb-h2" id="vbExTitle" data-i18n="vb_ex_title">How it adds up</h2>
-            <p class="vb-sub" data-i18n="vb_ex_lead">From %%min_per%% per class with a Class Pass — and even better with bonus VIBES.</p>
-          </div>
-          <dl class="vb-calc">
-            <div class="vb-calc-row"><dt><span class="vb-code">%%ex.plan%%</span> <span class="vb-hide-xs" data-i18n="vb_ex_pass">Class Pass</span> <span class="vb-nw">%%ex.price%%</span></dt><dd>%%ex.base%% VIBES</dd></div>
-            <div class="vb-calc-row"><dt data-i18n="vb_ex_friend">A friend you brought</dt><dd>+%%bonus.friend%%</dd></div>
-            <div class="vb-calc-row"><dt data-i18n="vb_ex_review">Google Maps review</dt><dd>+%%bonus.review%%</dd></div>
-            <div class="vb-calc-row"><dt data-i18n="vb_ex_bday">Birthday</dt><dd>+%%bonus.birthday%%</dd></div>
-            <div class="vb-calc-row vb-calc-total"><dt data-i18n="vb_ex_total">Total</dt><dd>%%ex.total%% VIBES</dd></div>
-            <div class="vb-calc-result">
-              <p><span data-i18n="vb_ex_classes">≈ %%ex.classes%% %%ex.classes_word%%</span></p>
-              <p class="vb-calc-per"><span data-i18n="vb_ex_per">about %%ex.per%% per class</span></p>
-            </div>
-          </dl>
-        </div>
-      </section>
-
       <!-- ── RULES ── -->
       <section class="vb-section" id="rules" aria-labelledby="vbRulesTitle">
         <h2 class="vb-h2" id="vbRulesTitle" data-i18n="vb_rules_title">Rules in brief</h2>
@@ -575,11 +587,11 @@
         <div class="vp-faq">
           <details>
             <summary data-i18n="vb_faq1_q">What are VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq1_a">VIBES are the studio’s internal currency. You pay for classes with them: a regular class costs %%class%% VIBES, special classes have their own price in VIBES.</div>
+            <div class="vp-faq-a" data-i18n="vb_faq1_a">VIBES are units on your balance that you use to pay for classes. A regular class costs %%class%% VIBES; special events have their own price.</div>
           </details>
           <details>
-            <summary data-i18n="vb_faq2_q">Do I need to join the program?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq2_a">There is nothing extra to sign up for. Your VIBES card is created automatically when you register on the website and confirm your email; VIBES appear on it after you buy a Class Pass or a Starter Pack. You can also come without a Class Pass — a single visit costs %%dropin%%.</div>
+            <summary data-i18n="vb_faq2_q">How do I become a VIBES member?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq2_a">Register on the website and confirm your email — your VIBES card is created automatically. VIBES appear on it after you buy a Class Pass or a Starter Pack, or top up at the studio. You can also come without a Class Pass — a single visit costs %%dropin%%.</div>
           </details>
           <details>
             <summary data-i18n="vb_faq3_q">Do VIBES expire?</summary>
@@ -591,7 +603,7 @@
           </details>
           <details>
             <summary data-i18n="vb_faq5_q">What if I don’t have enough VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq5_a">Pay the difference at the studio: %%topup%% = 1 VIBE. Or top up your balance or choose a new Class Pass — VIBES are cheaper with it.</div>
+            <div class="vp-faq-a" data-i18n="vb_faq5_a">Pay the difference at the studio or top up your balance: when you top up, %%topup%% becomes 1&nbsp;VIBE. With a new Class Pass, each class costs less.</div>
           </details>
           <details>
             <summary data-i18n="vb_faq6_q">Where can I see my balance?</summary>
@@ -607,12 +619,12 @@
       <!-- ── FINAL CTA ── -->
       <section class="vb-final" aria-labelledby="vbFinalTitle">
         <div>
-          <h2 class="vb-final-title" id="vbFinalTitle" data-i18n="vb_final_title">Start collecting VIBES</h2>
-          <p class="vb-final-text" data-i18n="vb_final_text">From %%min_per%% per class with a Class Pass — and even better with bonus VIBES.</p>
+          <h2 class="vb-final-title" id="vbFinalTitle" data-i18n="vb_final_title">Practise more, spend less</h2>
+          <p class="vb-final-text" data-i18n="vb_final_text">%%MP20.per%% per regular class with a Class Pass — plus bonus VIBES for your next classes.</p>
         </div>
         <div class="vb-cta">
-          <a href="/pricing#multi-pass" class="btn btn-primary" data-i18n="vb_cta_pass">Choose a Class Pass</a>
-          <a href="/schedule" class="btn btn-outline" data-i18n="vb_cta_book">Book a class</a>
+          <a href="/account" onclick="if(window.AuthModal){event.preventDefault();AuthModal.open('register')}" class="btn btn-primary" data-i18n="vb_cta_join">Join VIBES</a>
+          <a href="/pricing#multi-pass" class="btn btn-outline" data-i18n="vb_cta_pass">Choose a Class Pass</a>
         </div>
       </section>
 
