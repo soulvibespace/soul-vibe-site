@@ -402,6 +402,7 @@ function renderVibes() {
   var box = document.getElementById('vibesContainer');
   var d = _vibesData;
   if (!box || !d) return;
+  if (typeof renderActivity === 'function') renderActivity(); // account-activity.js — for every linked client
   // The VIBES block is for clients who have (or had) a Class Pass / Starter Pack, or still hold VIBES.
   // Everyone else sees only a link to the Class Passes — no VIBES wording at all.
   var head = document.querySelector('#vibesSection .dash-section-head');
@@ -1002,6 +1003,7 @@ function logout() {
   if (_vibesTimer) { clearInterval(_vibesTimer); _vibesTimer = null; }
   var vs = document.getElementById('vibesSection'); if (vs) vs.hidden = true;
   if (typeof resetBirthday === 'function') resetBirthday();
+  if (typeof resetActivity === 'function') resetActivity();
   const dashEl  = document.getElementById('accDashboard');
   const authEl  = document.getElementById('accAuth');
   const rightEl = document.getElementById('accRight');
