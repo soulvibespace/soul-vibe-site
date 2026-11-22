@@ -365,6 +365,22 @@ function vibesTxName(tx) {
 }
 
 // «≈ 1 занятие / 2 занятия / 5 занятий» — plural form for the page language (Intl.PluralRules).
+// soul-vibe-site#65 GAP-01: a Class Pass / Starter Pack term starts at the first visit. Until then the lot
+// has validity_days and no end date — show «N days from the first visit», never a date.
+function vibesDays(n) {
+  var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
+  if (lang === 'ru') {
+    var m10 = n % 10, m100 = n % 100;
+    return n + '\u00a0' + (m10 === 1 && m100 !== 11 ? 'день' : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'дня' : 'дней');
+  }
+  if (lang === 'el') return n + (n === 1 ? '\u00a0ημέρα' : '\u00a0ημέρες');
+  return n + (n === 1 ? '\u00a0day' : '\u00a0days');
+}
+function vibesLotTerm(l) {
+  if (!l.expires_at && !l.activated_at && Number(l.validity_days) > 0)
+    return vt('vibes_first_visit', 'term: {days} from the first visit').replace('{days}', vibesDays(Number(l.validity_days)));
+  return l.expires_at ? vt('vibes_until', 'valid until {d}').replace('{d}', vibesDate(l.expires_at)) : vt('vibes_no_expiry', 'no expiry date');
+}
 function vibesClassesLeft(n) {
   var lang = window.SVS_I18N ? window.SVS_I18N.getLang() : 'en';
   var form = 'other';
@@ -439,7 +455,7 @@ function renderVibes() {
   if (!active.length) h += '<p class="vibes-note">' + escHtml(vt('vibes_no_active', 'No active Class Pass or Starter Pack.')) + '</p>';
   else {
     h += '<ul class="vibes-list">' + active.map(function (l) {
-      var meta = l.expires_at ? vt('vibes_until', 'valid until {d}').replace('{d}', vibesDate(l.expires_at)) : vt('vibes_no_expiry', 'no expiry date');
+      var meta = vibesLotTerm(l);
       return '<li class="vibes-row"><span class="vibes-row-main"><span class="vibes-row-title">' + escHtml(vibesLotName(l)) + '</span><span class="vibes-row-meta">' + escHtml(meta) + '</span></span>'
            + '<span class="vibes-row-amount">' + l.remaining_vibes + ' / ' + l.granted_vibes + '</span></li>';
     }).join('') + '</ul>';

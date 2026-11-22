@@ -36,8 +36,8 @@
 
   function fill(tpl, vars) { return String(tpl).replace(/\{(\w+)\}/g, function (m, k) { return vars[k] != null ? vars[k] : m; }).replace(/\.\./g, '.'); }
 
-  // The panel currently counts the term from the purchase date, while /pricing promises «N days from the first visit»
-  // (soul-vibe-site#65). Until the rule is settled, show only the length of the term, without an end date.
+  // soul-vibe-site#65 GAP-01: the term starts at the first visit, so the page shows «N days from the first visit»
+  // and never an end date (the panel sets it only after the first visit).
   function fmtDays(n) {
     n = Number(n);
     if (!(n > 0)) return '';

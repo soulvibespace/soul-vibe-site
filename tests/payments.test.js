@@ -46,4 +46,22 @@ t('«Спасибо» показывает срок в днях, без даты
   assert.match(src, /validity_days/);
   assert.ok(!/expires_at/.test(src));
 });
+t('«Спасибо» и кабинет: срок «N дней с первого посещения» на RU/EN/EL (#65 GAP-01)', () => {
+  const first = { ru: /с первого посещения/, en: /from the first visit/, el: /από την πρώτη επίσκεψη/ };
+  for (const lang of ['ru', 'en', 'el']) {
+    assert.match(T[lang].payr_ok_text, first[lang], lang);
+    assert.match(T[lang].vibes_first_visit, /\{days\}/, lang);
+    assert.match(T[lang].vibes_first_visit, first[lang], lang);
+    assert.ok(!/пакет/i.test(T[lang].payr_ok_text + T[lang].vibes_first_visit), lang);
+  }
+  const acc = fs.readFileSync(path.join(ROOT, 'account.js'), 'utf8');
+  const fn = acc.slice(acc.indexOf('function vibesDays'), acc.indexOf('function vibesClassesLeft'));
+  const sandbox = { window: { SVS_I18N: { getLang: () => 'ru' } }, vt: (k, d) => T.ru[k] || d, vibesDate: s => s.slice(0, 10) };
+  const vm = require('vm'); vm.createContext(sandbox); vm.runInContext(fn, sandbox);
+  assert.equal(sandbox.vibesLotTerm({ validity_days: 30, expires_at: null, activated_at: null }), 'срок 30\u00a0дней с первого посещения');
+  assert.equal(sandbox.vibesLotTerm({ validity_days: 60, expires_at: '2026-12-20T23:59:59.999Z', activated_at: '2026-10-21' }), 'действует до 2026-12-20');
+  assert.equal(sandbox.vibesLotTerm({ expires_at: null }), 'без срока');
+  sandbox.window.SVS_I18N.getLang = () => 'el';
+  assert.equal(sandbox.vibesDays(1), '1\u00a0ημέρα');
+});
 console.log(`${n} тестов: ок`);
