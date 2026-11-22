@@ -107,6 +107,14 @@
       margin-bottom: 12px;
       max-width: 640px;
     }
+    .gc-amounts { display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 12px; padding:0; list-style:none; }
+    .gc-amounts li { padding:10px 18px; border:1px solid var(--border, rgba(0,0,0,.12)); border-radius:999px; font-weight:600; font-size:1.05rem; color:var(--text-primary); background:var(--bg-card, #fff); }
+    .gc-label { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-secondary); margin:20px 0 8px !important; }
+    .gc-formats { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+    .gc-format { padding:22px 24px; border:1px solid var(--border, rgba(0,0,0,.12)); border-radius:16px; background:var(--bg-card, #fff); }
+    .gc-format h3 { font-size:1.1rem; margin:0 0 6px; color:var(--text-primary); }
+    .gc-format p { margin:0 !important; }
+    @media (max-width:600px){ .gc-formats { grid-template-columns:1fr; } }
     .gc-text-link { color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
     .gc-how {
       background: var(--surface);
@@ -244,6 +252,18 @@
       </section>
 
       <!-- How to arrange -->
+      <section class="gc-section" id="amounts">
+        <p class="page-eyebrow" data-i18n="gc_fmt_eyebrow">Amounts and formats</p>
+        <h2 data-i18n="gc_fmt_title">Choose the amount and format</h2>
+        <p class="gc-label" data-i18n="gc_fmt_amounts_label">Amounts</p>
+        <ul class="gc-amounts" aria-label="Amounts"><li>€20</li><li>€40</li><li>€60</li><li>€120</li><li>€180</li><li>€240</li></ul>
+        <p data-i18n="gc_fmt_hint">€20 covers one drop-in class. The higher the amount, the more practices they can choose.</p>
+        <div class="gc-formats">
+          <div class="gc-format"><h3 data-i18n="gc_fmt_e_title">Digital</h3><p data-i18n="gc_fmt_e_desc">Sent to your email. Perfect when you need a gift today.</p></div>
+          <div class="gc-format"><h3 data-i18n="gc_fmt_p_title">Printed</h3><p data-i18n="gc_fmt_p_desc">A beautifully designed certificate to hand over in person. Pick it up at the studio while the administrator is in: 2:00 pm – 10:00 pm.</p></div>
+        </div>
+      </section>
+
       <section class="gc-section" id="how">
         <div class="gc-how">
           <p class="page-eyebrow" data-i18n="gc_how_eyebrow">WhatsApp · Instagram</p>

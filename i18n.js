@@ -2703,6 +2703,15 @@ if (window.SVS_I18N_EXTRA) {
 // ── Страница /gift-certificates: подарочный сертификат (оформление через администратора) ──
 // GR — машинный перевод, нужна вычитка носителем.
 Object.assign(SVS_TRANSLATIONS.en, {
+  gc_fmt_eyebrow:       'Amounts and formats',
+  gc_fmt_title:         'Choose the amount and format',
+  gc_fmt_amounts_label: 'Amounts',
+  gc_fmt_amounts:       '€20 · €40 · €60 · €120 · €180 · €240',
+  gc_fmt_hint:          '%%dropin%% covers one drop-in class. The higher the amount, the more practices they can choose.',
+  gc_fmt_e_title:       'Digital',
+  gc_fmt_e_desc:        'Sent to your email. Perfect when you need a gift today.',
+  gc_fmt_p_title:       'Printed',
+  gc_fmt_p_desc:        'A beautifully designed certificate to hand over in person. Pick it up at the studio while the administrator is in: 2:00 pm – 10:00 pm.',
   gc_eyebrow:      'Gift certificates',
   gc_title:        'Give the gift of time',
   gc_lead:         'A moment to slow down, move and enjoy a practice they love.',
@@ -2723,6 +2732,15 @@ Object.assign(SVS_TRANSLATIONS.en, {
   gc_gallery_title:'Soul Vibe Space gift certificates',
 });
 Object.assign(SVS_TRANSLATIONS.ru, {
+  gc_fmt_eyebrow:       'Номиналы и форматы',
+  gc_fmt_title:         'Выберите сумму и формат',
+  gc_fmt_amounts_label: 'Номиналы',
+  gc_fmt_amounts:       '€20 · €40 · €60 · €120 · €180 · €240',
+  gc_fmt_hint:          '%%dropin%% — это одно разовое занятие. Чем больше номинал, тем больше практик сможет выбрать тот, кого вы радуете.',
+  gc_fmt_e_title:       'Электронный',
+  gc_fmt_e_desc:        'Пришлём на email. Подходит, если подарок нужен сегодня.',
+  gc_fmt_p_title:       'Печатный',
+  gc_fmt_p_desc:        'Оформленный сертификат, который приятно вручить лично. Забрать можно в студии, когда там администратор: с 14:00 до 22:00.',
   gc_eyebrow:      'Подарочные сертификаты',
   gc_title:        'Подарите близким время для себя',
   gc_lead:         'Возможность выдохнуть, размяться и сходить на любимую практику.',
@@ -2743,6 +2761,15 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   gc_gallery_title:'Подарочные сертификаты Soul Vibe Space',
 });
 Object.assign(SVS_TRANSLATIONS.el, {
+  gc_fmt_eyebrow:       'Ποσά και μορφές',
+  gc_fmt_title:         'Επιλέξτε ποσό και μορφή',
+  gc_fmt_amounts_label: 'Ποσά',
+  gc_fmt_amounts:       '€20 · €40 · €60 · €120 · €180 · €240',
+  gc_fmt_hint:          'Τα %%dropin%% αντιστοιχούν σε ένα μεμονωμένο μάθημα. Όσο μεγαλύτερο το ποσό, τόσο περισσότερες πρακτικές μπορούν να επιλέξουν.',
+  gc_fmt_e_title:       'Ηλεκτρονική',
+  gc_fmt_e_desc:        'Τη στέλνουμε με email. Ιδανική όταν χρειάζεστε δώρο σήμερα.',
+  gc_fmt_p_title:       'Έντυπη',
+  gc_fmt_p_desc:        'Μια όμορφα σχεδιασμένη δωροκάρτα για να τη δώσετε προσωπικά. Την παραλαμβάνετε από το στούντιο όσο είναι εκεί ο διαχειριστής: 14:00–22:00.',
   gc_eyebrow:      'Δωροκάρτες',
   gc_title:        'Χαρίστε το δώρο του χρόνου',
   gc_lead:         'Μια στιγμή για να χαλαρώσουν, να κινηθούν και να απολαύσουν μια πρακτική που αγαπούν.',
