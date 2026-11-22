@@ -299,6 +299,12 @@ const AuthModal = (() => {
 // (it is saved in localStorage before the sign-in screen opens), otherwise open
 // the account page — not the booking window.
 async function svsAfterSignIn() {
+  // /payment: show the status of the payment the visitor just signed in for (payment-result.js).
+  if (window.SVSPaymentResult) { SVSPaymentResult.refresh(); return; }
+  // /pricing: continue an online purchase that was waiting for sign-in (buy-online.js).
+  if (window.SVSBuyOnline && SVSBuyOnline.resumePending) {
+    try { if (await SVSBuyOnline.resumePending()) return; } catch (_) {}
+  }
   if (typeof BookingModal !== 'undefined' && BookingModal.resumePendingBooking) {
     try { if (await BookingModal.resumePendingBooking()) return; } catch (_) {}
   }

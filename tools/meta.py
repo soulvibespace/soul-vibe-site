@@ -27,7 +27,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_BASE = 'https://soul-vibe-space.netlify.app'
 CANONICAL = False  # TODO(домен): включить после переноса soulvibespace.com
-SKIP = {'auth-callback.html'}
+SKIP = {'auth-callback.html', 'payment.html'}
 DEFAULT_IMAGE = '/images/hero.webp'
 IMAGES = {
     'price-list.html': '/images/coworking.webp',

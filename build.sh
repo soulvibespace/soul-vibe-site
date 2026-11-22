@@ -58,6 +58,8 @@ if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
   echo "тесты цен: ок"
   node tests/activity.test.js >/dev/null || { echo "ОШИБКА: tests/activity.test.js" >&2; exit 1; }
   echo "тесты бонуса за активность: ок"
+  node tests/payments.test.js >/dev/null || { echo "ОШИБКА: tests/payments.test.js" >&2; exit 1; }
+  echo "тесты онлайн-оплаты: ок"
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"

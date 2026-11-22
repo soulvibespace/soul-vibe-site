@@ -368,6 +368,14 @@
     .vp-pay-text { font-size: .88rem; color: var(--text-secondary); line-height: 1.6; }
     .vp-pay-actions { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
 
+    /* ── Online purchase (buy-online.js; only when the API has payments on) ── */
+    .vp-buy { width: 100%; justify-content: center; margin-top: auto; }
+    .vp-buy[disabled] { opacity: .7; cursor: progress; }
+    .vp-buy-msg { font-size: .82rem; line-height: 1.5; color: var(--text-secondary); margin-top: -4px; }
+    .vp-buy-msg a { color: var(--accent); font-weight: 600; white-space: nowrap; }
+    .vp-notice { margin: 0 0 24px; padding: 14px 18px; border-radius: 12px; border-left: 3px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, var(--surface)); font-size: .92rem; color: var(--text-primary); }
+
     /* ── VIBES: bonuses ── */
     .vp-bonus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .vp-bonus {
@@ -1021,6 +1029,7 @@
   <script defer src="email-login.js"></script>
   <script defer src="booking-modal.js"></script>
   <script defer src="auth-modal.js"></script>
+  <script defer src="buy-online.js"></script>
   <script src="/cookie-banner.js" defer></script>
 
   <script>
