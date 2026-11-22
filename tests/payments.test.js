@@ -37,4 +37,13 @@ t('pricing подключает buy-online.js, страница /payment — noi
   assert.match(pay, /noindex/);
   assert.match(pay, /payment-result\.js/);
 });
+t('«Спасибо» показывает срок в днях, без даты окончания (#65)', () => {
+  for (const lang of ['ru', 'en', 'el']) {
+    assert.match(T[lang].payr_ok_text, /\{days\}/, lang);
+    assert.ok(!/\{date\}/.test(T[lang].payr_ok_text + T[lang].payr_ok_text_nodays), lang);
+  }
+  const src = fs.readFileSync(path.join(ROOT, 'payment-result.js'), 'utf8');
+  assert.match(src, /validity_days/);
+  assert.ok(!/expires_at/.test(src));
+});
 console.log(`${n} тестов: ок`);

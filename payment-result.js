@@ -36,13 +36,18 @@
 
   function fill(tpl, vars) { return String(tpl).replace(/\{(\w+)\}/g, function (m, k) { return vars[k] != null ? vars[k] : m; }).replace(/\.\./g, '.'); }
 
-  function fmtDate(iso) {
-    if (!iso) return '';
-    // The panel stores «end of the studio day» as YYYY-MM-DDT23:59:59.999Z — the date part is the Cyprus date.
-    var d = new Date(String(iso).slice(0, 10) + 'T12:00:00Z');
-    if (isNaN(d)) return '';
-    var loc = { ru: 'ru-RU', el: 'el-GR' }[lang()] || 'en-GB';
-    return d.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  // The panel currently counts the term from the purchase date, while /pricing promises «N days from the first visit»
+  // (soul-vibe-site#65). Until the rule is settled, show only the length of the term, without an end date.
+  function fmtDays(n) {
+    n = Number(n);
+    if (!(n > 0)) return '';
+    var l = lang();
+    if (l === 'ru') {
+      var m10 = n % 10, m100 = n % 100;
+      return n + '\u00a0' + (m10 === 1 && m100 !== 11 ? 'день' : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'дня' : 'дней');
+    }
+    if (l === 'el') return n + (n === 1 ? '\u00a0ημέρα' : '\u00a0ημέρες');
+    return n + (n === 1 ? '\u00a0day' : '\u00a0days');
   }
 
   function planLine(code) {
@@ -78,10 +83,10 @@
   }
 
   function viewFor(d) {
-    var vars = { vibes: d.vibes, date: fmtDate(d.expires_at), balance: d.balance };
+    var vars = { vibes: d.vibes, days: fmtDays(d.validity_days), balance: d.balance };
     switch (d.status) {
       case 'credited':
-        return { state: 'ok', icon: 'ok', title: 'payr_ok_title', text: d.vibes ? 'payr_ok_text' : null, plan: d.plan, vars: vars,
+        return { state: 'ok', icon: 'ok', title: 'payr_ok_title', text: d.vibes ? (d.validity_days ? 'payr_ok_text' : 'payr_ok_text_nodays') : null, plan: d.plan, vars: vars,
           small: (d.balance != null ? ['payr_balance'] : []).concat(['payr_receipt']) };
       case 'resolved':
         return { state: 'ok', icon: 'ok', title: 'payr_ok_title', text: null, plan: d.plan, vars: vars, small: ['payr_receipt'] };
