@@ -66,6 +66,8 @@ def values(P, lang='en'):
         v.update({code + '.price': eur(p['price']), code + '.price_n': num(p['price']), code + '.vibes': p['vibes'], code + '.days': p['days'],
                   code + '.classes': int(classes), code + '.per': eur(per), code + '.save': pct(save),
                   code + '.save_eur': eur(full - p['price']), code + '.full': eur(full)})
+        tv = math.floor(p['price'] / P['topup_eur_per_vibe'])  # «абонемент vs обычное пополнение той же суммы»
+        v.update({code + '.topup_vibes': tv, code + '.topup_classes': tv // P['class_vibes']})
         if p['kind'] == 'pass':
             min_per, max_save = min(min_per, per), max(max_save, save)
     v['min_per'], v['max_save'] = eur(min_per), pct(max_save)
