@@ -2703,6 +2703,7 @@ if (window.SVS_I18N_EXTRA) {
 // ── Страница /gift-certificates: подарочный сертификат (оформление через администратора) ──
 // GR — машинный перевод, нужна вычитка носителем.
 Object.assign(SVS_TRANSLATIONS.en, {
+  gc_fmt_valid:  'Valid for 6 months from the date of purchase.',
   gc_fmt_eyebrow:       'Amounts and formats',
   gc_fmt_title:         'Choose the amount and format',
   gc_fmt_amounts_label: 'Amounts',
@@ -2732,6 +2733,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   gc_gallery_title:'Soul Vibe Space gift certificates',
 });
 Object.assign(SVS_TRANSLATIONS.ru, {
+  gc_fmt_valid:  'Сертификат действует 6 месяцев с даты покупки.',
   gc_fmt_eyebrow:       'Номиналы и форматы',
   gc_fmt_title:         'Выберите сумму и формат',
   gc_fmt_amounts_label: 'Номиналы',
@@ -2761,6 +2763,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   gc_gallery_title:'Подарочные сертификаты Soul Vibe Space',
 });
 Object.assign(SVS_TRANSLATIONS.el, {
+  gc_fmt_valid:  'Ισχύει για 6 μήνες από την ημερομηνία αγοράς.',
   gc_fmt_eyebrow:       'Ποσά και μορφές',
   gc_fmt_title:         'Επιλέξτε ποσό και μορφή',
   gc_fmt_amounts_label: 'Ποσά',
