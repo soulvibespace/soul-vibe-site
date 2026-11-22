@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Saved light/dark theme, applied before first paint -->
+  <script src="/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gift Certificates | Soul Vibe Space</title>
+  <meta name="description" content="Give the gift of time: a Soul Vibe Space gift certificate for classes and practices from our regular schedule in Limassol. Message us on WhatsApp or Instagram to arrange it." />
+  <!-- meta:start -->
+  <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Soul Vibe Space" />
+  <meta property="og:title" content="Gift Certificates | Soul Vibe Space" />
+  <meta property="og:description" content="Give the gift of time: a Soul Vibe Space gift certificate for classes and practices from our regular schedule in Limassol. Message us on WhatsApp or Instagram to arrange it." />
+  <meta property="og:url" content="https://soul-vibe-space.netlify.app/gift-certificates" />
+  <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/gift-hero-960.webp" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ru_RU" />
+  <meta property="og:locale:alternate" content="el_GR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Gift Certificates | Soul Vibe Space" />
+  <meta name="twitter:description" content="Give the gift of time: a Soul Vibe Space gift certificate for classes and practices from our regular schedule in Limassol. Message us on WhatsApp or Instagram to arrange it." />
+  <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/gift-hero-960.webp" />
+  <!-- meta:end -->
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .gc-page { padding: var(--page-pt) 0 var(--page-pb); }
+    .page-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .gc-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 28px;
+    }
+    .gc-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .gc-btns .btn { display: inline-flex; align-items: center; gap: 8px; }
+    .gc-btns .btn-outline {
+      padding: var(--space-3) var(--space-8);
+      border: 2px solid var(--color-primary);
+      border-radius: var(--radius-full);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── Hero ── */
+    .gc-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+      gap: var(--split-gap);
+      align-items: center;
+      margin-bottom: var(--block-gap);
+    }
+    .gc-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--surface);
+      aspect-ratio: 1122 / 1402;
+      box-shadow: 0 12px 40px rgba(0,0,0,.08);
+    }
+    .gc-photo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .gc-hero .gc-photo { max-width: 460px; width: 100%; justify-self: end; }
+
+    /* ── Sections ── */
+    .gc-section {
+      padding: var(--block-gap) 0;
+      border-top: 1px solid var(--border);
+    }
+    .gc-section h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .gc-section p {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 12px;
+      max-width: 640px;
+    }
+    .gc-amounts { display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 12px; padding:0; list-style:none; }
+    .gc-amounts li { padding:10px 18px; border:1px solid var(--border, rgba(0,0,0,.12)); border-radius:999px; font-weight:600; font-size:1.05rem; color:var(--text-primary); background:var(--bg-card, #fff); }
+    .gc-label { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text-secondary); margin:20px 0 8px !important; }
+    .gc-valid { font-weight:600; color:var(--text-primary) !important; }
+    .gc-formats { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+    .gc-format { padding:22px 24px; border:1px solid var(--border, rgba(0,0,0,.12)); border-radius:16px; background:var(--bg-card, #fff); }
+    .gc-format h3 { font-size:1.1rem; margin:0 0 6px; color:var(--text-primary); }
+    .gc-format p { margin:0 !important; }
+    @media (max-width:600px){ .gc-formats { grid-template-columns:1fr; } }
+    .gc-text-link { color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    .gc-how {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 40px;
+    }
+    .gc-how .gc-btns { margin: 20px 0 16px; }
+    .gc-phone { font-size: .9rem; color: var(--text-secondary); }
+    .gc-phone a { color: var(--text-primary); font-weight: 600; white-space: nowrap; }
+    .gc-admin { font-size: .85rem; color: var(--text-secondary); margin-top: 4px; }
+
+    /* ── Gallery: whole images (they carry text), no cropping ── */
+    .gc-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .gc-gallery figure { margin: 0; }
+    .gc-gallery figcaption {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      margin-top: 12px;
+      line-height: 1.35;
+    }
+
+    @media (max-width: 900px) {
+      .gc-hero { grid-template-columns: 1fr; gap: 32px; }
+      .gc-hero .gc-photo { justify-self: start; }
+      .gc-gallery { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .gc-hero .gc-photo { max-width: none; }
+      .gc-gallery { grid-template-columns: 1fr; }
+      .gc-how { padding: 28px 22px; }
+      .gc-btns .btn { width: 100%; justify-content: center; }
+    }
+  </style>  <link rel="stylesheet" href="/compact.css" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="header">
+    <!-- Единая шапка: источник tools/header.html, вставляется tools/header.py. Не правьте вручную на страницах. -->
+    <div class="header-inner container">
+      <a href="/" class="logo" aria-label="Soul Vibe Space — Home">
+        <img src="/images/logo.png" alt="Soul Vibe Space" class="logo-full" width="200" height="96" />
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
+        <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+        <a href="/vibes" class="nav-link" data-i18n="nav_vibes">VIBES</a>
+        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
+        <a href="/rental" class="nav-link" data-i18n="nav_rent">Rental</a>
+        <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="icon-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="icon-btn" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" class="icon-btn" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+        </a>
+        <div class="lang-switcher" aria-label="Language">
+          <button class="lang-btn lang-active" data-lang-btn="en" onclick="SVS_I18N.setLang('en')" aria-pressed="true" title="English">EN</button>
+          <button class="lang-btn" data-lang-btn="ru" onclick="SVS_I18N.setLang('ru')" aria-pressed="false" title="Русский">RU</button>
+          <button class="lang-btn" data-lang-btn="el" onclick="SVS_I18N.setLang('el')" aria-pressed="false" title="Ελληνικά">EL</button>
+        </div>
+        <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" class="btn btn-primary btn-sm" data-i18n="btn_book_now">Book a class</a>
+        <a href="/account" class="btn btn-outline btn-sm" id="headerAccountBtn" aria-label="My Account">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span id="headerAccountLabel" data-i18n="nav_signin">Sign In</span>
+        </a>
+        <button class="mobile-signin-btn" id="mobileSignInBtn" aria-label="Sign In" onclick="event.preventDefault();if(window.getToken&&window.isTokenValid&&window.isTokenValid(window.getToken())){window.location.href='/account';}else if(typeof AuthModal!=='undefined'){AuthModal.open('login');}else{window.location.href='/account';}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+      <a href="/pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a>
+      <a href="/vibes" class="mobile-nav-link" data-i18n="nav_vibes">VIBES</a>
+      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
+      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental</a>
+      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
+      <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
+      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
+      <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@soul.vibe.space.y" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </header>
+
+  <!-- ═══ GIFT CERTIFICATES PAGE ═══ -->
+  <main class="gc-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="gc-hero">
+        <div>
+          <p class="page-eyebrow" data-i18n="gc_eyebrow">Gift certificates</p>
+          <h1 class="page-title" data-i18n="gc_title">Give the gift of time</h1>
+          <p class="gc-lead" data-i18n="gc_lead">A moment to slow down, move and enjoy a practice they love.</p>
+          <div class="gc-btns">
+            <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span data-i18n="gc_hero_wa">Message us on WhatsApp</span></a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="btn btn-outline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg><span data-i18n="gc_hero_ig">DM us on Instagram</span></a>
+          </div>
+        </div>
+        <div class="gc-photo">
+          <img src="images/gift-hero-960.webp" srcset="images/gift-hero-560.webp 560w, images/gift-hero-960.webp 960w" sizes="(max-width:900px) 100vw, 460px" width="1122" height="1402" fetchpriority="high" alt="Soul Vibe Space gift certificate in a white envelope with a ribbon" />
+        </div>
+      </section>
+
+      <!-- What it is -->
+      <section class="gc-section">
+        <p class="page-eyebrow" data-i18n="gc_what_eyebrow">For classes and practices</p>
+        <h2 data-i18n="gc_what_title">What is a gift certificate</h2>
+        <p data-i18n="gc_what_p1">With a Soul Vibe Space gift certificate, they can choose a class from our regular schedule — and make a little time for themselves.</p>
+        <p data-i18n="gc_what_p2">Any class or practice they like, whenever it suits them.</p>
+        <p><a href="/schedule" class="gc-text-link" data-i18n="gc_what_link">See the schedule</a></p>
+      </section>
+
+      <!-- How to arrange -->
+      <section class="gc-section" id="amounts">
+        <p class="page-eyebrow" data-i18n="gc_fmt_eyebrow">Amounts and formats</p>
+        <h2 data-i18n="gc_fmt_title">Choose the amount and format</h2>
+        <p class="gc-label" data-i18n="gc_fmt_amounts_label">Amounts</p>
+        <ul class="gc-amounts" aria-label="Amounts"><li>€20</li><li>€40</li><li>€60</li><li>€120</li><li>€180</li><li>€240</li></ul>
+        <p data-i18n="gc_fmt_hint">€20 covers one drop-in class. The higher the amount, the more practices they can choose.</p>
+        <p class="gc-valid" data-i18n="gc_fmt_valid">Valid for 6 months from the date of purchase.</p>
+        <div class="gc-formats">
+          <div class="gc-format"><h3 data-i18n="gc_fmt_e_title">Digital</h3><p data-i18n="gc_fmt_e_desc">Sent to your email. Perfect when you need a gift today.</p></div>
+          <div class="gc-format"><h3 data-i18n="gc_fmt_p_title">Printed</h3><p data-i18n="gc_fmt_p_desc">A beautifully designed certificate to hand over in person. Pick it up at the studio while the administrator is in: 2:00 pm – 10:00 pm.</p></div>
+        </div>
+      </section>
+
+      <section class="gc-section" id="how">
+        <div class="gc-how">
+          <p class="page-eyebrow" data-i18n="gc_how_eyebrow">WhatsApp · Instagram</p>
+          <h2 data-i18n="gc_how_title">How to arrange a gift certificate</h2>
+          <p data-i18n="gc_how_p">DM us or message us on WhatsApp to arrange your gift certificate. Our administrator will take care of the rest.</p>
+          <div class="gc-btns">
+            <a href="https://wa.me/35795642888" target="_blank" rel="noopener" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span data-i18n="gc_hero_wa">Message us on WhatsApp</span></a>
+            <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" class="btn btn-outline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg><span data-i18n="gc_hero_ig">DM us on Instagram</span></a>
+          </div>
+          <p class="gc-phone"><span data-i18n="gc_how_phone">Or call us:</span> <a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p class="gc-admin" data-i18n="footer_hours_admin">Administrator at the studio: 2:00 pm – 10:00 pm</p>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="gc-section" aria-labelledby="gcGalleryTitle">
+        <h2 id="gcGalleryTitle" class="sr-only" data-i18n="gc_gallery_title">Soul Vibe Space gift certificates</h2>
+        <div class="gc-gallery">
+          <figure>
+            <div class="gc-photo"><img src="images/gift-birthday-960.webp" srcset="images/gift-birthday-560.webp 560w, images/gift-birthday-960.webp 960w" sizes="(max-width:600px) 100vw, (max-width:900px) 50vw, 400px" width="1122" height="1402" loading="lazy" alt="Hands holding a Soul Vibe Space gift certificate envelope" /></div>
+            <figcaption data-i18n="gc_cap1">For a birthday. Or just because.</figcaption>
+          </figure>
+          <figure>
+            <div class="gc-photo"><img src="images/gift-care-960.webp" srcset="images/gift-care-560.webp 560w, images/gift-care-960.webp 960w" sizes="(max-width:600px) 100vw, (max-width:900px) 50vw, 400px" width="1122" height="1402" loading="lazy" alt="Soul Vibe Space gift certificate with lavender" /></div>
+            <figcaption data-i18n="gc_cap2">A thoughtful gift for someone you care about.</figcaption>
+          </figure>
+          <figure>
+            <div class="gc-photo"><img src="images/gift-choice-960.webp" srcset="images/gift-choice-560.webp 560w, images/gift-choice-960.webp 960w" sizes="(max-width:600px) 100vw, (max-width:900px) 50vw, 400px" width="1122" height="1402" loading="lazy" alt="Soul Vibe Space gift certificate next to a yoga mat and block" /></div>
+            <figcaption data-i18n="gc_cap3">Their practice. Their choice.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="footer">
+    <!-- Единый подвал: источник tools/footer.html, вставляется tools/footer.py. Не правьте вручную на страницах. -->
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="Soul Vibe Space">
+          <img src="/images/logo.png" alt="Soul Vibe Space" class="logo-full logo-full--footer" width="180" height="87" loading="lazy" />
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">Movement, mindfulness and community in Limassol, Cyprus.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@soul.vibe.space.y" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+          </a>
+          <a href="https://wa.me/35795642888" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+          <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer_studio">Studio</h4>
+        <nav aria-label="Footer navigation">
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/schedule" data-i18n="nav_schedule">Schedule</a>
+          <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="/vibes" data-i18n="footer_vibes">VIBES</a>
+          <a href="/space" data-i18n="footer_coworking">Co-working</a>
+          <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
+          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
+          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
+          <a href="/gift-certificates" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" data-i18n="footer_book">Book a class</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <h4 data-i18n="footer_visit">Visit us</h4>
+        <address>
+          <p>50 Agias Zonis<br>Limassol 3090, Cyprus</p>
+          <p><a href="tel:+35795642888">+357 95 642 888</a></p>
+          <p><a href="mailto:soulvibespace@gmail.com">soulvibespace@gmail.com</a></p>
+          <p class="footer-hours"><span data-i18n="footer_hours">Classes: daily 8:00 am – 10:00 pm</span><br><span data-i18n="footer_hours_admin">Administrator at the studio: 2:00 pm – 10:00 pm</span></p>
+          <p><a href="/contact" data-i18n="nav_contact">Contact</a></p>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span data-i18n="footer_copy">© 2026 Soul Vibe Space LTD</span>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="/terms" data-i18n="footer_terms">Terms &amp; Conditions</a>
+          <a href="/privacy" data-i18n="footer_privacy">Privacy Policy</a>
+          <a href="/privacy#cookies" data-i18n="footer_cookies">Cookies</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ BOOKING MODAL (Custom) ═══ -->
+  <div id="bookingModal" class="booking-modal" role="dialog" aria-modal="true" aria-label="Book a class" hidden>
+    <div class="booking-modal-backdrop" id="bookingModalBackdrop"></div>
+    <div class="booking-modal-panel bm-panel">
+      <!-- Header -->
+      <div class="booking-modal-header">
+        <div class="booking-modal-header-info">
+          <img src="images/logo-icon.png" alt="" class="booking-modal-logo" />
+          <span class="booking-modal-title">Soul Vibe Space</span>
+        </div>
+        <button class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <!-- Booking body -->
+      <div id="bookingModalBody" class="bm-body"></div>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="services-filter.js"></script>
+  <script defer src="pay-plan.js"></script>
+  <script defer src="email-login.js"></script>
+  <script defer src="booking-modal.js"></script>
+  <script defer src="auth-modal.js"></script>
+
+  <script>
+  (() => {
+    function updateHeaderAuth() {
+      try {
+        const token = localStorage.getItem('svs_token');
+        const user = token ? JSON.parse(localStorage.getItem('svs_user') || 'null') : null;
+        const label = document.getElementById('headerAccountLabel');
+        if (label && user) label.textContent = user.name ? user.name.split(' ')[0] : SVS_I18N.t('nav_account');
+      } catch {}
+    }
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('is-open');
+        mobileMenuBtn.setAttribute('aria-expanded', open);
+        mobileNav.setAttribute('aria-hidden', !open);
+      });
+    }
+    // Theme: handled by /theme.js (saved choice is shared by all pages)
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { header?.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SVS_I18N) { const s = localStorage.getItem('svs_lang') || 'en'; SVS_I18N.setLang(s); }
+      updateHeaderAuth();
+    });
+  })();
+  </script>
+<script src="/cookie-banner.js" defer></script>
+  <script src="/compact.js" defer></script>
+</body>
+</html>
