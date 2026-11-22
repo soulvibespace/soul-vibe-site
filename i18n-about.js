@@ -49,7 +49,7 @@
     ab_diff3_title:   'Classes in nature',
     ab_diff3_text:    'Yoga, meditation and Ecstatic Dance under the open sky at Rancho Meadow Paradise.',
     ab_diff4_title:   'VIBES',
-    ab_diff4_text:    'Top up your balance and practise at your own pace: each class is deducted when you visit. Plus gift VIBES for regular practice, a friend, a review and your birthday.',
+    ab_diff4_text:    'Top up your balance and practise at your own pace: each class is deducted when you visit. Plus gift VIBES for regular practice, a friend and your birthday.',
     ab_diff4_link:    'How VIBES work →',
     ab_diff_sched:    'See the schedule →',
 
@@ -179,7 +179,7 @@
     ab_diff3_title:   'Занятия на природе',
     ab_diff3_text:    'Йога, медитация и Ecstatic Dance под открытым небом на Ранчо Meadow Paradise.',
     ab_diff4_title:   'VIBES',
-    ab_diff4_text:    'Пополните баланс и практикуйте в своём ритме: каждое занятие списывается при посещении. А за регулярную практику, друга, отзыв и день рождения — VIBES в подарок.',
+    ab_diff4_text:    'Пополните баланс и практикуйте в своём ритме: каждое занятие списывается при посещении. А за регулярную практику, друга и день рождения — VIBES в подарок.',
     ab_diff4_link:    'Как работают VIBES →',
     ab_diff_sched:    'Смотреть расписание →',
 
@@ -309,7 +309,7 @@
     ab_diff3_title:   'Μαθήματα στη φύση',
     ab_diff3_text:    'Yoga, διαλογισμός και Ecstatic Dance στην ύπαιθρο, στο Rancho Meadow Paradise.',
     ab_diff4_title:   'VIBES',
-    ab_diff4_text:    'Γεμίστε το υπόλοιπό σας και εξασκηθείτε στον δικό σας ρυθμό: κάθε μάθημα αφαιρείται όταν έρχεστε. Και VIBES δώρο για τακτική εξάσκηση, έναν φίλο, μια κριτική και τα γενέθλιά σας.',
+    ab_diff4_text:    'Γεμίστε το υπόλοιπό σας και εξασκηθείτε στον δικό σας ρυθμό: κάθε μάθημα αφαιρείται όταν έρχεστε. Και VIBES δώρο για τακτική εξάσκηση, έναν φίλο και τα γενέθλιά σας.',
     ab_diff4_link:    'Πώς λειτουργούν τα VIBES →',
     ab_diff_sched:    'Δείτε το πρόγραμμα →',
 
