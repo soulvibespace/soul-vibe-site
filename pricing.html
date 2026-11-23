@@ -352,6 +352,11 @@
     .vp-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
     .vp-card { gap: 14px; position: relative; }
     .vp-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 22px; }
+    /* Long badges («Best price among passes», «Лучшая цена среди абонементов») wrap to two lines
+       on narrow cards: keep the code on the top line and the badge a neat right-aligned block. */
+    .vp-card-top { align-items: flex-start; }
+    .vp-card-top .vp-code { flex-shrink: 0; }
+    .vp-card-top .pass-badge { min-width: 0; text-align: right; line-height: 1.3; border-radius: 10px; letter-spacing: .04em; overflow-wrap: anywhere; }
     .vp-code {
       font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: .1em;
       color: var(--text-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px;
