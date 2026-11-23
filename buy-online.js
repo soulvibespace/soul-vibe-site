@@ -44,7 +44,7 @@
   function busy(btn, on) {
     btn.disabled = !!on;
     btn.setAttribute('aria-busy', on ? 'true' : 'false');
-    setI18n(btn, on ? 'pay_buy_wait' : 'pay_buy');
+    setI18n(btn, on ? 'pay_buy_wait' : 'pay_buy_online');
   }
 
   async function buy(plan, btn) {
@@ -85,7 +85,7 @@
       btn.type = 'button';
       btn.className = 'btn btn-primary btn-sm vp-buy';
       btn.setAttribute('data-plan', code);
-      setI18n(btn, 'pay_buy');
+      setI18n(btn, 'pay_buy_online');
       btn.addEventListener('click', function () { buy(code, btn); });
       card.appendChild(btn);
     });

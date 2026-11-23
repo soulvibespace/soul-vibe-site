@@ -51,12 +51,43 @@ t('срок кончится до занятия → expired', () => {
   const p = planPayment(V([lot({ remaining_vibes: 60, expires_at: '2026-12-05' })]), [], cls, NOW);
   assert.deepStrictEqual([p.kind, p.expiry], ['expired', '2026-12-05']);
 });
-t('FIFO по сроку: сначала Стартер пак с ближним сроком', () => {
+t('порядок как в панели: сначала более ранняя покупка, а не ближний срок', () => {
   const p = planPayment(V([
-    lot({ remaining_vibes: 100, expires_at: '2027-01-30' }),
-    lot({ source_type: 'starter_pack', source_label: 'SP2 · 40 VIBES', remaining_vibes: 40, expires_at: '2026-12-09' }),
+    lot({ id: 'b', created_at: '2026-11-10T09:00:00Z', source_type: 'starter_pack', source_label: 'SP2 · 40 VIBES', remaining_vibes: 40, expires_at: '2026-12-09' }),
+    lot({ id: 'a', created_at: '2026-10-01T09:00:00Z', remaining_vibes: 100, expires_at: '2027-01-30' }),
   ]), [], cls, NOW);
-  assert.deepStrictEqual([p.kind, p.lot.source_type, p.left], ['full', 'starter_pack', 120]);
+  assert.deepStrictEqual([p.kind, p.lot.source_type, p.left], ['full', 'membership', 120]);
+});
+t('одинаковая дата покупки → по id лота', () => {
+  const p = planPayment(V([
+    lot({ id: 'z', created_at: '2026-11-01T09:00:00Z', source_label: 'MP20 · 400 VIBES', remaining_vibes: 400, expires_at: '2027-02-01' }),
+    lot({ id: 'm', created_at: '2026-11-01T09:00:00Z', source_label: 'MP8 · 160 VIBES', remaining_vibes: 160, expires_at: '2027-01-01' }),
+  ]), [], cls, NOW);
+  assert.strictEqual(p.lot.source_label, 'MP8 · 160 VIBES');
+});
+t('неактивированный абонемент (без срока) тоже идёт по дате покупки', () => {
+  const p = planPayment(V([
+    lot({ id: 'n', created_at: '2026-11-15T09:00:00Z', remaining_vibes: 40, expires_at: '2026-12-31' }),
+    lot({ id: 'o', created_at: '2026-11-01T09:00:00Z', remaining_vibes: 160, expires_at: null, validity_days: 60 }),
+  ]), [], cls, NOW);
+  assert.deepStrictEqual([p.kind, p.lot.id], ['full', 'o']);
+});
+t('особое событие (цена ≠ разовому) → event, без обещания 20 VIBES', () => {
+  const p = planPayment(V([lot({ remaining_vibes: 60, expires_at: '2026-12-10' })]), [], Object.assign({ price: 35 }, cls), NOW);
+  assert.deepStrictEqual([p.kind, p.eur, p.hasVibes], ['event', 35, true]);
+  const q = planPayment({ linked: false, reason: 'not_found' }, [], Object.assign({ price: 35 }, cls), NOW);
+  assert.deepStrictEqual([q.kind, q.hasVibes], ['event', false]);
+});
+t('обычное занятие с ценой разового → обычный расчёт', () => {
+  const p = planPayment(V([lot({ remaining_vibes: 60, expires_at: '2026-12-10' })]), [], Object.assign({ price: 20 }, cls), NOW);
+  assert.strictEqual(p.kind, 'full');
+});
+t('expired показывает лот с самым поздним сроком', () => {
+  const p = planPayment(V([
+    lot({ id: 'a', created_at: '2026-10-01T09:00:00Z', remaining_vibes: 20, expires_at: '2026-12-06' }),
+    lot({ id: 'b', created_at: '2026-11-01T09:00:00Z', remaining_vibes: 20, expires_at: '2026-12-02' }),
+  ]), [], cls, NOW);
+  assert.deepStrictEqual([p.kind, p.expiry], ['expired', '2026-12-06']);
 });
 t('просроченный к дате лот пропускается, берётся следующий', () => {
   const p = planPayment(V([
