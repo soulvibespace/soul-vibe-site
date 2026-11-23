@@ -46,6 +46,8 @@ if command -v python3 >/dev/null 2>&1; then
   # Термины (абонемент / Class Pass, Стартер пак / Starter Pack): по умолчанию только
   # предупреждения, с --check — ошибка. Словарь — SVS_TERMS в i18n.js.
   python3 tools/terms.py $STRICT
+  # Версии ?v=хеш у локальных js/css — чтобы Safari не брал старые файлы из памяти.
+  python3 tools/assetver.py dist
 else
   echo "ВНИМАНИЕ: python3 не найден — шапка не синхронизирована" >&2
 fi
