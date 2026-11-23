@@ -27,10 +27,10 @@ t('цена занятия и выгода', () => {
   assert.strictEqual(ru.min_per, '€15'); assert.strictEqual(ru.max_save, '25%');
 });
 t('пример MP20 + бонусы', () => {
-  assert.deepStrictEqual([ru['ex.total'], ru['ex.classes'], ru['ex.per']], [422, 21, '€14,20']);
+  assert.deepStrictEqual([ru['ex.total'], ru['ex.classes'], ru['ex.per']], [417, 20, '€14,40']);
 });
 t('склонение «занятие»', () => {
-  assert.strictEqual(ru['ex.classes_word'], 'занятие');
+  assert.strictEqual(ru['ex.classes_word'], 'занятий');
   const w = (n, l) => window.svsClassWord(n, l);
   assert.deepStrictEqual([1, 2, 5, 11, 12, 21, 22, 25, 111, 104].map((n) => w(n, 'ru')),
     ['занятие', 'занятия', 'занятий', 'занятий', 'занятий', 'занятие', 'занятия', 'занятий', 'занятий', 'занятия']);

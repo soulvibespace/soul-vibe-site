@@ -63,7 +63,7 @@ window.SVS_TERMS = SVS_TERMS;
 //   %%MP8.save_eur%% → €30 (экономия в евро к разовым)
 //   %%MP8.full%%     → €160 (те же занятия по разовой цене)
 //   %%min_per%% / %%max_save%% — лучшая цена занятия / выгода по абонементам (MP)
-//   %%bonus.friend%% / %%bonus.review%% / %%bonus.birthday%% — бонусные VIBES
+//   %%bonus.friend%% / %%bonus.birthday%% — VIBES в подарок
 //   %%ex.plan%% %%ex.price%% %%ex.base%% %%ex.bonus%% %%ex.total%% %%ex.classes%% %%ex.classes_word%% %%ex.per%% — пример на /vibes
 //   %%topup%% → €1 (за 1 VIBE)  %%refund%% → €0,75  %%freeze%% → 90 (дней заморозки)
 // В HTML токены раскрывает tools/prices.py при сборке (build.sh), в переводах — svsExpandPrices().
@@ -86,8 +86,8 @@ const SVS_PRICES = /*prices:start*/{
     "SP2":  { "kind": "starter", "price": 20,  "vibes": 40,  "days": 30 },
     "SP4":  { "kind": "starter", "price": 40,  "vibes": 80,  "days": 30 }
   },
-  "bonus": { "friend": 7, "review": 5, "birthday": 10 },
-  "example": { "plan": "MP20", "bonuses": ["friend", "review", "birthday"] }
+  "bonus": { "friend": 7, "birthday": 10 },
+  "example": { "plan": "MP20", "bonuses": ["friend", "birthday"] }
 }/*prices:end*/;
 window.SVS_PRICES = SVS_PRICES;
 
@@ -399,7 +399,7 @@ const SVS_TRANSLATIONS = {
     vibes_starter: '{{starter_line}}',
     vibes_src_bonus: 'Bonus VIBES',
     vibes_src_manual: 'Bonus VIBES',
-    vibes_src_reward: 'Google review bonus',
+    vibes_src_reward: 'Gift from the studio',
     vibes_src_reward_friend: 'Referral bonus',
     vibes_src_birthday: 'Birthday bonus',
     vibes_src_activity_bonus: 'Gift VIBES for regular practice',
@@ -743,7 +743,7 @@ const SVS_TRANSLATIONS = {
     vibes_starter: '{{starter_line}}',
     vibes_src_bonus: 'Бонусные VIBES',
     vibes_src_manual: 'Бонусные VIBES',
-    vibes_src_reward: 'Бонус за отзыв в Google',
+    vibes_src_reward: 'Подарок от студии',
     vibes_src_reward_friend: 'Бонус за друга',
     vibes_src_birthday: 'Бонус ко дню рождения',
     vibes_src_activity_bonus: 'VIBES в подарок за регулярную практику',
@@ -1089,7 +1089,7 @@ const SVS_TRANSLATIONS = {
     vibes_starter: '{{starter_line}}',
     vibes_src_bonus: 'Μπόνους VIBES',
     vibes_src_manual: 'Μπόνους VIBES',
-    vibes_src_reward: 'Μπόνους για κριτική Google',
+    vibes_src_reward: 'Δώρο από το στούντιο',
     vibes_src_reward_friend: 'Μπόνους σύστασης',
     vibes_src_birthday: 'Μπόνους γενεθλίων',
     vibes_src_activity_bonus: 'VIBES δώρο για τακτική εξάσκηση',
@@ -1802,7 +1802,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pv_faq8_q:            'Can I pay online?',
   pv_faq8_a:            'Not yet. Payment is made at the studio, and the administrator confirms it. VIBES then appear on your balance.',
   pv_faq11_q:           'Can I get a refund for unused VIBES?',
-  pv_faq11_a:           'Refunds for unused VIBES are possible at the studio’s discretion, at the rate of 1 VIBE = %%refund%%. Bonus VIBES (for referring a friend, a review or your birthday) are not refundable.',
+  pv_faq11_a:           'Refunds for unused VIBES are possible at the studio’s discretion, at the rate of 1 VIBE = %%refund%%. Bonus VIBES (for referring a friend or your birthday) are not refundable.',
 
   pv_rental_title:      'Studio & Space Rental',
   pv_rental_desc:       'Rooms, hourly rates, event setups and what’s included — on a separate page.',
@@ -1857,7 +1857,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pv_faq8_q:            'Можно оплатить онлайн?',
   pv_faq8_a:            'Пока нет. Оплата проходит в студии, администратор её подтверждает — после этого VIBES появляются на балансе.',
   pv_faq11_q:           'Можно ли вернуть деньги за неиспользованные VIBES?',
-  pv_faq11_a:           'Возврат денег за неиспользованные VIBES возможен по решению студии по курсу 1 VIBE = %%refund%%. Бонусные VIBES (за друга, отзыв, день рождения) не возвращаются.',
+  pv_faq11_a:           'Возврат денег за неиспользованные VIBES возможен по решению студии по курсу 1 VIBE = %%refund%%. Бонусные VIBES (за друга, день рождения) не возвращаются.',
 
   pv_rental_title:      'Аренда пространства',
   pv_rental_desc:       'Залы, почасовые тарифы, варианты расстановки и что включено — на отдельной странице.',
@@ -1912,7 +1912,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pv_faq8_q:            'Μπορώ να πληρώσω online;',
   pv_faq8_a:            'Όχι ακόμη. Η πληρωμή γίνεται στο studio και ο διαχειριστής την επιβεβαιώνει — έπειτα τα VIBES εμφανίζονται στο υπόλοιπό σας.',
   pv_faq11_q:           'Μπορώ να πάρω πίσω χρήματα για αχρησιμοποίητα VIBES;',
-  pv_faq11_a:           'Η επιστροφή χρημάτων για αχρησιμοποίητα VIBES είναι δυνατή κατά την κρίση του στούντιο, με ισοτιμία 1 VIBE = %%refund%%. Τα bonus VIBES (για σύσταση φίλου, κριτική ή γενέθλια) δεν επιστρέφονται.',
+  pv_faq11_a:           'Η επιστροφή χρημάτων για αχρησιμοποίητα VIBES είναι δυνατή κατά την κρίση του στούντιο, με ισοτιμία 1 VIBE = %%refund%%. Τα bonus VIBES (για σύσταση φίλου ή γενέθλια) δεν επιστρέφονται.',
 
   pv_rental_title:      'Ενοικίαση Χώρου',
   pv_rental_desc:       'Αίθουσες, ωριαίες τιμές, διατάξεις εκδηλώσεων και τι περιλαμβάνεται — σε ξεχωριστή σελίδα.',
@@ -2368,16 +2368,14 @@ Object.assign(SVS_TRANSLATIONS.en, {
   vb_gift_active_desc:   '4–9 visits in a calendar month: +10 VIBES. 10 or more: +20 VIBES in total.',
   vb_gift_friend_title:  'Bring a friend',
   vb_gift_friend_desc:   '+%%bonus.friend%% VIBES for every new guest.',
-  vb_gift_review_title:  'Leave a review',
-  vb_gift_review_desc:   '+%%bonus.review%% VIBES for a review on Google Maps.',
   vb_gift_bday_title:    'Your birthday',
   vb_gift_bday_desc:     '+%%bonus.birthday%% VIBES. Add your date of birth in your <a href="/account">personal account</a> in advance.',
-  vb_gift_how:           'VIBES for regular practice are credited automatically on the 1st of each month, and birthday VIBES on your birthday. For a friend or a review, just tell the administrator at the studio. Gift VIBES never expire: %%class%% VIBES is one more class.',
+  vb_gift_how:           'VIBES for regular practice are credited automatically on the 1st of each month, and birthday VIBES on your birthday. For a friend, just tell the administrator at the studio. Gift VIBES never expire: %%class%% VIBES is one more class.',
   vb_join_text:          'Sign up on the website and choose a {{pass}} — your VIBES balance is created automatically. You can also top up at the studio, any amount: %%topup%% = 1 VIBE.',
   pv_sum_title:         'VIBES in brief',
   pv_sum1:              'A regular class is %%class%% VIBES — VIBES are the studio’s currency.',
   pv_sum2:              'With a {{pass}} VIBES are cheaper: from %%min_per%% per class instead of %%dropin%%.',
-  pv_sum3:              'Bonus VIBES: +%%bonus.friend%% for a friend, +%%bonus.review%% for a review, +%%bonus.birthday%% on your birthday.',
+  pv_sum3:              'Gift VIBES: +%%bonus.friend%% for a friend, +%%bonus.birthday%% on your birthday.',
   pv_vibes_link:        'How VIBES work →',
   pv_days_from_first:   'days from your first visit',
   pv_rules_note:        'Validity, order of use, freezing, bonus VIBES and other rules — on the <a href="/vibes#rules">VIBES</a> page.',
@@ -2473,16 +2471,14 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   vb_gift_active_desc:   '4–9 посещений за календарный месяц — +10 VIBES, 10 и больше — всего +20 VIBES.',
   vb_gift_friend_title:  'Привели друга',
   vb_gift_friend_desc:   '+%%bonus.friend%% VIBES за каждого нового гостя.',
-  vb_gift_review_title:  'Оставили отзыв',
-  vb_gift_review_desc:   '+%%bonus.review%% VIBES за отзыв в Google Maps.',
   vb_gift_bday_title:    'День рождения',
   vb_gift_bday_desc:     '+%%bonus.birthday%% VIBES. Заранее укажите дату рождения в <a href="/account">личном кабинете</a>.',
-  vb_gift_how:           'VIBES за регулярную практику начисляются сами 1-го числа каждого месяца, а за день рождения — в ваш день рождения. За друга и отзыв скажите администратору в студии. VIBES в подарок не сгорают: %%class%% VIBES — это ещё одно занятие.',
+  vb_gift_how:           'VIBES за регулярную практику начисляются сами 1-го числа каждого месяца, а за день рождения — в ваш день рождения. За друга скажите администратору в студии. VIBES в подарок не сгорают: %%class%% VIBES — это ещё одно занятие.',
   vb_join_text:          'Зарегистрируйтесь на сайте и выберите {{pass:acc}} — баланс VIBES появится сам. Пополнить баланс можно и в студии, на любую сумму: %%topup%% = 1 VIBE.',
   pv_sum_title:         'VIBES коротко',
   pv_sum1:              'Обычное занятие — %%class%% VIBES: VIBES — валюта студии.',
   pv_sum2:              'С {{pass:ins}} VIBES выгоднее: от %%min_per%% за занятие вместо %%dropin%%.',
-  pv_sum3:              'Бонусные VIBES: +%%bonus.friend%% за друга, +%%bonus.review%% за отзыв, +%%bonus.birthday%% в день рождения.',
+  pv_sum3:              'VIBES в подарок: +%%bonus.friend%% за друга, +%%bonus.birthday%% в день рождения.',
   pv_vibes_link:        'Как работают VIBES →',
   pv_days_from_first:   'дней с первого посещения',
   pv_rules_note:        'Срок действия, порядок списания, заморозка, бонусные VIBES и другие правила — на странице <a href="/vibes#rules">VIBES</a>.',
@@ -2578,16 +2574,14 @@ Object.assign(SVS_TRANSLATIONS.el, {
   vb_gift_active_desc:   '4–9 επισκέψεις σε έναν ημερολογιακό μήνα: +10 VIBES. 10 ή περισσότερες: +20 VIBES συνολικά.',
   vb_gift_friend_title:  'Φέρτε έναν φίλο',
   vb_gift_friend_desc:   '+%%bonus.friend%% VIBES για κάθε νέο επισκέπτη.',
-  vb_gift_review_title:  'Αφήστε μια κριτική',
-  vb_gift_review_desc:   '+%%bonus.review%% VIBES για μια κριτική στο Google Maps.',
   vb_gift_bday_title:    'Γενέθλια',
   vb_gift_bday_desc:     '+%%bonus.birthday%% VIBES. Προσθέστε εγκαίρως την ημερομηνία γέννησής σας στον <a href="/account">προσωπικό σας λογαριασμό</a>.',
-  vb_gift_how:           'Τα VIBES για τακτική εξάσκηση πιστώνονται αυτόματα την 1η κάθε μήνα και τα VIBES γενεθλίων την ημέρα των γενεθλίων σας. Για φίλο ή κριτική, πείτε το στον διαχειριστή του στούντιο. Τα VIBES δώρο δεν λήγουν: %%class%% VIBES είναι ένα ακόμη μάθημα.',
+  vb_gift_how:           'Τα VIBES για τακτική εξάσκηση πιστώνονται αυτόματα την 1η κάθε μήνα και τα VIBES γενεθλίων την ημέρα των γενεθλίων σας. Για φίλο, πείτε το στον διαχειριστή του στούντιο. Τα VIBES δώρο δεν λήγουν: %%class%% VIBES είναι ένα ακόμη μάθημα.',
   vb_join_text:          'Εγγραφείτε στον ιστότοπο και επιλέξτε ένα {{pass}} — το υπόλοιπο VIBES δημιουργείται αυτόματα. Μπορείτε επίσης να κάνετε ανανέωση στο στούντιο, με οποιοδήποτε ποσό: %%topup%% = 1 VIBE.',
   pv_sum_title:         'Τα VIBES με λίγα λόγια',
   pv_sum1:              'Ένα τακτικό μάθημα — %%class%% VIBES: τα VIBES είναι το νόμισμα του στούντιο.',
   pv_sum2:              'Με {{pass}} τα VIBES κοστίζουν λιγότερο: από %%min_per%% ανά μάθημα αντί για %%dropin%%.',
-  pv_sum3:              'Bonus VIBES: +%%bonus.friend%% για έναν φίλο, +%%bonus.review%% για μια κριτική, +%%bonus.birthday%% στα γενέθλιά σας.',
+  pv_sum3:              'VIBES δώρο: +%%bonus.friend%% για έναν φίλο, +%%bonus.birthday%% στα γενέθλιά σας.',
   pv_vibes_link:        'Πώς λειτουργούν τα VIBES →',
   pv_days_from_first:   'ημέρες από την πρώτη επίσκεψη',
   pv_rules_note:        'Ισχύς, σειρά χρέωσης, πάγωμα, bonus VIBES και άλλοι κανόνες — στη σελίδα <a href="/vibes#rules">VIBES</a>.',
