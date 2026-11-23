@@ -793,7 +793,8 @@ const BookingModal = (() => {
     const d = new Date(String(iso).slice(0, 10) + 'T12:00:00');
     const o = { day: 'numeric', month: 'long' };
     if (d.getFullYear() !== new Date().getFullYear()) o.year = 'numeric';
-    return d.toLocaleDateString(locale, o);
+    // ru-RU adds «г.» after the year; the texts put their own full stop → «г..». Drop it.
+    return d.toLocaleDateString(locale, o).replace(/\.$/, '');
   }
 
   // Lot name from the terms dictionary: «абонемент MP8» / «Стартер пак SP2» / Class Pass MP8.
@@ -801,7 +802,7 @@ const BookingModal = (() => {
     if (!lot) return '';
     const code = String(lot.source_label || '').split(' · ')[0].trim();
     const type = lot.source_type === 'membership' ? 'pass' : lot.source_type === 'starter_pack' ? 'starter' : null;
-    if (!type) return _k('pay_bonus', 'Bonus VIBES');
+    if (!type) return _k('pay_bonus', 'Gift VIBES');
     const lang = _lang();
     const terms = window.SVS_TERMS || {};
     let name;
@@ -866,6 +867,11 @@ const BookingModal = (() => {
         main = plan.expiry ? _payFill(_esc(K('pay_expired')), v) : _esc(_k('pay_studio'));
         break;
       }
+      case 'event':
+        // Special event: own price; its VIBES cost is confirmed by the administrator.
+        v.eur = _esc(String(Math.round(plan.eur)));
+        main = _payFill(_esc(_k(plan.hasVibes ? 'pay_event' : 'pay_event_studio')), v);
+        break;
       case 'unknown':
         main = _esc(_k('pay_unknown'));
         break;
@@ -895,7 +901,10 @@ const BookingModal = (() => {
     const data = await _payData();
     if (want !== _selectedService + '|' + _selectedDate + '|' + _selectedSlot || _step !== 'confirm') return;
     const plan = window.SVSPayPlan
-      ? SVSPayPlan.planPayment(data && data.vibes, data && data.bookings, { date: _selectedDate, time: _selectedSlot, service_id: _selectedService })
+      ? SVSPayPlan.planPayment(data && data.vibes, data && data.bookings, {
+          date: _selectedDate, time: _selectedSlot, service_id: _selectedService,
+          price: _services?.find(s => String(s.id) === String(_selectedService))?.price,
+        })
       : null;
     _lastPlan = plan;
     _paintPay('bmPayBox', plan, 'confirm');

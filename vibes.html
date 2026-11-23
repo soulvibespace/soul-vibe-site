@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n-title="vb_page_title">VIBES — your practice currency | Soul Vibe Space Limassol</title>
-  <meta name="description" content="VIBES — your practice currency at Soul Vibe Space, Limassol: one balance for any practice at your own rhythm. %%MP20.per%% per class with a Class Pass, free co-working, gift VIBES for regular practice, friends and your birthday." />
+  <title data-i18n-title="vb_page_title">VIBES. Make more room for practice | Soul Vibe Space Limassol</title>
+  <meta name="description" content="VIBES at Soul Vibe Space, Limassol: every guest has a balance for classes. A Class Pass tops it up at a better rate than a standard top-up, and regular practice earns gift VIBES." />
   <!-- meta:start -->
   <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Soul Vibe Space" />
-  <meta property="og:title" content="VIBES — your practice currency | Soul Vibe Space Limassol" />
-  <meta property="og:description" content="VIBES — your practice currency at Soul Vibe Space, Limassol: one balance for any practice at your own rhythm. %%MP20.per%% per class with a Class Pass, free co-working, gift VIBES for regular practice, friends and your birthday." />
+  <meta property="og:title" content="VIBES. Make more room for practice | Soul Vibe Space Limassol" />
+  <meta property="og:description" content="VIBES at Soul Vibe Space, Limassol: every guest has a balance for classes. A Class Pass tops it up at a better rate than a standard top-up, and regular practice earns gift VIBES." />
   <meta property="og:url" content="https://soul-vibe-space.netlify.app/vibes" />
   <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="ru_RU" />
   <meta property="og:locale:alternate" content="el_GR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="VIBES — your practice currency | Soul Vibe Space Limassol" />
-  <meta name="twitter:description" content="VIBES — your practice currency at Soul Vibe Space, Limassol: one balance for any practice at your own rhythm. %%MP20.per%% per class with a Class Pass, free co-working, gift VIBES for regular practice, friends and your birthday." />
+  <meta name="twitter:title" content="VIBES. Make more room for practice | Soul Vibe Space Limassol" />
+  <meta name="twitter:description" content="VIBES at Soul Vibe Space, Limassol: every guest has a balance for classes. A Class Pass tops it up at a better rate than a standard top-up, and regular practice earns gift VIBES." />
   <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <!-- meta:end -->
 
@@ -219,71 +219,107 @@
       .vb-final .vb-cta { width: 100%; }
       .vb-hide-xs { display: none; }
     }
+    .vb-hero--paths { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .vb-hero--paths > * { min-width: 0; }
+    .vb-title { overflow-wrap: break-word; hyphens: auto; }
+    .vb-hero--paths .vb-lead { max-width: 720px; }
+    .vb-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .vb-path { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px; border-radius: 18px; border: 1px solid var(--border); background: var(--bg, var(--color-bg)); }
+    .vb-path--new { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+    .vb-path-tag { font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+    .vb-path-num { font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 2.8rem); line-height: 1; color: var(--text-primary); }
+    .vb-path-num small { font-family: var(--font-sans); font-size: .95rem; color: var(--text-secondary); margin-left: 4px; }
+    .vb-path-desc { font-size: .95rem; color: var(--text-secondary); line-height: 1.5; flex: 1; }
+    .vb-path { min-width: 0; }
+    /* Пример «абонемент vs обычное пополнение»: одна цифра, общая для всех гостей */
+    .vb-ex { padding: 20px 24px; border-radius: 18px; border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+    .vb-ex-num { font-family: var(--font-serif); font-size: clamp(1.5rem, 3.2vw, 2rem); line-height: 1.2; color: var(--text-primary); margin-bottom: 8px; }
+    .vb-ex-text { font-size: .98rem; color: var(--text-secondary); line-height: 1.55; margin: 0; }
+    .vb-path-tag { text-transform: none; letter-spacing: 0; font-size: 1.02rem; color: var(--text-primary); }
+    .vb-path-desc { flex: 0 1 auto; margin: 0; }
+    /* Главный заголовок: слоган читается первым */
+    .vb-hero--paths .vb-title--big { hyphens: manual; margin-bottom: 18px; line-height: 1.02; font-size: clamp(2.3rem, 5.6vw, 4.2rem); max-width: 15ch; }
+    .vb-title-brand { display: block; font-size: 1.45em; color: var(--accent); letter-spacing: -.01em; line-height: .95; margin-bottom: .08em; }
+    .vb-title-line { display: block; }
+    .vb-hero--paths .vb-lead { font-size: 1.12rem; max-width: 640px; }
+    @media (max-width: 720px) { .vb-hero--paths .vb-title.vb-title--big { font-size: clamp(2rem, 9.4vw, 2.6rem); } .vb-hero--paths .vb-lead { font-size: 1.02rem; } }
+    /* Инфографика «лотосы»: один лотос = одно обычное занятие */
+    .lt { display: block; aspect-ratio: 1; width: 100%; max-width: 30px;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.5c-2 2.2-3 4.6-3 7.1 0 2.3 1 4.3 3 5.9 2-1.6 3-3.6 3-5.9 0-2.5-1-4.9-3-7.1zM2.5 8.8c.2 4.3 3.4 7.6 8 8.2-1.9-2-2.9-4.3-3-6.8-1.6-1-3.3-1.4-5-1.4zM21.5 8.8c-.2 4.3-3.4 7.6-8 8.2 1.9-2 2.9-4.3 3-6.8 1.6-1 3.3-1.4 5-1.4zM5 19.2h14v1.6H5z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.5c-2 2.2-3 4.6-3 7.1 0 2.3 1 4.3 3 5.9 2-1.6 3-3.6 3-5.9 0-2.5-1-4.9-3-7.1zM2.5 8.8c.2 4.3 3.4 7.6 8 8.2-1.9-2-2.9-4.3-3-6.8-1.6-1-3.3-1.4-5-1.4zM21.5 8.8c-.2 4.3-3.4 7.6-8 8.2 1.9-2 2.9-4.3 3-6.8 1.6-1 3.3-1.4 5-1.4zM5 19.2h14v1.6H5z'/%3E%3C/svg%3E") center / contain no-repeat;
+      background: linear-gradient(90deg, var(--lt-1) 0 var(--a, 0%), var(--lt-2) var(--a, 0%) var(--b, 0%), var(--lt-0) var(--b, 0%)); }
+    .vb-ex, .vb-scale { --lt-0: color-mix(in srgb, var(--text-secondary) 22%, var(--surface)); --lt-1: color-mix(in srgb, var(--accent) 45%, var(--surface)); --lt-2: var(--accent); }
+    .vb-cmps { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+    .vb-cmp { min-width: 0; padding: 16px 18px; border-radius: 14px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border)); display: flex; flex-direction: column; gap: 12px; }
+    .vb-cmp-title { font-family: var(--font-serif); font-size: 1.15rem; color: var(--text-primary); margin: 0; }
+    .vb-bar-label { display: flex; justify-content: space-between; align-items: center; gap: 8px 12px; flex-wrap: wrap; font-size: .88rem; color: var(--text-secondary); margin: 0 0 6px; }
+    .vb-bar-label strong { color: var(--text-primary); font-weight: 600; }
+    .vb-bar-vals { display: inline-flex; align-items: center; gap: 8px; }
+    .vb-bar-chip { font-style: normal; font-weight: 700; font-size: .74rem; color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+    .vb-lotus { display: grid; grid-template-columns: repeat(10, minmax(0, 30px)); gap: 4px 3px; }
+    .vb-bar-note { font-size: .82rem; color: var(--text-secondary); margin: 10px 0 0; }
+    .vb-scale { margin: 18px 0 6px; max-width: 520px; }
+    .vb-scale-title { font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--text-secondary); margin: 0 0 6px; }
+    .vb-scale-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; align-items: end; }
+    .vb-scale-grid .lt { grid-row: 2; max-width: 44px; justify-self: center; }
+    .lt--0 { background: var(--lt-0); } .lt--1 { background: var(--lt-1); } .lt--2 { background: var(--lt-2); }
+    .vb-scale-mark { margin: 0 0 4px; font-family: var(--font-serif); font-size: clamp(.95rem, 3.4vw, 1.2rem); color: var(--text-primary); white-space: nowrap; border-left: 2px solid var(--lt-1); padding-left: 6px; line-height: 1.1; }
+    .vb-scale-mark--1 { grid-column: 4 / span 4; grid-row: 1; }
+    .vb-scale-mark--2 { grid-column: 8 / span 3; grid-row: 1; justify-self: end; border-left: 0; border-right: 2px solid var(--accent); padding: 0 6px 0 0; color: var(--accent); font-weight: 600; }
+    .vb-scale-n { margin: 2px 0 0; grid-row: 3; text-align: center; font-size: .78rem; font-weight: 700; color: var(--text-secondary); }
+    @media (max-width: 720px) { .vb-cmps { grid-template-columns: 1fr; } .vb-cmp { padding: 14px; } }
+    .vb-path .btn { align-self: flex-start; margin-top: 4px; white-space: normal; max-width: 100%; }
+    .vb-all { font-size: .9rem; color: var(--text-secondary); line-height: 1.5; }
+    .vb-all strong { color: var(--text-primary); }
+    @media (max-width: 720px) { .vb-hero--paths .vb-title { font-size: clamp(1.7rem, 7.4vw, 2rem); } .vb-paths { grid-template-columns: 1fr; } .vb-path { padding: 18px 20px; } .vb-path .btn { align-self: stretch; justify-content: center; text-align: center; } }
   </style>
-  <!-- FAQ для поисковиков: тексты = ответы vb_faq*_a (EN) на странице. Цифры — токены %%…%% (tools/prices.py). -->
+  <!-- FAQ для поисковиков: тексты = видимые вопросы «Ещё о VIBES» (EN, без правил) на странице. Цифры — токены %%…%% (tools/prices.py). -->
   <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What are VIBES?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "VIBES is your practice currency at Soul Vibe Space: a balance you use to pay for classes. A regular class costs %%class%% VIBES; special events have their own price."
+        {
+            "@type": "Question",
+            "name": "Gifts for a friend and your birthday",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Bring a friend who is new to the studio and get %%bonus.friend%% gift VIBES: just tell the administrator. On your birthday we add %%bonus.birthday%% gift VIBES automatically if your date of birth is in your personal account."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Co-working",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Between classes, co-working is free if you have more than %%class%% VIBES on your balance. Otherwise, co-working rates apply."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Where can I see my balance?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "In your personal account: current VIBES balance, your Class Passes with expiry dates and the history of credits and visits."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do VIBES expire?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "VIBES from a Class Pass or Starter Pack are valid for its period, which starts from your first visit. Gift VIBES never expire."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What if I don’t have enough VIBES?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Top up your balance at the studio by any amount or pay for the class at the studio without using VIBES."
+            }
         }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I start using VIBES?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Register on the website and confirm your email — your VIBES balance is created automatically. VIBES appear on it after you buy a Class Pass or a Starter Pack, or top up at the studio. You can also come without a Class Pass — a single visit costs %%dropin%%."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do VIBES expire?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "VIBES from a Class Pass or Starter Pack are valid for its period, which starts from your first visit. Gift VIBES never expire."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I give or transfer VIBES?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A Class Pass is personal and is not intended to be transferred to other people. To give a class as a present, choose a gift certificate."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What if I don’t have enough VIBES?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Pay the difference at the studio or top up your balance: when you top up, %%topup%% becomes 1 VIBE. With a new Class Pass, each class costs less."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Where can I see my balance?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "In your personal account: current VIBES balance, your Class Passes with expiry dates and the history of credits and visits."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How do I freeze my Class Pass?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Submit a request in your personal account — the administrator reviews it. A freeze lasts up to %%freeze%% days, and the validity is extended by the frozen days."
-        }
-      }
     ]
-  }
+}
   </script>
   <link rel="stylesheet" href="/compact.css" />
 </head>
@@ -358,266 +394,141 @@
   <main class="vibes-page">
     <div class="container">
 
-      <!-- ── HERO: валюта практики ── -->
-      <section class="vb-hero" aria-labelledby="vbTitle">
+      <!-- ── HERO: у каждого гостя есть баланс; абонемент — выгодное пополнение ── -->
+      <section class="vb-hero vb-hero--paths" aria-labelledby="vbTitle">
         <div class="vb-hero-text">
-          <p class="page-eyebrow" data-i18n="vb_eyebrow">VIBES · your practice currency</p>
-          <h1 class="vb-title" id="vbTitle" data-i18n="vb_h1">Practise at your own rhythm</h1>
-          <p class="vb-lead" data-i18n="vb_lead">VIBES is an easy, flexible way to attend practices at Soul Vibe Space. You get a balance and use it the way that suits you: each class is simply deducted from your balance.</p>
-          <div class="vb-cta">
-            <a href="#how" class="btn btn-primary" data-i18n="vb_cta_how">How it works</a>
-            <a href="/pricing#multi-pass" class="btn btn-outline" data-i18n="vb_cta_pass">Choose a Class Pass</a>
-          </div>
+          <h1 class="vb-title vb-title--big" id="vbTitle"><span class="vb-title-brand">VIBES.</span> <span class="vb-title-line" data-i18n="vb_h1">Make more room for practice.</span></h1>
+          <p class="vb-lead" data-i18n="vb_lead">When yoga and practice become part of your week, VIBES make practising better value. When you buy a Class Pass, VIBES top up your balance automatically, and you can use them for all the studio’s practices and classes. Regular visits and activity also earn you extra VIBES as a gift.</p>
         </div>
-        <div class="vb-stats" role="list">
-          <div class="vb-stat vb-stat--accent" role="listitem">
-            <p class="vb-stat-num">%%MP20.per%%</p>
-            <p class="vb-stat-label" data-i18n="vb_stat_per">per regular class instead of %%dropin%%</p>
-          </div>
-          <div class="vb-stat" role="listitem">
-            <p class="vb-stat-num" data-i18n="vb_stat_cowork_num">€0</p>
-            <p class="vb-stat-label" data-i18n="vb_stat_cowork">co-working with more than 20 VIBES on your balance</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── ПОЧЕМУ ЭТО УДОБНО ── -->
-      <section class="vb-section" id="why" aria-labelledby="vbWhyTitle">
-        <h2 class="vb-h2" id="vbWhyTitle" data-i18n="vb_why_title">Why it’s convenient</h2>
-        <ol class="vb-steps">
-          <li class="vb-step"><span class="vb-step-num">1</span><div>
-            <p class="vb-step-title" data-i18n="vb_why1_title">Flexibility</p>
-            <p class="vb-step-desc" data-i18n="vb_why1_desc">Come at your own rhythm.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">2</span><div>
-            <p class="vb-step-title" data-i18n="vb_why2_title">Freedom</p>
-            <p class="vb-step-desc" data-i18n="vb_why2_desc">Choose any practice. Special events have their own price.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">3</span><div>
-            <p class="vb-step-title" data-i18n="vb_why3_title">Transparency</p>
-            <p class="vb-step-desc" data-i18n="vb_why3_desc">Your balance, dates and history are always in your <a href="/account">personal account</a>.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">4</span><div>
-            <p class="vb-step-title" data-i18n="vb_why4_title">Savings</p>
-            <p class="vb-step-desc" data-i18n="vb_why4_desc">%%MP20.classes%% classes with a Class Pass cost %%MP20.price%%, not %%MP20.full%%.</p></div></li>
-        </ol>
-        <p class="vb-howget" data-i18n="vb_cowork_note"><strong>Co-working for free.</strong> With more than 20 VIBES on your balance, you can work in our co-working area between classes at no charge: Wi-Fi, tea and coffee included.</p>
-      </section>
-
-      <!-- ── ВЫГОДА: пример в деньгах ── -->
-      <section class="vb-section" id="example" aria-labelledby="vbExTitle">
-        <div class="vb-example">
-          <div class="vb-example-text">
-            <p class="page-eyebrow" data-i18n="vb_ex_eyebrow">Savings</p>
-            <h2 class="vb-h2" id="vbExTitle" data-i18n="vb_ex_title">%%MP20.classes%% classes. %%MP20.save_eur%% less.</h2>
-            <p class="vb-sub" data-i18n="vb_ex_lead">With a Class Pass you save %%MP20.save_eur%%, and one regular class costs you %%MP20.per%%.</p>
-          </div>
-          <dl class="vb-calc">
-            <div class="vb-calc-row"><dt data-i18n="vb_ex_dropin">Paying per visit</dt><dd>%%MP20.full%%</dd></div>
-            <div class="vb-calc-row"><dt><span data-i18n="vb_ex_pass">With a Class Pass</span> <span class="vb-code">MP20</span></dt><dd>%%MP20.price%%</dd></div>
-            <div class="vb-calc-row vb-calc-total"><dt data-i18n="vb_ex_save">You save</dt><dd>%%MP20.save_eur%%</dd></div>
-            <div class="vb-calc-result">
-              <p class="vb-calc-per"><span data-i18n="vb_ex_per">one class — %%MP20.per%%</span></p>
-              <p><span data-i18n="vb_ex_meta">%%MP20.classes%% classes · %%MP20.days%% days from your first visit · %%MP20.vibes%% VIBES</span></p>
+        <div class="vb-ex">
+          <p class="vb-ex-num" data-i18n="vb_ex_title">More VIBES for the same amount</p>
+          <!-- Инфографика: одна и та же сумма; лотос = обычное занятие. Цифры — токены цен, лотосы рисует скрипт ниже. -->
+          <div class="vb-cmps">
+            <div class="vb-cmp">
+              <p class="vb-cmp-title" data-i18n="vb_cmp8_title">Class Pass for %%MP8.classes%% classes</p>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_topup">Standard top-up</span><strong>%%MP8.topup_vibes%% VIBES</strong></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP8.topup_vibes%%" data-have="%%MP8.topup_vibes%%" data-of="%%MP8.vibes%%" data-class="%%class%%"></div>
+              </div>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_pass">With a Class Pass</span><span class="vb-bar-vals"><strong>%%MP8.vibes%% VIBES</strong><em class="vb-bar-chip">+%%MP8.extra_vibes%% VIBES</em></span></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP8.topup_vibes%%" data-have="%%MP8.vibes%%" data-of="%%MP8.vibes%%" data-class="%%class%%"></div>
+              </div>
             </div>
-          </dl>
+            <div class="vb-cmp">
+              <p class="vb-cmp-title" data-i18n="vb_cmp20_title">Class Pass for %%MP20.classes%% classes</p>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_topup">Standard top-up</span><strong>%%MP20.topup_vibes%% VIBES</strong></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP20.topup_vibes%%" data-have="%%MP20.topup_vibes%%" data-of="%%MP20.vibes%%" data-class="%%class%%"></div>
+              </div>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_pass">With a Class Pass</span><span class="vb-bar-vals"><strong>%%MP20.vibes%% VIBES</strong><em class="vb-bar-chip">+%%MP20.extra_vibes%% VIBES</em></span></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP20.topup_vibes%%" data-have="%%MP20.vibes%%" data-of="%%MP20.vibes%%" data-class="%%class%%"></div>
+              </div>
+            </div>
+          </div>
+          <p class="vb-bar-note" data-i18n="vb_bar_note">One lotus = one regular class (%%class%% VIBES).</p>
+        </div>
+        <div class="vb-paths">
+          <div class="vb-path">
+            <p class="vb-path-tag" data-i18n="vb_reg_q">Already practise with us?</p>
+            <a href="/pricing#multi-pass" class="btn btn-primary" data-i18n="vb_cta_pass">Choose a Class Pass</a>
+          </div>
+          <div class="vb-path">
+            <p class="vb-path-tag" data-i18n="vb_new_q">New here?</p>
+            <a href="/pricing#starter-pack" class="btn btn-primary" data-i18n="vb_cta_starter">Explore the Starter Pack</a>
+            <p class="vb-path-desc" data-i18n="vb_new_note">This one-time offer for new guests also adds VIBES to your balance automatically.</p>
+          </div>
         </div>
       </section>
 
-      <!-- ── КАК ЭТО РАБОТАЕТ ── -->
-      <section class="vb-section" id="how" aria-labelledby="vbHowTitle">
-        <h2 class="vb-h2" id="vbHowTitle" data-i18n="vb_how_title">How it works</h2>
-        <ol class="vb-steps">
-          <li class="vb-step"><span class="vb-step-num">1</span><div>
-            <p class="vb-step-title" data-i18n="vb_how1_title">Buy a Class Pass</p>
-            <p class="vb-step-desc" data-i18n="vb_how1_desc">and get a VIBES balance. For example, MP20 gives you %%MP20.vibes%% VIBES.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">2</span><div>
-            <p class="vb-step-title" data-i18n="vb_how2_title">Come to class</p>
-            <p class="vb-step-desc" data-i18n="vb_how2_desc">Each class is deducted from your balance: 1 class = %%class%% VIBES.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">3</span><div>
-            <p class="vb-step-title" data-i18n="vb_how3_title">Your balance starts</p>
-            <p class="vb-step-desc" data-i18n="vb_how3_desc">with your first visit. Each Class Pass has a validity period.</p></div></li>
-        </ol>
-      </section>
-
-      <!-- ── VIBES В ПОДАРОК ── -->
+      <!-- ── VIBES В ПОДАРОК ЗА РЕГУЛЯРНОСТЬ ── -->
+      <!-- Бонус за активность: выпускать вместе с логикой начисления (первое — 1 декабря). -->
       <section class="vb-section" id="gift" aria-labelledby="vbGiftTitle">
-        <h2 class="vb-h2" id="vbGiftTitle" data-i18n="vb_gift_title">VIBES as a gift</h2>
-        <p class="vb-sub" data-i18n="vb_gift_sub">We value your part in the life of our space.</p>
-        <ol class="vb-steps">
-          <!-- Бонус за активность: выпускать вместе с логикой начисления (первое — 1 декабря). Иначе удалить этот <li> и абзац ниже поправить. -->
-          <li class="vb-step"><span class="vb-step-num">1</span><div>
-            <p class="vb-step-title" data-i18n="vb_gift_active_title">Regular practice</p>
-            <p class="vb-step-desc" data-i18n="vb_gift_active_desc">4–9 visits in a calendar month: +10 VIBES. 10 or more: +20 VIBES in total.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">2</span><div>
-            <p class="vb-step-title" data-i18n="vb_gift_friend_title">Bring a friend</p>
-            <p class="vb-step-desc" data-i18n="vb_gift_friend_desc">+%%bonus.friend%% VIBES for every new guest.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">3</span><div>
-            <p class="vb-step-title" data-i18n="vb_gift_bday_title">Your birthday</p>
-            <p class="vb-step-desc" data-i18n="vb_gift_bday_desc">+%%bonus.birthday%% VIBES. Add your date of birth in your <a href="/account">personal account</a> in advance.</p></div></li>
-        </ol>
-        <p class="vb-howget" data-i18n="vb_gift_how">VIBES for regular practice are credited automatically on the 1st of each month, and birthday VIBES on your birthday. For a friend, just tell the administrator at the studio. Gift VIBES never expire: %%class%% VIBES is one more class.</p>
+        <h2 class="vb-h2" id="vbGiftTitle" data-i18n="vb_gift_title">Your practice earns you gift VIBES</h2>
+        <p class="vb-sub" data-i18n="vb_gift_sub">What counts here is how many times you come to class in a calendar month, not which pass you buy.</p>
+        <!-- Инфографика: 10 лотосов = посещения за месяц; с 4-го +10 VIBES, с 10-го +20 VIBES всего -->
+        <div class="vb-scale">
+          <p class="vb-scale-title" data-i18n="vb_scale_title">Visits in a calendar month</p>
+          <div class="vb-scale-grid" aria-hidden="true">
+            <p class="vb-scale-mark vb-scale-mark--1">+10 VIBES</p>
+            <p class="vb-scale-mark vb-scale-mark--2">+20 VIBES</p>
+            <span class="lt lt--0"></span><span class="lt lt--0"></span><span class="lt lt--0"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--2"></span>
+            <p class="vb-scale-n" style="grid-column:1">1</p><p class="vb-scale-n" style="grid-column:4">4</p><p class="vb-scale-n" style="grid-column:10">10+</p>
+          </div>
+        </div>
+        <p class="vb-howget" data-i18n="vb_gift_how">Your gift appears automatically on the first day of the following month. Gift VIBES never expire.</p>
       </section>
 
-      <!-- ── КАК НАЧАТЬ ── -->
-      <section class="vb-section" id="join" aria-labelledby="vbJoinTitle">
-        <h2 class="vb-h2" id="vbJoinTitle" data-i18n="vb_join_title">How to start</h2>
-        <p class="vb-sub" data-i18n="vb_join_text">Sign up on the website and choose a Class Pass — your VIBES balance is created automatically. You can also top up at the studio, any amount: %%topup%% = 1 VIBE.</p>
+      <!-- ── КАК ПОЛЬЗОВАТЬСЯ БАЛАНСОМ ── -->
+      <section class="vb-section" id="how" aria-labelledby="vbHowTitle">
+        <h2 class="vb-h2" id="vbHowTitle" data-i18n="vb_use_title">Using your balance</h2>
+        <p class="vb-sub" data-i18n="vb_use_text">Book as usual. We deduct %%class%% VIBES for a regular class when you attend, not when you book. Special events are priced separately.</p>
         <div class="vb-cta">
-          <a href="/account" onclick="if(window.AuthModal){event.preventDefault();AuthModal.open('register')}" class="btn btn-primary" data-i18n="vb_cta_join">Sign up</a>
-          <a href="/pricing#multi-pass" class="btn btn-outline" data-i18n="vb_cta_pass">Choose a Class Pass</a>
+          <a href="/account" class="btn btn-primary" data-i18n="vb_cta_balance">View my balance</a>
+          <a href="/schedule" class="btn btn-outline" data-i18n="vb_cta_find">Find a class</a>
         </div>
-        <p class="vb-howget"><strong data-i18n="vb_starter_title">New to the studio?</strong> <span data-i18n="vb_starter_text">A Starter Pack — from %%SP4.per%% per class, for new clients only, once.</span> <a href="/pricing#starter-pack" data-i18n="vb_starter_link">Choose a Starter Pack</a></p>
       </section>
 
-      <!-- ── ПОДРОБНЫЕ УСЛОВИЯ ── -->
-      <section class="vb-section" id="value" aria-labelledby="vbValueTitle">
-        <p class="page-eyebrow" data-i18n="vb_terms_eyebrow">Full terms</p>
-        <h2 class="vb-h2" id="vbValueTitle" data-i18n="vb_value_title">All options and price per class</h2>
-        <p class="vb-sub" data-i18n="vb_value_sub">The bigger the Class Pass, the lower the price per class. Savings are compared with a single visit.</p>
-        <div class="vb-table-wrap">
-          <table class="vb-table">
-            <thead>
-              <tr>
-                <th scope="col" data-i18n="vb_col_option">Option</th>
-                <th scope="col" class="vb-num vb-hide-sm" data-i18n="vb_col_price">Price</th>
-                <th scope="col" class="vb-num vb-hide-sm">VIBES</th>
-                <th scope="col" class="vb-num vb-hide-sm" data-i18n="vb_col_days">Valid</th>
-                <th scope="col" class="vb-num" data-i18n="vb_col_per">Per class</th>
-                <th scope="col" class="vb-num" data-i18n="vb_col_save">Savings</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="vb-row--base">
-                <th scope="row"><span class="vb-name" data-i18n="vb_row_dropin">Single visit</span><span class="vb-meta" data-i18n="vb_row_dropin_meta">without a Class Pass</span></th>
-                <td class="vb-num vb-hide-sm">%%dropin%%</td>
-                <td class="vb-num vb-hide-sm">—</td>
-                <td class="vb-num vb-hide-sm">—</td>
-                <td class="vb-num vb-per">%%dropin%%</td>
-                <td class="vb-num vb-save vb-save--none">—</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="vb-name"><span class="vb-code">MP4</span> <span data-i18n="vb_row_pass">Class Pass</span></span><span class="vb-meta vb-show-sm">%%MP4.price%% · %%MP4.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP4.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%MP4.price%%</td>
-                <td class="vb-num vb-hide-sm">%%MP4.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%MP4.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="MP4.per">%%MP4.per%%</td>
-                <td class="vb-num vb-save">−%%MP4.save%%</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="vb-name"><span class="vb-code">MP8</span> <span data-i18n="vb_row_pass">Class Pass</span></span><span class="vb-meta vb-show-sm">%%MP8.price%% · %%MP8.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP8.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%MP8.price%%</td>
-                <td class="vb-num vb-hide-sm">%%MP8.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%MP8.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="MP8.per">%%MP8.per%%</td>
-                <td class="vb-num vb-save">−%%MP8.save%%</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="vb-name"><span class="vb-code">MP12</span> <span data-i18n="vb_row_pass">Class Pass</span></span><span class="vb-meta vb-show-sm">%%MP12.price%% · %%MP12.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP12.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%MP12.price%%</td>
-                <td class="vb-num vb-hide-sm">%%MP12.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%MP12.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="MP12.per">%%MP12.per%%</td>
-                <td class="vb-num vb-save">−%%MP12.save%%</td>
-              </tr>
-              <tr class="vb-row--best">
-                <th scope="row"><span class="vb-name"><span class="vb-code">MP20</span> <span data-i18n="vb_row_pass">Class Pass</span> <span class="vb-badge" data-i18n="vb_badge_best">Best price</span></span><span class="vb-meta vb-show-sm">%%MP20.price%% · %%MP20.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%MP20.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%MP20.price%%</td>
-                <td class="vb-num vb-hide-sm">%%MP20.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%MP20.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="MP20.per">%%MP20.per%%</td>
-                <td class="vb-num vb-save">−%%MP20.save%%</td>
-              </tr>
-              <tr class="vb-row--group">
-                <th scope="rowgroup" colspan="6"><span data-i18n="vb_row_starter_group">Starter Pack</span> <span class="vb-badge vb-badge--new" data-i18n="vb_badge_new">New clients only · once</span></th>
-              </tr>
-              <tr>
-                <th scope="row"><span class="vb-name"><span class="vb-code">SP1</span> <span data-i18n="vb_row_starter">Starter Pack</span></span><span class="vb-meta vb-show-sm">%%SP1.price%% · %%SP1.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%SP1.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%SP1.price%%</td>
-                <td class="vb-num vb-hide-sm">%%SP1.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%SP1.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="SP1.per">%%SP1.per%%</td>
-                <td class="vb-num vb-save">−%%SP1.save%%</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="vb-name"><span class="vb-code">SP2</span> <span data-i18n="vb_row_starter">Starter Pack</span></span><span class="vb-meta vb-show-sm">%%SP2.price%% · %%SP2.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%SP2.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%SP2.price%%</td>
-                <td class="vb-num vb-hide-sm">%%SP2.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%SP2.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="SP2.per">%%SP2.per%%</td>
-                <td class="vb-num vb-save">−%%SP2.save%%</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="vb-name"><span class="vb-code">SP4</span> <span data-i18n="vb_row_starter">Starter Pack</span></span><span class="vb-meta vb-show-sm">%%SP4.price%% · %%SP4.vibes%%&nbsp;VIBES</span><span class="vb-meta vb-meta--2 vb-show-sm">%%SP4.days%%&nbsp;<span data-i18n="vb_days">days</span></span></th>
-                <td class="vb-num vb-hide-sm">%%SP4.price%%</td>
-                <td class="vb-num vb-hide-sm">%%SP4.vibes%%</td>
-                <td class="vb-num vb-hide-sm">%%SP4.days%%&nbsp;<span data-i18n="vb_days">days</span></td>
-                <td class="vb-num vb-per" data-price="SP4.per">%%SP4.per%%</td>
-                <td class="vb-num vb-save">−%%SP4.save%%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="vb-note" data-i18n="vb_value_note">Validity starts from your first visit. Prices and purchase — on the <a href="/pricing">Pricing</a> page.</p>
-      </section>
-
-      <!-- ── RULES ── -->
-      <section class="vb-section" id="rules" aria-labelledby="vbRulesTitle">
-        <h2 class="vb-h2" id="vbRulesTitle" data-i18n="vb_rules_title">Rules in brief</h2>
-        <ul class="vb-rules">
-          <li data-i18n="vb_rule1"><strong>Validity</strong> of a Class Pass starts from your first visit, not from the purchase date.</li>
-          <li data-i18n="vb_rule2"><strong>Order of use:</strong> VIBES are taken from the earliest purchase first.</li>
-          <li data-i18n="vb_rule3"><strong>Top-up:</strong> any amount at the studio, %%topup%% = 1 VIBE.</li>
-          <li data-i18n="vb_rule4"><strong>Freeze:</strong> on request in your personal account, up to %%freeze%% days.</li>
-          <li data-i18n="vb_rule5"><strong>Personal:</strong> a Class Pass is not intended to be transferred to other people.</li>
-          <li data-i18n="vb_rule6"><strong>Cancellation:</strong> please cancel your booking in advance. No penalty while online payment is not available.</li>
-        </ul>
-        <p class="vb-note" data-i18n="vb_rules_terms">Full terms — in the <a href="/terms#booking">Terms &amp; Conditions</a>.</p>
-      </section>
-
-      <!-- ── FAQ ── -->
+      <!-- ── ЕЩЁ О VIBES ── -->
       <section class="vb-section" id="faq" aria-labelledby="vbFaqTitle">
-        <h2 class="vb-h2" id="vbFaqTitle" data-i18n="vb_faq_title">Questions &amp; answers</h2>
+        <h2 class="vb-h2" id="vbFaqTitle" data-i18n="vb_faq_title">More about VIBES</h2>
         <div class="vp-faq">
           <details>
-            <summary data-i18n="vb_faq1_q">What are VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq1_a">VIBES is your practice currency at Soul Vibe Space: a balance you use to pay for classes. A regular class costs %%class%% VIBES; special events have their own price.</div>
+            <summary data-i18n="vb_more_gifts_q">Gifts for a friend and your birthday</summary>
+            <div class="vp-faq-a" data-i18n="vb_more_gifts_a">Bring a friend who is new to the studio and get %%bonus.friend%% gift VIBES: just tell the administrator. On your birthday we add %%bonus.birthday%% gift VIBES automatically if your date of birth is in your <a href="/account">personal account</a>.</div>
           </details>
           <details>
-            <summary data-i18n="vb_faq2_q">How do I start using VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq2_a">Register on the website and confirm your email — your VIBES balance is created automatically. VIBES appear on it after you buy a Class Pass or a Starter Pack, or top up at the studio. You can also come without a Class Pass — a single visit costs %%dropin%%.</div>
-          </details>
-          <details>
-            <summary data-i18n="vb_faq3_q">Do VIBES expire?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq3_a">VIBES from a Class Pass or Starter Pack are valid for its period, which starts from your first visit. Gift VIBES never expire.</div>
-          </details>
-          <details>
-            <summary data-i18n="vb_faq4_q">Can I give or transfer VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq4_a">A Class Pass is personal and is not intended to be transferred to other people. To give a class as a present, choose a <a href="/gift-certificates">gift certificate</a>.</div>
-          </details>
-          <details>
-            <summary data-i18n="vb_faq5_q">What if I don’t have enough VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq5_a">Pay the difference at the studio or top up your balance: when you top up, %%topup%% becomes 1&nbsp;VIBE. With a new Class Pass, each class costs less.</div>
+            <summary data-i18n="vb_more_cowork_q">Co-working</summary>
+            <div class="vp-faq-a" data-i18n="vb_more_cowork_a">Between classes, co-working is free if you have more than %%class%% VIBES on your balance. Otherwise, <a href="/price-list#coworking">co-working rates</a> apply.</div>
           </details>
           <details>
             <summary data-i18n="vb_faq6_q">Where can I see my balance?</summary>
             <div class="vp-faq-a" data-i18n="vb_faq6_a">In your <a href="/account">personal account</a>: current VIBES balance, your Class Passes with expiry dates and the history of credits and visits.</div>
           </details>
           <details>
-            <summary data-i18n="vb_faq7_q">How do I freeze my Class Pass?</summary>
-            <div class="vp-faq-a" data-i18n="vb_faq7_a">Submit a request in your <a href="/account">personal account</a> — the administrator reviews it. A freeze lasts up to %%freeze%% days, and the validity is extended by the frozen days.</div>
+            <summary data-i18n="vb_faq3_q">Do VIBES expire?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq3_a">VIBES from a Class Pass or Starter Pack are valid for its period, which starts from your first visit. Gift VIBES never expire.</div>
+          </details>
+          <details>
+            <summary data-i18n="vb_faq5_q">What if I don’t have enough VIBES?</summary>
+            <div class="vp-faq-a" data-i18n="vb_faq5_a">Top up your balance at the studio by any amount or pay for the class at the studio without using VIBES.</div>
+          </details>
+          <details id="rules">
+            <summary data-i18n="vb_rules_title">All VIBES rules</summary>
+            <div class="vp-faq-a">
+              <ul class="vb-rules">
+                <li data-i18n="vb_rule1"><strong>Validity</strong> of a Class Pass starts from your first visit, not from the purchase date.</li>
+                <li data-i18n="vb_rule2"><strong>Order of use:</strong> VIBES are taken from the earliest purchase first.</li>
+                <li data-i18n="vb_rule3"><strong>Top-up:</strong> any amount at the studio, %%topup%% = 1 VIBE.</li>
+                <li data-i18n="vb_rule4"><strong>Freeze:</strong> on request in your personal account, up to %%freeze%% days.</li>
+                <li data-i18n="vb_rule5"><strong>Personal:</strong> a Class Pass is not intended to be transferred to other people. To give a class as a present, choose a <a href="/gift-certificates">gift certificate</a>.</li>
+                <li data-i18n="vb_rule6"><strong>Cancellation:</strong> please cancel your booking in advance. No penalty while online payment is not available.</li>
+              </ul>
+              <p class="vb-note" data-i18n="vb_rules_terms">Full terms — in the <a href="/terms#booking">Terms &amp; Conditions</a>.</p>
+            </div>
           </details>
         </div>
       </section>
-
-      <!-- ── FINAL CTA ── -->
-      <section class="vb-final" aria-labelledby="vbFinalTitle">
-        <div>
-          <h2 class="vb-final-title" id="vbFinalTitle" data-i18n="vb_final_title">VIBES is more than a way to pay.</h2>
-          <p class="vb-final-text" data-i18n="vb_final_text">It is about mindful contact with yourself, your body and your rhythm. See you in the space.</p>
-        </div>
-        <div class="vb-cta">
-          <a href="/account" onclick="if(window.AuthModal){event.preventDefault();AuthModal.open('register')}" class="btn btn-primary" data-i18n="vb_cta_join">Sign up</a>
-          <a href="/pricing#multi-pass" class="btn btn-outline" data-i18n="vb_cta_pass">Choose a Class Pass</a>
-        </div>
-      </section>
+      <script>
+      /* Лотосы VIBES: data-base — сколько VIBES даёт обычное пополнение, data-have — сколько есть, data-of — шкала. */
+      (function () {
+        function draw() {
+          document.querySelectorAll('.vb-lotus').forEach(function (el) {
+            var c = +el.dataset.class || 20, base = +el.dataset.base, have = +el.dataset.have, n = Math.ceil(+el.dataset.of / c), h = '';
+            if (!c || !n || el.dataset.done) return;
+            for (var i = 0; i < n; i++) {
+              var f1 = Math.max(0, Math.min(base - i * c, c)) / c, f2 = Math.max(0, Math.min(have - i * c, c)) / c;
+              var a = Math.min(f1, f2) * 100, b = f2 * 100;
+              h += '<span class="lt" style="--a:' + a + '%;--b:' + b + '%"></span>';
+            }
+            el.innerHTML = h; el.dataset.done = '1';
+          });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', draw); else draw();
+      })();
+      </script>
+      <script>(function(){function o(){if(location.hash==='#rules'){var d=document.getElementById('rules');if(d){d.open=true;d.scrollIntoView();}}}window.addEventListener('hashchange',o);document.addEventListener('DOMContentLoaded',o);})();</script>
 
     </div>
   </main>

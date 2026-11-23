@@ -669,6 +669,18 @@ button { cursor: pointer; background: none; border: none; }
 }
 
 /* ── GIFT SECTION ────────────────────────────────────────────────── */
+/* Главная: блок VIBES (логика /vibes) */
+.vibes-band { background: var(--color-surface, var(--surface)); border-top: 1px solid var(--color-border, var(--border)); border-bottom: 1px solid var(--color-border, var(--border)); }
+.vibes-band-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8, 32px); }
+.vibes-band-text { max-width: 640px; }
+.vibes-band-text .section-title { margin-bottom: var(--space-3, 12px); }
+.vibes-band-text .body-text { margin-bottom: 0; }
+.vibes-band-cta { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+@media (max-width: 768px) {
+  .vibes-band-inner { flex-direction: column; align-items: flex-start; }
+  .vibes-band-cta { width: 100%; }
+  .vibes-band-cta .btn { flex: 1 1 auto; justify-content: center; text-align: center; white-space: normal; }
+}
 .gift-section { background: var(--color-primary); }
 .gift-section .section-title { color: white; }
 .gift-section .body-text { color: rgba(255,255,255,0.78); }

@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n-title="pricing_page_title">Pricing | Soul Vibe Space Limassol</title>
-  <meta name="description" content="Yoga class pricing in Limassol with VIBES: 1 regular class = %%class%% VIBES. Class Pass from %%MP4.price%% (from %%min_per%% per class), one-time Starter Pack for new clients from %%SP1.price%%, drop-in %%dropin%%, top up any amount." />
+  <title data-i18n-title="pricing_page_title">Prices: Class Passes, Starter Pack and drop-in | Soul Vibe Space Limassol</title>
+  <meta name="description" content="Class Passes for %%MP4.classes%%–%%MP20.classes%% classes, a Starter Pack for new guests and drop-in classes at Soul Vibe Space, Limassol. Compare prices and validity." />
   <!-- meta:start -->
   <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Soul Vibe Space" />
-  <meta property="og:title" content="Pricing | Soul Vibe Space Limassol" />
-  <meta property="og:description" content="Yoga class pricing in Limassol with VIBES: 1 regular class = %%class%% VIBES. Class Pass from %%MP4.price%% (from %%min_per%% per class), one-time Starter Pack for new clients from %%SP1.price%%, drop-in %%dropin%%, top up any amount." />
+  <meta property="og:title" content="Prices: Class Passes, Starter Pack and drop-in | Soul Vibe Space Limassol" />
+  <meta property="og:description" content="Class Passes for %%MP4.classes%%–%%MP20.classes%% classes, a Starter Pack for new guests and drop-in classes at Soul Vibe Space, Limassol. Compare prices and validity." />
   <meta property="og:url" content="https://soul-vibe-space.netlify.app/pricing" />
   <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="ru_RU" />
   <meta property="og:locale:alternate" content="el_GR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Pricing | Soul Vibe Space Limassol" />
-  <meta name="twitter:description" content="Yoga class pricing in Limassol with VIBES: 1 regular class = %%class%% VIBES. Class Pass from %%MP4.price%% (from %%min_per%% per class), one-time Starter Pack for new clients from %%SP1.price%%, drop-in %%dropin%%, top up any amount." />
+  <meta name="twitter:title" content="Prices: Class Passes, Starter Pack and drop-in | Soul Vibe Space Limassol" />
+  <meta name="twitter:description" content="Class Passes for %%MP4.classes%%–%%MP20.classes%% classes, a Starter Pack for new guests and drop-in classes at Soul Vibe Space, Limassol. Compare prices and validity." />
   <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <!-- meta:end -->
 
@@ -308,6 +308,16 @@
     }
     .vp-rate-value { font-family: var(--font-serif); font-size: 1.45rem; color: var(--text-primary); line-height: 1.15; }
     .vp-rate-value em { font-style: normal; color: var(--accent); }
+    .vp-rates--paths { grid-template-columns: repeat(3, 1fr); }
+    .vp-rates--paths .vp-rate { display: block; text-decoration: none; color: inherit; transition: background .15s; }
+    .vp-rates--paths .vp-rate:hover { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+    .vp-rates--paths .vp-rate-value::after { content: ' →'; color: var(--accent); font-family: var(--font-sans); font-size: .9em; }
+    .vp-sum-text { font-size: .95rem; color: var(--text-secondary); line-height: 1.6; margin: 0; max-width: 620px; }
+    @media (max-width: 720px) {
+      .vp-rates.vp-rates--paths { grid-template-columns: 1fr; }
+      .vp-rates--paths .vp-rate { border-left: none; }
+      .vp-rates--paths .vp-rate + .vp-rate { border-top: 1px solid var(--border); }
+    }
 
     /* ── VIBES: summary → /vibes ── */
     .vp-summary {
@@ -545,30 +555,26 @@
 
       <!-- Page header -->
       <div style="margin-bottom: var(--head-gap);">
-        <p class="page-eyebrow" data-i18n="pricing_eyebrow">Pricing · VIBES</p>
-        <h1 class="page-title" data-i18n="pricing_h1">Classes, Class Passes &amp; VIBES</h1>
-        <p class="page-lead" data-i18n="pricing_lead">At Soul Vibe Space you pay for classes with VIBES — our studio currency. One regular class is %%class%% VIBES. Choose a Class Pass, top up any amount or simply drop in.</p>
+        <p class="page-eyebrow" data-i18n="pricing_eyebrow">Pricing</p>
+        <h1 class="page-title" data-i18n="pricing_h1">Classes and prices</h1>
+        <p class="page-lead" data-i18n="pricing_lead">Drop in for a class or choose a Class Pass for regular practice. New here? You can also choose a Starter Pack. When you buy any Class Pass or Starter Pack, VIBES are added to your balance automatically.</p>
       </div>
 
-      <!-- ── VIBES at a glance ── -->
-      <div class="vp-rates">
-        <div class="vp-rate">
-          <p class="vp-rate-label" data-i18n="pv_rate_regular">Regular class</p>
-          <p class="vp-rate-value"><em>%%class%%</em> VIBES</p>
-        </div>
-        <div class="vp-rate">
-          <p class="vp-rate-label" data-i18n="pv_rate_special">Special class</p>
-          <p class="vp-rate-value" data-i18n="pv_rate_special_val">Own price in VIBES</p>
-        </div>
-        <div class="vp-rate">
-          <p class="vp-rate-label" data-i18n="pv_rate_topup">Top-up</p>
-          <p class="vp-rate-value"><em>%%topup%%</em> = 1 VIBE</p>
-        </div>
-        <div class="vp-rate">
-          <p class="vp-rate-label" data-i18n="pv_rate_dropin">Drop-in, without a Class Pass</p>
+      <!-- ── Три пути: абонемент · впервые (Стартер пак) · разовое ── -->
+      <nav class="vp-rates vp-rates--paths" aria-label="Pricing options">
+        <a class="vp-rate" href="#multi-pass">
+          <p class="vp-rate-label" data-i18n="pv_path_pass">Class Passes</p>
+          <p class="vp-rate-value" data-i18n="pv_path_pass_val">For regular practice</p>
+        </a>
+        <a class="vp-rate" href="#starter-pack">
+          <p class="vp-rate-label" data-i18n="pv_path_new">New to the studio</p>
+          <p class="vp-rate-value" data-i18n="pv_path_new_val">Starter Pack</p>
+        </a>
+        <a class="vp-rate" href="#drop-in">
+          <p class="vp-rate-label" data-i18n="pv_path_drop">Drop-in class</p>
           <p class="vp-rate-value"><em>%%dropin%%</em></p>
-        </div>
-      </div>
+        </a>
+      </nav>
 
       <hr class="pricing-divider">
 
@@ -576,11 +582,7 @@
       <section id="how-vibes" class="vp-summary" aria-labelledby="pvSumTitle">
         <div>
           <h2 class="pricing-section-title" id="pvSumTitle" data-i18n="pv_sum_title">VIBES in brief</h2>
-          <ul class="vp-sum-list">
-            <li data-i18n="pv_sum1">A regular class is %%class%% VIBES — VIBES are the studio’s currency.</li>
-            <li data-i18n="pv_sum2">With a Class Pass VIBES are cheaper: from %%min_per%% per class instead of %%dropin%%.</li>
-            <li data-i18n="pv_sum3">Gift VIBES: +%%bonus.friend%% for a friend, +%%bonus.birthday%% on your birthday.</li>
-          </ul>
+          <p class="vp-sum-text" data-i18n="pv_sum_text">With a Class Pass, you get more VIBES than with a standard top-up for the same amount. Regular visits earn gift VIBES separately.</p>
         </div>
         <a href="/vibes" class="btn btn-outline btn-sm vp-sum-link" data-i18n="pv_vibes_link">How VIBES work →</a>
       </section>
@@ -592,66 +594,66 @@
         <div class="vp-head">
           <h2 class="pricing-section-title" id="pvMpTitle" data-i18n="pv_mp_title">Class Pass</h2>
         </div>
-        <p class="pricing-section-sub" data-i18n="pv_mp_sub">For a regular practice. The bigger the Class Pass, the lower the price per class.</p>
+        <p class="pricing-section-sub" data-i18n="pv_mp_sub">For regular practice. The more classes in a Class Pass, the lower the price per class. The price per class assumes you use all classes.</p>
         <div class="pass-grid pass-grid--4">
         <div class="pass-card vp-card">
           <div class="vp-card-top"><span class="vp-code">MP4</span></div>
           <div>
             <p class="vp-vibes">%%MP4.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_4">= 4 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_4">on your balance · 4 classes</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%MP4.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%MP4.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_m4_saving">%%MP4.per%% / class · save %%MP4.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_m4_saving">%%MP4.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         <div class="pass-card vp-card pass-card--featured">
           <div class="vp-card-top"><span class="vp-code">MP8</span><span class="pass-badge" data-i18n="pv_badge_popular">Popular</span></div>
           <div>
             <p class="vp-vibes">%%MP8.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_8">= 8 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_8">on your balance · 8 classes</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%MP8.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%MP8.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_m8_saving">%%MP8.per%% / class · save %%MP8.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_m8_saving">%%MP8.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         <div class="pass-card vp-card">
           <div class="vp-card-top"><span class="vp-code">MP12</span></div>
           <div>
             <p class="vp-vibes">%%MP12.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_12">= 12 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_12">on your balance · 12 classes</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%MP12.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%MP12.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_m12_saving">%%MP12.per%% / class · save %%MP12.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_m12_saving">%%MP12.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         <div class="pass-card vp-card pass-card--featured">
-          <div class="vp-card-top"><span class="vp-code">MP20</span><span class="pass-badge" data-i18n="pricing_multi_badge">Best value</span></div>
+          <div class="vp-card-top"><span class="vp-code">MP20</span><span class="pass-badge" data-i18n="pricing_multi_badge">Best price among passes</span></div>
           <div>
             <p class="vp-vibes">%%MP20.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_20">= 20 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_20">on your balance · 20 classes</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%MP20.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%MP20.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_m20_saving">%%MP20.per%% / class · save %%MP20.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_m20_saving">%%MP20.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         </div>
-        <p class="vp-more"><a href="/vibes#value" data-i18n="pv_vibes_link">How VIBES work →</a></p>
+        <p class="vp-more"><a href="/vibes" data-i18n="pv_vibes_link">How VIBES work →</a></p>
       </section>
 
       <hr class="pricing-divider">
@@ -662,48 +664,48 @@
           <h2 class="pricing-section-title" id="pvSpTitle" data-i18n="pv_sp_title">Starter Pack</h2>
           <span class="pass-badge pass-badge--new" data-i18n="pv_sp_badge">New clients · once</span>
         </div>
-        <p class="pricing-section-sub" data-i18n="pv_sp_sub">A gentle start for new clients. A Starter Pack can be purchased only once — choose one of the three options.</p>
+        <p class="pricing-section-sub" data-i18n="pv_sp_sub">For new guests only: choose one of the three options, once. VIBES are added to your balance automatically after your payment is confirmed.</p>
         <div class="pass-grid pass-grid--3">
         <div class="pass-card vp-card">
           <div class="vp-card-top"><span class="vp-code">SP1</span></div>
           <div>
             <p class="vp-vibes">%%SP1.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_1">= 1 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_1">on your balance · 1 class</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%SP1.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%SP1.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_s1_saving">%%SP1.per%% / class · save %%SP1.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_s1_saving">%%SP1.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         <div class="pass-card vp-card pass-card--featured">
           <div class="vp-card-top"><span class="vp-code">SP2</span></div>
           <div>
             <p class="vp-vibes">%%SP2.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_2">= 2 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_2">on your balance · 2 classes</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%SP2.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%SP2.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_s2_saving">%%SP2.per%% / class · save %%SP2.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_s2_saving">%%SP2.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         <div class="pass-card vp-card">
           <div class="vp-card-top"><span class="vp-code">SP4</span></div>
           <div>
             <p class="vp-vibes">%%SP4.vibes%%<span>VIBES</span></p>
-            <p class="vp-eq" data-i18n="pv_eq_4">= 4 regular classes</p>
+            <p class="vp-eq" data-i18n="pv_eq_4">on your balance · 4 classes</p>
           </div>
           <div class="pass-meta">
             <p class="pass-validity"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><span>%%SP4.days%% <span data-i18n="pv_days_from_first">days from your first visit</span></span></p>
           </div>
           <div class="vp-price-row">
             <p class="pass-price"><sup>€</sup>%%SP4.price_n%%</p>
-            <p class="pass-per-class" data-i18n="pricing_s4_saving">%%SP4.per%% / class · save %%SP4.save%%</p>
+            <p class="pass-per-class" data-i18n="pricing_s4_saving">%%SP4.per%% per class instead of %%dropin%% for a drop-in</p>
           </div>
         </div>
         </div>
@@ -717,7 +719,7 @@
           <div class="dropin-left">
             <p class="dropin-label" data-i18n="pv_topup_label">Top-up</p>
             <p class="dropin-name" data-i18n="pv_topup_name">Any amount</p>
-            <p class="dropin-desc" data-i18n="pv_topup_desc">Add exactly as many VIBES as you need — any amount, at the studio.</p>
+            <p class="dropin-desc" data-i18n="pv_topup_desc">Not enough VIBES? Top up your balance at the studio by any amount. With this top-up, %%topup%% gives 1 VIBE.</p>
           </div>
           <div class="dropin-right">
             <p class="price-big"><sup>€</sup>%%topup_n%%<span class="vp-unit">= 1 VIBE</span></p>
@@ -727,7 +729,7 @@
           <div class="dropin-left">
             <p class="dropin-label" data-i18n="pricing_drop_label">Drop-in</p>
             <p class="dropin-name" data-i18n="pv_drop_name">Single visit</p>
-            <p class="dropin-desc" data-i18n="pv_drop_desc">One regular class without a Class Pass, paid in euros at the studio.</p>
+            <p class="dropin-desc" data-i18n="pv_drop_desc">One regular class. You can pay at the studio without using VIBES.</p>
           </div>
           <div class="dropin-right">
             <p class="price-big"><sup>€</sup>%%dropin_n%%</p>
@@ -740,7 +742,7 @@
       <div class="vp-pay" role="note">
         <div>
           <p class="vp-pay-title" data-i18n="pv_pay_title">Payment at the studio</p>
-          <p class="vp-pay-text" data-i18n="pv_pay_text">Online payment is not available yet. Pay for Class Passes, Starter Packs, top-ups and drop-ins at the studio — the administrator confirms the payment and credits VIBES to your balance.</p>
+          <p class="vp-pay-text" data-i18n="pv_pay_text">Online payment is not available yet. Class Passes, Starter Packs, top-ups and drop-in classes are paid at the studio. Once the administrator confirms payment for a Class Pass, Starter Pack or top-up, VIBES are added to your balance.</p>
         </div>
         <div class="vp-pay-actions">
           <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary btn-sm" data-i18n="footer_book">Book a class</a>
@@ -784,18 +786,18 @@
           </details>
           <details>
             <summary data-i18n="pv_faq7_q">Can I come without a Class Pass?</summary>
-            <div class="vp-faq-a" data-i18n="pv_faq7_a">Of course. A single visit to a regular class without a Class Pass costs €20, paid at the studio.</div>
+            <div class="vp-faq-a" data-i18n="pv_faq7_a">Of course. A drop-in regular class costs %%dropin%%. You can pay at the studio without using VIBES.</div>
           </details>
           <details>
             <summary data-i18n="pv_faq8_q">Can I pay online?</summary>
-            <div class="vp-faq-a" data-i18n="pv_faq8_a">Not yet. Payment is made at the studio, and the administrator confirms it. VIBES then appear on your balance.</div>
+            <div class="vp-faq-a" data-i18n="pv_faq8_a">Not yet. Payment is made at the studio. Once the administrator confirms payment for a Class Pass, Starter Pack or top-up, VIBES appear on your balance.</div>
           </details>
           <details>
             <summary data-i18n="pv_faq11_q">Can I get a refund for unused VIBES?</summary>
-            <div class="vp-faq-a" data-i18n="pv_faq11_a">Refunds for unused VIBES are possible at the studio’s discretion, at the rate of 1 VIBE = €0.75. Bonus VIBES (for referring a friend or your birthday) are not refundable.</div>
+            <div class="vp-faq-a" data-i18n="pv_faq11_a">At the studio’s discretion, the cost of unused purchased VIBES may be refunded at %%refund%% per VIBE. Gift VIBES are not refundable.</div>
           </details>
         </div>
-        <p class="how-note" data-i18n="pv_rules_note">Validity, order of use, freezing, bonus VIBES and other rules — on the <a href="/vibes#rules">VIBES</a> page.</p>
+        <p class="how-note" data-i18n="pv_rules_note">Validity, order of use, freezing, gift VIBES and other rules — on the <a href="/vibes#rules">VIBES</a> page.</p>
       </section>
 
       <hr class="pricing-divider">
@@ -817,9 +819,9 @@
         <div>
           <h3 data-i18n="pricing_coworking_title">Coworking</h3>
           <p data-i18n="pricing_coworking_desc">Open workspace on the ground floor — Wi-Fi, tea & coffee included.</p>
-          <p class="extra-card-price" data-i18n="pricing_coworking_from">From €2 / hour pp</p>
+          <p class="extra-card-price" data-i18n="pricing_coworking_from">Free between classes with more than %%class%% VIBES on your balance. Otherwise, co-working rates apply.</p>
           <div class="events-links">
-            <a href="/price-list#coworking" class="btn btn-outline btn-sm" data-i18n="pricing_coworking_link">View Coworking Rates</a>
+            <a href="/price-list#coworking" class="btn btn-outline btn-sm" data-i18n="pricing_coworking_link">View rates</a>
           </div>
         </div>
       </div>
