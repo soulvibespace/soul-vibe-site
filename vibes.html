@@ -237,32 +237,30 @@
     .vb-ex-text { font-size: .98rem; color: var(--text-secondary); line-height: 1.55; margin: 0; }
     .vb-path-tag { text-transform: none; letter-spacing: 0; font-size: 1.02rem; color: var(--text-primary); }
     .vb-path-desc { flex: 0 1 auto; margin: 0; }
-    /* Инфографика: пополнение vs абонемент */
-    .vb-bars { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
-    .vb-bar-label { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .9rem; color: var(--text-secondary); margin: 0 0 6px; }
+    /* Инфографика «лотосы»: один лотос = одно обычное занятие */
+    .lt { display: block; aspect-ratio: 1; width: 100%; max-width: 30px;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.5c-2 2.2-3 4.6-3 7.1 0 2.3 1 4.3 3 5.9 2-1.6 3-3.6 3-5.9 0-2.5-1-4.9-3-7.1zM2.5 8.8c.2 4.3 3.4 7.6 8 8.2-1.9-2-2.9-4.3-3-6.8-1.6-1-3.3-1.4-5-1.4zM21.5 8.8c-.2 4.3-3.4 7.6-8 8.2 1.9-2 2.9-4.3 3-6.8 1.6-1 3.3-1.4 5-1.4zM5 19.2h14v1.6H5z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.5c-2 2.2-3 4.6-3 7.1 0 2.3 1 4.3 3 5.9 2-1.6 3-3.6 3-5.9 0-2.5-1-4.9-3-7.1zM2.5 8.8c.2 4.3 3.4 7.6 8 8.2-1.9-2-2.9-4.3-3-6.8-1.6-1-3.3-1.4-5-1.4zM21.5 8.8c-.2 4.3-3.4 7.6-8 8.2 1.9-2 2.9-4.3 3-6.8 1.6-1 3.3-1.4 5-1.4zM5 19.2h14v1.6H5z'/%3E%3C/svg%3E") center / contain no-repeat;
+      background: linear-gradient(90deg, var(--lt-1) 0 var(--a, 0%), var(--lt-2) var(--a, 0%) var(--b, 0%), var(--lt-0) var(--b, 0%)); }
+    .vb-ex, .vb-scale { --lt-0: color-mix(in srgb, var(--text-secondary) 22%, var(--surface)); --lt-1: color-mix(in srgb, var(--accent) 45%, var(--surface)); --lt-2: var(--accent); }
+    .vb-cmps { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+    .vb-cmp { min-width: 0; padding: 16px 18px; border-radius: 14px; background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border)); display: flex; flex-direction: column; gap: 12px; }
+    .vb-cmp-title { font-family: var(--font-serif); font-size: 1.15rem; color: var(--text-primary); margin: 0; }
+    .vb-bar-label { display: flex; justify-content: space-between; align-items: center; gap: 8px 12px; flex-wrap: wrap; font-size: .88rem; color: var(--text-secondary); margin: 0 0 6px; }
     .vb-bar-label strong { color: var(--text-primary); font-weight: 600; }
-    .vb-bar { position: relative; display: flex; height: 34px; border-radius: 10px; overflow: hidden; background: color-mix(in srgb, var(--accent) 11%, var(--surface)); }
-    .vb-bar::after { content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / var(--n) - 3px), var(--surface) calc(100% / var(--n) - 3px), var(--surface) calc(100% / var(--n))); }
-    .vb-bar-fill { width: calc(var(--k) / var(--n) * 100%); background: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
-    .vb-bar-extra { width: calc(var(--k) / var(--n) * 100%); background: var(--accent); }
-    .vb-bar-vals { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .vb-bar-chip { font-style: normal; font-weight: 700; font-size: .76rem; color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
-    .vb-bar-note { font-size: .82rem; color: var(--text-secondary); margin: 0; }
-    /* Инфографика: шкала посещений */
-    .vb-scale { margin: 18px 0 6px; max-width: 640px; }
-    .vb-scale-title { font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--text-secondary); margin: 0 0 8px; }
-    .vb-scale-track { display: grid; grid-template-columns: 2fr 5fr 5fr; gap: 4px; }
-    .vb-scale-seg { padding: 14px 12px 10px; border-radius: 12px; min-width: 0; display: flex; flex-direction: column; }
-    .vb-scale-seg p { margin: 0; }
-    .vb-scale-seg--0 { background: color-mix(in srgb, var(--text-secondary) 14%, var(--surface)); }
-    .vb-scale-seg--1 { background: color-mix(in srgb, var(--accent) 28%, var(--surface)); }
-    .vb-scale-seg--2 { background: var(--accent); }
-    .vb-scale-gift { font-family: var(--font-serif); font-size: clamp(1rem, 3.4vw, 1.5rem); line-height: 1.1; white-space: nowrap; color: var(--text-primary); }
-    .vb-scale-seg--0 .vb-scale-gift { color: var(--text-secondary); }
-    .vb-scale-seg--2 .vb-scale-gift, .vb-scale-seg--2 .vb-scale-sub, .vb-scale-seg--2 .vb-scale-range { color: #fff; }
-    .vb-scale-sub { font-size: .74rem; line-height: 1.3; margin-top: 2px !important; }
-    .vb-scale-range { margin-top: auto !important; padding-top: 10px; font-size: .8rem; font-weight: 700; color: var(--text-secondary); }
+    .vb-bar-vals { display: inline-flex; align-items: center; gap: 8px; }
+    .vb-bar-chip { font-style: normal; font-weight: 700; font-size: .74rem; color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+    .vb-lotus { display: grid; grid-template-columns: repeat(10, minmax(0, 30px)); gap: 4px 3px; }
+    .vb-bar-note { font-size: .82rem; color: var(--text-secondary); margin: 10px 0 0; }
+    .vb-scale { margin: 18px 0 6px; max-width: 520px; }
+    .vb-scale-title { font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--text-secondary); margin: 0 0 6px; }
+    .vb-scale-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; align-items: end; }
+    .vb-scale-grid .lt { grid-row: 2; max-width: 44px; justify-self: center; }
+    .lt--0 { background: var(--lt-0); } .lt--1 { background: var(--lt-1); } .lt--2 { background: var(--lt-2); }
+    .vb-scale-mark { margin: 0 0 4px; font-family: var(--font-serif); font-size: clamp(.95rem, 3.4vw, 1.2rem); color: var(--text-primary); white-space: nowrap; border-left: 2px solid var(--lt-1); padding-left: 6px; line-height: 1.1; }
+    .vb-scale-mark--1 { grid-column: 4 / span 4; grid-row: 1; }
+    .vb-scale-mark--2 { grid-column: 8 / span 3; grid-row: 1; justify-self: end; border-left: 0; border-right: 2px solid var(--accent); padding: 0 6px 0 0; color: var(--accent); font-weight: 600; }
+    .vb-scale-n { margin: 2px 0 0; grid-row: 3; text-align: center; font-size: .78rem; font-weight: 700; color: var(--text-secondary); }
+    @media (max-width: 720px) { .vb-cmps { grid-template-columns: 1fr; } .vb-cmp { padding: 14px; } }
     .vb-path .btn { align-self: flex-start; margin-top: 4px; white-space: normal; max-width: 100%; }
     .vb-all { font-size: .9rem; color: var(--text-secondary); line-height: 1.5; }
     .vb-all strong { color: var(--text-primary); }
@@ -398,19 +396,33 @@
           <p class="vb-lead" data-i18n="vb_lead">Every studio guest has a VIBES balance. When you buy any Class Pass or Starter Pack, VIBES are added to it automatically. With a Class Pass, you get more VIBES than with a standard top-up for the same amount.</p>
         </div>
         <div class="vb-ex">
-          <p class="vb-ex-num" data-i18n="vb_ex_title">%%MP20.vibes%% VIBES instead of %%MP20.topup_vibes%% for the same amount</p>
-          <!-- Инфографика: одна и та же сумма; квадрат = обычное занятие. Ширины — из токенов цен. -->
-          <div class="vb-bars" style="--n:%%MP20.classes%%">
-            <div class="vb-bar-row">
-              <p class="vb-bar-label"><span data-i18n="vb_bar_topup">Standard top-up</span><strong data-i18n="vb_bar_topup_val">%%MP20.topup_vibes%% VIBES · %%MP20.topup_classes%% classes</strong></p>
-              <div class="vb-bar" aria-hidden="true"><span class="vb-bar-fill" style="--k:%%MP20.topup_classes%%"></span></div>
+          <p class="vb-ex-num" data-i18n="vb_ex_title">More VIBES for the same amount</p>
+          <!-- Инфографика: одна и та же сумма; лотос = обычное занятие. Цифры — токены цен, лотосы рисует скрипт ниже. -->
+          <div class="vb-cmps">
+            <div class="vb-cmp">
+              <p class="vb-cmp-title" data-i18n="vb_cmp8_title">Class Pass for %%MP8.classes%% classes</p>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_topup">Standard top-up</span><strong>%%MP8.topup_vibes%% VIBES</strong></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP8.topup_vibes%%" data-have="%%MP8.topup_vibes%%" data-of="%%MP8.vibes%%" data-class="%%class%%"></div>
+              </div>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_pass">With a Class Pass</span><span class="vb-bar-vals"><strong>%%MP8.vibes%% VIBES</strong><em class="vb-bar-chip">+%%MP8.extra_vibes%% VIBES</em></span></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP8.topup_vibes%%" data-have="%%MP8.vibes%%" data-of="%%MP8.vibes%%" data-class="%%class%%"></div>
+              </div>
             </div>
-            <div class="vb-bar-row vb-bar-row--pass">
-              <p class="vb-bar-label"><span data-i18n="vb_bar_pass">Class Pass for %%MP20.classes%% classes</span><span class="vb-bar-vals"><strong data-i18n="vb_bar_pass_val">%%MP20.vibes%% VIBES · %%MP20.classes%% classes</strong><em class="vb-bar-chip" data-i18n="vb_bar_extra">+%%MP20.extra_classes%% classes</em></span></p>
-              <div class="vb-bar" aria-hidden="true"><span class="vb-bar-fill" style="--k:%%MP20.topup_classes%%"></span><span class="vb-bar-extra" style="--k:%%MP20.extra_classes%%"></span></div>
+            <div class="vb-cmp">
+              <p class="vb-cmp-title" data-i18n="vb_cmp20_title">Class Pass for %%MP20.classes%% classes</p>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_topup">Standard top-up</span><strong>%%MP20.topup_vibes%% VIBES</strong></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP20.topup_vibes%%" data-have="%%MP20.topup_vibes%%" data-of="%%MP20.vibes%%" data-class="%%class%%"></div>
+              </div>
+              <div class="vb-cmp-row">
+                <p class="vb-bar-label"><span data-i18n="vb_bar_pass">With a Class Pass</span><span class="vb-bar-vals"><strong>%%MP20.vibes%% VIBES</strong><em class="vb-bar-chip">+%%MP20.extra_vibes%% VIBES</em></span></p>
+                <div class="vb-lotus" aria-hidden="true" data-base="%%MP20.topup_vibes%%" data-have="%%MP20.vibes%%" data-of="%%MP20.vibes%%" data-class="%%class%%"></div>
+              </div>
             </div>
-            <p class="vb-bar-note" data-i18n="vb_bar_note">Same amount, one square = one regular class.</p>
           </div>
+          <p class="vb-bar-note" data-i18n="vb_bar_note">One lotus = one regular class (%%class%% VIBES).</p>
         </div>
         <div class="vb-paths">
           <div class="vb-path">
@@ -430,13 +442,14 @@
       <section class="vb-section" id="gift" aria-labelledby="vbGiftTitle">
         <h2 class="vb-h2" id="vbGiftTitle" data-i18n="vb_gift_title">Your practice earns you gift VIBES</h2>
         <p class="vb-sub" data-i18n="vb_gift_sub">What counts here is how many times you come to class in a calendar month, not which pass you buy.</p>
-        <!-- Инфографика: шкала посещений за месяц → VIBES в подарок -->
+        <!-- Инфографика: 10 лотосов = посещения за месяц; с 4-го +10 VIBES, с 10-го +20 VIBES всего -->
         <div class="vb-scale">
           <p class="vb-scale-title" data-i18n="vb_scale_title">Visits in a calendar month</p>
-          <div class="vb-scale-track">
-            <div class="vb-scale-seg vb-scale-seg--0"><p class="vb-scale-gift">—</p><p class="vb-scale-range">1–3</p></div>
-            <div class="vb-scale-seg vb-scale-seg--1"><p class="vb-scale-gift">+10 VIBES</p><p class="vb-scale-range">4–9</p></div>
-            <div class="vb-scale-seg vb-scale-seg--2"><p class="vb-scale-gift">+20 VIBES</p><p class="vb-scale-sub" data-i18n="vb_scale_g3_sub">one more class</p><p class="vb-scale-range">10+</p></div>
+          <div class="vb-scale-grid" aria-hidden="true">
+            <p class="vb-scale-mark vb-scale-mark--1">+10 VIBES</p>
+            <p class="vb-scale-mark vb-scale-mark--2">+20 VIBES</p>
+            <span class="lt lt--0"></span><span class="lt lt--0"></span><span class="lt lt--0"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--1"></span><span class="lt lt--2"></span>
+            <p class="vb-scale-n" style="grid-column:1">1</p><p class="vb-scale-n" style="grid-column:4">4</p><p class="vb-scale-n" style="grid-column:10">10+</p>
           </div>
         </div>
         <p class="vb-howget" data-i18n="vb_gift_how">Your gift appears automatically on the first day of the following month. Gift VIBES never expire.</p>
@@ -492,6 +505,24 @@
           </details>
         </div>
       </section>
+      <script>
+      /* Лотосы VIBES: data-base — сколько VIBES даёт обычное пополнение, data-have — сколько есть, data-of — шкала. */
+      (function () {
+        function draw() {
+          document.querySelectorAll('.vb-lotus').forEach(function (el) {
+            var c = +el.dataset.class || 20, base = +el.dataset.base, have = +el.dataset.have, n = Math.ceil(+el.dataset.of / c), h = '';
+            if (!c || !n || el.dataset.done) return;
+            for (var i = 0; i < n; i++) {
+              var f1 = Math.max(0, Math.min(base - i * c, c)) / c, f2 = Math.max(0, Math.min(have - i * c, c)) / c;
+              var a = Math.min(f1, f2) * 100, b = f2 * 100;
+              h += '<span class="lt" style="--a:' + a + '%;--b:' + b + '%"></span>';
+            }
+            el.innerHTML = h; el.dataset.done = '1';
+          });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', draw); else draw();
+      })();
+      </script>
       <script>(function(){function o(){if(location.hash==='#rules'){var d=document.getElementById('rules');if(d){d.open=true;d.scrollIntoView();}}}window.addEventListener('hashchange',o);document.addEventListener('DOMContentLoaded',o);})();</script>
 
     </div>

@@ -28,6 +28,7 @@ t('цена занятия и выгода', () => {
 });
 t('абонемент vs обычное пополнение', () => {
   assert.deepStrictEqual([ru['MP20.vibes'], ru['MP20.topup_vibes'], ru['MP20.classes'], ru['MP20.topup_classes'], ru['MP20.extra_classes']], [400, 300, 20, 15, 5]);
+  assert.deepStrictEqual([ru['MP8.vibes'], ru['MP8.topup_vibes'], ru['MP8.extra_vibes'], ru['MP20.extra_vibes']], [160, 130, 30, 100]);
 });
 t('пример MP20 + бонусы', () => {
   assert.deepStrictEqual([ru['ex.total'], ru['ex.classes'], ru['ex.per']], [417, 20, '€14,40']);
