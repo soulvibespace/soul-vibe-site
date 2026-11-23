@@ -237,6 +237,32 @@
     .vb-ex-text { font-size: .98rem; color: var(--text-secondary); line-height: 1.55; margin: 0; }
     .vb-path-tag { text-transform: none; letter-spacing: 0; font-size: 1.02rem; color: var(--text-primary); }
     .vb-path-desc { flex: 0 1 auto; margin: 0; }
+    /* Инфографика: пополнение vs абонемент */
+    .vb-bars { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+    .vb-bar-label { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .9rem; color: var(--text-secondary); margin: 0 0 6px; }
+    .vb-bar-label strong { color: var(--text-primary); font-weight: 600; }
+    .vb-bar { position: relative; display: flex; height: 34px; border-radius: 10px; overflow: hidden; background: color-mix(in srgb, var(--accent) 11%, var(--surface)); }
+    .vb-bar::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / var(--n) - 3px), var(--surface) calc(100% / var(--n) - 3px), var(--surface) calc(100% / var(--n))); }
+    .vb-bar-fill { width: calc(var(--k) / var(--n) * 100%); background: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
+    .vb-bar-extra { width: calc(var(--k) / var(--n) * 100%); background: var(--accent); }
+    .vb-bar-vals { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .vb-bar-chip { font-style: normal; font-weight: 700; font-size: .76rem; color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+    .vb-bar-note { font-size: .82rem; color: var(--text-secondary); margin: 0; }
+    /* Инфографика: шкала посещений */
+    .vb-scale { margin: 18px 0 6px; max-width: 640px; }
+    .vb-scale-title { font-size: .82rem; font-weight: 600; letter-spacing: .04em; color: var(--text-secondary); margin: 0 0 8px; }
+    .vb-scale-track { display: grid; grid-template-columns: 2fr 5fr 5fr; gap: 4px; }
+    .vb-scale-seg { padding: 14px 12px 10px; border-radius: 12px; min-width: 0; display: flex; flex-direction: column; }
+    .vb-scale-seg p { margin: 0; }
+    .vb-scale-seg--0 { background: color-mix(in srgb, var(--text-secondary) 14%, var(--surface)); }
+    .vb-scale-seg--1 { background: color-mix(in srgb, var(--accent) 28%, var(--surface)); }
+    .vb-scale-seg--2 { background: var(--accent); }
+    .vb-scale-gift { font-family: var(--font-serif); font-size: clamp(1rem, 3.4vw, 1.5rem); line-height: 1.1; white-space: nowrap; color: var(--text-primary); }
+    .vb-scale-seg--0 .vb-scale-gift { color: var(--text-secondary); }
+    .vb-scale-seg--2 .vb-scale-gift, .vb-scale-seg--2 .vb-scale-sub, .vb-scale-seg--2 .vb-scale-range { color: #fff; }
+    .vb-scale-sub { font-size: .74rem; line-height: 1.3; margin-top: 2px !important; }
+    .vb-scale-range { margin-top: auto !important; padding-top: 10px; font-size: .8rem; font-weight: 700; color: var(--text-secondary); }
     .vb-path .btn { align-self: flex-start; margin-top: 4px; white-space: normal; max-width: 100%; }
     .vb-all { font-size: .9rem; color: var(--text-secondary); line-height: 1.5; }
     .vb-all strong { color: var(--text-primary); }
@@ -373,7 +399,18 @@
         </div>
         <div class="vb-ex">
           <p class="vb-ex-num" data-i18n="vb_ex_title">%%MP20.vibes%% VIBES instead of %%MP20.topup_vibes%% for the same amount</p>
-          <p class="vb-ex-text" data-i18n="vb_ex_text">That’s what you get with a %%MP20.classes%%-class pass. A standard top-up would cover %%MP20.topup_classes%% regular classes; the pass covers %%MP20.classes%%.</p>
+          <!-- Инфографика: одна и та же сумма; квадрат = обычное занятие. Ширины — из токенов цен. -->
+          <div class="vb-bars" style="--n:%%MP20.classes%%">
+            <div class="vb-bar-row">
+              <p class="vb-bar-label"><span data-i18n="vb_bar_topup">Standard top-up</span><strong data-i18n="vb_bar_topup_val">%%MP20.topup_vibes%% VIBES · %%MP20.topup_classes%% classes</strong></p>
+              <div class="vb-bar" aria-hidden="true"><span class="vb-bar-fill" style="--k:%%MP20.topup_classes%%"></span></div>
+            </div>
+            <div class="vb-bar-row vb-bar-row--pass">
+              <p class="vb-bar-label"><span data-i18n="vb_bar_pass">Class Pass for %%MP20.classes%% classes</span><span class="vb-bar-vals"><strong data-i18n="vb_bar_pass_val">%%MP20.vibes%% VIBES · %%MP20.classes%% classes</strong><em class="vb-bar-chip" data-i18n="vb_bar_extra">+%%MP20.extra_classes%% classes</em></span></p>
+              <div class="vb-bar" aria-hidden="true"><span class="vb-bar-fill" style="--k:%%MP20.topup_classes%%"></span><span class="vb-bar-extra" style="--k:%%MP20.extra_classes%%"></span></div>
+            </div>
+            <p class="vb-bar-note" data-i18n="vb_bar_note">Same amount, one square = one regular class.</p>
+          </div>
         </div>
         <div class="vb-paths">
           <div class="vb-path">
@@ -393,14 +430,15 @@
       <section class="vb-section" id="gift" aria-labelledby="vbGiftTitle">
         <h2 class="vb-h2" id="vbGiftTitle" data-i18n="vb_gift_title">Your practice earns you gift VIBES</h2>
         <p class="vb-sub" data-i18n="vb_gift_sub">What counts here is how many times you come to class in a calendar month, not which pass you buy.</p>
-        <ol class="vb-steps">
-          <li class="vb-step"><span class="vb-step-num">10</span><div>
-            <p class="vb-step-title" data-i18n="vb_gift_a_title">4–9 visits</p>
-            <p class="vb-step-desc" data-i18n="vb_gift_a_desc">10 gift VIBES.</p></div></li>
-          <li class="vb-step"><span class="vb-step-num">20</span><div>
-            <p class="vb-step-title" data-i18n="vb_gift_b_title">10 or more visits</p>
-            <p class="vb-step-desc" data-i18n="vb_gift_b_desc">20 gift VIBES in total for the month. That’s enough for one more regular class.</p></div></li>
-        </ol>
+        <!-- Инфографика: шкала посещений за месяц → VIBES в подарок -->
+        <div class="vb-scale">
+          <p class="vb-scale-title" data-i18n="vb_scale_title">Visits in a calendar month</p>
+          <div class="vb-scale-track">
+            <div class="vb-scale-seg vb-scale-seg--0"><p class="vb-scale-gift">—</p><p class="vb-scale-range">1–3</p></div>
+            <div class="vb-scale-seg vb-scale-seg--1"><p class="vb-scale-gift">+10 VIBES</p><p class="vb-scale-range">4–9</p></div>
+            <div class="vb-scale-seg vb-scale-seg--2"><p class="vb-scale-gift">+20 VIBES</p><p class="vb-scale-sub" data-i18n="vb_scale_g3_sub">one more class</p><p class="vb-scale-range">10+</p></div>
+          </div>
+        </div>
         <p class="vb-howget" data-i18n="vb_gift_how">Your gift appears automatically on the first day of the following month. Gift VIBES never expire.</p>
       </section>
 
