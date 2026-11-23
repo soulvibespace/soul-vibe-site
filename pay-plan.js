@@ -24,7 +24,20 @@
   // 1 class = SVS_PRICES.class_vibes (i18n.js loads first); 20 is only a fallback for tests.
   var G = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : {});
   var CLASS_VIBES = (G.SVS_PRICES && Number(G.SVS_PRICES.class_vibes)) || 20;
+  var DROPIN_EUR = (G.SVS_PRICES && Number(G.SVS_PRICES.dropin_eur)) || 20;
   var TZ = 'Asia/Nicosia';
+
+  function lotTime(v) {
+    var n = v ? Date.parse(v) : NaN;
+    return isFinite(n) ? n : Number.MAX_SAFE_INTEGER;
+  }
+
+  // A special event: SimplyBook price differs from a regular drop-in class. Its VIBES cost
+  // is set per class in the panel (studio_classes.vibes_cost), the site does not know it.
+  function isSpecial(cls) {
+    var p = cls && Number(cls.price);
+    return p > 0 && p !== DROPIN_EUR;
+  }
 
   // Studio-local calendar date "YYYY-MM-DD" of an ISO timestamp or a plain date.
   function localDate(v) {
@@ -62,6 +75,12 @@
    */
   function planPayment(vibes, bookings, cls, now) {
     var price = CLASS_VIBES;
+    if (isSpecial(cls)) {
+      var hasLots = !!(vibes && vibes.linked && (vibes.lots || []).some(function (l) {
+        return l.status === 'active' && Number(l.remaining_vibes) > 0;
+      }));
+      return { kind: 'event', eur: Number(cls.price), hasVibes: hasLots, price: null };
+    }
     if (!vibes) return { kind: 'unknown', price: price };
     if (!vibes.linked) {
       return { kind: (vibes.reason === 'not_found' || vibes.reason === 'no_email') ? 'none' : 'unknown', price: price };
@@ -72,11 +91,11 @@
       .map(function (l) {
         return { src: l, left: Number(l.remaining_vibes), expiry: localDate(l.expires_at) };
       })
+      // Same order as the panel (vibes-panel lib/ledger-replay.ts compareLotsFifo):
+      // earliest purchase first (created_at), equal dates by lot id. Expiry does not matter.
       .sort(function (a, b) {
-        if (a.expiry === b.expiry) return 0;
-        if (!a.expiry) return 1;
-        if (!b.expiry) return -1;
-        return a.expiry < b.expiry ? -1 : 1;
+        return lotTime(a.src.created_at) - lotTime(b.src.created_at)
+          || (String(a.src.id) < String(b.src.id) ? -1 : String(a.src.id) > String(b.src.id) ? 1 : 0);
       });
 
     if (!lots.length) return { kind: 'none', price: price, hadPass: hadPass(vibes) };
@@ -120,7 +139,7 @@
 
     var valid = lots.filter(function (l) { return validOn(l, cls.date); });
     var leftAfter = valid.reduce(function (s, l) { return s + l.left; }, 0);
-    var main = result.used.length ? result.used[0].lot : (valid[0] || lots[lots.length - 1]);
+    var main = result.used.length ? result.used[0].lot : (valid[0] || lots[0]);
     var out = {
       price: price,
       covered: result.covered,
@@ -137,13 +156,14 @@
     else if (!valid.length) {
       // Every lot ends before the class date: show the one that lasts longest.
       out.kind = 'expired';
-      out.lot = lots[lots.length - 1].src;
-      out.expiry = lots[lots.length - 1].expiry;
+      var last = lots.reduce(function (m, l) { return !m || (l.expiry && (!m.expiry || l.expiry > m.expiry)) ? l : m; }, null);
+      out.lot = last.src;
+      out.expiry = last.expiry;
     } else out.kind = 'used';
     return out;
   }
 
-  var api = { planPayment: planPayment, hadPass: hadPass, localDate: localDate, CLASS_VIBES: CLASS_VIBES };
+  var api = { planPayment: planPayment, hadPass: hadPass, localDate: localDate, CLASS_VIBES: CLASS_VIBES, isSpecial: isSpecial };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.SVSPayPlan = api;
 })(typeof window !== 'undefined' ? window : this);
