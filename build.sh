@@ -39,10 +39,11 @@ if command -v python3 >/dev/null 2>&1; then
   # Единый подвал (tools/footer.html) — так же, как шапка.
   python3 tools/footer.py dist
   python3 tools/footer.py --check dist
-  # OG/Twitter-мета-теги: абсолютные адреса от SITE_URL (по умолчанию — адрес в tools/meta.py,
-  # https://soul-vibe-space.netlify.app). $URL Netlify НЕ используем: там уже стоит
-  # soulvibespace.com, а домен ещё указывает на старый сайт.
-  # TODO(домен): после переноса soulvibespace.com — см. tools/meta.py (DEFAULT_BASE, CANONICAL).
+  # OG/Twitter-мета-теги, JSON-LD, sitemap/robots/llms: абсолютные адреса от SITE_URL (переменная
+  # окружения Netlify; без неё — DEFAULT_BASE в tools/meta.py, https://soul-vibe-space.netlify.app).
+  # До переключения апекса (после 13.12): SITE_URL=https://app.soulvibespace.com. $URL Netlify НЕ
+  # используем: это «основной домен» Netlify, а не адрес, под который собираем сайт.
+  # seo.py --check падает, если при другом SITE_URL в dist остался адрес netlify.app.
   python3 tools/meta.py dist ${SITE_URL:+--base "$SITE_URL"}
   # SEO и AI-поиск: JSON-LD студии и цен на всех страницах, noindex служебных страниц,
   # analytics.js (GA4 + Consent Mode v2), sitemap.xml, robots.txt, llms.txt. До assetver.py.
@@ -69,6 +70,11 @@ if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
   echo "тесты онлайн-оплаты: ок"
   node tests/ga-events.test.js >/dev/null || { echo "ОШИБКА: tests/ga-events.test.js" >&2; exit 1; }
   echo "тесты событий GA4: ок"
+  # Edge-функция noindex: индексируется только soulvibespace.com и www (нужен Node 22.18+).
+  if node -e 'process.exit(process.features.typescript ? 0 : 1)' 2>/dev/null; then
+    node tests/noindex-edge.test.mjs >/dev/null || { echo "ОШИБКА: tests/noindex-edge.test.mjs" >&2; exit 1; }
+    echo "тесты noindex (только основной домен): ок"
+  fi
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"
