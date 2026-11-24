@@ -195,8 +195,8 @@ def robots(base):
     lines = [
         '# Soul Vibe Space — robots.txt (генерируется tools/seo.py)',
         '# Поисковики и AI-поиск приглашены. Служебные страницы закрыты.',
-        '# На *.netlify.app сайт дополнительно закрыт заголовком X-Robots-Tag: noindex',
-        '# (netlify/edge-functions/noindex-preview.ts) — после переноса домена это снимается само.',
+        '# Все адреса, кроме soulvibespace.com и www, закрыты заголовком X-Robots-Tag: noindex',
+        '# (netlify/edge-functions/noindex-preview.ts): netlify.app, app.soulvibespace.com и др.',
         '',
     ]
     for bot in AI_BOTS:
