@@ -24,3 +24,53 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# S5 (#136) — 301-редиректы со старого сайта Squarespace. ЧЕРНОВИК, НЕ ВКЛЮЧЁН.
+# Включить (раскомментировать) только в день переноса soulvibespace.com на Netlify.
+# Список старых адресов — https://soulvibespace.com/sitemap.xml (24.11.2026) + /cart.
+# /about, /contact, /schedule, /gift-certificates совпадают с новыми — правило не нужно.
+# www.soulvibespace.com → soulvibespace.com Netlify делает сам, когда домен основной.
+#
+# [[redirects]]
+#   from = "/home"
+#   to = "/"
+#   status = 301
+#   force = true
+#
+# [[redirects]]
+#   from = "/yoga-studio-limassol"
+#   to = "/classes"
+#   status = 301
+#   force = true
+#
+# [[redirects]]
+#   from = "/gift-certificates/gift-certificates"
+#   to = "/gift-certificates"
+#   status = 301
+#   force = true
+#
+# [[redirects]]
+#   from = "/gift-certificates/p/*"
+#   to = "/gift-certificates"
+#   status = 301
+#   force = true
+#
+# [[redirects]]
+#   from = "/cart"
+#   to = "/gift-certificates"
+#   status = 301
+#   force = true
+#
+# # Служебные адреса Squarespace (корзина, оформление, аккаунт покупателя).
+# [[redirects]]
+#   from = "/commerce/*"
+#   to = "/gift-certificates"
+#   status = 301
+#   force = true
+#
+# [[redirects]]
+#   from = "/account/*"
+#   to = "/account"
+#   status = 301
+# ─────────────────────────────────────────────────────────────────────────────

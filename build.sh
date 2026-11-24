@@ -22,6 +22,7 @@ rsync -a ./ dist/ \
   --exclude 'deploy.py' \
   --exclude 'README.md' \
   --exclude 'netlify.toml' \
+  --exclude 'netlify/' \
   --exclude '.gitignore' \
   --exclude '__pycache__/' \
   --exclude '*.pyc' \
@@ -43,6 +44,10 @@ if command -v python3 >/dev/null 2>&1; then
   # soulvibespace.com, а домен ещё указывает на старый сайт.
   # TODO(домен): после переноса soulvibespace.com — см. tools/meta.py (DEFAULT_BASE, CANONICAL).
   python3 tools/meta.py dist ${SITE_URL:+--base "$SITE_URL"}
+  # SEO и AI-поиск: JSON-LD студии и цен на всех страницах, noindex служебных страниц,
+  # analytics.js (GA4 + Consent Mode v2), sitemap.xml, robots.txt, llms.txt. До assetver.py.
+  python3 tools/seo.py dist ${SITE_URL:+--base "$SITE_URL"}
+  python3 tools/seo.py --check dist ${SITE_URL:+--base "$SITE_URL"}
   # Термины (абонемент / Class Pass, Стартер пак / Starter Pack): по умолчанию только
   # предупреждения, с --check — ошибка. Словарь — SVS_TERMS в i18n.js.
   python3 tools/terms.py $STRICT
