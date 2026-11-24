@@ -14,10 +14,11 @@ twitter:card, twitter:title, twitter:description, twitter:image.
 Картинку для превью страницы меняйте в IMAGES ниже, заголовок и описание —
 в <title> и <meta name="description"> самой страницы.
 
-TODO(домен): canonical и hreflang сейчас НЕ выводятся — soulvibespace.com ещё
-указывает на старый сайт (Squarespace). После переноса домена поменять
-DEFAULT_BASE на https://soulvibespace.com и включить CANONICAL = True.
-(Переменную $URL Netlify не используем: в ней уже стоит soulvibespace.com.)
+Основной адрес — https://www.soulvibespace.com (этап 2 переезда, docs/domain-move.md).
+canonical выводится на всех страницах и на любом хосте указывает на основной адрес:
+так app.soulvibespace.com (алиас для PWA) и soul-vibe-space.netlify.app не спорят с ним
+в поиске. hreflang появится вместе с адресами /ru/ и /el/ (S2, #133).
+(Переменную $URL Netlify не используем: основной домен задаётся здесь или в SITE_URL.)
 """
 import html
 import os
@@ -25,9 +26,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_BASE = 'https://soul-vibe-space.netlify.app'
+DEFAULT_BASE = 'https://www.soulvibespace.com'
 NETLIFY_BASE = 'https://soul-vibe-space.netlify.app'  # технический адрес Netlify (не меняется)
-CANONICAL = False  # TODO(домен): включить после переноса soulvibespace.com
+CANONICAL = True
 SKIP = {'auth-callback.html', 'payment.html'}
 DEFAULT_IMAGE = '/images/hero.webp'
 IMAGES = {
