@@ -24,7 +24,7 @@
 (function () {
   'use strict';
   var CONFIG = {
-    ga4: '',          // TODO(владелец): ID потока GA4, напр. 'G-XXXXXXXXXX'
+    ga4: 'G-TK6J5M87YL', // поток GA4 www.soulvibespace.com
     mode: 'basic',    // 'basic' | 'advanced'
   };
   var CONSENT_KEY = 'svs_cookie_consent';
