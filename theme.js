@@ -20,7 +20,9 @@
 
   function pinLight() {
     if (root.getAttribute('data-theme') !== 'light') root.setAttribute('data-theme', 'light');
-    root.classList.remove('dark');
+    // Только если класс есть: classList.remove() всегда перезаписывает атрибут class, и наблюдатель
+    // ниже зацикливается, как только на <html> появляется любой класс (например, svs-standalone).
+    if (root.classList.contains('dark')) root.classList.remove('dark');
   }
   pinLight();
 

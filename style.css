@@ -3053,3 +3053,56 @@ a.bm-confirm-btn:hover { color: #fff; }
 .svs-ec-dot { color: var(--color-text-muted, #aaa); font-size: 0.82rem; }
 .svs-ec-divider { margin: 18px 0 14px; }
 @media (max-width: 600px) { .svs-ec-form input { font-size: 16px; } .svs-ec-form .svs-ec-code { font-size: 1.5rem; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   APP (PWA, #104 / #105) — только в установленном приложении
+   html.svs-standalone ставит pwa.js, когда сайт открыт с экрана телефона.
+   ═══════════════════════════════════════════════════════════════ */
+.svs-tabbar { display: none; }
+html.svs-standalone { --svs-tabbar-h: 64px; }
+html.svs-standalone body { padding-bottom: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px)); }
+html.svs-standalone .svs-tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 95;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  height: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px));
+  padding: 0 4px env(safe-area-inset-bottom, 0px);
+  background: color-mix(in oklab, var(--color-surface, #fff) 94%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--color-divider, #e7e3dc);
+}
+.svs-tab {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  min-width: 0; padding: 6px 2px; text-decoration: none;
+  color: var(--color-text-muted, #6f6a61); font-family: var(--font-body); font-size: 11px; font-weight: 500; line-height: 1.15;
+  -webkit-tap-highlight-color: transparent;
+}
+.svs-tab svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.svs-tab-label { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+.svs-tab.is-active { color: var(--color-primary, #6B4FA0); font-weight: 600; }
+.svs-tab:focus-visible { outline: 2px solid var(--color-primary, #6B4FA0); outline-offset: -4px; border-radius: 12px; }
+/* В приложении нижнее меню заменяет плавающую кнопку записи; баннер cookies — над меню. */
+html.svs-standalone .float-book { display: none !important; }
+html.svs-standalone #svs-cookie-banner { bottom: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px)) !important; }
+
+/* Подсказка «Установить приложение» (/account) */
+.svs-ih {
+  position: relative; display: flex; gap: 12px; align-items: flex-start;
+  margin: 0 0 var(--space-6, 24px); padding: 14px 44px 14px 14px;
+  border: 1px solid var(--color-divider, #e7e3dc); border-radius: var(--radius-lg, 14px);
+  background: color-mix(in oklab, var(--color-accent, #c5b3e8) 14%, var(--color-surface, #fff));
+}
+.svs-ih-icon { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 10px; }
+.svs-ih-body { min-width: 0; }
+.svs-ih-title { margin: 0 0 2px; font-weight: 600; font-size: var(--text-sm, .9rem); color: var(--color-text, #27231b); }
+.svs-ih-text { margin: 0; font-size: var(--text-sm, .9rem); line-height: 1.5; color: var(--color-text-muted, #6f6a61); }
+.svs-ih-share { display: inline-block; width: 18px; height: 18px; vertical-align: -3px; fill: none; stroke: var(--color-primary, #6B4FA0); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.svs-ih-btn {
+  margin-top: 10px; min-height: 36px; padding: 0 16px; border: 0; border-radius: 999px;
+  background: var(--color-primary, #6B4FA0); color: #fff; font: inherit; font-size: var(--text-sm, .9rem); font-weight: 600; cursor: pointer;
+}
+.svs-ih-close {
+  position: absolute; top: 6px; right: 6px; width: 36px; height: 36px; display: grid; place-items: center;
+  border: 0; background: transparent; color: var(--color-text-muted, #6f6a61); border-radius: 50%; cursor: pointer;
+}
+.svs-ih-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.svs-ih-close:hover { background: color-mix(in oklab, var(--color-text, #000) 6%, transparent); }
