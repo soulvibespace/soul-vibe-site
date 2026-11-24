@@ -154,8 +154,11 @@ def schema_block(fname, src, base):
 def render(fname, src, base):
     src = SCHEMA_RE.sub('', src)
     # Старые JSON-LD страниц: адрес сайта — от --base.
-    if base != meta.DEFAULT_BASE:
-        src = LD_RE.sub(lambda m: m.group(1) + m.group(2).replace(meta.DEFAULT_BASE, base) + m.group(3), src)
+    # Адрес netlify.app, записанный в разметке (about.html), тоже меняется на --base.
+    def fix(m):
+        body = m.group(2).replace(meta.DEFAULT_BASE, base).replace(meta.NETLIFY_BASE, base)
+        return m.group(1) + body + m.group(3)
+    src = LD_RE.sub(fix, src)
     if fname in NOINDEX and not ROBOTS_META_RE.search(src):
         src = src.replace('</title>', '</title>\n  <meta name="robots" content="noindex, nofollow" />', 1)
     if ANALYTICS_TAG not in src:
@@ -219,7 +222,7 @@ def html_pages(d):
     return sorted(f for f in os.listdir(d) if f.endswith('.html'))
 
 
-def check(d):
+def check(d, base=meta.DEFAULT_BASE):
     bad = []
     for f in html_pages(d):
         src = open(os.path.join(d, f), encoding='utf-8').read()
@@ -242,6 +245,15 @@ def check(d):
             bad.append(f'{name}: пустой')
         elif prices.TOKEN.search(open(p, encoding='utf-8').read()) or '{{BASE}}' in open(p, encoding='utf-8').read():
             bad.append(f'{name}: остался токен %%…%%')
+    if base != meta.NETLIFY_BASE:
+        # Сайт собран под другой адрес (SITE_URL): в JSON-LD, OG и canonical не должно остаться netlify.app.
+        for f in html_pages(d):
+            if meta.NETLIFY_BASE in open(os.path.join(d, f), encoding='utf-8').read():
+                bad.append(f'{f}: остался адрес {meta.NETLIFY_BASE} (собрано под {base})')
+        for name in ('robots.txt', 'sitemap.xml', 'llms.txt'):
+            p = os.path.join(d, name)
+            if os.path.exists(p) and meta.NETLIFY_BASE in open(p, encoding='utf-8').read():
+                bad.append(f'{name}: остался адрес {meta.NETLIFY_BASE}')
     if bad:
         print('ОШИБКА: seo —', *bad, sep='\n  ', file=sys.stderr)
         return 1
@@ -260,7 +272,7 @@ def main(argv):
     base = base.rstrip('/')
     d = os.path.abspath(args[0]) if args else os.path.join(ROOT, 'dist')
     if '--check' in argv:
-        return check(d)
+        return check(d, base)
     pages = html_pages(d)
     for f in pages:
         p = os.path.join(d, f)
