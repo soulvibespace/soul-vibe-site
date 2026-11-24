@@ -79,8 +79,9 @@ git push origin main   # Netlify подхватит и опубликует са
 | OG/Twitter-теги | `<title>` и `<meta name="description">` страницы, картинка — `IMAGES` в `tools/meta.py` | `python3 tools/meta.py` | `python3 tools/meta.py --check` |
 
 `build.sh` прогоняет всё это для `dist/` при каждой сборке на Netlify. Абсолютные адреса в
-мета-тегах — от `DEFAULT_BASE` в `tools/meta.py` (сейчас https://soul-vibe-space.netlify.app)
-или от переменной `SITE_URL`. `canonical`/`hreflang` пока не выводятся — домен
+мета-тегах — от переменной окружения Netlify `SITE_URL` (с запуска app.soulvibespace.com — `https://app.soulvibespace.com`)
+или, без неё, от `DEFAULT_BASE` в `tools/meta.py` (https://soul-vibe-space.netlify.app). В коде сайта адрес
+сайта нигде не зашит: ссылки относительные или от `location.origin`. `canonical`/`hreflang` пока не выводятся — домен
 `soulvibespace.com` ещё на Squarespace (см. TODO в `tools/meta.py`).
 
 Тексты `/terms` и `/privacy`: английский — в разметке страниц, русский и греческий — в `i18n-legal.js`.

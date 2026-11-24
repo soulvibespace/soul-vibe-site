@@ -1076,7 +1076,7 @@ const BookingModal = (() => {
   function _calEvent(service) {
     const dur = Number(service?.duration) || 60;
     const title = _svcName(service) + ' — Soul Vibe Space';
-    const details = _k('bm_arrive') + '\n' + _k('bm_how_cancel') + '\nhttps://soulvibespace.netlify.app/account';
+    const details = _k('bm_arrive') + '\n' + _k('bm_how_cancel') + '\n' + location.origin + '/account';
     return {
       title, details,
       start: _nicosiaUTC(_selectedDate, _selectedSlot),
