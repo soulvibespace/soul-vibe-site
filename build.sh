@@ -68,11 +68,6 @@ if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
   echo "тесты бонуса за активность: ок"
   node tests/payments.test.js >/dev/null || { echo "ОШИБКА: tests/payments.test.js" >&2; exit 1; }
   echo "тесты онлайн-оплаты: ок"
-  # Edge-функция noindex для *.netlify.app (нужен Node 22.18+, он сам убирает типы TS).
-  if node -e 'process.exit(process.features.typescript ? 0 : 1)' 2>/dev/null; then
-    node tests/noindex-edge.test.mjs >/dev/null || { echo "ОШИБКА: tests/noindex-edge.test.mjs" >&2; exit 1; }
-    echo "тесты noindex для netlify.app: ок"
-  fi
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"

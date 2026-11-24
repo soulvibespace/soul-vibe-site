@@ -15,7 +15,7 @@ DNS домена: регистратор Squarespace Domains, записи пр�
 | Что | Где | В день переноса |
 |---|---|---|
 | 301 со старых адресов Squarespace | `netlify.toml` (уже включены, безопасны заранее) | ничего; проверить `tools/check-redirects.sh` |
-| noindex только на `*.netlify.app` | `netlify/edge-functions/noindex-preview.ts`, тест `tests/noindex-edge.test.mjs` | ничего: на www заголовка не будет |
+| noindex на всех хостах, кроме soulvibespace.com и www | `netlify/edge-functions/noindex-preview.ts`, тест `tests/noindex-edge.test.mjs` (PR #144) | ничего: app.* и netlify.app остаются закрытыми |
 | Базовый адрес, canonical, sitemap, robots, llms, JSON-LD | PR «день переноса» (ветка `seo/domain-switch`) | слить этот PR после того, как HTTPS заработает |
 
 ## За 1–3 дня (до 30 ноября)
