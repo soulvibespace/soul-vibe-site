@@ -3051,3 +3051,16 @@ a.bm-confirm-btn:hover { color: #fff; }
 .svs-ec-dot { color: var(--color-text-muted, #aaa); font-size: 0.82rem; }
 .svs-ec-divider { margin: 18px 0 14px; }
 @media (max-width: 600px) { .svs-ec-form input { font-size: 16px; } .svs-ec-form .svs-ec-code { font-size: 1.5rem; } }
+
+/* Статичный EN-текст /classes и /schedule (tools/static_text.py): для поиска без JS.
+   Только на EN — для RU/EL скрыт, пока нет адресов /ru/ и /el/ (S2, #133). */
+.svs-static { max-width: 760px; margin: 56px 0 24px; padding-top: 32px; border-top: 1px solid var(--color-border); color: var(--color-text); }
+.svs-static h2 { font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem); margin: 0 0 12px; }
+.svs-static h3 { font-size: 1.15rem; margin: 28px 0 8px; }
+.svs-static p { margin: 0 0 10px; line-height: 1.6; color: var(--color-text-muted); }
+.svs-static a { color: var(--color-primary); }
+.svs-static-list { list-style: none; margin: 0; padding: 0; }
+.svs-static-list li { padding: 10px 0; border-bottom: 1px solid var(--color-surface-offset); line-height: 1.55; color: var(--color-text-muted); }
+.svs-static-list li strong { color: var(--color-text); font-weight: 600; }
+.svs-static-list--compact li { padding: 6px 0; }
+html:not([lang="en"]) .svs-static { display: none; }

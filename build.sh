@@ -33,6 +33,9 @@ rsync -a ./ dist/ \
 if command -v python3 >/dev/null 2>&1; then
   # Цифры цен и VIBES: токены %%…%% в HTML → значения из SVS_PRICES (i18n.js). До meta.py,
   # чтобы в og:description попали готовые цифры.
+  # Статичный EN-текст /classes и /schedule для поиска без JS (tools/classes-static.json). До prices.py.
+  python3 tools/static_text.py dist
+  python3 tools/static_text.py --check dist
   python3 tools/prices.py $STRICT dist
   python3 tools/header.py dist
   python3 tools/header.py --check dist
