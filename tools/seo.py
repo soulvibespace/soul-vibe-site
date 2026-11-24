@@ -19,7 +19,7 @@
     robots.txt (с адресом карты сайта) и llms.txt (токены %%…%% цен раскрываются).
 
 Данные студии меняйте в STUDIO ниже, цены — в SVS_PRICES (i18n.js).
-TODO(домен): после переноса soulvibespace.com — DEFAULT_BASE в tools/meta.py.
+Основной адрес — DEFAULT_BASE в tools/meta.py (https://www.soulvibespace.com) или SITE_URL.
 """
 import json
 import os

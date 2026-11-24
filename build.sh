@@ -40,8 +40,7 @@ if command -v python3 >/dev/null 2>&1; then
   python3 tools/footer.py dist
   python3 tools/footer.py --check dist
   # OG/Twitter-мета-теги, JSON-LD, sitemap/robots/llms: абсолютные адреса от SITE_URL (переменная
-  # окружения Netlify; без неё — DEFAULT_BASE в tools/meta.py, https://soul-vibe-space.netlify.app).
-  # До переключения апекса (после 13.12): SITE_URL=https://app.soulvibespace.com. $URL Netlify НЕ
+  # окружения Netlify; без неё — DEFAULT_BASE в tools/meta.py, https://www.soulvibespace.com). $URL Netlify НЕ
   # используем: это «основной домен» Netlify, а не адрес, под который собираем сайт.
   # seo.py --check падает, если при другом SITE_URL в dist остался адрес netlify.app.
   python3 tools/meta.py dist ${SITE_URL:+--base "$SITE_URL"}

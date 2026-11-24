@@ -2,7 +2,7 @@
 
 Статический сайт студии. Деплоится на Netlify автоматически при пуше в `main`.
 
-- Живой сайт: https://soul-vibe-space.netlify.app
+- Живой сайт: https://www.soulvibespace.com (алиас для PWA: https://app.soulvibespace.com; технический адрес: https://soul-vibe-space.netlify.app; оба закрыты от поиска)
 - Netlify site ID: `5160c45c-80d9-4a82-9a3d-068717d5fdc2`
 - Бэкенд API: https://soul-vibe-api.onrender.com (репозиторий `soulvibespace/soul-vibe-api`)
 
@@ -65,8 +65,8 @@ git push origin main   # Netlify подхватит и опубликует са
 При импорте содержимое репозитория сверено с живым сайтом по контрольным суммам:
 все 28 файлов совпали байт в байт, ничего не потеряно и не откатилось.
 
-Домен `soulvibespace.com` пока указывает на старый сайт на Squarespace. Перенос —
-отдельная задача после того как новый сайт будет доделан.
+Домен `soulvibespace.com` переключён на этот сайт после Yoga Day (13.12.2026), основной адрес — www.
+Чек-лист переезда, DNS и откат — `docs/domain-move.md`.
 
 ## Общие части страниц
 
@@ -79,9 +79,8 @@ git push origin main   # Netlify подхватит и опубликует са
 | OG/Twitter-теги | `<title>` и `<meta name="description">` страницы, картинка — `IMAGES` в `tools/meta.py` | `python3 tools/meta.py` | `python3 tools/meta.py --check` |
 
 `build.sh` прогоняет всё это для `dist/` при каждой сборке на Netlify. Абсолютные адреса в
-мета-тегах — от переменной окружения Netlify `SITE_URL` (с запуска app.soulvibespace.com — `https://app.soulvibespace.com`)
-или, без неё, от `DEFAULT_BASE` в `tools/meta.py` (https://soul-vibe-space.netlify.app). В коде сайта адрес
-сайта нигде не зашит: ссылки относительные или от `location.origin`. `canonical`/`hreflang` пока не выводятся — домен
-`soulvibespace.com` ещё на Squarespace (см. TODO в `tools/meta.py`).
+мета-тегах — от переменной окружения Netlify `SITE_URL` 
+или, без неё, от `DEFAULT_BASE` в `tools/meta.py` (https://www.soulvibespace.com). `canonical` выводится на всех страницах. В коде сайта адрес
+сайта нигде не зашит: ссылки относительные или от `location.origin`. `hreflang` появится вместе с адресами /ru/ и /el/ (#133).
 
 Тексты `/terms` и `/privacy`: английский — в разметке страниц, русский и греческий — в `i18n-legal.js`.
