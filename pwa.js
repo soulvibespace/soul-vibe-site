@@ -50,7 +50,9 @@
     { id: 'profile', href: '/account', key: 'pwa_tab_profile', fb: 'Profile' }
   ];
 
-  function path() { return location.pathname.replace(/\.html$/, '').replace(/\/+$/, '') || '/'; }
+  // Языковые адреса /ru/…, /el/… (S2): префикс не влияет на вкладки, ссылки меню его сохраняют.
+  function langPrefix() { var m = location.pathname.match(/^\/(ru|el)(?=\/|$)/); return m ? '/' + m[1] : ''; }
+  function path() { return location.pathname.replace(/^\/(ru|el)(?=\/|$)/, '').replace(/\.html$/, '').replace(/\/+$/, '') || '/'; }
 
   function activeTab() {
     var p = path();
@@ -90,7 +92,7 @@
     var nav = D.createElement('nav');
     nav.className = 'svs-tabbar';
     nav.innerHTML = TABS.map(function (tab) {
-      return '<a class="svs-tab" data-tab="' + tab.id + '" href="' + tab.href + '">' + ICONS[tab.id] +
+      return '<a class="svs-tab" data-tab="' + tab.id + '" href="' + langPrefix() + tab.href + '">' + ICONS[tab.id] +
         '<span class="svs-tab-label"></span></a>';
     }).join('');
     // Профиль на /account: просто наверх, без перезагрузки.
@@ -100,7 +102,7 @@
       var tab = a.getAttribute('data-tab');
       if (tab === 'profile') {
         e.preventDefault();
-        if (location.hash) history.pushState(null, '', '/account' + location.search);
+        if (location.hash) history.pushState(null, '', langPrefix() + '/account' + location.search);
         W.scrollTo({ top: 0, behavior: 'smooth' });
         paintTabs(nav);
       }
