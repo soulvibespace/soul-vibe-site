@@ -18,7 +18,10 @@
  *                   (больше данных в отчётах за счёт моделирования; решает владелец).
  *
  * События: window.svsTrack('booking_start', { class_name: '…' }) — безопасно вызывать
- * где угодно; без согласия/ID это no-op. Клики по WhatsApp/Instagram/TikTok/телефону/
+ * где угодно; без согласия/ID это no-op (вернёт false).
+ *   booking_start / booking_done — booking-modal.js (окно записи открыто / запись создана);
+ *   begin_checkout — buy-online.js (переход в Stripe Checkout), purchase — payment-result.js
+ *   (оплата подтверждена, один раз на session_id). Клики по WhatsApp/Instagram/TikTok/телефону/
  * почте отслеживаются автоматически (contact_click). Отладка: ?ga_debug=1 в адресе.
  */
 (function () {
@@ -83,10 +86,12 @@
   }
 
   // Событие GA4. В режиме basic без согласия ничего не копится и не отправляется.
+  // Возвращает true, если событие передано в gtag (нужно, чтобы не ждать event_callback зря).
   window.svsTrack = function (name, params) {
-    if (!CONFIG.ga4 || !name) return;
-    if (CONFIG.mode === 'basic' && !granted) return;
+    if (!CONFIG.ga4 || !name) return false;
+    if (CONFIG.mode === 'basic' && !granted) return false;
     gtag('event', name, params || {});
+    return true;
   };
 
   // Автоматически: клики по способам связи (лиды для студии).
