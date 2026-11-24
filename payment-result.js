@@ -103,6 +103,27 @@
     }
   }
 
+  // GA4 purchase — once per Checkout Session (a reload or a second tab does not count it again).
+  // Only when the payment really went through; value and currency from the API (Stripe amount_total).
+  var GA_SENT_PREFIX = 'svs_ga_purchase_';
+  function trackPurchase(d) {
+    try {
+      if (typeof window.svsTrack !== 'function') return;
+      if (['credited', 'resolved', 'needs_review'].indexOf(d.status) < 0) return;
+      var key = GA_SENT_PREFIX + sessionId;
+      try { if (localStorage.getItem(key)) return; } catch (_) {}
+      var code = String(d.plan || '').replace(/[^A-Z0-9]/g, '');
+      var value = Number(d.amount_cents) > 0 ? Math.round(Number(d.amount_cents)) / 100 : undefined;
+      var starter = /^SP/.test(code);
+      var item = { item_id: code || 'unknown', item_name: (starter ? 'Starter Pack ' : 'Class Pass ') + code, item_category: starter ? 'Starter Pack' : 'Class Pass', quantity: 1 };
+      if (value) item.price = value;
+      var sent = window.svsTrack('purchase', {
+        transaction_id: sessionId, currency: String(d.currency || 'eur').toUpperCase(), value: value, items: [item],
+      });
+      if (sent === true) { try { localStorage.setItem(key, String(Date.now())); } catch (_) {} }
+    } catch (_) {}
+  }
+
   async function check() {
     clearTimeout(timer);
     if (!/^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(sessionId)) return render({ state: 'err', icon: 'info', title: 'payr_err_title', text: 'payr_err_text' });
@@ -115,7 +136,7 @@
       });
       if (r.status === 401) return render({ state: 'signin', icon: 'user', title: 'payr_signin_title', text: 'payr_signin_text', signin: true });
       var d = await r.json().catch(function () { return {}; });
-      if (r.ok) view = viewFor(d);
+      if (r.ok) { view = viewFor(d); trackPurchase(d); }
       else if (r.status >= 500 && tries < MAX_TRIES) view = { state: 'wait', icon: 'wait', title: 'payr_wait_title', text: tries >= FAST_TRIES ? 'payr_slow_text' : 'payr_wait_text', again: true };
       else view = { state: 'err', icon: 'info', title: 'payr_err_title', text: 'payr_err_text' };
     } catch (_) {
