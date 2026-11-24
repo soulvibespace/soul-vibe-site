@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Saved light/dark theme, applied before first paint -->
+  <script src="/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found | Soul Vibe Space</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="This page does not exist. Find a class, prices and contacts of Soul Vibe Space, a yoga studio in Limassol." />
+  <!-- Netlify отдаёт эту страницу с кодом 404 на любой несуществующий адрес, в т. ч. вложенный
+       (/a/b/c), поэтому все пути здесь — абсолютные (/style.css, /i18n.js). -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@300,400,500,700&f[]=work-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .nf-page { background: var(--bg); }
+    .nf-wrap { max-width: 720px; margin: 0 auto; padding: var(--page-pt, 140px) 1.5rem var(--page-pb, 80px); text-align: center; }
+    .nf-code { font-family: 'Zodiak', serif; font-size: clamp(4rem, 14vw, 7rem); line-height: 1; color: var(--color-primary, #6B4FA0); opacity: .9; margin: 0 0 .5rem; }
+    .nf-title { font-family: 'Zodiak', serif; font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 400; margin: 0 0 .75rem; }
+    .nf-text { font-size: 1rem; line-height: 1.7; color: var(--color-text-muted, #666); margin: 0 auto 2rem; max-width: 520px; }
+    .nf-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .nf-links { display: flex; gap: 8px 20px; justify-content: center; flex-wrap: wrap; font-size: .95rem; }
+    .nf-links a { color: var(--color-primary, #6B4FA0); text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+  <link rel="stylesheet" href="/compact.css" />
+</head>
+<body>
+
+  <header class="header" id="header"></header>
+
+  <main class="nf-page">
+    <div class="nf-wrap">
+      <p class="nf-code" aria-hidden="true">404</p>
+      <h1 class="nf-title" data-nf="title">This page could not be found</h1>
+      <p class="nf-text" data-nf="text">The link may be old or mistyped. Our site has moved recently — everything is still here, just at a new address.</p>
+      <div class="nf-actions">
+        <a href="/schedule" class="btn btn-primary" data-nf="schedule">See the schedule</a>
+        <a href="/" class="btn btn-outline" data-nf="home">Go to the home page</a>
+      </div>
+      <nav class="nf-links" aria-label="Popular pages">
+        <a href="/classes" data-nf="classes">Classes</a>
+        <a href="/pricing" data-nf="pricing">Prices</a>
+        <a href="/gift-certificates" data-nf="gift">Gift certificates</a>
+        <a href="/contact" data-nf="contact">Contact</a>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <script src="/i18n.js" defer></script>
+  <script src="/email-login.js" defer></script>
+  <script src="/auth-modal.js" defer></script>
+  <script>
+    // Тексты этой страницы на трёх языках — здесь же, чтобы не трогать словарь i18n.js.
+    (function () {
+      var T = {
+        ru: { title: 'Такой страницы нет', text: 'Возможно, ссылка устарела или в ней опечатка. Мы недавно обновили сайт — всё на месте, просто по новому адресу.', schedule: 'Открыть расписание', home: 'На главную', classes: 'Занятия', pricing: 'Цены', gift: 'Подарочные сертификаты', contact: 'Контакты', doc: 'Страница не найдена | Soul Vibe Space' },
+        el: { title: 'Η σελίδα δεν βρέθηκε', text: 'Ο σύνδεσμος μπορεί να είναι παλιός ή λάθος. Ανανεώσαμε πρόσφατα τον ιστότοπο — όλα είναι εδώ, απλώς σε νέα διεύθυνση.', schedule: 'Δείτε το πρόγραμμα', home: 'Αρχική σελίδα', classes: 'Μαθήματα', pricing: 'Τιμές', gift: 'Δωροεπιταγές', contact: 'Επικοινωνία', doc: 'Η σελίδα δεν βρέθηκε | Soul Vibe Space' }
+      };
+      var EN = {};
+      function apply(lang) {
+        var t = T[lang];
+        document.querySelectorAll('[data-nf]').forEach(function (el) {
+          var k = el.getAttribute('data-nf');
+          if (!(k in EN)) EN[k] = el.textContent;
+          el.textContent = t ? t[k] : EN[k];
+        });
+        if (!EN.doc) EN.doc = document.title;
+        document.title = t ? t.doc : EN.doc;
+      }
+      var lang = 'en';
+      try { lang = (localStorage.getItem('svs_lang') || 'en').toLowerCase(); } catch (e) {}
+      apply(lang);
+      window.addEventListener('svs:langchange', function (e) { apply(e.detail && e.detail.lang); });
+      if (window.svsTrack) window.svsTrack('page_not_found', { page_path: location.pathname, page_referrer: document.referrer });
+    })();
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    if (mobileMenuBtn && mobileNav) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const open = mobileNav.classList.toggle('is-open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        mobileNav.setAttribute('aria-hidden', String(!open));
+      });
+    }
+  </script>
+<script src="/cookie-banner.js" defer></script>
+  <script src="/compact.js" defer></script>
+</body>
+</html>

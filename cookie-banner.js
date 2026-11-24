@@ -8,7 +8,16 @@
   var LANG_KEY  = 'svs_lang';
   var PRIVACY_COOKIES_URL = '/privacy#cookies';
 
-  if (localStorage.getItem(STORE_KEY)) return; // already accepted/rejected
+  // Повторно открыть баннер (отозвать/изменить согласие): window.svsCookieSettings().
+  window.svsCookieSettings = function () {
+    try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+    var old = document.getElementById('svs-cookie-banner');
+    if (!old) render();
+  };
+
+  var saved = null;
+  try { saved = localStorage.getItem(STORE_KEY); } catch (e) {}
+  if (saved) return; // already accepted/rejected
 
   var T = {
     en: {
@@ -84,6 +93,8 @@
     function dismiss(value) {
       try { localStorage.setItem(STORE_KEY, value); } catch(e) {}
       document.body.removeChild(banner);
+      // analytics.js (GA4 + Consent Mode) слушает это событие.
+      try { window.dispatchEvent(new CustomEvent('svs:consent', { detail: value })); } catch(e) {}
     }
 
     btnAccept.addEventListener('click', function () { dismiss('all'); });

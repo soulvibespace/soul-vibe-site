@@ -1,0 +1,53 @@
+# Soul Vibe Space
+
+> Yoga and wellness studio in Limassol, Cyprus. Yoga, meditation, qigong, sound healing and Ecstatic Dance, classes every day from 8:00 to 22:00. A multilingual community: English, Russian and Greek speakers practise side by side. Address: 50 Agias Zonis, Limassol 3090, Cyprus. Phone and WhatsApp: +357 95 642 888.
+
+This file is a short guide to the site for AI assistants and search engines. Prices below are generated from the studio's price list at build time.
+
+## Key facts
+
+- Name: Soul Vibe Space (Soul Vibe Space LTD)
+- Type: yoga studio and wellness space, about 170 m² over two floors, with a co-working area
+- Address: 50 Agias Zonis, Limassol 3090, Cyprus
+- Phone / WhatsApp: +357 95 642 888 (https://wa.me/35795642888)
+- Email: soulvibespace@gmail.com
+- Classes: daily 8:00–22:00. Administrator at the studio: 14:00–22:00
+- Languages: English, Russian and Greek speakers; the language of each class is shown in the schedule
+- Instagram: https://www.instagram.com/soul.vibe.space_cyprus
+- TikTok: https://www.tiktok.com/@soul.vibe.space.y
+- Summer season: open-air classes at Rancho Meadow Paradise
+
+## Booking
+
+- Book a class online from the schedule: {{BASE}}/schedule (with a free studio account)
+- Or message the studio on WhatsApp or Instagram
+
+## Prices (EUR)
+
+- Drop-in class: %%dropin%%
+- Class Pass — 4 classes: %%MP4.price%%, valid %%MP4.days%% days from the first visit (%%MP4.per%% per class)
+- Class Pass — 8 classes: %%MP8.price%%, valid %%MP8.days%% days (%%MP8.per%% per class)
+- Class Pass — 12 classes: %%MP12.price%%, valid %%MP12.days%% days (%%MP12.per%% per class)
+- Class Pass — 20 classes: %%MP20.price%%, valid %%MP20.days%% days (%%MP20.per%% per class)
+- Starter Pack for first-time guests (once): 1 class %%SP1.price%%, 2 classes %%SP2.price%%, 4 classes %%SP4.price%%, valid %%SP1.days%% days
+- VIBES: the studio balance. A regular class costs %%class%% VIBES; a Class Pass adds more VIBES than a standard top-up for the same amount. Top-up at the studio: %%topup%% = 1 VIBE
+
+## Pages
+
+- [Home]({{BASE}}/): overview of the studio
+- [About us and teachers]({{BASE}}/about): story, founder, team, what makes the studio different
+- [Classes]({{BASE}}/classes): all class types (yoga, meditation, qigong, sound healing, Ecstatic Dance)
+- [Schedule]({{BASE}}/schedule): weekly timetable with online booking
+- [Prices]({{BASE}}/pricing): Class Passes, Starter Pack, drop-in
+- [VIBES]({{BASE}}/vibes): how the studio balance and gift VIBES work
+- [Our space]({{BASE}}/space): photos, amenities, co-working
+- [Studio rental]({{BASE}}/rental): hourly rates for workshops, events and corporate programs
+- [Extra services]({{BASE}}/price-list): personal sessions, co-working, private events
+- [Gift certificates]({{BASE}}/gift-certificates)
+- [Reviews]({{BASE}}/reviews)
+- [Contact]({{BASE}}/contact): map, phone, WhatsApp, contact form
+
+## Optional
+
+- [Terms & Conditions]({{BASE}}/terms)
+- [Privacy Policy]({{BASE}}/privacy)
