@@ -24,7 +24,7 @@
 (function () {
   'use strict';
   var CONFIG = {
-    ga4: 'G-64E01PMCWV', // поток GA4 студии (soulvibespace@gmail.com)
+    ga4: 'G-TK6J5M87YL', // поток GA4 www.soulvibespace.com
     mode: 'basic',    // 'basic' | 'advanced'
   };
   var CONSENT_KEY = 'svs_cookie_consent';
