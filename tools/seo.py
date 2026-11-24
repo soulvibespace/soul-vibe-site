@@ -110,6 +110,7 @@ def graph(fname, src, base):
     url = base + meta.page_path(fname)
     t = meta.TITLE_RE.search(src)
     d = meta.DESC_RE.search(src)
+    lang = meta.split_lang(fname)[0]
     studio = {
         '@type': ['HealthClub', 'LocalBusiness'],
         '@id': studio_id,
@@ -140,7 +141,7 @@ def graph(fname, src, base):
         {'@type': 'WebPage', '@id': url + '#webpage', 'url': url,
          'name': meta.html.unescape(t.group(1).strip()) if t else STUDIO['name'],
          'description': meta.html.unescape(d.group(1)) if d else '',
-         'inLanguage': 'en', 'isPartOf': {'@id': base + '/#website'}, 'about': {'@id': studio_id}},
+         'inLanguage': lang, 'isPartOf': {'@id': base + '/#website'}, 'about': {'@id': studio_id}},
     ]
     return {'@context': 'https://schema.org', '@graph': nodes}
 
@@ -151,6 +152,10 @@ def schema_block(fname, src, base):
             '  <script type="application/ld+json">\n' + body + '\n  </script>\n  ' + END + '\n')
 
 
+def noindex(fname):
+    return meta.split_lang(fname)[1] in NOINDEX
+
+
 def render(fname, src, base):
     src = SCHEMA_RE.sub('', src)
     # Старые JSON-LD страниц: адрес сайта — от --base.
@@ -159,19 +164,21 @@ def render(fname, src, base):
         body = m.group(2).replace(meta.DEFAULT_BASE, base).replace(meta.NETLIFY_BASE, base)
         return m.group(1) + body + m.group(3)
     src = LD_RE.sub(fix, src)
-    if fname in NOINDEX and not ROBOTS_META_RE.search(src):
+    if noindex(fname) and not ROBOTS_META_RE.search(src):
         src = src.replace('</title>', '</title>\n  <meta name="robots" content="noindex, nofollow" />', 1)
     if ANALYTICS_TAG not in src:
         # Как можно раньше в <head>: Consent Mode должен стоять до любых тегов Google.
-        m = re.search(r'<meta charset="[^"]*"\s*/?>\n?', src, re.I)
+        # (после svs_lang языковых страниц /ru/, /el/ — tools/i18n_build.py)
+        m = re.search(r'<meta charset="[^"]*"\s*/?>\n?(?:\s*<script>try\{localStorage\.setItem\("svs_lang"[^<]*</script>\n?)?', src, re.I)
         pos = m.end() if m else src.index('<head>') + len('<head>')
         src = src[:pos] + '  ' + ANALYTICS_TAG + '\n' + src[pos:]
-    if fname not in NOINDEX:
+    if not noindex(fname):
         src = src.replace('</head>', schema_block(fname, src, base) + '</head>', 1)
     return src
 
 
 def lastmod(fname):
+    fname = meta.split_lang(fname)[1]  # ru/pricing.html — тот же исходник pricing.html
     try:
         out = subprocess.run(['git', '-C', ROOT, 'log', '-1', '--format=%cs', '--', fname],
                              capture_output=True, text=True, timeout=20).stdout.strip()
@@ -180,15 +187,22 @@ def lastmod(fname):
         return None
 
 
-def sitemap(pages, base):
+def sitemap(pages, base, d=None):
+    # Все языковые версии + xhtml:link hreflang (те же, что в <head>, x-default = EN).
     rows = ['<?xml version="1.0" encoding="UTF-8"?>',
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+            'xmlns:xhtml="http://www.w3.org/1999/xhtml">']
     for f in pages:
         rows.append('  <url>')
         rows.append(f'    <loc>{base}{meta.page_path(f)}</loc>')
         lm = lastmod(f)
         if lm:
             rows.append(f'    <lastmod>{lm}</lastmod>')
+        alt = meta.alternates(f, d) if d else {}
+        for l, path in alt.items():
+            rows.append(f'    <xhtml:link rel="alternate" hreflang="{l}" href="{base}{path}" />')
+        if 'en' in alt:
+            rows.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{base}{alt["en"]}" />')
         rows.append('  </url>')
     rows.append('</urlset>')
     return '\n'.join(rows) + '\n'
@@ -219,7 +233,11 @@ def expand_text(src, base):
 
 
 def html_pages(d):
-    return sorted(f for f in os.listdir(d) if f.endswith('.html'))
+    out = sorted(f for f in os.listdir(d) if f.endswith('.html'))
+    for l in meta.LANGS[1:]:
+        if os.path.isdir(os.path.join(d, l)):
+            out += sorted(f'{l}/{f}' for f in os.listdir(os.path.join(d, l)) if f.endswith('.html'))
+    return out
 
 
 def check(d, base=meta.DEFAULT_BASE):
@@ -233,9 +251,9 @@ def check(d, base=meta.DEFAULT_BASE):
                 bad.append(f'{f}: JSON-LD не читается ({e})')
         if ANALYTICS_TAG not in src:
             bad.append(f'{f}: нет {ANALYTICS_TAG}')
-        if f in NOINDEX and not ROBOTS_META_RE.search(src):
+        if noindex(f) and not ROBOTS_META_RE.search(src):
             bad.append(f'{f}: нет noindex')
-        if f not in NOINDEX and START not in src:
+        if not noindex(f) and START not in src:
             bad.append(f'{f}: нет JSON-LD студии')
     for name in ('robots.txt', 'sitemap.xml', 'llms.txt'):
         p = os.path.join(d, name)
@@ -281,7 +299,7 @@ def main(argv):
         if out != src:
             open(p, 'w', encoding='utf-8').write(out)
     open(os.path.join(d, 'sitemap.xml'), 'w', encoding='utf-8').write(
-        sitemap([f for f in pages if f not in NOINDEX], base))
+        sitemap([f for f in pages if not noindex(f)], base, d))
     open(os.path.join(d, 'robots.txt'), 'w', encoding='utf-8').write(robots(base))
     for name in TEXT_FILES:
         p = os.path.join(d, name)
@@ -289,7 +307,7 @@ def main(argv):
             text = expand_text(open(p, encoding='utf-8').read(), base)
             open(p, 'w', encoding='utf-8').write(text)
     print(f'seo: JSON-LD и analytics.js на {len(pages)} стр., sitemap.xml '
-          f'({len(pages) - len(NOINDEX & set(pages))} адресов), robots.txt, llms.txt')
+          f'({len([f for f in pages if not noindex(f)])} адресов), robots.txt, llms.txt')
     return 0
 
 

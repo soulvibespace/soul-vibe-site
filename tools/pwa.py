@@ -33,7 +33,13 @@ SW_TOKEN = '__SVS_SW_VERSION__'
 
 
 def pages(d):
-    return sorted(f for f in os.listdir(d) if f.endswith('.html'))
+    # Корень и языковые копии /ru/, /el/ (S2, tools/i18n_build.py) — блок pwa нужен везде.
+    out = sorted(f for f in os.listdir(d) if f.endswith('.html'))
+    for lang in ('ru', 'el'):
+        sub = os.path.join(d, lang)
+        if os.path.isdir(sub):
+            out += [f'{lang}/{f}' for f in sorted(os.listdir(sub)) if f.endswith('.html')]
+    return out
 
 
 def block(src):

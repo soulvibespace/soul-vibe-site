@@ -1424,6 +1424,14 @@ button { cursor: pointer; background: none; border: none; }
   color: var(--color-primary);
 }
 
+/* Переключатель — ссылки на /ru/…, /el/… (S2, tools/i18n_build.py): выглядят как прежние кнопки */
+a.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .lang-btn.lang-active {
   background: var(--color-primary);
   color: #fff;
