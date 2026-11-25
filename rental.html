@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-i18n-title="rental_page_title">Studio & Venue Rental | Soul Vibe Space Limassol</title>
-  <meta name="description" content="Rent the Soul Vibe Space studio in Limassol for classes, workshops, private events and corporate programs. Clear hourly rates for a studio, a floor or the whole building." />
+  <title data-i18n-title="rental_page_title">Rental & Coworking | Soul Vibe Space Limassol</title>
+  <meta name="description" content="Rent the Soul Vibe Space studio in Limassol for classes, workshops, private and corporate events, or work in our co-working area. Clear hourly rates for a studio, a floor, the whole building and co-working." />
   <!-- meta:start -->
   <!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Soul Vibe Space" />
-  <meta property="og:title" content="Studio &amp; Venue Rental | Soul Vibe Space Limassol" />
-  <meta property="og:description" content="Rent the Soul Vibe Space studio in Limassol for classes, workshops, private events and corporate programs. Clear hourly rates for a studio, a floor or the whole building." />
+  <meta property="og:title" content="Rental &amp; Coworking | Soul Vibe Space Limassol" />
+  <meta property="og:description" content="Rent the Soul Vibe Space studio in Limassol for classes, workshops, private and corporate events, or work in our co-working area. Clear hourly rates for a studio, a floor, the whole building and co-working." />
   <meta property="og:url" content="https://soul-vibe-space.netlify.app/rental" />
   <meta property="og:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="ru_RU" />
   <meta property="og:locale:alternate" content="el_GR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Studio &amp; Venue Rental | Soul Vibe Space Limassol" />
-  <meta name="twitter:description" content="Rent the Soul Vibe Space studio in Limassol for classes, workshops, private events and corporate programs. Clear hourly rates for a studio, a floor or the whole building." />
+  <meta name="twitter:title" content="Rental &amp; Coworking | Soul Vibe Space Limassol" />
+  <meta name="twitter:description" content="Rent the Soul Vibe Space studio in Limassol for classes, workshops, private and corporate events, or work in our co-working area. Clear hourly rates for a studio, a floor, the whole building and co-working." />
   <meta name="twitter:image" content="https://soul-vibe-space.netlify.app/images/hero.webp" />
   <!-- meta:end -->
 
@@ -230,6 +230,36 @@
       .rental-gallery { gap: 10px; }
       .rental-cta-img-wrap { min-height: 160px; }
     }
+    /* ── Коворкинг и мероприятия (перенесено с /space и /price-list) ── */
+    #coworking, #events { scroll-margin-top: 110px; }
+    .cw-split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: var(--split-gap, 48px); align-items: center; margin-bottom: 32px; }
+    .cw-split p:not(.page-eyebrow) { font-size: .95rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 12px; }
+    .cw-img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 20px; }
+    .cw-rates-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; color: var(--text-primary); margin-bottom: 6px; }
+    .cw-free { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; margin-top: 16px; }
+    .cw-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; }
+    table.cw-table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 480px; }
+    table.cw-table th, table.cw-table td { padding: 16px 20px; text-align: left; font-size: .92rem; border-bottom: 1px solid var(--border); }
+    table.cw-table th { font-family: var(--font-sans); font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-secondary); background: color-mix(in srgb, var(--accent) 5%, var(--surface)); }
+    table.cw-table td:not(:first-child) { font-family: var(--font-serif); font-size: 1.05rem; color: var(--text-primary); white-space: nowrap; }
+    table.cw-table td .pp-note { font-family: var(--font-sans); font-size: .68rem; color: var(--text-secondary); margin-left: 3px; }
+    table.cw-table tr:last-child td { border-bottom: none; }
+    table.cw-table td:first-child { font-family: var(--font-sans); font-weight: 500; color: var(--text-primary); }
+    .event-list { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 8px 32px; }
+    .event-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .event-row:last-child { border-bottom: none; }
+    .event-name { font-size: 1rem; color: var(--text-primary); font-weight: 500; }
+    .event-price { font-family: var(--font-serif); font-size: 1.15rem; color: var(--accent); white-space: nowrap; }
+    @media (max-width: 900px) { .cw-split { grid-template-columns: 1fr; gap: 24px; } .cw-split .cw-media { order: -1; } }
+    @media (max-width: 540px) {
+      .event-list { padding: 4px 20px; }
+      .event-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+      /* Таблица коворкинга без горизонтальной прокрутки на телефоне */
+      table.cw-table { min-width: 0; }
+      table.cw-table th, table.cw-table td { padding: 12px 10px; font-size: .84rem; }
+      table.cw-table th { font-size: .66rem; letter-spacing: .04em; }
+      table.cw-table td .pp-note { display: block; margin-left: 0; }
+    }
   </style>
   <link rel="stylesheet" href="/compact.css" />
 </head>
@@ -244,13 +274,13 @@
       </a>
 
       <nav class="nav" aria-label="Main navigation">
-        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
         <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
         <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
         <a href="/pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
         <a href="/vibes" class="nav-link" data-i18n="nav_vibes">VIBES</a>
-        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
-        <a aria-current="page" href="/rental" class="nav-link nav-link--active" data-i18n="nav_rent">Rental</a>
+        <a href="/gift-certificates" class="nav-link" data-i18n="nav_gift">Gift Certificates</a>
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a aria-current="page" href="/rental" class="nav-link nav-link--active" data-i18n="nav_rent">Rental &amp; Coworking</a>
         <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
       </nav>
 
@@ -284,15 +314,14 @@
     </div>
 
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
       <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
       <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
       <a href="/pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a>
       <a href="/vibes" class="mobile-nav-link" data-i18n="nav_vibes">VIBES</a>
-      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
-      <a aria-current="page" href="/rental" class="mobile-nav-link active" data-i18n="nav_rent">Rental</a>
+      <a href="/gift-certificates" class="mobile-nav-link" data-i18n="nav_gift">Gift Certificates</a>
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a aria-current="page" href="/rental" class="mobile-nav-link active" data-i18n="nav_rent">Rental &amp; Coworking</a>
       <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
-      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
       <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
       <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
       <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">Instagram</a>
@@ -337,16 +366,14 @@
       <div class="footer-links">
         <h4 data-i18n="footer_studio">Studio</h4>
         <nav aria-label="Footer navigation">
-          <a href="/about" data-i18n="footer_about">About</a>
-          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/classes" data-i18n="nav_classes">Classes</a>
           <a href="/schedule" data-i18n="nav_schedule">Schedule</a>
           <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
           <a href="/vibes" data-i18n="footer_vibes">VIBES</a>
-          <a href="/space" data-i18n="footer_coworking">Co-working</a>
-          <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
-          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
-          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="/gift-certificates" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/rental" data-i18n="nav_rent">Rental &amp; Coworking</a>
+          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" data-i18n="footer_book">Book a class</a>
         </nav>
       </div>
@@ -533,6 +560,8 @@
   <script>
     (function () {
       let RENTAL_DATA = null;
+      // Коворкинг и частные/корпоративные мероприятия — из data/price-list.json (редактируется в /admin)
+      let PL_DATA = null;
       const CHECK_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
       // Line-icon set, matching the venue's printed brochure iconography.
@@ -618,6 +647,56 @@
 
         const addonCol = (arr) => arr.map(i => `<li>${rtr(i)}</li>`).join('');
 
+        const pl = PL_DATA;
+        const cwNote = (t) => t.per_person ? `<span class="pp-note">${rtr(pl.coworking.per_person_note)}</span>` : '';
+        const eventsBlock = (pl && pl.events) ? `
+          <hr class="pricing-divider">
+          <section id="events" aria-labelledby="rentalEventsTitle">
+            <p class="page-eyebrow">${rtr(pl.events.label)}</p>
+            <h2 class="rental-subhead" id="rentalEventsTitle">${rtr(pl.events.title)}</h2>
+            <p class="rental-subhead-sub">${rtr(pl.events.desc)}</p>
+            <div class="event-list">${pl.events.items.map(it => `
+              <div class="event-row">
+                <span class="event-name">${rtr(it.name)}</span>
+                <span class="event-price">${rtr(it.price)}</span>
+              </div>`).join('')}
+            </div>
+          </section>` : '';
+        const coworkBlock = (pl && pl.coworking) ? `
+          <hr class="pricing-divider">
+          <section id="coworking" aria-labelledby="rentalCwTitle">
+            <div class="cw-split">
+              <div>
+                <p class="page-eyebrow" data-i18n="space_cowork_eyebrow">Co-working</p>
+                <h2 class="rental-subhead" id="rentalCwTitle" data-i18n="space_cowork_title">Work mindfully</h2>
+                <p data-i18n="space_cowork_p1">Between classes, our co-working area offers a calm, inspiring environment to focus, create, or connect with others in the community.</p>
+                <p data-i18n="space_cowork_p2">There’s a coffee point, a smart TV and fast Wi-Fi: everything you need to get work done. And it feels nothing like a regular office.</p>
+              </div>
+              <div class="cw-media"><img class="cw-img" src="/images/coworking.webp" width="1024" height="1024" loading="lazy" decoding="async" alt="Soul Vibe Space co-working area"/></div>
+            </div>
+            <h3 class="cw-rates-title" data-i18n="cowork_rates">Co-working rates</h3>
+            <p class="rental-subhead-sub">${rtr(pl.coworking.desc)}</p>
+            <div class="cw-table-wrap">
+              <table class="cw-table">
+                <thead><tr>
+                  <th scope="col">${rtr(pl.coworking.col_guests)}</th>
+                  <th scope="col">${rtr(pl.coworking.col_h1)}</th>
+                  <th scope="col">${rtr(pl.coworking.col_h2)}</th>
+                  <th scope="col">${rtr(pl.coworking.col_h3)}</th>
+                </tr></thead>
+                <tbody>${pl.coworking.tiers.map(t => `
+                  <tr>
+                    <td>${rtr(t.guests)}</td>
+                    <td>${reuro(t.h1)}${cwNote(t)}</td>
+                    <td>${reuro(t.h2)}${cwNote(t)}</td>
+                    <td>${reuro(t.h3)}${cwNote(t)}</td>
+                  </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+            <p class="cw-free" data-i18n="pricing_coworking_from">Free between classes if you have more than the cost of a class in VIBES. Otherwise, co-working rates apply.</p>
+          </section>` : '';
+
         root.innerHTML = `
           <div style="margin-bottom: var(--block-gap);">
             ${rtr(d.meta.eyebrow) ? `<p class="page-eyebrow">${rtr(d.meta.eyebrow)}</p>` : ''}
@@ -656,6 +735,9 @@
           </div>
           <p class="note-box">${rtr(d.note)}</p>
 
+          ${eventsBlock}
+          ${coworkBlock}
+
           <hr class="pricing-divider">
 
           <div class="rental-cta">
@@ -682,10 +764,13 @@
         }
       }
 
-      fetch('/data/rental.json', { cache: 'no-store' })
-        .then(r => r.json())
-        .then(json => {
-          RENTAL_DATA = json; renderRental();
+      const jsonOrNull = (url) => fetch(url, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
+      Promise.all([
+        fetch('/data/rental.json', { cache: 'no-store' }).then(r => r.json()),
+        jsonOrNull('/data/price-list.json')
+      ])
+        .then(([json, pl]) => {
+          RENTAL_DATA = json; PL_DATA = pl; renderRental();
           if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
         })
         .catch(() => {

@@ -35,14 +35,12 @@ This file is a short guide to the site for AI assistants and search engines. Pri
 ## Pages
 
 - [Home]({{BASE}}/): overview of the studio
-- [About us and teachers]({{BASE}}/about): story, founder, team, what makes the studio different
+- [About us and teachers]({{BASE}}/about): story, founder, team, the studio (photos, amenities), what makes the studio different
 - [Classes]({{BASE}}/classes): all class types (yoga, meditation, qigong, sound healing, Ecstatic Dance)
 - [Schedule]({{BASE}}/schedule): weekly timetable with online booking
-- [Prices]({{BASE}}/pricing): Class Passes, Starter Pack, drop-in
+- [Prices]({{BASE}}/pricing): Class Passes, Starter Pack, drop-in, individual monthly program
 - [VIBES]({{BASE}}/vibes): how the studio balance and gift VIBES work
-- [Our space]({{BASE}}/space): photos, amenities, co-working
-- [Studio rental]({{BASE}}/rental): hourly rates for workshops, events and corporate programs
-- [Extra services]({{BASE}}/price-list): personal sessions, co-working, private events
+- [Rental & Coworking]({{BASE}}/rental): hourly rates for halls, co-working rates, private and corporate events
 - [Gift certificates]({{BASE}}/gift-certificates)
 - [Reviews]({{BASE}}/reviews)
 - [Contact]({{BASE}}/contact): map, phone, WhatsApp, contact form

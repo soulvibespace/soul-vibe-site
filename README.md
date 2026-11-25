@@ -43,7 +43,7 @@ git push origin main   # Netlify подхватит и опубликует са
 |---|---|
 | `index.html` | Главная |
 | `schedule.html` | Расписание, тянет данные из `/api/schedule` |
-| `classes.html`, `pricing.html`, `rental.html`, `about.html`, `space.html`, `contact.html`, `gift-certificates.html` | Контентные страницы (`rental.html` — аренда, контент из `data/rental.json`, редактируется через `/admin`) |
+| `classes.html`, `pricing.html`, `rental.html`, `about.html`, `contact.html`, `gift-certificates.html` | Контентные страницы (`rental.html` — аренда и коворкинг: залы из `data/rental.json`, коворкинг и мероприятия из `data/price-list.json`; индивидуальная программа на `pricing.html` — тоже из `data/price-list.json`; всё редактируется через `/admin`. Зал, галерея и удобства — на `about.html#space`) |
 | `account.html`, `account.js` | Личный кабинет: брони, отмена |
 | `auth-modal.js` | Вход и регистрация |
 | `booking-modal.js` | Запись на занятие |

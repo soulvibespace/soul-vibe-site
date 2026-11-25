@@ -3,9 +3,9 @@ const { chromium } = require('playwright');
 // Запуск: bash build.sh, раздать dist/ с pretty URLs на :8090, затем node tools/header.e2e.js
 const B=process.env.BASE||'http://localhost:8090', SH=process.env.SHOTS||'/tmp/header-shots/';
 require('fs').mkdirSync(SH,{recursive:true});
-const pages=['/','/about','/classes','/schedule','/pricing','/vibes','/price-list','/reviews','/space','/contact','/account','/privacy','/terms'];
-const EXP=['/about','/classes','/schedule','/pricing','/vibes','/space','/rental','/contact'];
-const EXP_RU=['О нас','Занятия','Расписание','Цены','VIBES','Пространство','Аренда','Контакты'];
+const pages=['/','/about','/classes','/schedule','/pricing','/vibes','/gift-certificates','/rental','/reviews','/contact','/account','/privacy','/terms'];
+const EXP=['/classes','/schedule','/pricing','/vibes','/gift-certificates','/about','/rental','/contact'];
+const EXP_RU=['Занятия','Расписание','Цены','VIBES','Сертификаты','О нас','Аренда и коворкинг','Контакты'];
 const nm=p=>p==='/'?'home':p.slice(1);
 const R=[]; const ok=(n,c,x='')=>R.push(`${c?'PASS':'FAIL'} ${n} ${x}`);
 (async()=>{const b=await chromium.launch(); const errs=[];

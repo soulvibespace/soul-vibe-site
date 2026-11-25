@@ -105,7 +105,6 @@
     ab_social_ig: 'Open Instagram',
     ab_amen_eyebrow: 'Facilities',
     ab_amen_title: 'Everything for a comfortable practice',
-    ab_amen_link: 'More about the space →',
     ab_join_eyebrow: 'Join us',
     ab_join_title: 'For teachers and practitioners',
     ab_join_p1: 'We are always glad to meet certified teachers and practitioners who share our values:',
@@ -135,8 +134,8 @@
     ab_amen9_d: 'Plus healthy snacks for guests',
     ab_amen10_t: 'Cleanliness',
     ab_amen10_d: 'Regular antibacterial cleaning',
-    ab_amen11_t: 'Central Limassol',
-    ab_amen11_d: '50 Agias Zonis',
+    ab_amen13_t: 'Wi-Fi & Smart TV',
+    ab_amen13_d: 'Fast Wi-Fi throughout; a Smart TV for presentations and group sessions',
     ab_amen12_t: 'Licensed',
     ab_amen12_d: 'A licensed yoga studio'
   });
@@ -235,7 +234,6 @@
     ab_social_ig: 'Открыть Instagram',
     ab_amen_eyebrow: 'Удобства',
     ab_amen_title: 'Всё для комфортной практики',
-    ab_amen_link: 'Подробнее о пространстве →',
     ab_join_eyebrow: 'Присоединяйтесь',
     ab_join_title: 'Преподавателям и практикам',
     ab_join_p1: 'Мы всегда рады знакомству с сертифицированными преподавателями и практиками, которые разделяют наши ценности:',
@@ -265,8 +263,8 @@
     ab_amen9_d: 'И полезные снеки для гостей',
     ab_amen10_t: 'Чистота',
     ab_amen10_d: 'Регулярная антибактериальная уборка',
-    ab_amen11_t: 'Центр Лимасола',
-    ab_amen11_d: 'ул. Агиас Зонис, 50',
+    ab_amen13_t: 'Wi-Fi и Smart TV',
+    ab_amen13_d: 'Быстрый Wi-Fi по всей студии; Smart TV для презентаций и групповых занятий',
     ab_amen12_t: 'Лицензия',
     ab_amen12_d: 'Лицензированная йога-студия'
   });
@@ -365,7 +363,6 @@
     ab_social_ig: 'Άνοιγμα Instagram',
     ab_amen_eyebrow: 'Παροχές',
     ab_amen_title: 'Όλα για μια άνετη πρακτική',
-    ab_amen_link: 'Περισσότερα για τον χώρο →',
     ab_join_eyebrow: 'Ελάτε μαζί μας',
     ab_join_title: 'Για δασκάλους και επαγγελματίες',
     ab_join_p1: 'Χαιρόμαστε πάντα να γνωρίζουμε πιστοποιημένους δασκάλους και επαγγελματίες που μοιράζονται τις αξίες μας:',
@@ -395,8 +392,8 @@
     ab_amen9_d: 'Και υγιεινά σνακ για τους επισκέπτες',
     ab_amen10_t: 'Καθαριότητα',
     ab_amen10_d: 'Τακτικός αντιβακτηριδιακός καθαρισμός',
-    ab_amen11_t: 'Κέντρο Λεμεσού',
-    ab_amen11_d: 'Αγίας Ζώνης 50',
+    ab_amen13_t: 'Wi-Fi & Smart TV',
+    ab_amen13_d: 'Γρήγορο Wi-Fi σε όλο τον χώρο· Smart TV για παρουσιάσεις και ομαδικές συνεδρίες',
     ab_amen12_t: 'Αδειοδότηση',
     ab_amen12_d: 'Αδειοδοτημένο στούντιο γιόγκα'
   });

@@ -170,7 +170,7 @@ const SVS_TRANSLATIONS = {
     nav_about:      'About',
     nav_schedule:   'Schedule',
     nav_classes:    'Classes',
-    nav_space:      'Space',
+    nav_gift:       'Gift Certificates',
     nav_contact:    'Contact',
     nav_account:    'My Account',
     nav_signin:     'Sign In',
@@ -276,17 +276,6 @@ const SVS_TRANSLATIONS = {
     space_cowork_title: 'Work mindfully',
     space_cowork_p1:    'Between classes, our co-working area offers a calm, inspiring environment to focus, create, or connect with others in the community.',
     space_cowork_p2:    'There’s a coffee point, a smart TV and fast Wi-Fi: everything you need to get work done. And it feels nothing like a regular office.',
-    amenities_title:    'Facilities & amenities',
-    space_feat5_title:  'Yoga Props',
-    space_feat5_text:   'Mats, blocks and straps provided',
-    space_feat6_title:  'Free Wi-Fi',
-    space_feat6_text:   'High-speed internet throughout',
-    space_feat7_title:  'Open Daily',
-    space_feat8_title:  'Central Location',
-    space_feat8_text:   '50 Agias Zonis, Limassol',
-    space_hours_detail: 'Classes daily · 8:00 am – 10:00 pm · Administrator 2:00 pm – 10:00 pm',
-    space_cta_title:    'Ready to experience it yourself?',
-    space_cta_sub:      'Book a class and come see the space for yourself.',
     space_p:            'Soul Vibe Space also includes a creative co-working area where guests can work, relax and connect with a mindful community.',
     space_feat1_title:  'Coffee Point',
     space_feat1_text:   'Self-service coffee and tea',
@@ -326,8 +315,6 @@ const SVS_TRANSLATIONS = {
     footer_tagline:     'Movement, mindfulness and community in Limassol, Cyprus.',
     footer_studio:      'Studio',
     footer_about:       'About',
-    footer_practices:   'Practices',
-    footer_coworking:   'Co-working',
     footer_gift:        'Gift Certificates',
     footer_book:        'Book a class',
     footer_visit:       'Visit us',
@@ -515,7 +502,7 @@ const SVS_TRANSLATIONS = {
     nav_about:      'О нас',
     nav_schedule:   'Расписание',
     nav_classes:    'Занятия',
-    nav_space:      'Пространство',
+    nav_gift:       'Сертификаты',
     nav_contact:    'Контакты',
     nav_account:    'Мой кабинет',
     nav_signin:     'Войти',
@@ -621,17 +608,6 @@ const SVS_TRANSLATIONS = {
     space_cowork_title: 'Работа в осознанном пространстве',
     space_cowork_p1:    'Между занятиями наш коворкинг даёт спокойную вдохновляющую среду для фокуса, творчества и общения.',
     space_cowork_p2:    'Кофе-пойнт, SMART TV и быстрый Wi-Fi — всё для продуктивной работы в уникальном пространстве.',
-    amenities_title:    'Удобства и сервисы',
-    space_feat5_title:  'Инвентарь йоги',
-    space_feat5_text:   'Коврики, блоки и ремни',
-    space_feat6_title:  'Бесплатный Wi-Fi',
-    space_feat6_text:   'Быстрый интернет по всей студии',
-    space_feat7_title:  'Открыто ежедневно',
-    space_feat8_title:  'Центральное расположение',
-    space_feat8_text:   'ул. Агиас Зонис, 50, Лимасол',
-    space_hours_detail: 'Занятия ежедневно · 8:00–22:00 · Администратор 14:00–22:00',
-    space_cta_title:    'Готовы почувствовать это сами?',
-    space_cta_sub:      'Запишитесь на занятие и приходите посмотреть.',
     space_p:            'Soul Vibe Space включает творческую зону коворкинга, где гости могут работать, отдыхать и общаться в осознанном сообществе.',
     space_feat1_title:  'Кофе-пойнт',
     space_feat1_text:   'Кофе и чай — самообслуживание',
@@ -671,8 +647,6 @@ const SVS_TRANSLATIONS = {
     footer_tagline:     'Движение, осознанность и сообщество в Лимасоле, Кипр.',
     footer_studio:      'Студия',
     footer_about:       'О нас',
-    footer_practices:   'Практики',
-    footer_coworking:   'Коворкинг',
     footer_gift:        'Подарочные сертификаты',
     footer_book:        'Записаться на занятие',
     footer_visit:       'Адрес и контакты',
@@ -866,7 +840,7 @@ const SVS_TRANSLATIONS = {
     nav_about:      'Σχετικά',
     nav_schedule:   'Πρόγραμμα',
     nav_classes:    'Μαθήματα',
-    nav_space:      'Χώρος',
+    nav_gift:       'Δωροκάρτες',
     nav_contact:    'Επικοινωνία',
     nav_account:    'Ο λογαριασμός μου',
     nav_signin:     'Σύνδεση',
@@ -972,17 +946,6 @@ const SVS_TRANSLATIONS = {
     space_cowork_title: 'Εργαστείτε συνειδητά',
     space_cowork_p1:    'Μεταξύ των μαθημάτων, η ζώνη co-working προσφέρει ήρεμο, εμπνευστικό περιβάλλον.',
     space_cowork_p2:    'Με σημείο καφέ, SMART TV και γρήγορο Wi-Fi — ό,τι χρειάζεστε για να είστε αποδοτικοί.',
-    amenities_title:    'Εγκαταστάσεις & ανέσεις',
-    space_feat5_title:  'Εξοπλισμός Yoga',
-    space_feat5_text:   'Στρώματα, βοηθήματα και ταινίες',
-    space_feat6_title:  'Δωρεάν Wi-Fi',
-    space_feat6_text:   'Γρήγορο ιντερνετ σε όλο το χώρο',
-    space_feat7_title:  'Ανοιχτό καθημερινά',
-    space_feat8_title:  'Κεντρική τοποθεσία',
-    space_feat8_text:   'Αγίας Ζώνης 50, Λεμεσός',
-    space_hours_detail: 'Μαθήματα καθημερινά · 8:00–22:00 · Διαχειριστής 14:00–22:00',
-    space_cta_title:    'Έτοιμοι να το ζήσετε ο ίδιοι;',
-    space_cta_sub:      'Κλείστε ένα μάθημα και ελάτε να δείτε τον χώρο.',
     space_p:            'Το Soul Vibe Space διαθέτει επίσης μια δημιουργική ζώνη co-working όπου οι επισκέπτες μπορούν να εργαστούν, να χαλαρώσουν και να συνδεθούν με μια ενσυνείδητη κοινότητα.',
     space_feat1_title:  'Σημείο καφέ',
     space_feat1_text:   'Καφές και τσάι αυτοεξυπηρέτησης',
@@ -1022,8 +985,6 @@ const SVS_TRANSLATIONS = {
     footer_tagline:     'Κίνηση, επίγνωση και κοινότητα στη Λεμεσό, Κύπρος.',
     footer_studio:      'Στούντιο',
     footer_about:       'Σχετικά',
-    footer_practices:   'Πρακτικές',
-    footer_coworking:   'Χώρος Συνεργασίας',
     footer_gift:        'Δωροκάρτες',
     footer_book:        'Κλείστε μάθημα',
     footer_visit:       'Επισκεφθείτε μας',
@@ -1527,10 +1488,6 @@ Object.assign(SVS_TRANSLATIONS.en, {
   pricing_coworking_from:  'Free between classes if you have more than %%class%% VIBES. Otherwise, co-working rates apply.',
   pricing_coworking_link:  'View rates',
 
-  // Extra services / rental cross-link
-  pricing_extras_title: 'Looking for something else?',
-  pricing_extras_desc:  'Individual programs and special events are priced separately.',
-  pricing_extras_link:  'See Extra Services & Pricing',
 
   // How to book
   pricing_how_title:    'How It Works',
@@ -1594,10 +1551,6 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_coworking_from:  'Между занятиями коворкинг бесплатен, если на балансе больше %%class%% VIBES. В остальных случаях действуют тарифы коворкинга.',
   pricing_coworking_link:  'Посмотреть тарифы',
 
-  pricing_extras_title: 'Ищете что-то другое?',
-  pricing_extras_desc:  'Индивидуальные программы и специальные события оплачиваются отдельно.',
-  pricing_extras_link:  'Смотреть доп. услуги и цены',
-
   pricing_how_title:    'Как это работает',
   pricing_how1_title:   'Выберите класс',
   pricing_how1_desc:    'Посмотрите расписание и выберите занятие, которое вам откликается.',
@@ -1659,10 +1612,6 @@ Object.assign(SVS_TRANSLATIONS.el, {
   pricing_coworking_from:  'Δωρεάν ανάμεσα στα μαθήματα με υπόλοιπο πάνω από %%class%% VIBES. Σε κάθε άλλη περίπτωση ισχύουν οι τιμές co-working.',
   pricing_coworking_link:  'Δείτε τις τιμές',
 
-  pricing_extras_title: 'Ψάχνετε κάτι άλλο;',
-  pricing_extras_desc:  'Ατομικά προγράμματα και ειδικές εκδηλώσεις τιμολογούνται ξεχωριστά.',
-  pricing_extras_link:  'Δείτε Πρόσθετες Υπηρεσίες & Τιμές',
-
   pricing_how_title:    'Πώς Λειτουργεί',
   pricing_how1_title:   'Επιλέξτε Μάθημα',
   pricing_how1_desc:    'Περιηγηθείτε στο πρόγραμμα και επιλέξτε ένα μάθημα που σας εκφράζει.',
@@ -1677,10 +1626,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
 
 // ── Extra Services / Venue Rental page strings ─────────────────────────────────
 Object.assign(SVS_TRANSLATIONS.en, {
-  nav_pricelist:            'Extra Services',
-  nav_rental:               'Venue Rental',
-  nav_rent:                 'Rental',
-  pricelist_page_title:     'Extra Services & Pricing | Soul Vibe Space Limassol',
+  nav_rent:                 'Rental & Coworking',
 
   rental_rooms_title:       'Rooms & Rates',
   rental_rooms_sub:         'Clear hourly rates for a studio, a floor or the whole building.',
@@ -1713,10 +1659,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
 });
 
 Object.assign(SVS_TRANSLATIONS.ru, {
-  nav_pricelist:            'Доп. услуги',
-  nav_rental:               'Аренда',
-  nav_rent:                 'Аренда',
-  pricelist_page_title:     'Дополнительные услуги и цены | Soul Vibe Space Лимасол',
+  nav_rent:                 'Аренда и коворкинг',
 
   rental_rooms_title:       'Залы и тарифы',
   rental_rooms_sub:         'Чёткие почасовые тарифы на студию, этаж или всё здание.',
@@ -1748,10 +1691,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 });
 
 Object.assign(SVS_TRANSLATIONS.el, {
-  nav_pricelist:            'Πρόσθετες Υπηρεσίες',
-  nav_rental:               'Ενοικίαση',
-  nav_rent:                 'Ενοικίαση',
-  pricelist_page_title:     'Πρόσθετες Υπηρεσίες & Τιμές | Soul Vibe Space Λεμεσός',
+  nav_rent:                 'Ενοικίαση & Coworking',
 
   rental_rooms_title:       'Αίθουσες & Τιμές',
   rental_rooms_sub:         'Ξεκάθαρες ωριαίες τιμές για studio, όροφο ή όλο το κτίριο.',
@@ -1785,7 +1725,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
 // ── Pricing page: VIBES programme (Class Pass / Starter Pack, rules, bonuses, FAQ) + /rental ─────
 Object.assign(SVS_TRANSLATIONS.en, {
   pricing_page_title:   'Prices: Class Passes, Starter Pack and drop-in | Soul Vibe Space Limassol',
-  rental_page_title:    'Studio & Venue Rental | Soul Vibe Space Limassol',
+  rental_page_title:    'Rental & Coworking | Soul Vibe Space Limassol',
 
 
 
@@ -1835,7 +1775,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
 
 Object.assign(SVS_TRANSLATIONS.ru, {
   pricing_page_title:   'Цены: абонементы, Стартер пак и разовые занятия | Soul Vibe Space Лимасол',
-  rental_page_title:    'Аренда студии и пространства | Soul Vibe Space Лимасол',
+  rental_page_title:    'Аренда и коворкинг | Soul Vibe Space Лимасол',
 
 
 
@@ -1885,7 +1825,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 
 Object.assign(SVS_TRANSLATIONS.el, {
   pricing_page_title:   'Τιμές: Class Pass, Starter Pack και μεμονωμένα μαθήματα | Soul Vibe Space Λεμεσός',
-  rental_page_title:    'Ενοικίαση Studio & Χώρου | Soul Vibe Space Λεμεσός',
+  rental_page_title:    'Ενοικίαση & Coworking | Soul Vibe Space Λεμεσός',
 
 
 
@@ -2304,7 +2244,7 @@ Object.assign(SVS_TRANSLATIONS.en, {
   vb_page_title:         'VIBES. Make more room for practice | Soul Vibe Space Limassol',
   vb_h1:                 'Make more room for practice.',
   vb_lead:               'When practice becomes part of your week, VIBES make it better value. Buy a {{pass}} and VIBES are added to your balance automatically. Use them for any class or practice at the studio. Regular visits and taking part in studio life earn you extra gift VIBES too.',
-  vb_more_cowork_a:      'Between classes, co-working is free if you have more than %%class%% VIBES. Otherwise, <a href="/price-list#coworking">co-working rates</a> apply.',
+  vb_more_cowork_a:      'Between classes, co-working is free if you have more than %%class%% VIBES. Otherwise, <a href="/rental#coworking">co-working rates</a> apply.',
   vb_more_cowork_q:      'Co-working',
   vb_more_gifts_a:       'Bring a friend who’s new to the studio and get %%bonus.friend%% gift VIBES. Just tell the administrator. On your birthday, %%bonus.birthday%% gift VIBES are added automatically if your date of birth is saved in your <a href="/account">personal account</a>.',
   vb_more_gifts_q:       'Gifts for a friend and your birthday',
@@ -2355,7 +2295,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   vb_page_title:         'VIBES. Больше практики в вашей жизни | Soul Vibe Space Лимасол',
   vb_h1:                 'Больше практики в вашей жизни.',
   vb_lead:               'Когда йога и практика становятся частью вашей недели, с VIBES практиковать выгоднее. При покупке {{pass:gen}} VIBES автоматически пополняют ваш баланс, и вы можете использовать их на все практики и занятия студии, а за регулярные посещения и активность вы получаете дополнительные VIBES в подарок.',
-  vb_more_cowork_a:      'Между занятиями коворкинг бесплатен, если на балансе больше %%class%% VIBES. В остальных случаях действуют <a href="/price-list#coworking">тарифы коворкинга</a>.',
+  vb_more_cowork_a:      'Между занятиями коворкинг бесплатен, если на балансе больше %%class%% VIBES. В остальных случаях действуют <a href="/rental#coworking">тарифы коворкинга</a>.',
   vb_more_cowork_q:      'Коворкинг',
   vb_more_gifts_a:       'Приведите друга, который впервые в студии, и получите %%bonus.friend%% VIBES в подарок: просто скажите администратору. В день рождения мы начислим %%bonus.birthday%% VIBES в подарок автоматически, если дата рождения указана в <a href="/account">личном кабинете</a>.',
   vb_more_gifts_q:       'Подарки за друга и на день рождения',
@@ -2406,7 +2346,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
   vb_page_title:         'VIBES. Περισσότερος χώρος για γιόγκα στη ζωή σας | Soul Vibe Space Λεμεσός',
   vb_h1:                 'Περισσότερος χώρος για γιόγκα στη ζωή σας.',
   vb_lead:               'Όταν η γιόγκα και η εξάσκηση γίνονται μέρος της εβδομάδας σας, με τα VIBES η εξάσκηση σας συμφέρει περισσότερο. Με την αγορά ενός {{pass}}, τα VIBES προστίθενται αυτόματα στο υπόλοιπό σας και μπορείτε να τα χρησιμοποιείτε για όλες τις πρακτικές και τα μαθήματα του στούντιο, ενώ για τις τακτικές επισκέψεις και τη συμμετοχή σας παίρνετε επιπλέον VIBES δώρο.',
-  vb_more_cowork_a:      'Ανάμεσα στα μαθήματα το co-working είναι δωρεάν, αν έχετε υπόλοιπο πάνω από %%class%% VIBES. Σε κάθε άλλη περίπτωση ισχύουν οι <a href="/price-list#coworking">τιμές co-working</a>.',
+  vb_more_cowork_a:      'Ανάμεσα στα μαθήματα το co-working είναι δωρεάν, αν έχετε υπόλοιπο πάνω από %%class%% VIBES. Σε κάθε άλλη περίπτωση ισχύουν οι <a href="/rental#coworking">τιμές co-working</a>.',
   vb_more_cowork_q:      'Co-working',
   vb_more_gifts_a:       'Φέρτε έναν φίλο που έρχεται για πρώτη φορά στο στούντιο και πάρτε %%bonus.friend%% VIBES δώρο: απλώς ενημερώστε τη ρεσεψιόν. Στα γενέθλιά σας προσθέτουμε αυτόματα %%bonus.birthday%% VIBES δώρο, αν η ημερομηνία γέννησής σας είναι στον <a href="/account">προσωπικό σας λογαριασμό</a>.',
   vb_more_gifts_q:       'Δώρα για φίλο και για τα γενέθλιά σας',
@@ -2751,8 +2691,23 @@ Object.assign(SVS_TRANSLATIONS.el, {
   payr_btn_pricing:     'Πίσω στις τιμές',
 });
 
+// ── Структура сайта 2026-11: инд. программа на /pricing, ссылка главной на коворкинг ──
+Object.assign(SVS_TRANSLATIONS.en, {
+  pricing_personal_cta: 'Contact us',
+  cowork_rates:      'Co-working rates',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  pricing_personal_cta: 'Написать нам',
+  cowork_rates:      'Цены на коворкинг',
+});
+Object.assign(SVS_TRANSLATIONS.el, {
+  pricing_personal_cta: 'Γράψτε μας',
+  cowork_rates:      'Τιμές co-working',
+});
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', SVS_I18N.init);
 } else {
   SVS_I18N.init();
 }
+
