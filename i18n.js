@@ -180,7 +180,7 @@ const SVS_TRANSLATIONS = {
     // ── Hero ──
     hero_eyebrow:   'Yoga Studio in Limassol, Cyprus',
     hero_title:     'Yoga &amp;<br>Co-working',
-    hero_subtitle:  'Movement, mindfulness and community — in one conscious space.',
+    hero_subtitle:  'Daily yoga, sound healing and co-working in the heart of Limassol.',
     hero_cta1:      'Explore practices',
     hero_cta2:      'Book a class',
 
@@ -218,22 +218,22 @@ const SVS_TRANSLATIONS = {
     contact_open_maps:     'Open in Google Maps',
     form_intro_p:          'Have a question about a class, pricing, or anything else? Fill in the form and we\'ll get back to you within 24 hours.',
     form_success_msg:      'Your message has been sent. We\'ll be in touch soon!',
-    about_p1:           'Soul Vibe Space is a yoga and wellness studio in Limassol offering yoga classes, meditation, ecstatic dance and sound healing.',
-    about_p2:           'We\'ve created a multifunctional space for movement, mindfulness and community connection — a place where people feel inspired, connected, and at home.',
+    about_p1:           'Soul Vibe Space is a yoga and wellness studio in Limassol. Every day we host yoga, meditation, sound healing and ecstatic dance.',
+    about_p2:           'It\'s a warm, unhurried space to move, breathe and meet people — somewhere you can feel at home.',
     about_badge_num:    '700+',
-    about_badge_label:  'Happy practitioners',
+    about_badge_label:  'Guests in our community',
     feature1_title:     'Daily Classes',
     feature1_text:      'Yoga, meditation, sound healing and more — 7 days a week',
     feature2_title:     'All Levels Welcome',
-    feature2_text:      'Beginners and experienced practitioners alike',
+    feature2_text:      'Whether it\'s your first class or you\'ve practised for years',
     feature3_title:     '50 Agias Zonis, Limassol',
     feature3_text:      'Classes daily, 8am–10pm',
-    about_cta:          'Learn more',
+    about_cta:          'Explore classes',
 
     // ── Schedule ──
     schedule_eyebrow:   'Live schedule',
     schedule_title:     'Upcoming classes',
-    schedule_lead:      'Real-time schedule straight from our booking system — updated automatically.',
+    schedule_lead:      'Pick a day that suits you and book your spot in a few clicks.',
     schedule_subtitle:  'Real-time from the studio — updated automatically.',
     schedule_today:     'Today',
     schedule_filter_cat:  'Category',
@@ -254,7 +254,7 @@ const SVS_TRANSLATIONS = {
     // ── Classes ──
     classes_eyebrow:    'What we offer',
     classes_title:      'Classes at Soul Vibe Space',
-    classes_lead:       'Yoga, sound healing, ecstatic dance and more — all classes come directly from our studio schedule.',
+    classes_lead:       'From gentle morning yoga to sound baths and ecstatic dance — see what\'s on this week.',
     classes_cta:        'View all classes & book →',
     home_vibes_prices:     'See prices',
     home_vibes_cta:        'How VIBES work',
@@ -263,7 +263,7 @@ const SVS_TRANSLATIONS = {
     classes_cat_all:    'All',
 
     // ── Quote ──
-    visual_quote:       '"A place where people feel inspired, connected, and at home."',
+    visual_quote:       '"A calm space to move, breathe and feel at home."',
 
     // ── Space ──
     space_eyebrow:      'More than yoga',
@@ -276,20 +276,20 @@ const SVS_TRANSLATIONS = {
     space_cowork_title: 'A quiet place to work',
     space_cowork_p1:    'Between classes, you can work in our co-working area. It’s calm and easy to focus, and there’s always someone from the community to talk to.',
     space_cowork_p2:    'There’s a coffee point, a smart TV and fast Wi-Fi: everything you need to get work done. And it feels nothing like a regular office.',
-    space_p:            'Soul Vibe Space also includes a creative co-working area where guests can work, relax and connect with a mindful community.',
+    space_p:            'Between classes, stay in our ground-floor co-working area to get work done, have a coffee or chat with other guests.',
     space_feat1_title:  'Coffee Point',
-    space_feat1_text:   'Self-service coffee and tea',
-    space_feat2_title:  'SMART TV',
+    space_feat1_text:   'Fresh coffee and tea for guests',
+    space_feat2_title:  'Smart TV',
     space_feat2_text:   'For presentations or group sessions',
     space_feat3_title:  'Changing Rooms & Showers',
     space_feat3_text:   'Refresh after your practice',
-    space_feat4_title:  'Premises for Rent',
+    space_feat4_title:  'Space for Rent',
     space_feat4_text:   'Workshops, meetings and events',
     space_hours:        'Classes every day, 8:00 am – 10:00 pm',
 
     // ── Gift ──
     gift_title:         'Give the gift of wellness',
-    gift_text:          'Treat someone special to a yoga class, sound healing session or wellness experience at Soul Vibe Space.',
+    gift_text:          'Give someone a yoga class, a sound bath or time to unwind at Soul Vibe Space.',
     gift_cta:           'Gift Certificates',
 
     // ── Contact ──
@@ -298,7 +298,7 @@ const SVS_TRANSLATIONS = {
     contact_p:          "Book a class, ask a question, or just say hello. We'd love to hear from you.",
     contact_address:    '50 Agias Zonis, Limassol 3090, Cyprus',
     contact_whatsapp:   'WhatsApp',
-    contact_book_p:     'Book directly via our booking platform:',
+    contact_book_p:     'Choose a class and reserve your spot online:',
     contact_book_btn:   'Book a class →',
     form_title:         'Send us a message',
     form_firstname:     'First Name',
@@ -511,8 +511,8 @@ const SVS_TRANSLATIONS = {
 
     // ── Hero ──
     hero_eyebrow:   'Йога-студия в Лимасоле, Кипр',
-    hero_title:     'Йога &amp;<br>Коворкинг',
-    hero_subtitle:  'Движение, осознанность и сообщество — в одном пространстве.',
+    hero_title:     'Йога и<br>коворкинг',
+    hero_subtitle:  'Йога каждый день, звуковые практики и коворкинг в центре Лимасола.',
     hero_cta1:      'Наши практики',
     hero_cta2:      'Записаться',
 
@@ -550,22 +550,22 @@ const SVS_TRANSLATIONS = {
     contact_open_maps:     'Открыть в Google Maps',
     form_intro_p:          'Есть вопрос о занятии, ценах или чём-то ещё? Заполните форму — мы ответим в течение 24 часов.',
     form_success_msg:      'Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время!',
-    about_p1:           'Soul Vibe Space — это студия йоги и велнеса в Лимасоле: занятия йогой, медитация, экстатический танец и звукотерапия.',
-    about_p2:           'Мы создали многофункциональное пространство для движения, осознанности и общения — место, где люди чувствуют вдохновение, связь и уют.',
+    about_p1:           'Soul Vibe Space — студия йоги и велнеса в Лимасоле. Каждый день здесь проходят йога, медитация, звуковые практики и экстатический танец.',
+    about_p2:           'Тёплое место без спешки, где легко подышать, переключиться и почувствовать себя как дома.',
     about_badge_num:    '700+',
-    about_badge_label:  'Счастливых практиков',
+    about_badge_label:  'Гостей в сообществе',
     feature1_title:     'Ежедневные занятия',
     feature1_text:      'Йога, медитация, звукотерапия и многое другое — 7 дней в неделю',
     feature2_title:     'Для любого уровня',
-    feature2_text:      'Начинающие и опытные практики одинаково приветствуются',
+    feature2_text:      'Подойдёт и новичкам, и тем, кто занимается давно',
     feature3_title:     'ул. Агиас Зонис, 50, Лимасол',
     feature3_text:      'Занятия ежедневно, 8:00–22:00',
-    about_cta:          'Узнать больше',
+    about_cta:          'Выбрать занятие',
 
     // ── Schedule ──
     schedule_eyebrow:   'Живое расписание',
     schedule_title:     'Ближайшие занятия',
-    schedule_lead:      'Актуальное расписание прямо из нашей системы записи — обновляется автоматически.',
+    schedule_lead:      'Выбирайте удобный день и записывайтесь за пару кликов.',
     schedule_subtitle:  'В реальном времени из студии — обновляется автоматически.',
     schedule_today:     'Сегодня',
     schedule_filter_cat:  'Категория',
@@ -586,7 +586,7 @@ const SVS_TRANSLATIONS = {
     // ── Classes ──
     classes_eyebrow:    'Что мы предлагаем',
     classes_title:      'Занятия в Soul Vibe Space',
-    classes_lead:       'Йога, звукотерапия, экстатический танец и многое другое — все занятия из реального расписания студии.',
+    classes_lead:       'От спокойной утренней йоги до звуковых ванн и экстатического танца — посмотрите, что идёт на этой неделе.',
     classes_cta:        'Все занятия и запись →',
     home_vibes_prices:     'Посмотреть цены',
     home_vibes_cta:        'Как работают VIBES',
@@ -595,7 +595,7 @@ const SVS_TRANSLATIONS = {
     classes_cat_all:    'Все',
 
     // ── Quote ──
-    visual_quote:       '«Место, где люди чувствуют вдохновение, связь и уют.»',
+    visual_quote:       '«Спокойное место, где можно подышать, подвигаться и почувствовать себя как дома.»',
 
     // ── Space ──
     space_eyebrow:      'Больше, чем йога',
@@ -608,29 +608,29 @@ const SVS_TRANSLATIONS = {
     space_cowork_title: 'Тихое место для работы',
     space_cowork_p1:    'Между занятиями можно поработать в коворкинге: здесь спокойно и легко сосредоточиться, а при желании — пообщаться с другими гостями студии.',
     space_cowork_p2:    'Кофе-пойнт, Smart TV и быстрый Wi-Fi — всё, что нужно для работы. И совсем не похоже на обычный офис.',
-    space_p:            'Soul Vibe Space включает творческую зону коворкинга, где гости могут работать, отдыхать и общаться в осознанном сообществе.',
+    space_p:            'Между занятиями можно остаться в коворкинге на первом этаже — спокойно поработать, выпить кофе или пообщаться с другими гостями.',
     space_feat1_title:  'Кофе-пойнт',
-    space_feat1_text:   'Кофе и чай — самообслуживание',
-    space_feat2_title:  'SMART TV',
+    space_feat1_text:   'Свежий кофе и чай для гостей',
+    space_feat2_title:  'Smart TV',
     space_feat2_text:   'Для презентаций и групповых занятий',
     space_feat3_title:  'Раздевалки и душевые',
     space_feat3_text:   'Освежитесь после практики',
-    space_feat4_title:  'Аренда помещений',
+    space_feat4_title:  'Аренда залов',
     space_feat4_text:   'Воркшопы, встречи и мероприятия',
     space_hours:        'Занятия ежедневно, 8:00–22:00',
 
     // ── Gift ──
-    gift_title:         'Подарите велнес',
-    gift_text:          'Порадуйте близкого йога-занятием, сеансом звукотерапии или велнес-опытом в Soul Vibe Space.',
+    gift_title:         'Подарите время для себя',
+    gift_text:          'Порадуйте близкого занятием йогой, звуковой практикой или спокойным отдыхом в Soul Vibe Space.',
     gift_cta:           'Подарочные сертификаты',
 
     // ── Contact ──
     contact_eyebrow:    'Свяжитесь с нами',
     contact_title:      'Готовы начать?',
-    contact_p:          'Запишитесь на занятие, задайте вопрос или просто поздоровайтесь. Будем рады вас видеть!',
+    contact_p:          'Запишитесь на занятие, задайте вопрос или просто загляните поздороваться. Будем рады вам.',
     contact_address:    'ул. Агиас Зонис, 50, Лимасол 3090, Кипр',
     contact_whatsapp:   'WhatsApp',
-    contact_book_p:     'Записывайтесь напрямую через нашу платформу:',
+    contact_book_p:     'Выберите занятие и запишитесь за пару кликов:',
     contact_book_btn:   'Записаться на занятие →',
     form_title:         'Напишите нам',
     form_firstname:     'Имя',
@@ -849,8 +849,8 @@ const SVS_TRANSLATIONS = {
 
     // ── Hero ──
     hero_eyebrow:   'Στούντιο Yoga στη Λεμεσό, Κύπρος',
-    hero_title:     'Yoga &amp;<br>Co-working Space',
-    hero_subtitle:  'Κίνηση, επίγνωση και κοινότητα — σε έναν συνειδητό χώρο.',
+    hero_title:     'Yoga &amp;<br>Coworking',
+    hero_subtitle:  'Καθημερινή γιόγκα, sound healing και coworking στην καρδιά της Λεμεσού.',
     hero_cta1:      'Εξερευνήστε τις πρακτικές',
     hero_cta2:      'Κλείστε μάθημα',
 
@@ -888,22 +888,22 @@ const SVS_TRANSLATIONS = {
     contact_open_maps:     'Ανοίξτε στο Google Maps',
     form_intro_p:          'Έχετε ερώτηση για κάποιο μάθημα ή τιμές; Συμπληρώστε τη φόρμα και θα επικοινωνήσουμε μαζί σας εντός 24 ωρών.',
     form_success_msg:      'Το μήνυμά σας εστάλη. Θα επικοινωνήσουμε μαζί σας σύντομα!',
-    about_p1:           'Το Soul Vibe Space είναι στούντιο yoga και ευεξίας στη Λεμεσό: μαθήματα yoga, διαλογισμός, εκστατικός χορός και ηχοθεραπεία.',
-    about_p2:           'Δημιουργήσαμε έναν πολυλειτουργικό χώρο για κίνηση, επίγνωση και σύνδεση κοινότητας — ένα μέρος όπου οι άνθρωποι νιώθουν έμπνευση, σύνδεση και σπίτι.',
+    about_p1:           'Το Soul Vibe Space είναι στούντιο γιόγκα και ευεξίας στη Λεμεσό. Κάθε μέρα φιλοξενούμε γιόγκα, διαλογισμό, sound healing και εκστατικό χορό.',
+    about_p2:           'Ένας ζεστός χώρος χωρίς βιασύνη, για να κινηθείτε, να αναπνεύσετε και να νιώσετε σαν στο σπίτι σας.',
     about_badge_num:    '700+',
-    about_badge_label:  'Ευχαριστημένοι ασκούμενοι',
+    about_badge_label:  'Μέλη της κοινότητάς μας',
     feature1_title:     'Καθημερινά μαθήματα',
     feature1_text:      'Yoga, διαλογισμός, ηχοθεραπεία και άλλα — 7 ημέρες την εβδομάδα',
     feature2_title:     'Για όλα τα επίπεδα',
-    feature2_text:      'Αρχάριοι και έμπειροι ασκούμενοι είναι ευπρόσδεκτοι',
+    feature2_text:      'Είτε είναι το πρώτο σας μάθημα είτε ασκείστε χρόνια',
     feature3_title:     'Αγίας Ζώνης 50, Λεμεσός',
     feature3_text:      'Μαθήματα καθημερινά, 8:00–22:00',
-    about_cta:          'Μάθετε περισσότερα',
+    about_cta:          'Δείτε τα μαθήματα',
 
     // ── Schedule ──
     schedule_eyebrow:   'Ζωντανό πρόγραμμα',
     schedule_title:     'Επερχόμενα μαθήματα',
-    schedule_lead:      'Πρόγραμμα σε πραγματικό χρόνο από το σύστημα κρατήσεών μας — ενημερώνεται αυτόματα.',
+    schedule_lead:      'Διαλέξτε τη μέρα που σας βολεύει και κλείστε τη θέση σας με λίγα κλικ.',
     schedule_subtitle:  'Σε πραγματικό χρόνο από το στούντιο — ενημερώνεται αυτόματα.',
     schedule_today:     'Σήμερα',
     schedule_filter_cat:  'Κατηγορία',
@@ -924,7 +924,7 @@ const SVS_TRANSLATIONS = {
     // ── Classes ──
     classes_eyebrow:    'Τι προσφέρουμε',
     classes_title:      'Μαθήματα στο Soul Vibe Space',
-    classes_lead:       'Yoga, ηχοθεραπεία, εκστατικός χορός και άλλα — όλα τα μαθήματα απευθείας από το πρόγραμμα του στούντιο.',
+    classes_lead:       'Από ήρεμη πρωινή γιόγκα μέχρι sound baths και εκστατικό χορό — δείτε τι έχουμε αυτή την εβδομάδα.',
     classes_cta:        'Όλα τα μαθήματα & κράτηση →',
     home_vibes_prices:     'Δείτε τις τιμές',
     home_vibes_cta:        'Πώς λειτουργούν τα VIBES',
@@ -933,7 +933,7 @@ const SVS_TRANSLATIONS = {
     classes_cat_all:    'Όλα',
 
     // ── Quote ──
-    visual_quote:       '«Ένα μέρος όπου οι άνθρωποι νιώθουν έμπνευση, σύνδεση και σπίτι.»',
+    visual_quote:       '«Ένας ήρεμος χώρος για να κινηθείτε, να αναπνεύσετε και να νιώσετε σαν στο σπίτι σας.»',
 
     // ── Space ──
     space_eyebrow:      'Περισσότερα από yoga',
@@ -946,11 +946,11 @@ const SVS_TRANSLATIONS = {
     space_cowork_title: 'Ένα ήσυχο μέρος για δουλειά',
     space_cowork_p1:    'Ανάμεσα στα μαθήματα μπορείτε να δουλέψετε στο coworking μας. Επικρατεί ηρεμία, συγκεντρώνεστε εύκολα και, αν θέλετε, γνωρίζετε κόσμο από την κοινότητά μας.',
     space_cowork_p2:    'Γωνιά καφέ, Smart TV και γρήγορο Wi-Fi — ό,τι χρειάζεστε για να δουλέψετε. Κι όμως, δεν θυμίζει καθόλου γραφείο.',
-    space_p:            'Το Soul Vibe Space διαθέτει επίσης μια δημιουργική ζώνη co-working όπου οι επισκέπτες μπορούν να εργαστούν, να χαλαρώσουν και να συνδεθούν με μια ενσυνείδητη κοινότητα.',
-    space_feat1_title:  'Σημείο καφέ',
-    space_feat1_text:   'Καφές και τσάι αυτοεξυπηρέτησης',
-    space_feat2_title:  'SMART TV',
-    space_feat2_text:   'Για παρουσιάσεις ή ομαδικές συνεδρίες',
+    space_p:            'Ανάμεσα στα μαθήματα μπορείτε να μείνετε στο coworking του ισογείου για να δουλέψετε, να πιείτε έναν καφέ ή να τα πείτε με άλλους επισκέπτες.',
+    space_feat1_title:  'Γωνιά καφέ',
+    space_feat1_text:   'Φρέσκος καφές και τσάι για τους επισκέπτες',
+    space_feat2_title:  'Smart TV',
+    space_feat2_text:   'Για παρουσιάσεις και ομαδικά μαθήματα',
     space_feat3_title:  'Αποδυτήρια & Ντους',
     space_feat3_text:   'Χαλαρώστε μετά την άσκηση',
     space_feat4_title:  'Ενοικίαση χώρου',
@@ -958,8 +958,8 @@ const SVS_TRANSLATIONS = {
     space_hours:        'Μαθήματα καθημερινά, 8:00–22:00',
 
     // ── Gift ──
-    gift_title:         'Δώστε το δώρο της ευεξίας',
-    gift_text:          'Κάντε δώρο ένα μάθημα yoga, μια συνεδρία ηχοθεραπείας ή μια εμπειρία ευεξίας στο Soul Vibe Space.',
+    gift_title:         'Χαρίστε χρόνο για τον εαυτό τους',
+    gift_text:          'Χαρίστε σε ένα αγαπημένο πρόσωπο ένα μάθημα γιόγκα, ένα sound bath ή λίγη ηρεμία στο Soul Vibe Space.',
     gift_cta:           'Δωροκάρτες',
 
     // ── Contact ──
@@ -968,7 +968,7 @@ const SVS_TRANSLATIONS = {
     contact_p:          'Κλείστε μάθημα, κάντε μια ερώτηση ή απλά πείτε γεια. Θα χαρούμε να σας ακούσουμε.',
     contact_address:    'Αγίας Ζώνης 50, Λεμεσός 3090, Κύπρος',
     contact_whatsapp:   'WhatsApp',
-    contact_book_p:     'Κλείστε απευθείας μέσω της πλατφόρμας κρατήσεών μας:',
+    contact_book_p:     'Διαλέξτε μάθημα και κλείστε τη θέση σας online:',
     contact_book_btn:   'Κλείστε μάθημα →',
     form_title:         'Στείλτε μας μήνυμα',
     form_firstname:     'Όνομα',
@@ -1652,9 +1652,9 @@ Object.assign(SVS_TRANSLATIONS.en, {
   reviews_avg_of5:      'out of 5',
   reviews_count_suffix: 'reviews',
   reviews_source_note:  'Ratings and reviews are verified through our booking platform and Google Business Profile.',
-  home_reviews_eyebrow: 'CLIENT VOICES',
-  home_reviews_title:   'What Our Clients Say',
-  home_reviews_sub:     'Real reviews from students and guests of Soul Vibe Space.',
+  home_reviews_eyebrow: 'REVIEWS',
+  home_reviews_title:   'What our guests say',
+  home_reviews_sub:     'Honest words from people who practise with us.',
   home_reviews_cta:     'See all reviews',
 });
 
@@ -1684,9 +1684,9 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   reviews_avg_of5:      'из 5',
   reviews_count_suffix: 'отзывов',
   reviews_source_note:  'Оценки и отзывы проверены через платформу онлайн-записи и профиль Google Business.',
-  home_reviews_eyebrow: 'ОТЗЫВЫ КЛИЕНТОВ',
-  home_reviews_title:   'Что говорят наши клиенты',
-  home_reviews_sub:     'Настоящие отзывы учеников и гостей Soul Vibe Space.',
+  home_reviews_eyebrow: 'ОТЗЫВЫ',
+  home_reviews_title:   'Что говорят наши гости',
+  home_reviews_sub:     'Честные впечатления тех, кто занимается с нами.',
   home_reviews_cta:     'Смотреть все отзывы',
 });
 
@@ -1716,10 +1716,10 @@ Object.assign(SVS_TRANSLATIONS.el, {
   reviews_avg_of5:      'από 5',
   reviews_count_suffix: 'αξιολογήσεις',
   reviews_source_note:  'Οι βαθμολογίες και οι αξιολογήσεις επαληθεύονται μέσω της πλατφόρμας κρατήσεων και του προφίλ Google Business.',
-  home_reviews_eyebrow: 'ΦΩΝΕΣ ΠΕΛΑΤΩΝ',
-  home_reviews_title:   'Τι Λένε οι Πελάτες μας',
-  home_reviews_sub:     'Πραγματικές αξιολογήσεις μαθητών και επισκεπτών του Soul Vibe Space.',
-  home_reviews_cta:     'Δείτε όλες τις αξιολογήσεις',
+  home_reviews_eyebrow: 'ΚΡΙΤΙΚΕΣ',
+  home_reviews_title:   'Τι λένε οι επισκέπτες μας',
+  home_reviews_sub:     'Ειλικρινή λόγια από ανθρώπους που ασκούνται μαζί μας.',
+  home_reviews_cta:     'Δείτε όλες τις κριτικές',
 });
 
 // ── Pricing page: VIBES programme (Class Pass / Starter Pack, rules, bonuses, FAQ) + /rental ─────
