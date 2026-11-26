@@ -50,7 +50,7 @@
 # (id="coworking", id="events"), индивидуальная программа — на /pricing (id="personal").
 # Якорь в 301 не передать (фрагмент не доходит до сервера), поэтому — просто /about и /rental.
 # force = true: правило сработает, даже если старый .html где-то останется в dist.
-# Языковые варианты (/ru/space и т. п.) добавляются вместе с S2 (#150) — выше правил /ru/* и /el/*.
+# Языковые варианты (/ru/space, /el/price-list…) — ниже; они должны стоять выше правил /ru/* и /el/* (404).
 [[redirects]]
   from = "/space"
   to = "/about"
@@ -72,6 +72,54 @@
 [[redirects]]
   from = "/price-list.html"
   to = "/rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ru/space"
+  to = "/ru/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ru/space.html"
+  to = "/ru/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ru/price-list"
+  to = "/ru/rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ru/price-list.html"
+  to = "/ru/rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/el/space"
+  to = "/el/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/el/space.html"
+  to = "/el/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/el/price-list"
+  to = "/el/rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/el/price-list.html"
+  to = "/el/rental"
   status = 301
   force = true
 
@@ -124,3 +172,15 @@
 #   to = "/account"
 #   status = 301
 # ─────────────────────────────────────────────────────────────────────────────
+
+# Языковые адреса (S2, #133): dist/ru/*.html и dist/el/*.html собирает tools/i18n_build.py.
+# Без force: правило срабатывает, только если файла нет — тогда 404 на языке раздела.
+[[redirects]]
+  from = "/ru/*"
+  to = "/ru/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/el/*"
+  to = "/el/404.html"
+  status = 404

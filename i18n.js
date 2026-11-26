@@ -1187,8 +1187,23 @@ const SVS_I18N = (function() {
     return current;
   }
 
+  // Языковые адреса (S2): /ru/…, /el/… — язык задаёт путь, EN — без префикса.
+  function pathLang() {
+    var m = typeof location !== 'undefined' && /^\/(ru|el)(?:\/|$)/.exec(location.pathname);
+    return m ? m[1] : null;
+  }
+
   function setLang(lang) {
     if (!SVS_TRANSLATIONS[lang]) return;
+    // На языковом адресе другой язык — это другая страница: переходим на её версию
+    // (ссылка из переключателя, tools/i18n_build.py).
+    var pl = pathLang();
+    var alt = pl && pl !== lang && document.querySelector('a[data-lang-btn="' + lang + '"][href]');
+    if (alt && alt.getAttribute) {
+      if (_store) _store.setItem(STORE_KEY, lang);
+      location.href = alt.getAttribute('href') + location.search + location.hash;
+      return;
+    }
     current = lang;
     if (_store) _store.setItem(STORE_KEY, lang);
     applyLang(lang);
@@ -1251,6 +1266,12 @@ const SVS_I18N = (function() {
   }
 
   function init() {
+    // Клик по ссылке переключателя запоминает выбор до перехода.
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest && e.target.closest('a[data-lang-btn]');
+      if (a && _store) _store.setItem(STORE_KEY, a.getAttribute('data-lang-btn'));
+    });
+    if (pathLang()) { setLang(pathLang()); return; }
     const saved = getLang();
     // Detect browser language as fallback
     const detected = navigator.language ? navigator.language.slice(0, 2) : 'en';

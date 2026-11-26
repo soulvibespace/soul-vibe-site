@@ -45,20 +45,41 @@ TITLE_RE = re.compile(r'<title[^>]*>(.*?)</title>', re.S)
 DESC_RE = re.compile(r'<meta\s+name="description"\s+content="([^"]*)"\s*/?>[ \t]*\n?')
 
 
+LANGS = ('en', 'ru', 'el')  # EN без префикса, RU/EL — dist/ru/, dist/el/ (tools/i18n_build.py)
+LOCALES = {'en': 'en_US', 'ru': 'ru_RU', 'el': 'el_GR'}
+
+
+def split_lang(fname):
+    """'ru/pricing.html' → ('ru', 'pricing.html'); 'pricing.html' → ('en', 'pricing.html')"""
+    head, _, tail = fname.partition('/')
+    return (head, tail) if tail and head in LANGS else ('en', fname)
+
+
 def page_path(fname):
-    name = fname[:-5]
-    return '/' if name == 'index' else '/' + name
+    lang, base = split_lang(fname)
+    name = base[:-5]
+    pre = '' if lang == 'en' else '/' + lang
+    return pre + '/' if name == 'index' else pre + '/' + name
+
+
+def alternates(fname, d):
+    """{lang: путь} для версий страницы, которые есть в d (пусто, если версия одна)."""
+    _, base = split_lang(fname)
+    alt = {l: page_path(base if l == 'en' else l + '/' + base) for l in LANGS
+           if os.path.exists(os.path.join(d, base if l == 'en' else os.path.join(l, base)))}
+    return alt if len(alt) > 1 else {}
 
 
 def attr(s):
     return html.escape(html.unescape(s.strip()), quote=True)
 
 
-def block(fname, src, base):
+def block(fname, src, base, alt=None):
     title = attr(TITLE_RE.search(src).group(1))
     desc = attr(DESC_RE.search(src).group(1))
     url = base + page_path(fname)
-    img = base + IMAGES.get(fname, DEFAULT_IMAGE)
+    lang, bname = split_lang(fname)
+    img = base + IMAGES.get(bname, DEFAULT_IMAGE)
     tags = [
         START,
         '<!-- Генерируется tools/meta.py из <title> и meta description. Не правьте вручную. -->',
@@ -68,9 +89,8 @@ def block(fname, src, base):
         f'<meta property="og:description" content="{desc}" />',
         f'<meta property="og:url" content="{url}" />',
         f'<meta property="og:image" content="{img}" />',
-        '<meta property="og:locale" content="en_US" />',
-        '<meta property="og:locale:alternate" content="ru_RU" />',
-        '<meta property="og:locale:alternate" content="el_GR" />',
+        f'<meta property="og:locale" content="{LOCALES[lang]}" />',
+    ] + [f'<meta property="og:locale:alternate" content="{LOCALES[l]}" />' for l in LANGS if l != lang] + [
         '<meta name="twitter:card" content="summary_large_image" />',
         f'<meta name="twitter:title" content="{title}" />',
         f'<meta name="twitter:description" content="{desc}" />',
@@ -78,21 +98,32 @@ def block(fname, src, base):
     ]
     if CANONICAL:
         tags.append(f'<link rel="canonical" href="{url}" />')
+    # hreflang: каждая версия ссылается на все три и на себя; x-default — EN.
+    for l, path in (alt or {}).items():
+        tags.append(f'<link rel="alternate" hreflang="{l}" href="{base}{path}" />')
+    if alt and 'en' in alt:
+        tags.append(f'<link rel="alternate" hreflang="x-default" href="{base}{alt["en"]}" />')
     tags.append(END)
     return ''.join('  ' + t + '\n' for t in tags)
 
 
-def render(fname, src, base):
+def render(fname, src, base, d=None):
     src = BLOCK_RE.sub('', src)
     src = STRAY_RE.sub('', src)
     m = DESC_RE.search(src)
     if not m:
         raise SystemExit(f'{fname}: нет <meta name="description"> — добавьте его')
-    return src[:m.end()] + block(fname, src, base) + src[m.end():]
+    alt = alternates(fname, d) if d else {}
+    return src[:m.end()] + block(fname, src, base, alt) + src[m.end():]
 
 
 def pages(d):
-    return sorted(f for f in os.listdir(d) if f.endswith('.html') and f not in SKIP)
+    out = sorted(f for f in os.listdir(d) if f.endswith('.html') and f not in SKIP)
+    for l in LANGS[1:]:
+        sub = os.path.join(d, l)
+        if os.path.isdir(sub):
+            out += sorted(f'{l}/{f}' for f in os.listdir(sub) if f.endswith('.html') and f not in SKIP)
+    return out
 
 
 def main(argv):
@@ -111,7 +142,7 @@ def main(argv):
     for f in pages(d):
         p = os.path.join(d, f)
         src = open(p, encoding='utf-8').read()
-        out = render(f, src, base)
+        out = render(f, src, base, d)
         if out != src:
             if check:
                 bad.append(f)

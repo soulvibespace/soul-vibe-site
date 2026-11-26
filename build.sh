@@ -39,6 +39,10 @@ if command -v python3 >/dev/null 2>&1; then
   # Единый подвал (tools/footer.html) — так же, как шапка.
   python3 tools/footer.py dist
   python3 tools/footer.py --check dist
+  # Языковые адреса /ru/… и /el/… (S2, #133): готовый HTML из словарей i18n.js. До meta.py и
+  # seo.py — они добавляют hreflang, og:locale, JSON-LD и sitemap для всех трёх языков.
+  python3 tools/i18n_build.py dist
+  python3 tools/i18n_build.py --check dist
   # OG/Twitter-мета-теги, JSON-LD, sitemap/robots/llms: абсолютные адреса от SITE_URL (переменная
   # окружения Netlify; без неё — DEFAULT_BASE в tools/meta.py, https://soul-vibe-space.netlify.app).
   # До переключения апекса (после 13.12): SITE_URL=https://app.soulvibespace.com. $URL Netlify НЕ
@@ -83,6 +87,8 @@ if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
   fi
   node tests/pwa.test.js >/dev/null || { echo "ОШИБКА: tests/pwa.test.js" >&2; exit 1; }
   echo "тесты приложения (PWA): ок"
+  node tests/i18n-urls.test.js >/dev/null || { echo "ОШИБКА: tests/i18n-urls.test.js" >&2; exit 1; }
+  echo "тесты языковых адресов /ru/, /el/: ок"
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"
