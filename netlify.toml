@@ -18,6 +18,25 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Приложение (PWA, #104): service worker и офлайн-страница всегда свежие, иначе телефоны
+# неделями держат старую версию. Манифест — с правильным типом и коротким кэшем.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"
+
+[[headers]]
+  for = "/app/offline.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=3600"
+
 [[headers]]
   for = "/*"
   [headers.values]

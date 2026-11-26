@@ -2705,6 +2705,57 @@ Object.assign(SVS_TRANSLATIONS.el, {
   cowork_rates:      'Τιμές coworking',
 });
 
+// ── Приложение (PWA, #104 / #105): нижнее меню, подсказка установки, офлайн ──
+// Тексты офлайн-заглушки продублированы в app/offline.html (она работает без сети и без i18n.js).
+Object.assign(SVS_TRANSLATIONS.en, {
+  pwa_tabs_label:       'App menu',
+  pwa_tab_schedule:     'Schedule',
+  pwa_tab_bookings:     'My bookings',
+  pwa_tab_vibes:        'VIBES',
+  pwa_tab_profile:      'Profile',
+  pwa_install_title:    'Install the Soul Vibe Space app',
+  pwa_install_text:     'The schedule, your bookings and VIBES, one tap away on your home screen.',
+  pwa_install_btn:      'Install',
+  pwa_install_close:    'Not now',
+  pwa_ios_title:        'Add Soul Vibe Space to your home screen',
+  pwa_ios_steps:        'In Safari, tap Share {share}, then “Add to Home Screen”.',
+  pwa_offline_title:    'No internet connection',
+  pwa_offline_text:     'The schedule, your bookings and VIBES need the internet. Check your connection and try again.',
+  pwa_offline_retry:    'Try again',
+});
+Object.assign(SVS_TRANSLATIONS.ru, {
+  pwa_tabs_label:       'Меню приложения',
+  pwa_tab_schedule:     'Расписание',
+  pwa_tab_bookings:     'Мои записи',
+  pwa_tab_vibes:        'VIBES',
+  pwa_tab_profile:      'Профиль',
+  pwa_install_title:    'Установите приложение Soul Vibe Space',
+  pwa_install_text:     'Расписание, ваши записи и VIBES — в одно касание с экрана телефона.',
+  pwa_install_btn:      'Установить',
+  pwa_install_close:    'Не сейчас',
+  pwa_ios_title:        'Добавьте Soul Vibe Space на экран «Домой»',
+  pwa_ios_steps:        'В Safari нажмите «Поделиться» {share}, затем «На экран „Домой“».',
+  pwa_offline_title:    'Нет подключения к интернету',
+  pwa_offline_text:     'Расписанию, вашим записям и VIBES нужен интернет. Проверьте подключение и попробуйте ещё раз.',
+  pwa_offline_retry:    'Попробовать снова',
+});
+Object.assign(SVS_TRANSLATIONS.el, {
+  pwa_tabs_label:       'Μενού εφαρμογής',
+  pwa_tab_schedule:     'Πρόγραμμα',
+  pwa_tab_bookings:     'Κρατήσεις',
+  pwa_tab_vibes:        'VIBES',
+  pwa_tab_profile:      'Προφίλ',
+  pwa_install_title:    'Εγκαταστήστε την εφαρμογή Soul Vibe Space',
+  pwa_install_text:     'Το πρόγραμμα, οι κρατήσεις σας και τα VIBES με ένα άγγιγμα από την αρχική οθόνη.',
+  pwa_install_btn:      'Εγκατάσταση',
+  pwa_install_close:    'Όχι τώρα',
+  pwa_ios_title:        'Προσθέστε το Soul Vibe Space στην οθόνη Αφετηρίας',
+  pwa_ios_steps:        'Στο Safari πατήστε «Κοινοποίηση» {share} και μετά «Προσθήκη στην οθόνη Αφετηρίας».',
+  pwa_offline_title:    'Δεν υπάρχει σύνδεση στο internet',
+  pwa_offline_text:     'Το πρόγραμμα, οι κρατήσεις σας και τα VIBES χρειάζονται internet. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.',
+  pwa_offline_retry:    'Δοκιμάστε ξανά',
+});
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', SVS_I18N.init);
 } else {
