@@ -837,7 +837,7 @@ const SVS_TRANSLATIONS = {
   el: {
     // ── Nav ──
     nav_home:       'Αρχική',
-    nav_about:      'Σχετικά',
+    nav_about:      'Ποιοι είμαστε',
     nav_schedule:   'Πρόγραμμα',
     nav_classes:    'Μαθήματα',
     nav_gift:       'Δωροκάρτες',
@@ -940,12 +940,12 @@ const SVS_TRANSLATIONS = {
     space_title:        'Χώρος για<br>εργασία & δημιουργία',
     space_studio_eyebrow: 'Το στούντιο',
     space_studio_title: 'Μια αίθουσα για κάθε πρακτική',
-    space_studio_p1:    'Στην κεντρική μας αίθουσα χωράνε όλα — από ήρεμη πρωινή yoga μέχρι εκστατικό χορό και sound baths.',
-    space_studio_p2:    'Ψηλά ταβάνια, άφθονο φυσικό φως και άνετο δάπεδο — εδώ η πρακτική γίνεται εύκολα.',
-    space_cowork_eyebrow: 'Co-working',
+    space_studio_p1:    'Η κεντρική μας αίθουσα φιλοξενεί τα πάντα — από ήρεμη πρωινή γιόγκα μέχρι εκστατικό χορό και sound baths.',
+    space_studio_p2:    'Ψηλά ταβάνια, άπλετο φυσικό φως και άνετο πάτωμα — εδώ θα ασκείστε με ευχαρίστηση.',
+    space_cowork_eyebrow: 'Coworking',
     space_cowork_title: 'Ένα ήσυχο μέρος για δουλειά',
-    space_cowork_p1:    'Ανάμεσα στα μαθήματα μπορείτε να δουλέψετε στον χώρο co-working: είναι ήσυχα, συγκεντρώνεστε εύκολα και, αν θέλετε, γνωρίζετε άλλους από την κοινότητα.',
-    space_cowork_p2:    'Υπάρχει σημείο καφέ, Smart TV και γρήγορο Wi-Fi — ό,τι χρειάζεστε για δουλειά. Και δεν μοιάζει καθόλου με γραφείο.',
+    space_cowork_p1:    'Ανάμεσα στα μαθήματα μπορείτε να δουλέψετε στο coworking μας. Επικρατεί ηρεμία, συγκεντρώνεστε εύκολα και, αν θέλετε, γνωρίζετε κόσμο από την κοινότητά μας.',
+    space_cowork_p2:    'Γωνιά καφέ, Smart TV και γρήγορο Wi-Fi — ό,τι χρειάζεστε για να δουλέψετε. Κι όμως, δεν θυμίζει καθόλου γραφείο.',
     space_p:            'Το Soul Vibe Space διαθέτει επίσης μια δημιουργική ζώνη co-working όπου οι επισκέπτες μπορούν να εργαστούν, να χαλαρώσουν και να συνδεθούν με μια ενσυνείδητη κοινότητα.',
     space_feat1_title:  'Σημείο καφέ',
     space_feat1_text:   'Καφές και τσάι αυτοεξυπηρέτησης',
@@ -982,9 +982,9 @@ const SVS_TRANSLATIONS = {
     ph_message:         'Θέλω να κάνω εγγραφή σε μάθημα yoga...',
 
     // ── Footer ──
-    footer_tagline:     'Κίνηση, επίγνωση και κοινότητα στη Λεμεσό, Κύπρος.',
+    footer_tagline:     'Κίνηση, επίγνωση και κοινότητα στη Λεμεσό της Κύπρου.',
     footer_studio:      'Στούντιο',
-    footer_about:       'Σχετικά',
+    footer_about:       'Ποιοι είμαστε',
     footer_gift:        'Δωροκάρτες',
     footer_book:        'Κλείστε μάθημα',
     footer_visit:       'Επισκεφθείτε μας',
@@ -1609,7 +1609,7 @@ Object.assign(SVS_TRANSLATIONS.el, {
 
   pricing_coworking_title: 'Coworking',
   pricing_coworking_desc:  'Ανοιχτός χώρος εργασίας στο ισόγειο — Wi-Fi, τσάι & καφές περιλαμβάνονται.',
-  pricing_coworking_from:  'Αν το υπόλοιπό σας είναι πάνω από %%class%% VIBES, το co-working ανάμεσα στα μαθήματα είναι δωρεάν. Διαφορετικά ισχύουν οι κανονικές τιμές.',
+  pricing_coworking_from:  'Αν το υπόλοιπό σας ξεπερνά τα %%class%% VIBES, το coworking ανάμεσα στα μαθήματα είναι δωρεάν για εσάς. Διαφορετικά ισχύουν οι κανονικές τιμές.',
   pricing_coworking_link:  'Δείτε τις τιμές',
 
   pricing_how_title:    'Πώς Λειτουργεί',
@@ -1707,8 +1707,8 @@ Object.assign(SVS_TRANSLATIONS.el, {
 });
 
 Object.assign(SVS_TRANSLATIONS.el, {
-  nav_reviews:          'Αξιολογήσεις',
-  footer_reviews:       'Αξιολογήσεις',
+  nav_reviews:          'Κριτικές',
+  footer_reviews:       'Κριτικές',
   reviews_page_title:   'Αξιολογήσεις Πελατών | Soul Vibe Space Λεμεσός',
   reviews_hero_eyebrow: 'ΦΩΝΕΣ ΠΕΛΑΤΩΝ',
   reviews_hero_title:   'Τι Λένε οι Πελάτες μας',
@@ -1891,7 +1891,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
   footer_cookies: 'Cookies',
 });
 Object.assign(SVS_TRANSLATIONS.el, {
-  footer_hours_admin: 'Διαχειριστής στο στούντιο: 14:00–22:00',
+  footer_hours_admin: 'Υποδοχή στο στούντιο: 14:00–22:00',
   contact_hours_classes: 'Μαθήματα: καθημερινά',
   contact_hours_admin: 'Διαχειριστής στο στούντιο',
   footer_terms:   'Όροι & Προϋποθέσεις',
@@ -2702,7 +2702,7 @@ Object.assign(SVS_TRANSLATIONS.ru, {
 });
 Object.assign(SVS_TRANSLATIONS.el, {
   pricing_personal_cta: 'Γράψτε μας',
-  cowork_rates:      'Τιμές co-working',
+  cowork_rates:      'Τιμές coworking',
 });
 
 if (document.readyState === 'loading') {
