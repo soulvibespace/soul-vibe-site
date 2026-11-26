@@ -45,19 +45,29 @@
   // (/api/booking/services — по имени категории SimplyBook); если его нет —
   // классифицируем здесь по category_names / имени услуги теми же словами.
   // Класс НИКОГДА не скрывается из-за неизвестной категории: идёт в «Другое».
-  var API_GROUP = { Yoga: 'yoga', Spiritual: 'spirit', Dance: 'dance', Events: 'events', Other: 'other', Coworking: 'coworking' };
-  var GROUP_ORDER = ['yoga', 'spirit', 'dance', 'events', 'other'];
+  var API_GROUP = { Yoga: 'yoga', Spiritual: 'spirit', Dance: 'dance', Events: 'events', Other: 'other', Coworking: 'coworking', YogaDay: 'yogaday' };
+  var GROUP_ORDER = ['yoga', 'spirit', 'dance', 'events', 'yogaday', 'other'];
   var GROUP_LABELS = {
-    yoga:   { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
-    spirit: { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές Πρακτικές' },
-    dance:  { en: 'Dance & Movement', ru: 'Танец и движение', el: 'Χορός & Κίνηση' },
-    events: { en: 'Events', ru: 'События', el: 'Εκδηλώσεις' },
-    other:  { en: 'Other', ru: 'Другое', el: 'Άλλα' }
+    yoga:    { en: 'Yoga', ru: 'Йога', el: 'Γιόγκα' },
+    spirit:  { en: 'Spiritual & Healing', ru: 'Духовные практики', el: 'Πνευματικές Πρακτικές' },
+    dance:   { en: 'Dance & Movement', ru: 'Танец и движение', el: 'Χορός & Κίνηση' },
+    events:  { en: 'Events', ru: 'События', el: 'Εκδηλώσεις' },
+    yogaday: { en: 'Yoga Day (13.12)', ru: 'Yoga Day (13.12)', el: 'Yoga Day (13.12)' },
+    other:   { en: 'Other', ru: 'Другое', el: 'Άλλα' }
   };
+
+  function isYogaDayCategory(names) {
+    if (!Array.isArray(names)) return false;
+    for (var i = 0; i < names.length; i++) {
+      if (/open\s*house|yoga\s*day/i.test(String(names[i] || ''))) return true;
+    }
+    return false;
+  }
 
   function classifyName(name) {
     var n = String(name || '').toLowerCase();
     if (/coworking|коворкинг|hot\s*desk|day\s*pass/.test(n)) return 'coworking';
+    if (/open\s*house|yoga\s*day/.test(n)) return 'yogaday';
     if (/\byoga\b|йог|γιόγκα/.test(n)) return 'yoga';
     if (/dance|hip[-\s]?hop|choreo|ecstatic|movement|танц|движение|χορός/.test(n)) return 'dance';
     if (/sound|healing|meditat|gong|reiki|breath|qigong|chi\s?kung|цигун|звук|целит|медит|дыхан|θεραπεία|διαλογ/.test(n)) return 'spirit';
@@ -68,8 +78,9 @@
 
   function groupOf(svc) {
     if (!svc) return 'other';
-    if (svc.group && API_GROUP[svc.group]) return API_GROUP[svc.group];
     var names = Array.isArray(svc.category_names) ? svc.category_names : [];
+    if (isYogaDayCategory(names)) return 'yogaday';
+    if (svc.group && API_GROUP[svc.group]) return API_GROUP[svc.group];
     for (var i = 0; i < names.length; i++) {
       var g = classifyName(names[i]);
       if (g !== 'other') return g;

@@ -244,7 +244,8 @@
           var lang = getHomeLang();
           var visible = (typeof SvsGroups !== 'undefined')
             ? SvsGroups.orderServices(services, data.order).filter(function(s) {
-                return SvsGroups.groupOf(s) !== 'coworking';
+                var g = SvsGroups.groupOf(s);
+                return g !== 'coworking' && g !== 'yogaday';
               })
             : services.filter(function(s) {
                 return (s.category_ids || []).some(function(cid) { return !!CAT_MAP_HOME[Number(cid)]; });
