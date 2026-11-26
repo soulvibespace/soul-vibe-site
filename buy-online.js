@@ -63,7 +63,7 @@
         body: JSON.stringify({ plan: plan, lang: lang() }),
       });
       var d = await r.json().catch(function () { return {}; });
-      if (r.ok && d.url && /^https:\/\/checkout\.stripe\.com\//.test(d.url)) { location.href = d.url; return; }
+      if (r.ok && d.url && /^https:\/\/checkout\.stripe\.com\//.test(d.url)) { goCheckout(plan, d.url); return; }
       busy(btn, false);
       if (r.status === 401) { var s2 = store(); if (s2) s2.setItem(PENDING_KEY, JSON.stringify({ plan: plan, at: Date.now() })); if (typeof AuthModal !== 'undefined') AuthModal.open('login'); return; }
       if (d.code === 'verify_email') return message(card, 'pay_err_verify', '<a href="/account">' + t('nav_account') + ' →</a>');
@@ -75,6 +75,33 @@
       busy(btn, false);
       message(card, 'pay_err_generic');
     }
+  }
+
+  // GA4 item for a plan code; price from SVS_PRICES (i18n.js) — for the report only, Stripe takes the panel price.
+  function gaItem(code) {
+    var p = window.SVS_PRICES && SVS_PRICES.plans && SVS_PRICES.plans[code];
+    var starter = /^SP/.test(code);
+    var item = { item_id: code, item_name: (starter ? 'Starter Pack ' : 'Class Pass ') + code, item_category: starter ? 'Starter Pack' : 'Class Pass', quantity: 1 };
+    if (p && Number(p.price) > 0) item.price = Number(p.price);
+    return item;
+  }
+
+  // begin_checkout (analytics.js, no-op without consent), then off to Stripe. The redirect waits for GA
+  // at most 600 ms and only if the event was actually sent.
+  function goCheckout(code, url) {
+    var gone = false;
+    var go = function () { if (!gone) { gone = true; location.href = url; } };
+    var sent = false;
+    try {
+      var item = gaItem(code);
+      if (typeof window.svsTrack === 'function') {
+        sent = window.svsTrack('begin_checkout', {
+          currency: 'EUR', value: item.price, items: [item],
+          event_callback: go, event_timeout: 600,
+        }) === true;
+      }
+    } catch (_) { sent = false; }
+    if (sent) setTimeout(go, 700); else go();
   }
 
   function addButtons() {
@@ -142,7 +169,7 @@
     } catch (_) { /* API asleep or offline: keep «через администратора» */ }
   }
 
-  window.SVSBuyOnline = { resumePending: resumePending, reload: load };
+  window.SVSBuyOnline = { resumePending: resumePending, reload: load, _gaItem: gaItem, _goCheckout: goCheckout };
 
   function start() {
     cancelledNotice();

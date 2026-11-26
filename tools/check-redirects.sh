@@ -3,7 +3,9 @@
 #   bash tools/check-redirects.sh https://soul-vibe-space.netlify.app   # до переноса
 #   bash tools/check-redirects.sh https://www.soulvibespace.com          # в день переноса
 # Для каждого старого адреса: 301 на нужную новую страницу, а она отвечает 200.
-# Старые адреса — https://www.soulvibespace.com/sitemap.xml (24.11.2026) + меню.
+# Старые адреса — https://www.soulvibespace.com/sitemap.xml (24.11.2026) + меню,
+# плюс страницы, убранные при перестройке структуры (#152): /space → /about, /price-list → /rental.
+# Языковые /ru|/el/space и /price-list проверяются после слияния S2 (#150): tests/i18n-urls.test.js.
 set -uo pipefail
 BASE="${1:-https://soul-vibe-space.netlify.app}"; BASE="${BASE%/}"
 fail=0
@@ -38,6 +40,10 @@ done <<'LIST'
 /cart|/gift-certificates
 /commerce/show-cart|/gift-certificates
 /search?q=yoga|/
+/space|/about
+/space.html|/about
+/price-list|/rental
+/price-list.html|/rental
 LIST
 # Несуществующий адрес — наша страница 404 с кодом 404.
 code=$(curl -s -o /tmp/svs-404.html -w '%{http_code}' "$BASE/no-such-page-svs")

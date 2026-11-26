@@ -43,7 +43,7 @@ git push origin main   # Netlify подхватит и опубликует са
 |---|---|
 | `index.html` | Главная |
 | `schedule.html` | Расписание, тянет данные из `/api/schedule` |
-| `classes.html`, `pricing.html`, `rental.html`, `about.html`, `space.html`, `contact.html`, `gift-certificates.html` | Контентные страницы (`rental.html` — аренда, контент из `data/rental.json`, редактируется через `/admin`) |
+| `classes.html`, `pricing.html`, `rental.html`, `about.html`, `contact.html`, `gift-certificates.html` | Контентные страницы (`rental.html` — аренда и коворкинг: залы из `data/rental.json`, коворкинг и мероприятия из `data/price-list.json`; индивидуальная программа на `pricing.html` — тоже из `data/price-list.json`; всё редактируется через `/admin`. Зал, галерея и удобства — на `about.html#space`) |
 | `account.html`, `account.js` | Личный кабинет: брони, отмена |
 | `auth-modal.js` | Вход и регистрация |
 | `booking-modal.js` | Запись на занятие |
@@ -79,8 +79,9 @@ git push origin main   # Netlify подхватит и опубликует са
 | OG/Twitter-теги | `<title>` и `<meta name="description">` страницы, картинка — `IMAGES` в `tools/meta.py` | `python3 tools/meta.py` | `python3 tools/meta.py --check` |
 
 `build.sh` прогоняет всё это для `dist/` при каждой сборке на Netlify. Абсолютные адреса в
-мета-тегах — от `DEFAULT_BASE` в `tools/meta.py` (сейчас https://soul-vibe-space.netlify.app)
-или от переменной `SITE_URL`. `canonical`/`hreflang` пока не выводятся — домен
+мета-тегах — от переменной окружения Netlify `SITE_URL` (с запуска app.soulvibespace.com — `https://app.soulvibespace.com`)
+или, без неё, от `DEFAULT_BASE` в `tools/meta.py` (https://soul-vibe-space.netlify.app). В коде сайта адрес
+сайта нигде не зашит: ссылки относительные или от `location.origin`. `canonical`/`hreflang` пока не выводятся — домен
 `soulvibespace.com` ещё на Squarespace (см. TODO в `tools/meta.py`).
 
 Тексты `/terms` и `/privacy`: английский — в разметке страниц, русский и греческий — в `i18n-legal.js`.

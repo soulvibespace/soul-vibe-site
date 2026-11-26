@@ -156,6 +156,16 @@ const BookingModal = (() => {
     return chunks;
   }
 
+  // GA4 (analytics.js): no-op without consent. Never breaks booking.
+  function _track(name, params) {
+    try {
+      if (typeof window.svsTrack !== 'function') return;
+      const p = { page_path: location.pathname };
+      Object.keys(params || {}).forEach(k => { if (params[k] !== undefined && params[k] !== null && params[k] !== '') p[k] = params[k]; });
+      window.svsTrack(name, p);
+    } catch (_) {}
+  }
+
   // ── Open / Close ──────────────────────────────────────────────
   async function open(serviceId = null, date = null, time = null) {
     _modal = _el('bookingModal');
@@ -170,6 +180,7 @@ const BookingModal = (() => {
 
     _modal.hidden = false;
     document.body.style.overflow = 'hidden';
+    _track('booking_start', { service_id: serviceId ? String(serviceId) : undefined, class_date: date || undefined });
 
     // Set up backdrop
     _backdrop = _el('bookingModalBackdrop');
@@ -1034,6 +1045,11 @@ const BookingModal = (() => {
 
       _lastBooking = data.booking;
       _payCache = null; // the new booking changes the balance estimate
+      _track('booking_done', {
+        service_id: String(_selectedService), class_name: service?.name || undefined,
+        class_date: _selectedDate, class_time: _selectedSlot,
+        booking_id: data.booking?.id != null ? String(data.booking.id) : undefined,
+      });
       _renderStep('success');
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = _k('bm_confirm_btn'); }
@@ -1076,7 +1092,7 @@ const BookingModal = (() => {
   function _calEvent(service) {
     const dur = Number(service?.duration) || 60;
     const title = _svcName(service) + ' — Soul Vibe Space';
-    const details = _k('bm_arrive') + '\n' + _k('bm_how_cancel') + '\nhttps://soulvibespace.netlify.app/account';
+    const details = _k('bm_arrive') + '\n' + _k('bm_how_cancel') + '\n' + location.origin + '/account';
     return {
       title, details,
       start: _nicosiaUTC(_selectedDate, _selectedSlot),

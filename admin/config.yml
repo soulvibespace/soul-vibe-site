@@ -15,13 +15,13 @@ public_folder: /images
 
 collections:
   - name: price_list
-    label: "Extra Services & Pricing (/price-list)"
+    label: "Individual program, coworking & events (/pricing, /rental)"
     files:
       - name: price_list
-        label: "Extra Services & Pricing"
+        label: "Individual program, coworking & events"
         file: data/price-list.json
         fields:
-          - label: "Page intro"
+          - label: "Page intro (not shown: /price-list was removed)"
             name: meta
             widget: object
             fields:

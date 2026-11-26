@@ -21,7 +21,7 @@
     ['#classes-grid .service-card-desc:not([data-short])', 3],
     ['.class-card-desc:not([data-short])', 3],
     ['.intro-text .body-text ~ .body-text', 2],
-    ['.dropin-desc', 3],
+    ['.dropin-desc:not(#pvPersonalDesc)', 3],
     ['.room-desc', 3],
     ['.setup-desc', 3],
     ['.events-note p', 3]

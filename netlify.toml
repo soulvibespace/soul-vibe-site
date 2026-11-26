@@ -25,6 +25,36 @@
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Структура сайта 2026-11: /space и /price-list удалены.
+# Зал, галерея и удобства — на /about (id="space"), коворкинг и мероприятия — на /rental
+# (id="coworking", id="events"), индивидуальная программа — на /pricing (id="personal").
+# Якорь в 301 не передать (фрагмент не доходит до сервера), поэтому — просто /about и /rental.
+# force = true: правило сработает, даже если старый .html где-то останется в dist.
+# Языковые варианты (/ru/space и т. п.) добавляются вместе с S2 (#150) — выше правил /ru/* и /el/*.
+[[redirects]]
+  from = "/space"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/space.html"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/price-list"
+  to = "/rental"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/price-list.html"
+  to = "/rental"
+  status = 301
+  force = true
+
 # ─────────────────────────────────────────────────────────────────────────────
 # S5 (#136) — 301-редиректы со старого сайта Squarespace (www.soulvibespace.com).
 # Правила ВКЛЮЧЕНЫ и безопасны уже сейчас: они срабатывают только на старых адресах,
