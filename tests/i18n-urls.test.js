@@ -108,4 +108,18 @@ t('netlify.toml: 404 на языке раздела', () => {
   has(s, /from = "\/ru\/\*"\s+to = "\/ru\/404\.html"\s+status = 404/);
   has(s, /from = "\/el\/\*"\s+to = "\/el\/404\.html"\s+status = 404/);
 });
+t('netlify.toml: 301 /ru|/el со старых /space и /price-list — выше 404-правил', () => {
+  const s = fs.readFileSync(path.join(ROOT, 'netlify.toml'), 'utf8');
+  const at = (from) => s.indexOf('from = "' + from + '"');
+  for (const l of ['ru', 'el']) {
+    for (const [from, to] of [['space', 'about'], ['price-list', 'rental']]) {
+      for (const suf of ['', '.html']) {
+        const re = new RegExp('from = "/' + l + '/' + from + suf.replace('.', '\\.') + '"\\s+to = "/' + l + '/' + to + '"\\s+status = 301\\s+force = true');
+        assert.ok(re.test(s), l + '/' + from + suf);
+        assert.ok(at('/' + l + '/' + from + suf) < at('/' + l + '/*'), 'порядок ' + l + '/' + from + suf);
+      }
+    }
+  }
+  if (fs.existsSync(DIST)) for (const f of ['ru/space.html', 'el/price-list.html']) assert.ok(!fs.existsSync(path.join(DIST, f)), f);
+});
 console.log(`i18n-urls: ${n} тестов ок`);
