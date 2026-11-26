@@ -1,0 +1,150 @@
+{
+  "updated": "2026-11-24",
+  "source": "https://soul-vibe-api.onrender.com/api/booking/services",
+  "classes": [
+    {
+      "id": "31",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Kundalini Yoga, 90 min",
+      "teacher": "Larisa",
+      "duration": 90,
+      "desc": "Breath, movement, mantra and meditation in the Kundalini tradition, led by a certified KRI teacher."
+    },
+    {
+      "id": "97",
+      "group": "Dance",
+      "group_label": "Dance & Movement",
+      "title": "Ecstatic Dance at the Rancho (English/Russian)",
+      "teacher": "",
+      "duration": 120,
+      "desc": "Two hours of free movement to music at the Rancho, our outdoor venue. There are no steps to learn: you simply dance your own way."
+    },
+    {
+      "id": "12",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Vinyasa Yoga (English)",
+      "teacher": "Stephanie",
+      "duration": 60,
+      "desc": "A flowing class that links breath and movement. It builds strength, balance and focus."
+    },
+    {
+      "id": "64",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Therapy Yoga — Healthy Back",
+      "teacher": "",
+      "duration": 60,
+      "desc": "A gentle class for a stronger, more mobile back. Good if you sit a lot or often feel tension in your back."
+    },
+    {
+      "id": "65",
+      "group": "Spiritual",
+      "group_label": "Spiritual & Healing",
+      "title": "Sound Healing",
+      "teacher": "",
+      "duration": 90,
+      "desc": "Lie back and rest while singing bowls and gongs fill the room. A deep reset for body and mind."
+    },
+    {
+      "id": "70",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Black Lotus Yoga (Vinyasa) (Russian)",
+      "teacher": "",
+      "duration": 90,
+      "desc": "An original class rooted in vinyasa: dynamic sequences, steady breath and a focused mind."
+    },
+    {
+      "id": "71",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Yin Yoga (Russian)",
+      "teacher": "Elena",
+      "duration": 60,
+      "desc": "Long, quiet holds that release deep tension and help you slow down."
+    },
+    {
+      "id": "72",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Functional Hatha Yoga (Russian/English)",
+      "teacher": "",
+      "duration": 60,
+      "desc": "Classic hatha postures with a modern, functional approach to strength and mobility."
+    },
+    {
+      "id": "94",
+      "group": "Dance",
+      "group_label": "Dance & Movement",
+      "title": "Hip Hop Freestyle (7–12 y.o.)",
+      "teacher": "",
+      "duration": 60,
+      "desc": "Lively dance classes for children aged 7 to 12. They build rhythm, coordination and confidence."
+    },
+    {
+      "id": "99",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Hatha Yoga (Russian)",
+      "teacher": "",
+      "duration": 60,
+      "desc": "A classic practice of postures, breathing and relaxation for a balanced body and a calm mind."
+    },
+    {
+      "id": "105",
+      "group": "Spiritual",
+      "group_label": "Spiritual & Healing",
+      "title": "Qigong",
+      "teacher": "",
+      "duration": 60,
+      "desc": "Gentle, mindful movement with breath and body awareness, from the Chinese tradition."
+    },
+    {
+      "id": "138",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Aerial Yoga (Russian)",
+      "teacher": "",
+      "duration": 60,
+      "desc": "Yoga in hammocks for strength, flexibility and balance, with a real feeling of lightness."
+    },
+    {
+      "id": "142",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Kundalini Yoga, 90 min",
+      "teacher": "Tati",
+      "duration": 90,
+      "desc": "A 90-minute Kundalini class with kriya, conscious breathing and meditation."
+    },
+    {
+      "id": "145",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Yin Yoga (English)",
+      "teacher": "Stephanie",
+      "duration": 60,
+      "desc": "A calm practice of stillness, gentle mobility and deep relaxation."
+    },
+    {
+      "id": "146",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Low Hammock: Healthy Spine",
+      "teacher": "",
+      "duration": 60,
+      "desc": "A gentle low-hammock class for a mobile spine and less tension."
+    },
+    {
+      "id": "148",
+      "group": "Yoga",
+      "group_label": "Yoga",
+      "title": "Morning Hatha Yoga (Russian/English)",
+      "teacher": "",
+      "duration": 60,
+      "desc": "A gentle morning class to wake up the body and start the day calm and focused."
+    }
+  ]
+}
