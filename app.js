@@ -268,7 +268,9 @@
             var rawD = (svc.description || '').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim();
             var HLIMIT = 180;
             var desc = rawD;
-            var descShort = rawD.length > HLIMIT ? rawD.slice(0, HLIMIT).trimRight() + '\u2026' : rawD;
+            var descShort = rawD.length > HLIMIT
+              ? rawD.slice(0, HLIMIT).replace(/\s+\S*$/, '').replace(/[,;:\-—]+$/, '').trim() + '\u2026'
+              : rawD;
             var descId = 'hdesc-' + svc.id;
             var instructor = svc.instructor_name || '';
 
