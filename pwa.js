@@ -3,16 +3,17 @@
  *  1) Регистрирует service worker /sw.js (кэш только статики, см. комментарий в sw.js).
  *  2) В установленном приложении (display-mode: standalone или iOS navigator.standalone)
  *     добавляет нижнее меню: Расписание · Мои записи · VIBES · Профиль. На обычном сайте меню нет.
- *  3) На /account ненавязчиво предлагает установить приложение:
- *     Android/Chrome — кнопка (событие beforeinstallprompt), iPhone/iPad Safari — инструкция
- *     «Поделиться → На экран „Домой“». Закрыли — не показываем 30 дней.
+ *  3) На телефоне предлагает установить приложение: всплывашка внизу экрана (через ~3 с, не поверх
+ *     баннера cookie), инструкция в нижнем листе (iPhone Safari / iPhone в другом браузере / Android),
+ *     подсказка в кабинете и ссылка «Установить приложение» в мобильном меню и подвале.
+ *     Android/Chrome — сразу системное окно (beforeinstallprompt). Закрыли — 14 дней тишины.
  *  Тексты — ключи pwa_* в i18n.js (RU/EN/EL).
  */
 (function () {
   'use strict';
   var W = window, D = document;
   var HINT_KEY = 'svs_pwa_hint_closed';
-  var HINT_DAYS = 30;
+  var HINT_DAYS = 14;
 
   function t(key, fb) {
     try { var v = W.SVS_I18N && W.SVS_I18N.t(key); return v && v !== key ? v : fb; } catch (e) { return fb; }
@@ -114,28 +115,227 @@
     W.addEventListener('svs:langchange', function () { paintTabs(nav); });
   }
 
-  // ── 3. Подсказка «Установить приложение» (/account) ───────────────────────
+  // ── 3. Установка приложения: всплывашка, инструкция, подсказка в кабинете ──
+  // Режимы (installMode):
+  //   'prompt'    — Android/Chrome прислал beforeinstallprompt: «Установить» вызывает системное окно;
+  //   'android'   — Android без beforeinstallprompt: инструкция «Меню ⋮ → На главный экран → Установить»;
+  //   'ios'       — iPhone/iPad в Safari: «Поделиться → На экран „Домой“ → Добавить»;
+  //   'ios-other' — iPhone/iPad в Chrome, Instagram, Telegram и т. п.: сначала открыть страницу в Safari.
+  // Закрыли всплывашку или подсказку — не показываем 14 дней (svs_pwa_hint_closed).
+  // Установили — больше никогда (svs_pwa_installed). Ссылка «Установить приложение» в мобильном меню
+  // и подвале открывает инструкцию всегда (кроме самого приложения).
+  var INSTALLED_KEY = 'svs_pwa_installed';
+  var POP_DELAY = 2800;
+  var POP_PAGES = ['/', '/schedule', '/classes', '/pricing', '/vibes', '/account'];
   var deferred = null;
+
   W.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferred = e;
-    renderHint();
+    refresh();
   });
-  W.addEventListener('appinstalled', function () { deferred = null; removeHint(); store(HINT_KEY, String(Date.now())); });
+  W.addEventListener('appinstalled', function () {
+    deferred = null; store(INSTALLED_KEY, '1'); removeHint(); removePopup(); closeSheet(); removeLinks();
+  });
 
+  function ua() { return navigator.userAgent || ''; }
   function isIOS() {
-    var ua = navigator.userAgent || '';
     var iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
-    return /iPhone|iPad|iPod/.test(ua) || iPadOS;
+    return /iPhone|iPad|iPod/.test(ua()) || iPadOS;
   }
-  function isIOSSafari() {
-    var ua = navigator.userAgent || '';
-    return isIOS() && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|YaBrowser|GSA\//.test(ua);
+  // Настоящий Safari: не Chrome/Firefox/Edge/Opera/Яндекс/Google и не встроенный браузер соцсетей.
+  var IOS_NOT_SAFARI = /CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|GSA\/|DuckDuckGo|Instagram|FBAN|FBAV|FBIOS|Line\/|Telegram|TwitterAndroid|Snapchat|Pinterest|MicroMessenger/;
+  function isIOSSafari() { return isIOS() && /Safari\//.test(ua()) && !IOS_NOT_SAFARI.test(ua()); }
+  function isMobile() {
+    try { return W.matchMedia('(max-width: 900px)').matches || W.matchMedia('(pointer: coarse)').matches; } catch (e) { return false; }
   }
+  function installMode() {
+    if (deferred) return 'prompt';
+    if (isIOS()) return isIOSSafari() ? 'ios' : 'ios-other';
+    return 'android';
+  }
+  function installed() { return store(INSTALLED_KEY) === '1'; }
   function closedRecently() {
     var v = Number(store(HINT_KEY) || 0);
-    return v && (Date.now() - v) < HINT_DAYS * 864e5;
+    return !!v && (Date.now() - v) < HINT_DAYS * 864e5;
   }
+  function snooze() { store(HINT_KEY, String(Date.now())); }
+  function cookieBannerVisible() { return !!D.getElementById('svs-cookie-banner'); }
+  function popupAllowed() {
+    return !standalone() && !installed() && !closedRecently() && isMobile() && POP_PAGES.indexOf(path()) !== -1;
+  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+  var IC = {
+    share: '<svg class="svs-pi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M8.2 7.2 12 3.5l3.8 3.7"/><path d="M8 10.5H6.5A1.5 1.5 0 0 0 5 12v7a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>',
+    add: '<svg class="svs-pi" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/></svg>',
+    menu: '<svg class="svs-pi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="18.5" r="1.4"/></svg>',
+    safari: '<svg class="svs-pi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/></svg>',
+    close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+    copy: '<svg class="svs-pi" viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>'
+  };
+  function fill(s) { return esc(s).replace('{share}', IC.share).replace('{add}', IC.add).replace('{menu}', IC.menu); }
+  function ctaLabel(mode) { return mode === 'prompt' ? t('pwa_install_btn', 'Install') : t('pwa_how_btn', 'How to install'); }
+
+  // Главная кнопка: системное окно установки (Android/Chrome) или инструкция.
+  function act(from) {
+    if (deferred) {
+      var ev = deferred; deferred = null;
+      ev.prompt();
+      (ev.userChoice || Promise.resolve({})).then(function (c) {
+        if (c && c.outcome === 'accepted') store(INSTALLED_KEY, '1');
+        else if (from !== 'link') snooze();
+        removePopup(); removeHint(); refresh();
+      });
+      return;
+    }
+    openSheet(installMode());
+  }
+
+  // ── 3a. Всплывашка внизу экрана ──
+  var popTimer = null, popWaiting = false;
+  function removePopup() {
+    var p = D.getElementById('svsInstallPop');
+    if (!p) return;
+    p.classList.remove('is-in');
+    setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 250);
+  }
+  function renderPopup(p) {
+    var mode = installMode();
+    p.setAttribute('data-mode', mode);
+    p.setAttribute('aria-label', t('pwa_install_title', 'Install the Soul Vibe Space app'));
+    p.innerHTML =
+      '<img class="svs-pop-icon" src="/images/app/icon-192.png" alt="" width="48" height="48" />' +
+      '<div class="svs-pop-body">' +
+        '<p class="svs-pop-title">' + esc(t('pwa_install_title', 'Install the Soul Vibe Space app')) + '</p>' +
+        '<p class="svs-pop-text">' + esc(t('pwa_pop_text', 'Schedule, bookings and VIBES, one tap from your home screen.')) + '</p>' +
+        '<button type="button" class="svs-pop-btn" data-act="go">' + esc(ctaLabel(mode)) + '</button>' +
+      '</div>' +
+      '<button type="button" class="svs-pop-close" data-act="close" aria-label="' + esc(t('pwa_install_close', 'Not now')) + '">' + IC.close + '</button>';
+  }
+  function showPopup() {
+    popTimer = null;
+    if (!popupAllowed() || D.getElementById('svsInstallPop') || D.getElementById('svsInstallHint') || D.getElementById('svsInstallSheet')) return;
+    if (cookieBannerVisible()) { waitCookie(); return; }
+    var p = D.createElement('aside');
+    p.id = 'svsInstallPop';
+    p.className = 'svs-pop';
+    p.setAttribute('role', 'dialog');
+    renderPopup(p);
+    p.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-act]');
+      if (!b) return;
+      if (b.getAttribute('data-act') === 'close') { snooze(); removePopup(); return; }
+      act('popup');
+    });
+    D.body.appendChild(p);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { p.classList.add('is-in'); }); });
+  }
+  // Баннер cookie на экране — ждём, пока его закроют, и показываемся чуть позже.
+  function waitCookie() {
+    if (popWaiting) return;
+    popWaiting = true;
+    var done = function () {
+      if (cookieBannerVisible()) return;
+      popWaiting = false;
+      W.removeEventListener('svs:consent', done);
+      if (obs) obs.disconnect();
+      schedulePopup(1200);
+    };
+    var obs = null;
+    W.addEventListener('svs:consent', done);
+    try { obs = new MutationObserver(done); obs.observe(D.body, { childList: true }); } catch (e) {}
+  }
+  function schedulePopup(ms) {
+    if (popTimer || !popupAllowed()) return;
+    popTimer = setTimeout(showPopup, ms);
+  }
+
+  // ── 3b. Инструкция (нижний лист) ──
+  var lastFocus = null;
+  function steps(mode) {
+    if (mode === 'ios') return [t('pwa_ios_s1', 'Tap Share {share} at the bottom of Safari'), t('pwa_ios_s2', 'Scroll down and choose “Add to Home Screen” {add}'), t('pwa_ios_s3', 'Tap “Add”: the Soul Vibe Space icon appears on your home screen')];
+    if (mode === 'ios-other') return [t('pwa_iosx_s1', 'Open this page in Safari: copy the link and paste it into the address bar'), t('pwa_iosx_s2', 'In Safari, tap Share {share} and choose “Add to Home Screen” {add}'), t('pwa_ios_s3', 'Tap “Add”: the Soul Vibe Space icon appears on your home screen')];
+    return [t('pwa_and_s1', 'Open the browser menu {menu} in the top right corner'), t('pwa_and_s2', 'Choose “Add to Home screen” or “Install app”'), t('pwa_and_s3', 'Tap “Install”: the Soul Vibe Space icon appears on your home screen')];
+  }
+  function shareUrl() { return location.origin + location.pathname + location.search; }
+  function copyLink(btn) {
+    var url = shareUrl();
+    var ok = function () {
+      btn.classList.add('is-done');
+      btn.querySelector('span').textContent = t('pwa_copied', 'Link copied');
+      setTimeout(function () { if (btn.isConnected) { btn.classList.remove('is-done'); btn.querySelector('span').textContent = t('pwa_copy_link', 'Copy link'); } }, 2500);
+    };
+    var legacy = function () {
+      try {
+        var ta = D.createElement('textarea'); ta.value = url; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        D.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, url.length); D.execCommand('copy'); D.body.removeChild(ta); ok();
+      } catch (e) {}
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, legacy); else legacy();
+  }
+  function closeSheet() {
+    var s = D.getElementById('svsInstallSheet');
+    if (!s) return;
+    s.classList.remove('is-in');
+    D.documentElement.classList.remove('svs-sheet-open');
+    D.removeEventListener('keydown', onKey);
+    setTimeout(function () { if (s.parentNode) s.parentNode.removeChild(s); }, 250);
+    if (lastFocus && lastFocus.focus) try { lastFocus.focus(); } catch (e) {}
+  }
+  function onKey(e) {
+    var s = D.getElementById('svsInstallSheet');
+    if (!s) return;
+    if (e.key === 'Escape') { closeSheet(); return; }
+    if (e.key !== 'Tab') return;
+    var f = s.querySelectorAll('button, a[href]');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && D.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && D.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  function openSheet(mode) {
+    if (D.getElementById('svsInstallSheet')) return;
+    removePopup();
+    lastFocus = D.activeElement;
+    var ios = mode === 'ios' || mode === 'ios-other';
+    var list = steps(mode);
+    var s = D.createElement('div');
+    s.id = 'svsInstallSheet';
+    s.className = 'svs-sheet';
+    s.setAttribute('data-mode', mode);
+    s.innerHTML =
+      '<div class="svs-sheet-backdrop" data-act="close"></div>' +
+      '<div class="svs-sheet-card" role="dialog" aria-modal="true" aria-labelledby="svsSheetTitle">' +
+        '<button type="button" class="svs-sheet-x" data-act="close" aria-label="' + esc(t('pwa_sheet_close', 'Close')) + '">' + IC.close + '</button>' +
+        '<div class="svs-sheet-head">' +
+          '<img class="svs-pop-icon" src="/images/app/icon-192.png" alt="" width="48" height="48" />' +
+          '<div><h2 class="svs-sheet-title" id="svsSheetTitle">' + esc(t(ios ? 'pwa_sheet_title_ios' : 'pwa_sheet_title_android', ios ? 'Install on iPhone or iPad' : 'Install on Android')) + '</h2>' +
+          '<p class="svs-sheet-lead">' + esc(t('pwa_sheet_lead', 'Three steps, and Soul Vibe Space sits on your home screen like any other app.')) + '</p></div>' +
+        '</div>' +
+        '<ol class="svs-steps">' + list.map(function (txt, i) {
+          var extra = (mode === 'ios-other' && i === 0)
+            ? '<button type="button" class="svs-copy" data-act="copy">' + IC.copy + '<span>' + esc(t('pwa_copy_link', 'Copy link')) + '</span></button>'
+            : '';
+          var lead = (mode === 'ios-other' && i === 0) ? '<span class="svs-step-ic">' + IC.safari + '</span>' : '';
+          return '<li class="svs-step"><span class="svs-step-n">' + (i + 1) + '</span><div class="svs-step-body"><p>' + lead + fill(txt) + '</p>' + extra + '</div></li>';
+        }).join('') + '</ol>' +
+        '<button type="button" class="svs-sheet-done" data-act="close">' + esc(t('pwa_sheet_done', 'Got it')) + '</button>' +
+      '</div>';
+    s.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-act]');
+      if (!b) return;
+      var a = b.getAttribute('data-act');
+      if (a === 'close') closeSheet();
+      else if (a === 'copy') copyLink(b);
+    });
+    D.body.appendChild(s);
+    D.documentElement.classList.add('svs-sheet-open');
+    D.addEventListener('keydown', onKey);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('is-in'); var x = s.querySelector('.svs-sheet-done'); if (x) x.focus({ preventScroll: true }); }); });
+  }
+
+  // ── 3c. Подсказка в кабинете (/account): та же кнопка и та же инструкция, всплывашки там нет ──
   function hintPlace() {
     // В кабинете — под строкой профиля; для гостя — под формой входа.
     var dash = D.getElementById('accDashboard');
@@ -148,15 +348,11 @@
     return null;
   }
   function removeHint() { var h = D.getElementById('svsInstallHint'); if (h) h.remove(); }
-
-  var SHARE_ICON = '<svg class="svs-ih-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v11M8.2 7.2 12 3.5l3.8 3.7"/><path d="M8 10.5H6.5A1.5 1.5 0 0 0 5 12v7a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-7a1.5 1.5 0 0 0-1.5-1.5H16"/></svg>';
-
   function renderHint() {
-    if (path() !== '/account' || standalone() || closedRecently()) return;
-    var mode = deferred ? 'android' : (isIOSSafari() ? 'ios' : '');
-    if (!mode) return;
+    if (path() !== '/account' || standalone() || installed() || closedRecently() || !isMobile()) return;
     var place = hintPlace();
     if (!place) return;
+    var mode = installMode();
     var box = D.getElementById('svsInstallHint');
     if (box && box.offsetParent === null) { box.remove(); box = null; } // гость вошёл — переносим в кабинет
     if (!box) {
@@ -164,48 +360,79 @@
       box.id = 'svsInstallHint';
       box.className = 'svs-ih';
       place.parent.insertBefore(box, place.before);
+      box.onclick = function (e) {
+        var b = e.target.closest && e.target.closest('[data-act]');
+        if (!b) return;
+        if (b.getAttribute('data-act') === 'close') { snooze(); removeHint(); return; }
+        act('hint');
+      };
     }
+    removePopup();
     box.setAttribute('data-mode', mode);
-    var text = mode === 'ios'
-      ? t('pwa_ios_steps', 'Tap Share {share} at the bottom of the screen, then “Add to Home Screen”.')
-      : t('pwa_install_text', 'Schedule, your bookings and VIBES in one tap from your home screen.');
-    var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
     box.innerHTML =
       '<img class="svs-ih-icon" src="/images/app/icon-192.png" alt="" width="40" height="40" />' +
       '<div class="svs-ih-body">' +
-        '<p class="svs-ih-title">' + esc(t(mode === 'ios' ? 'pwa_ios_title' : 'pwa_install_title', 'Install the Soul Vibe Space app')) + '</p>' +
-        '<p class="svs-ih-text">' + esc(text).replace('{share}', SHARE_ICON) + '</p>' +
-        (mode === 'android' ? '<button type="button" class="svs-ih-btn" data-act="install">' + esc(t('pwa_install_btn', 'Install')) + '</button>' : '') +
+        '<p class="svs-ih-title">' + esc(t('pwa_install_title', 'Install the Soul Vibe Space app')) + '</p>' +
+        '<p class="svs-ih-text">' + esc(t('pwa_pop_text', 'Schedule, bookings and VIBES, one tap from your home screen.')) + '</p>' +
+        '<button type="button" class="svs-ih-btn" data-act="go">' + esc(ctaLabel(mode)) + '</button>' +
       '</div>' +
-      '<button type="button" class="svs-ih-close" data-act="close" aria-label="' + esc(t('pwa_install_close', 'Not now')) + '">' +
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>';
-    box.onclick = function (e) {
-      var b = e.target.closest && e.target.closest('[data-act]');
-      if (!b) return;
-      if (b.getAttribute('data-act') === 'close') { store(HINT_KEY, String(Date.now())); removeHint(); return; }
-      if (deferred) {
-        var ev = deferred; deferred = null;
-        ev.prompt();
-        (ev.userChoice || Promise.resolve({})).then(function (c) {
-          if (c && c.outcome === 'dismissed') store(HINT_KEY, String(Date.now()));
-          removeHint();
-        });
-      }
-    };
+      '<button type="button" class="svs-ih-close" data-act="close" aria-label="' + esc(t('pwa_install_close', 'Not now')) + '">' + IC.close + '</button>';
+  }
+
+  // ── 3d. Ссылка «Установить приложение»: мобильное меню и подвал ──
+  function removeLinks() { Array.prototype.forEach.call(D.querySelectorAll('.svs-install-link'), function (a) { a.remove(); }); }
+  function mountLinks() {
+    if (standalone() || installed()) return;
+    var label = t('pwa_footer_link', 'Install the app');
+    var nav = D.getElementById('mobileNav');
+    if (nav && !nav.querySelector('.svs-install-link')) {
+      var a = D.createElement('a');
+      a.href = '#install-app'; a.className = 'mobile-nav-link svs-install-link'; a.textContent = label;
+      var acc = nav.querySelector('a[href$="/account"]');
+      nav.insertBefore(a, acc ? acc.nextSibling : null);
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        nav.classList.remove('is-open'); nav.setAttribute('aria-hidden', 'true');
+        var btn = D.getElementById('mobileMenuBtn'); if (btn) btn.setAttribute('aria-expanded', 'false');
+        act('link');
+      });
+    }
+    var fnav = D.querySelector('.footer-links nav');
+    if (fnav && !fnav.querySelector('.svs-install-link')) {
+      var f = D.createElement('a');
+      f.href = '#install-app'; f.className = 'svs-install-link'; f.textContent = label;
+      fnav.appendChild(f);
+      f.addEventListener('click', function (e) { e.preventDefault(); act('link'); });
+    }
+  }
+  function relabel() {
+    Array.prototype.forEach.call(D.querySelectorAll('.svs-install-link'), function (a) { a.textContent = t('pwa_footer_link', 'Install the app'); });
+    var p = D.getElementById('svsInstallPop'); if (p) renderPopup(p);
+    if (D.getElementById('svsInstallHint')) renderHint();
+    var s = D.getElementById('svsInstallSheet');
+    if (s) { var m = s.getAttribute('data-mode'); s.remove(); D.documentElement.classList.remove('svs-sheet-open'); openSheet(m); }
+  }
+  // Режим поменялся (пришёл beforeinstallprompt) — обновляем подписи кнопок.
+  function refresh() {
+    var p = D.getElementById('svsInstallPop'); if (p) renderPopup(p);
+    if (D.getElementById('svsInstallHint')) renderHint();
   }
 
   function init() {
-    if (standalone()) { mountTabs(); scrollToHash(); }
+    if (standalone()) { mountTabs(); scrollToHash(); return; }
+    mountLinks();
+    W.addEventListener('svs:langchange', relabel);
     if (path() === '/account') {
       // Кабинет или форма входа появляются после проверки сессии — пробуем несколько раз.
       var n = 0;
       (function wait() { renderHint(); if (!D.getElementById('svsInstallHint') && ++n < 20) setTimeout(wait, 300); })();
-      W.addEventListener('svs:langchange', function () { if (D.getElementById('svsInstallHint')) renderHint(); });
     }
+    schedulePopup(POP_DELAY);
   }
 
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 
   // Для тестов (node tests/pwa.test.js)
-  W.SVS_PWA = { standalone: standalone, activeTab: activeTab, isIOSSafari: isIOSSafari };
+  W.SVS_PWA = { standalone: standalone, activeTab: activeTab, isIOS: isIOS, isIOSSafari: isIOSSafari, installMode: installMode,
+    popupAllowed: popupAllowed, cookieBannerVisible: cookieBannerVisible, openSheet: openSheet, showPopup: showPopup, steps: steps };
 })();
