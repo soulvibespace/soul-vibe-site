@@ -484,6 +484,10 @@
       .vp-bonus-amt { min-width: 52px; height: 52px; font-size: 1.2rem; }
       .vp-bonus-grid, .vp-pair { gap: 12px; }
     }
+    /* Индивидуальная программа */
+    #personal { scroll-margin-top: 110px; }
+    #personal .dropin-name { margin-top: 0; }
+    .pv-personal-price { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; color: var(--accent); white-space: nowrap; margin: 0; }
   </style>
   <link rel="stylesheet" href="/compact.css" />
 </head>
@@ -498,13 +502,13 @@
       </a>
 
       <nav class="nav" aria-label="Main navigation">
-        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
         <a href="/classes" class="nav-link" data-i18n="nav_classes">Classes</a>
         <a href="/schedule" class="nav-link" data-i18n="nav_schedule">Schedule</a>
         <a aria-current="page" href="/pricing" class="nav-link nav-link--active" data-i18n="nav_pricing">Pricing</a>
         <a href="/vibes" class="nav-link" data-i18n="nav_vibes">VIBES</a>
-        <a href="/space" class="nav-link" data-i18n="nav_space">Space</a>
-        <a href="/rental" class="nav-link" data-i18n="nav_rent">Rental</a>
+        <a href="/gift-certificates" class="nav-link" data-i18n="nav_gift">Gift Certificates</a>
+        <a href="/about" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="/rental" class="nav-link" data-i18n="nav_rent">Rental &amp; Coworking</a>
         <a href="/contact" class="nav-link" data-i18n="nav_contact">Contact</a>
       </nav>
 
@@ -538,15 +542,14 @@
     </div>
 
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
       <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
       <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
       <a aria-current="page" href="/pricing" class="mobile-nav-link active" data-i18n="nav_pricing">Pricing</a>
       <a href="/vibes" class="mobile-nav-link" data-i18n="nav_vibes">VIBES</a>
-      <a href="/space" class="mobile-nav-link" data-i18n="nav_space">Space</a>
-      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental</a>
+      <a href="/gift-certificates" class="mobile-nav-link" data-i18n="nav_gift">Gift Certificates</a>
+      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental &amp; Coworking</a>
       <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
-      <a href="/price-list" class="mobile-nav-link" data-i18n="nav_pricelist">Extra Services</a>
       <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
       <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
       <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">Instagram</a>
@@ -772,6 +775,23 @@
 
       <hr class="pricing-divider">
 
+      <!-- ── ИНДИВИДУАЛЬНАЯ ПРОГРАММА (data/price-list.json → personal, редактируется в /admin) ── -->
+      <section id="personal" aria-labelledby="pvPersonalTitle">
+        <div class="dropin-row">
+          <div class="dropin-left">
+            <p class="dropin-label" id="pvPersonalLabel">Personal &amp; online</p>
+            <h2 class="dropin-name" id="pvPersonalTitle">Personal monthly programme</h2>
+            <p class="dropin-desc" id="pvPersonalDesc">We build a month of practice around your goals and schedule: in the studio, online or both. The price depends on what’s included.</p>
+          </div>
+          <div class="dropin-right">
+            <p class="pv-personal-price" id="pvPersonalPrice">Price on request</p>
+            <a href="/contact" class="btn btn-primary" data-i18n="pricing_personal_cta">Contact us</a>
+          </div>
+        </div>
+      </section>
+
+      <hr class="pricing-divider">
+
       <!-- ── FAQ ── -->
       <section id="faq" aria-labelledby="pvFaqTitle">
         <h2 class="pricing-section-title" id="pvFaqTitle" data-i18n="pv_faq_title">Questions &amp; Answers</h2>
@@ -826,24 +846,11 @@
           <p data-i18n="pricing_coworking_desc">Open workspace on the ground floor — Wi-Fi, tea & coffee included.</p>
           <p class="extra-card-price" data-i18n="pricing_coworking_from">Free between classes if you have more than %%class%% VIBES. Otherwise, co-working rates apply.</p>
           <div class="events-links">
-            <a href="/price-list#coworking" class="btn btn-outline btn-sm" data-i18n="pricing_coworking_link">View rates</a>
+            <a href="/rental#coworking" class="btn btn-outline btn-sm" data-i18n="pricing_coworking_link">View rates</a>
           </div>
         </div>
       </div>
 
-      <hr class="pricing-divider">
-
-      <!-- ── EXTRAS CROSS-LINK ── -->
-      <div class="events-note">
-        <div class="events-icon">✨</div>
-        <div>
-          <h3 data-i18n="pricing_extras_title">Looking for something else?</h3>
-          <p data-i18n="pricing_extras_desc">Individual programs and special events are priced separately.</p>
-          <div class="events-links">
-            <a href="/price-list" class="btn btn-outline btn-sm" data-i18n="pricing_extras_link">See Extra Services & Pricing</a>
-          </div>
-        </div>
-      </div>
 
     </div>
   </main>
@@ -875,16 +882,14 @@
       <div class="footer-links">
         <h4 data-i18n="footer_studio">Studio</h4>
         <nav aria-label="Footer navigation">
-          <a href="/about" data-i18n="footer_about">About</a>
-          <a href="/classes" data-i18n="footer_practices">Practices</a>
+          <a href="/classes" data-i18n="nav_classes">Classes</a>
           <a href="/schedule" data-i18n="nav_schedule">Schedule</a>
           <a href="/pricing" data-i18n="nav_pricing">Pricing</a>
           <a href="/vibes" data-i18n="footer_vibes">VIBES</a>
-          <a href="/space" data-i18n="footer_coworking">Co-working</a>
-          <a href="/price-list" data-i18n="nav_pricelist">Extra Services</a>
-          <a href="/rental" data-i18n="nav_rental">Venue Rental</a>
-          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="/gift-certificates" data-i18n="footer_gift">Gift Certificates</a>
+          <a href="/about" data-i18n="footer_about">About</a>
+          <a href="/rental" data-i18n="nav_rent">Rental &amp; Coworking</a>
+          <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
           <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" data-i18n="footer_book">Book a class</a>
         </nav>
       </div>
@@ -1068,6 +1073,25 @@
     })();
   </script>
 
+  <!-- Индивидуальная программа: тексты из data/price-list.json (personal) -->
+  <script>
+    (function () {
+      var P = null;
+      function lang() { return (window.SVS_I18N && SVS_I18N.getLang) ? SVS_I18N.getLang() : 'en'; }
+      function tr(f) { return f ? (f[lang()] || f.en || '') : ''; }
+      function set(id, f) { var el = document.getElementById(id); var v = tr(f); if (el && v) el.textContent = v; }
+      function render() {
+        if (!P) return;
+        set('pvPersonalLabel', P.label); set('pvPersonalTitle', P.title);
+        set('pvPersonalDesc', P.desc); set('pvPersonalPrice', P.price_label);
+      }
+      fetch('/data/price-list.json', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { if (d && d.personal) { P = d.personal; render(); } })
+        .catch(function () {});
+      window.addEventListener('svs:langchange', render);
+    })();
+  </script>
   <script src="/compact.js" defer></script>
 </body>
 </html>

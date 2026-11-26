@@ -31,7 +31,6 @@ CANONICAL = False  # TODO(домен): включить после перено�
 SKIP = {'auth-callback.html', 'payment.html'}
 DEFAULT_IMAGE = '/images/hero.webp'
 IMAGES = {
-    'price-list.html': '/images/coworking.webp',
     'reviews.html': '/images/studio-entrance.webp',
     'about.html': '/images/studio-entrance.webp',
     'gift-certificates.html': '/images/gift-hero-960.webp',

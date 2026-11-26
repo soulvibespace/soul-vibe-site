@@ -650,6 +650,7 @@ button { cursor: pointer; background: none; border: none; }
   margin-top: var(--space-2);
   margin-bottom: var(--space-6);
 }
+.space-text .space-link { display: flex; width: fit-content; }
 
 /* ── BOOKING WIDGET ──────────────────────────────────────────── */
 .booking-section { background: var(--color-surface-2); }
@@ -2966,22 +2967,23 @@ a.bm-confirm-btn:hover { color: #fff; }
 
 /* ══════════════════════════════════════════════════════════════
    DESKTOP HEADER — one line in EN/RU/EL.
-   ≥1360px : full header (social icons, wider container)
-   1181–1359px : social icons hidden, tighter gaps
-   ≤1180px : burger header (same as mobile), language switcher stays
+   8 пунктов меню (структура 2026-11), самые длинные подписи — EL/RU.
+   ≥1500px : full header (social icons, wider container)
+   1280–1499px : social icons hidden, tighter gaps
+   ≤1279px : burger header (same as mobile), language switcher stays
    ══════════════════════════════════════════════════════════════ */
 .nav-link { white-space: nowrap; }
 .header-actions .btn { white-space: nowrap; }
-@media (min-width: 1181px) {
+@media (min-width: 1280px) {
   .header .header-inner.container { width: min(1400px, 100% - 48px); }
-  .nav { gap: clamp(14px, 1.4vw, 22px); }
+  .nav { gap: clamp(10px, 1vw, 16px); }
   .header-inner { gap: var(--space-5); }
 }
-@media (min-width: 1181px) and (max-width: 1359px) {
+@media (min-width: 1280px) and (max-width: 1499px) {
   .header-actions > a.icon-btn { display: none; }
   .logo-full { height: 56px; }
 }
-@media (min-width: 901px) and (max-width: 1180px) {
+@media (min-width: 901px) and (max-width: 1279px) {
   .nav { display: none; }
   .header-actions { margin-left: auto; }
   .header-actions > a.icon-btn,
