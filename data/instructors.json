@@ -250,6 +250,36 @@
       "photo": "/images/team/stephanie.webp",
       "active": true,
       "order": 8
+    },
+    {
+      "slug": "ksenia-bobrushko",
+      "name": {
+        "en": "Ksenia Bobrushko",
+        "ru": "Ксения Бобрушко",
+        "el": "Ksenia Bobrushko"
+      },
+      "role": "teacher",
+      "styles": [
+        {
+          "en": "Aerial Yoga",
+          "ru": "Аэройога",
+          "el": "Aerial Yoga"
+        },
+        {
+          "en": "Vinyasa Yoga",
+          "ru": "Виньяса йога",
+          "el": "Vinyasa Yoga"
+        }
+      ],
+      "languages": [],
+      "bio": {
+        "en": "Teaches Aerial Yoga and Vinyasa Yoga.",
+        "ru": "Ведёт аэройогу и виньяса йогу.",
+        "el": "Διδάσκει Aerial Yoga και Vinyasa Yoga."
+      },
+      "photo": "/images/team/ksenia-bobrushko.webp",
+      "active": true,
+      "order": 9
     }
   ]
 }
