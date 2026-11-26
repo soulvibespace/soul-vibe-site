@@ -242,9 +242,14 @@
             services = await SvsFilter.filterVisibleServices(services);
           }
           var lang = getHomeLang();
-          var visible = services.filter(function(s) {
-            return (s.category_ids || []).some(function(cid) { return !!CAT_MAP_HOME[Number(cid)]; });
-          }).slice(0, 8);
+          var visible = (typeof SvsGroups !== 'undefined')
+            ? SvsGroups.orderServices(services, data.order).filter(function(s) {
+                var g = SvsGroups.groupOf(s);
+                return g !== 'coworking' && g !== 'yogaday';
+              })
+            : services.filter(function(s) {
+                return (s.category_ids || []).some(function(cid) { return !!CAT_MAP_HOME[Number(cid)]; });
+              });
 
           if (!visible.length) {
             classesGridWrap.innerHTML = '<p style="color:var(--text-secondary)"><a href="classes.html" style="color:var(--accent)">View all classes \u2192</a></p>';
@@ -252,16 +257,21 @@
           }
 
           classesGridWrap.innerHTML = visible.map(function(svc) {
-            var catId = (svc.category_ids || [])[0];
-            var group = catId ? CAT_MAP_HOME[Number(catId)] : null;
-            var catLbl = group ? ((CAT_LABELS_H[group] || {})[lang] || group) : '';
+            var group = (typeof SvsGroups !== 'undefined')
+              ? SvsGroups.groupOf(svc)
+              : ((svc.category_ids || [])[0] ? CAT_MAP_HOME[Number((svc.category_ids || [])[0])] : null);
+            var catLbl = group
+              ? ((CAT_LABELS_H[group] || {})[lang] || (typeof SvsGroups !== 'undefined' ? SvsGroups.label(group, lang) : group))
+              : '';
             var color = (CAT_COLORS_HOME[group] || CAT_COLORS_HOME['default']);
             var photo = svcPhotoHome(svc);
             // Strip HTML tags + decode entities for clean display
             var rawD = (svc.description || '').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim();
             var HLIMIT = 180;
             var desc = rawD;
-            var descShort = rawD.length > HLIMIT ? rawD.slice(0, HLIMIT).trimRight() + '\u2026' : rawD;
+            var descShort = rawD.length > HLIMIT
+              ? rawD.slice(0, HLIMIT).replace(/\s+\S*$/, '').replace(/[,;:\-—]+$/, '').trim() + '\u2026'
+              : rawD;
             var descId = 'hdesc-' + svc.id;
             var instructor = svc.instructor_name || '';
 
@@ -291,6 +301,25 @@
               + '</button>'
               + '</div></div>';
           }).join('');
+
+          var prevBtn = document.getElementById('classesPrev');
+          var nextBtn = document.getElementById('classesNext');
+          if (prevBtn && nextBtn) {
+            var syncArrows = function() {
+              prevBtn.disabled = classesGridWrap.scrollLeft <= 4;
+              nextBtn.disabled = classesGridWrap.scrollLeft + classesGridWrap.clientWidth >= classesGridWrap.scrollWidth - 4;
+            };
+            var step = function(dir) {
+              var card = classesGridWrap.querySelector('.service-card');
+              var w = card ? (card.offsetWidth + 20) : classesGridWrap.clientWidth * 0.8;
+              classesGridWrap.scrollBy({ left: dir * w, behavior: 'smooth' });
+            };
+            prevBtn.addEventListener('click', function() { step(-1); });
+            nextBtn.addEventListener('click', function() { step(1); });
+            classesGridWrap.addEventListener('scroll', syncArrows, { passive: true });
+            window.addEventListener('resize', syncArrows);
+            requestAnimationFrame(syncArrows);
+          }
         })
         .catch(function(err) {
           classesGridWrap.innerHTML = '<p style="color:var(--text-secondary)"><a href="classes.html" style="color:var(--accent)">View all classes \u2192</a></p>';

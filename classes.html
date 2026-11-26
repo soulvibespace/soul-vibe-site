@@ -703,9 +703,9 @@
       const container = document.getElementById('classesContainer');
       const meta = document.getElementById('classesMeta');
 
-      // Filter
+      // Filter: по умолчанию («Все») показываем регулярные классы; разовые события Yoga Day — в своей вкладке.
       let visible = _allServices.filter(svc => {
-        if (!_activeCat) return true;
+        if (!_activeCat) return serviceGroup(svc) !== 'yogaday';
         return serviceGroup(svc) === _activeCat;
       });
 

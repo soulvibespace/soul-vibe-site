@@ -232,8 +232,16 @@
         <h2 class="section-title" data-i18n="classes_title">Classes at Soul Vibe Space</h2>
         <p class="section-lead" data-i18n="classes_lead">From gentle morning yoga to sound baths and ecstatic dance — see what's on this week.</p>
       </div>
-      <div id="classes-grid" class="classes-grid-wrap">
-        <!-- Populated by simplybook-api.js -->
+      <div class="classes-carousel">
+        <button type="button" class="reviews-preview-arrow classes-carousel-arrow" id="classesPrev" aria-label="Previous classes" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div id="classes-grid" class="classes-grid-wrap">
+          <!-- Populated by app.js -->
+        </div>
+        <button type="button" class="reviews-preview-arrow classes-carousel-arrow" id="classesNext" aria-label="Next classes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
       </div>
       <div class="classes-cta">
         <a href="#" onclick="event.preventDefault();ClassModal.open(null,null,null)" class="btn btn-primary" data-i18n="classes_cta">View all classes &amp; book →</a>

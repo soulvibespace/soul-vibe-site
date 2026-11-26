@@ -74,16 +74,22 @@
     if (!scrollable) { dots.innerHTML = ''; dots._n = 0; return; }
     if (dots._n !== list.length) {
       dots.innerHTML = '';
-      list.forEach(function (card) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.tabIndex = -1;
-        b.addEventListener('click', function () {
-          var l = cards(row);
-          row.scrollTo({ left: card.offsetLeft - (l[0] ? l[0].offsetLeft : 0), behavior: 'smooth' });
+      if (list.length > 10) {
+        var counter = document.createElement('span');
+        counter.className = 'snap-counter';
+        dots.appendChild(counter);
+      } else {
+        list.forEach(function (card) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.tabIndex = -1;
+          b.addEventListener('click', function () {
+            var l = cards(row);
+            row.scrollTo({ left: card.offsetLeft - (l[0] ? l[0].offsetLeft : 0), behavior: 'smooth' });
+          });
+          dots.appendChild(b);
         });
-        dots.appendChild(b);
-      });
+      }
       dots._n = list.length;
     }
     update(row);
@@ -93,11 +99,17 @@
     var dots = row._svsDots; if (!dots || !dots._n) return;
     var list = cards(row); if (!list.length) return;
     var x = row.scrollLeft, first = list[0].offsetLeft, idx = 0, best = Infinity;
-    if (x + row.clientWidth >= row.scrollWidth - 4) idx = list.length - 1;
+    if (x + row.scrollWidth <= row.clientWidth + 4) idx = 0;
+    else if (x + row.clientWidth >= row.scrollWidth - 4) idx = list.length - 1;
     else list.forEach(function (c, i) {
       var d = Math.abs(c.offsetLeft - first - x);
       if (d < best) { best = d; idx = i; }
     });
+    if (dots._n > 10) {
+      var counter = dots.querySelector('.snap-counter');
+      if (counter) counter.textContent = (idx + 1) + ' / ' + list.length;
+      return;
+    }
     Array.prototype.forEach.call(dots.children, function (b, i) {
       b.classList.toggle('is-active', i === idx);
     });
