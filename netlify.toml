@@ -25,7 +25,6 @@
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# ─────────────────────────────────────────────────────────────────────────────
 # Структура сайта 2026-11: /space и /price-list удалены.
 # Зал, галерея и удобства — на /about (id="space"), коворкинг и мероприятия — на /rental
 # (id="coworking", id="events"), индивидуальная программа — на /pricing (id="personal").
@@ -57,51 +56,99 @@
   force = true
 
 # ─────────────────────────────────────────────────────────────────────────────
-# S5 (#136) — 301-редиректы со старого сайта Squarespace. ЧЕРНОВИК, НЕ ВКЛЮЧЁН.
-# Включить (раскомментировать) только в день переноса soulvibespace.com на Netlify.
-# Список старых адресов — https://soulvibespace.com/sitemap.xml (24.11.2026) + /cart.
-# /about, /contact, /schedule, /gift-certificates совпадают с новыми — правило не нужно.
-# www.soulvibespace.com → soulvibespace.com Netlify делает сам, когда домен основной.
-#
+# S5 (#136) — 301-редиректы со старого сайта Squarespace (www.soulvibespace.com).
+# Правила ВКЛЮЧЕНЫ и безопасны уже сейчас: они срабатывают только на старых адресах,
+# которых на новом сайте нет (сейчас там 404). Поэтому в день переноса домена здесь
+# ничего менять не нужно, а проверить их можно заранее на soul-vibe-space.netlify.app:
+#     bash tools/check-redirects.sh https://soul-vibe-space.netlify.app
+# Источник списка: https://www.soulvibespace.com/sitemap.xml + ссылки в меню (24.11.2026).
+# /about, /contact, /schedule, /gift-certificates совпадают с новыми — правила не нужны
+# (вариант со слэшем в конце, /about/, Netlify сам ведёт на /about).
+# НЕ ставить splat на существующие страницы (/gift-certificates/*): с force = true
+# правило поймало бы и саму /gift-certificates и зациклилось.
+# Хост: основной — www.soulvibespace.com; soulvibespace.com → www Netlify делает сам,
+# когда www выбран Primary domain (Domain management). Отдельного правила не добавляем,
+# чтобы не получить петлю, если основной домен выберут иначе.
+
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+  force = true
+
+# Старая SEO-страница «Yoga classes in Limassol» → список занятий.
+[[redirects]]
+  from = "/yoga-studio-limassol"
+  to = "/classes"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/gift-certificates/gift-certificates"
+  to = "/gift-certificates"
+  status = 301
+  force = true
+
+# Карточки товаров магазина Squarespace (сертификаты).
+[[redirects]]
+  from = "/gift-certificates/p/*"
+  to = "/gift-certificates"
+  status = 301
+  force = true
+
+# Корзина и оформление заказа Squarespace.
+[[redirects]]
+  from = "/cart"
+  to = "/gift-certificates"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/cart/*"
+  to = "/gift-certificates"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/checkout/*"
+  to = "/gift-certificates"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/commerce/*"
+  to = "/gift-certificates"
+  status = 301
+  force = true
+
+# Поиск Squarespace (/search?q=…) — поиска на новом сайте нет.
+[[redirects]]
+  from = "/search"
+  to = "/"
+  status = 301
+  force = true
+
+# Файлы и служебные адреса Squarespace: /s/… (загруженные файлы), /config (вход в админку).
+[[redirects]]
+  from = "/s/*"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/config/*"
+  to = "/"
+  status = 301
+  force = true
+
+# ПО ЖЕЛАНИЮ, после этапа 2 (docs/domain-move.md) и проверки входа, оплаты и писем на www:
+# склеить технический адрес с основным. Не обязательно — netlify.app закрыт noindex.
+# До этого НЕ включать: на netlify.app сейчас живут вход и оплата.
+# app.soulvibespace.com сюда НЕ добавлять: это алиас для установленных PWA, без редиректа.
+# Deploy-превью (deploy-preview-N--soul-vibe-space.netlify.app) это правило не задевает.
 # [[redirects]]
-#   from = "/home"
-#   to = "/"
+#   from = "https://soul-vibe-space.netlify.app/*"
+#   to = "https://www.soulvibespace.com/:splat"
 #   status = 301
 #   force = true
-#
-# [[redirects]]
-#   from = "/yoga-studio-limassol"
-#   to = "/classes"
-#   status = 301
-#   force = true
-#
-# [[redirects]]
-#   from = "/gift-certificates/gift-certificates"
-#   to = "/gift-certificates"
-#   status = 301
-#   force = true
-#
-# [[redirects]]
-#   from = "/gift-certificates/p/*"
-#   to = "/gift-certificates"
-#   status = 301
-#   force = true
-#
-# [[redirects]]
-#   from = "/cart"
-#   to = "/gift-certificates"
-#   status = 301
-#   force = true
-#
-# # Служебные адреса Squarespace (корзина, оформление, аккаунт покупателя).
-# [[redirects]]
-#   from = "/commerce/*"
-#   to = "/gift-certificates"
-#   status = 301
-#   force = true
-#
-# [[redirects]]
-#   from = "/account/*"
-#   to = "/account"
-#   status = 301
 # ─────────────────────────────────────────────────────────────────────────────

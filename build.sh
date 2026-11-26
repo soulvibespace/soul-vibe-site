@@ -23,6 +23,7 @@ rsync -a ./ dist/ \
   --exclude 'README.md' \
   --exclude 'netlify.toml' \
   --exclude 'netlify/' \
+  --exclude 'docs/' \
   --exclude '.gitignore' \
   --exclude '__pycache__/' \
   --exclude '*.pyc' \
