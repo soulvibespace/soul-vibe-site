@@ -474,9 +474,20 @@
     W.addEventListener('svs:langchange', function () { waPaint(a); });
   }
 
+  // Любая кнопка с data-svs-install (например, в «Частых вопросах» на /contact) открывает установку.
+  function bindInstallButtons() {
+    D.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest && e.target.closest('[data-svs-install]');
+      if (!b) return;
+      e.preventDefault();
+      act('link');
+    });
+  }
+
   function init() {
     mountTabs();
     mountWa();
+    bindInstallButtons();
     if (standalone()) { scrollToHash(); return; }
     mountLinks();
     W.addEventListener('svs:langchange', relabel);
@@ -492,5 +503,6 @@
 
   // Для тестов (node tests/pwa.test.js)
   W.SVS_PWA = { standalone: standalone, activeTab: activeTab, tabsAllowed: tabsAllowed, tabs: TABS, waAllowed: waAllowed, waHref: waHref, waBlocked: waBlocked, isIOS: isIOS, isIOSSafari: isIOSSafari, installMode: installMode,
-    popupAllowed: popupAllowed, cookieBannerVisible: cookieBannerVisible, openSheet: openSheet, showPopup: showPopup, steps: steps };
+    popupAllowed: popupAllowed, cookieBannerVisible: cookieBannerVisible, openSheet: openSheet, showPopup: showPopup, steps: steps,
+    install: function () { act('link'); } };
 })();

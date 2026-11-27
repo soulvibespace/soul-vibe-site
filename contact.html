@@ -235,9 +235,54 @@
     .form-success.visible { display: block; }
     .form-success svg { color: #4caf50; margin-bottom: 12px; }
 
+    /* ── FAQ ── */
+    .faq-section {
+      margin-top: var(--block-gap);
+      padding-top: var(--block-gap);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: var(--split-gap);
+      align-items: start;
+      scroll-margin-top: 96px;
+    }
+    .faq-intro h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .faq-intro p { font-size: .93rem; color: var(--text-secondary); line-height: 1.7; }
+    .faq-intro .faq-more { margin-top: 14px; }
+    .faq-intro a, .faq-a a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    .faq-list { border-top: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item summary {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 18px 0; min-height: 48px; cursor: pointer; list-style: none;
+      font-size: 1rem; font-weight: 500; line-height: 1.45; color: var(--text-primary);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+    .faq-icon { flex: 0 0 auto; color: var(--accent); transition: transform .25s ease; }
+    .faq-item[open] .faq-icon { transform: rotate(180deg); }
+    .faq-a { padding: 0 36px 20px 0; font-size: .93rem; line-height: 1.7; color: var(--text-secondary); }
+    .faq-item[open] .faq-a { animation: faqIn .25s ease; }
+    @keyframes faqIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    /* Кнопка «Как установить» — только на телефоне и не в установленном приложении. */
+    .faq-install-row { display: none; margin: -6px 0 20px; }
+    @media (max-width: 900px) { html:not(.svs-standalone) .faq-install-row { display: block; } }
+    @media (prefers-reduced-motion: reduce) { .faq-icon { transition: none; } .faq-item[open] .faq-a { animation: none; } }
+
     @media (max-width: 900px) {
       .contact-grid { grid-template-columns: 1fr; gap: 40px; }
       .contact-form-section { grid-template-columns: 1fr; gap: 32px; }
+      .faq-section { grid-template-columns: 1fr; gap: 24px; }
+      .faq-a { padding-right: 0; }
       .contact-map-wrap { aspect-ratio: 16/9; }
     }
     @media (max-width: 600px) {
@@ -310,6 +355,7 @@
         <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental &amp; Coworking</a>
         <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
         <a aria-current="page" href="/contact" class="mobile-nav-link active" data-i18n="nav_contact">Contact</a>
+        <a href="/contact#faq" class="mobile-nav-link" data-i18n="nav_faq">FAQ</a>
       </nav>
       <div class="mobile-nav-social">
         <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-pill" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.25" cy="6.75" r="0.6" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a>
@@ -391,6 +437,54 @@
 
       </div>
 
+      <!-- Частые вопросы. Тексты — faq_* в i18n.js; разметку FAQPage (JSON-LD) из этого блока собирает tools/seo.py. -->
+      <section class="faq-section" id="faq" aria-labelledby="faqTitle">
+        <div class="faq-intro">
+          <h2 id="faqTitle" data-i18n="faq_title">Frequently asked questions</h2>
+          <p data-i18n="faq_sub">Quick answers about classes, Class Passes, VIBES and the studio.</p>
+          <p class="faq-more" data-i18n="faq_more">Didn’t find your answer? Message the administrator on <a href="https://wa.me/35795642888" target="_blank" rel="noopener">WhatsApp</a> — we’re happy to help.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" id="faq-1">
+            <summary><span data-i18n="faq_q1">What should I bring to class?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a1">Comfortable clothes you can move in and a bottle of water. Mats, blocks, straps, bolsters and blankets are provided at the studio, so there’s no need to bring your own. Try to arrive 5–10 minutes early to change and settle in.</div>
+          </details>
+          <details class="faq-item" id="faq-2">
+            <summary><span data-i18n="faq_q2">Do I need to book in advance, and how do I cancel?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a2">Yes, please book your place through the <a href="/schedule">schedule</a> on the website or in your personal account. If your plans change, cancel the booking in your <a href="/account">personal account</a> as early as you can, so someone else can take the spot. There is currently no penalty for late cancellation; if that changes, we’ll let you know in advance.</div>
+          </details>
+          <details class="faq-item" id="faq-3">
+            <summary><span data-i18n="faq_q3">Are the classes suitable for beginners?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a3">Yes. Beginners and experienced practitioners are equally welcome, and we’ll help you find a practice that suits you. If you’re new to the studio, have a look at the <a href="/pricing">Starter Pack</a>, a one-time offer for your first classes. Not sure where to start? Message the administrator on <a href="https://wa.me/35795642888" target="_blank" rel="noopener">WhatsApp</a>.</div>
+          </details>
+          <details class="faq-item" id="faq-4">
+            <summary><span data-i18n="faq_q4">How do Class Passes and VIBES work?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a4">VIBES are the studio’s practice currency. When you buy a Class Pass or a Starter Pack, VIBES are added to your balance automatically, and you can use them for any class or practice at the studio. Book as usual: %%class%% VIBES are deducted for a regular class when you attend, not when you book. A Class Pass is valid from your first visit, not from the purchase date. More on the <a href="/vibes">VIBES</a> and <a href="/pricing">Pricing</a> pages.</div>
+          </details>
+          <details class="faq-item" id="faq-5">
+            <summary><span data-i18n="faq_q5">Can I freeze my Class Pass?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a5">Yes. Send a freeze request from your <a href="/account">personal account</a>. The administrator reviews each request; a freeze can last up to %%freeze%% days, and your Class Pass is extended by the number of frozen days. Your VIBES balance stays the same.</div>
+          </details>
+          <details class="faq-item" id="faq-6">
+            <summary><span data-i18n="faq_q6">Where is the studio, and is there parking?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a6">We’re at 50 Agias Zonis, Limassol 3090, Cyprus — <a href="https://g.co/kgs/G6ZR1W7" target="_blank" rel="noopener">open in Google Maps</a>. Classes run daily from 8:00 to 22:00, and the administrator is at the studio from 14:00 to 22:00. For the easiest place to park nearby, message the administrator on <a href="https://wa.me/35795642888" target="_blank" rel="noopener">WhatsApp</a> before your first visit.</div>
+          </details>
+          <details class="faq-item" id="faq-7">
+            <summary><span data-i18n="faq_q7">How do I buy and use a gift certificate?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a7">Message us on <a href="https://wa.me/35795642888" target="_blank" rel="noopener">WhatsApp</a> or <a href="https://www.instagram.com/soul.vibe.space_cyprus" target="_blank" rel="noopener">Instagram</a>, or call +357 95 642 888, and our administrator will arrange everything. Amounts range from €20 to €240, and %%dropin%% covers one drop-in class. Choose a digital certificate sent by email or a printed one to pick up at the studio from 14:00 to 22:00. A certificate is valid for 6 months from the date of purchase and can be used for any class from the regular schedule. More on the <a href="/gift-certificates">Gift Certificates</a> page.</div>
+          </details>
+          <details class="faq-item" id="faq-8">
+            <summary><span data-i18n="faq_q8">How do coworking and room rental work?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a8">The studio has 170 m² over two floors: two 35 m² halls upstairs (the Mirror Room and the White Room) and a 100 m² ground floor with open coworking that converts into an event space for up to 50 guests. You can book one room or the whole venue: tell us your dates and format, and we’ll send you an offer. Coworking between classes is free if you have more than %%class%% VIBES on your balance; otherwise, coworking rates apply. See <a href="/rental">Rental &amp; Coworking</a>.</div>
+          </details>
+          <details class="faq-item" id="faq-9">
+            <summary><span data-i18n="faq_q9">How do I install the Soul Vibe Space app on my phone?</span><svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+            <div class="faq-a" data-i18n="faq_a9">The app installs straight from the website, no App Store or Google Play needed. On iPhone, open the site in Safari, tap Share and choose “Add to Home Screen”. On Android, open the browser menu ⋮ and choose “Add to Home screen” or “Install app”. Your schedule, bookings and VIBES are then one tap away.</div>
+            <p class="faq-install-row"><button type="button" class="btn btn-outline btn-sm faq-install" data-svs-install data-i18n="pwa_how_btn">How to install</button></p>
+          </details>
+        </div>
+      </section>
+
       <!-- Contact form -->
       <div class="contact-form-section">
         <div class="contact-form-intro">
@@ -471,6 +565,7 @@
           <a href="/about" data-i18n="footer_about">About</a>
           <a href="/rental" data-i18n="nav_rent">Rental &amp; Coworking</a>
           <a href="/reviews" data-i18n="footer_reviews">Reviews</a>
+          <a href="/contact#faq" data-i18n="nav_faq">FAQ</a>
           <a href="/schedule" onclick="if(window.ClassModal){event.preventDefault();ClassModal.open(null,null,null)}" data-i18n="footer_book">Book a class</a>
         </nav>
       </div>

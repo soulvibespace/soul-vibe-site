@@ -83,6 +83,8 @@ if [ -n "$STRICT" ] && command -v node >/dev/null 2>&1; then
   fi
   node tests/pwa.test.js >/dev/null || { echo "ОШИБКА: tests/pwa.test.js" >&2; exit 1; }
   echo "тесты приложения (PWA): ок"
+  node tests/faq.test.js >/dev/null || { echo "ОШИБКА: tests/faq.test.js" >&2; exit 1; }
+  echo "тесты частых вопросов: ок"
 fi
 
 echo "файлов на публикацию: $(find dist -type f | wc -l)"
