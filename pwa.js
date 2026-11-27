@@ -39,10 +39,10 @@
   }
 
   var ICONS = {
-    schedule: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M8 2.75v3.5M16 2.75v3.5M3.5 9.5h17M8 13.5h2M14 13.5h2M8 17h2"/></svg>',
-    bookings: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8M6.5 3h11A1.5 1.5 0 0 1 19 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3z"/><path d="M8.5 11.5l2.2 2.2 4.8-4.7M8.5 17h7"/></svg>',
-    vibes: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.3-1.8-7.5-5.3-7.5-9.3 0-.6.1-1.2.2-1.7 2.7.2 5.5 1.7 7.3 4.2 1.8-2.5 4.6-4 7.3-4.2.1.5.2 1.1.2 1.7 0 4-3.2 7.5-7.5 9.3z"/><path d="M12 13.7c-1-2.4-1-5.6 0-9.2 1 3.6 1 6.8 0 9.2z"/></svg>',
-    profile: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.1-3.6 4-5.5 7.5-5.5s6.4 1.9 7.5 5.5"/></svg>'
+    schedule: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M8 2.75v3.5M16 2.75v3.5M3.5 9.5h17M8.5 13.5h.01M12 13.5h.01M15.5 13.5h.01M8.5 17h.01M12 17h.01"/></svg>',
+    bookings: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="3.5" width="15" height="17" rx="2.5"/><path d="M8.5 11.5l2.3 2.3 4.7-4.8M8.5 16.5h7"/></svg>',
+    vibes: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C9.4 7.8 8.8 12.2 12 19.5c3.2-7.3 2.6-11.7 0-15Z"/><path d="M12 19.5c-4.6-.3-8-3.4-8.5-8.2 3.2-.3 5.8 1.2 7.3 3.9"/><path d="M12 19.5c4.6-.3 8-3.4 8.5-8.2-3.2-.3-5.8 1.2-7.3 3.9"/></svg>',
+    profile: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.25" r="3.75"/><path d="M4.5 20c1.1-3.5 3.9-5.25 7.5-5.25s6.4 1.75 7.5 5.25"/></svg>'
   };
   var TABS = [
     { id: 'schedule', href: '/schedule', key: 'pwa_tab_schedule', fb: 'Schedule' },

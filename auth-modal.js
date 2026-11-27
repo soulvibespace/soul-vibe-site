@@ -662,12 +662,12 @@ function _updateHeaderBtn(name, loggedIn) {
       mobBtn.setAttribute('aria-label', name);
       mobBtn.title = name;
       // Filled person icon
-      mobBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" fill="rgba(107,79,160,0.18)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--color-primary,#6B4FA0)"/></svg>`;
+      mobBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" fill="rgba(107,79,160,0.18)"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--color-primary,#6B4FA0)"/></svg>`;
       mobBtn.onclick = (e) => { e.preventDefault(); window.location.href = '/account'; };
     } else {
       mobBtn.setAttribute('aria-label', 'Sign In');
       mobBtn.title = 'Sign In';
-      mobBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
+      mobBtn.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
       mobBtn.onclick = (e) => { e.preventDefault(); if(typeof AuthModal!=='undefined') AuthModal.open('login'); else window.location.href='/account'; };
     }
   }
