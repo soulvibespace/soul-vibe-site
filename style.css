@@ -2166,6 +2166,38 @@ button { cursor: pointer; background: none; border: none; }
 }
 .bm-continue-btn:hover { opacity: 0.9; }
 
+/* ── Step 2: compact list of available dates (default) ── */
+.bm-dates-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.bm-dates-head .bm-calendar-title { margin-bottom: 0; }
+.bm-view-toggle {
+  flex-shrink: 0; background: none; border: 1.5px solid rgba(107,79,160,0.3); border-radius: 999px;
+  padding: 6px 12px; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--color-primary, #6B4FA0);
+  cursor: pointer; white-space: nowrap;
+}
+.bm-view-toggle:hover { background: rgba(107,79,160,0.06); }
+.bm-view-toggle[hidden] { display: none; }
+.bm-date-hint { margin: 0 0 10px; font-size: 0.82rem; color: #666; }
+.bm-date-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.bm-date-row {
+  display: grid; grid-template-columns: 7.5rem 1fr; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid rgba(107,79,160,0.12);
+}
+.bm-date-row:last-child { border-bottom: none; }
+.bm-date-label { font-weight: 600; font-size: 0.92rem; color: #1a1a1a; }
+.bm-date-times { display: flex; flex-wrap: wrap; gap: 8px; }
+.bm-time-pill { min-width: 64px; min-height: 38px; padding: 6px 14px; border-radius: 999px; font-size: 0.9rem; }
+.bm-more-dates {
+  display: block; width: 100%; margin-top: 12px; padding: 11px; border-radius: 10px;
+  border: 1.5px dashed rgba(107,79,160,0.35); background: #fff; color: var(--color-primary, #6B4FA0);
+  font: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+.bm-more-dates:hover { background: rgba(107,79,160,0.05); }
+.bm-date-empty-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 12px; }
+.bm-date-empty-actions .bm-wa-btn { margin: 0; }
+@media (max-width: 340px) {
+  .bm-date-row { grid-template-columns: 1fr; gap: 6px; }
+}
+
 /* ── Confirm ── */
 .bm-confirm-header {
   display: flex;
