@@ -97,6 +97,11 @@ const BookingModal = (() => {
   let _slotsLoading = false;
   let _loadedFrom = null;   // ISO date string of the currently cached window
   let _loadedTo = null;
+  // Step 2 view: 'list' = only dates that have slots (default), 'calendar' = month grid.
+  let _viewMode = 'list';
+  let _listShown = 0;       // how many dates the list currently shows
+  const LIST_DAYS = 60;     // list horizon, days ahead
+  const LIST_PAGE = 8;      // dates per "Show more dates"
 
   // DOM refs
   let _modal, _backdrop;
@@ -414,10 +419,28 @@ const BookingModal = (() => {
     _selectedSlot = null;
     _currentMonth = new Date();
     _resetSlotState();
+    _viewMode = 'list';
+    _listShown = 0;
     _renderStep('schedule');
   }
 
   // ── Schedule (calendar + slots) ───────────────────────────────
+  // Step-2 labels (RU / EN / EL).
+  const SCH = {
+    choose:     { ru: 'Выберите дату и время', en: 'Choose a date and time', el: 'Επίλεξε ημέρα και ώρα' },
+    to_cal:     { ru: 'Календарь', en: 'Calendar', el: 'Ημερολόγιο' },
+    to_list:    { ru: 'Список дат', en: 'Available dates', el: 'Διαθέσιμες ημερομηνίες' },
+    more:       { ru: 'Показать ещё даты', en: 'Show more dates', el: 'Περισσότερες ημερομηνίες' },
+    list_hint:  { ru: 'Нажмите на время — и сразу к подтверждению.', en: 'Tap a time to go straight to confirmation.', el: 'Πάτησε μια ώρα για να συνεχίσεις στην επιβεβαίωση.' },
+    empty:      { ru: 'В ближайшие 60 дней занятий этого класса нет. Напишите нам — подскажем ближайшую дату, или посмотрите общее расписание.',
+                  en: 'There are no sessions of this class in the next 60 days. Message us and we’ll tell you the next date, or check the full schedule.',
+                  el: 'Δεν υπάρχουν μαθήματα αυτής της τάξης τις επόμενες 60 ημέρες. Στείλε μας μήνυμα για την επόμενη ημερομηνία ή δες το πλήρες πρόγραμμα.' },
+    wa:         { ru: 'Написать в WhatsApp', en: 'Message us on WhatsApp', el: 'Μήνυμα στο WhatsApp' },
+    schedule:   { ru: 'Открыть расписание', en: 'Open the schedule', el: 'Άνοιγμα προγράμματος' },
+    time_aria:  { ru: 'Записаться: {d}, {t}', en: 'Book: {d}, {t}', el: 'Κράτηση: {d}, {t}' },
+  };
+  const RU_MON_SHORT = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+
   function _renderSchedule(body) {
     const service = _services?.find(s => String(s.id) === String(_selectedService));
     const serviceName = service ? _esc(_svcName(service)) : '';
@@ -426,15 +449,35 @@ const BookingModal = (() => {
     const backLabel = lang === 'ru' ? '← Назад' : lang === 'el' ? '← Πίσω' : '← Back';
     const chooseLabel = lang === 'ru' ? 'Выберите дату' : lang === 'el' ? 'Επιλέξτε ημέρα' : 'Choose a date';
     const slotsLabel = lang === 'ru' ? 'Доступное время' : lang === 'el' ? 'Διαθέσιμες ώρες' : 'Available times';
+    const isList = _viewMode !== 'calendar';
+    const toggle = `<button type="button" class="bm-view-toggle" id="bmViewToggle" onclick="BookingModal._toggleView()"
+        aria-pressed="${isList ? 'false' : 'true'}">${_esc(_t(isList ? SCH.to_cal : SCH.to_list))}</button>`;
 
-    body.innerHTML = `
+    const head = `
       <div class="bm-schedule-header">
         <button class="bm-back-btn" onclick="BookingModal._goBack()">${backLabel}</button>
         <div class="bm-selected-service">${serviceName}</div>
+      </div>`;
+
+    if (isList) {
+      body.innerHTML = head + `
+      <div class="bm-dates-head">
+        <div class="bm-calendar-title">${_esc(_t(SCH.choose))}</div>
+        ${toggle}
+      </div>
+      <div id="bmDateList" class="bm-date-list" aria-live="polite"></div>`;
+      _renderDateList();
+      _loadSlotsForMonth(false);
+      return;
+    }
+
+    body.innerHTML = head + `
+      <div class="bm-dates-head">
+        <div class="bm-calendar-title">${chooseLabel}</div>
+        ${toggle}
       </div>
       <div class="bm-schedule-body">
         <div class="bm-calendar-section">
-          <div class="bm-calendar-title">${chooseLabel}</div>
           <div id="bmCalendar" class="bm-calendar"></div>
         </div>
         <div class="bm-slots-section">
@@ -447,6 +490,105 @@ const BookingModal = (() => {
     // Allow auto-advance here: if the current month has no availability we jump
     // straight to the first month that does, instead of showing an all-grey grid.
     _loadSlotsForMonth(true);
+  }
+
+  // «Сб, 28 ноя» / «Sat 28 Nov» / «Σάβ 28 Νοε»
+  function _listDateLabel(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const lang = _lang();
+    if (lang === 'ru') {
+      const wd = d.toLocaleDateString('ru-RU', { weekday: 'short' }).replace('.', '');
+      return wd.charAt(0).toUpperCase() + wd.slice(1) + ', ' + d.getDate() + ' ' + RU_MON_SHORT[d.getMonth()];
+    }
+    const loc = lang === 'el' ? 'el-GR' : 'en-GB';
+    const wd = d.toLocaleDateString(loc, { weekday: 'short' });
+    const mo = d.toLocaleDateString(loc, { month: 'short' }).replace('.', '');
+    return wd + ' ' + d.getDate() + ' ' + mo;
+  }
+
+  // Dates with slots from today to today + LIST_DAYS; today's past times are dropped.
+  function _listDates() {
+    const today = _todayMidnight();
+    const last = new Date(today); last.setDate(last.getDate() + LIST_DAYS);
+    const lastISO = _fmtISO(last), todayISO = _fmtISO(today);
+    const now = new Date();
+    const nowHM = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    return _futureSlotDates()
+      .filter(k => k <= lastISO)
+      .map(k => ({ date: k, times: _slots[k].slice().sort().filter(t => k !== todayISO || t.slice(0, 5) > nowHM) }))
+      .filter(x => x.times.length);
+  }
+
+  function _renderDateList() {
+    const el = _el('bmDateList');
+    if (!el) return;
+    if (_slotsLoading || (!_loadedTo && !_slotsError)) {
+      el.innerHTML = `<div class="bm-loading-small"><div class="bm-spinner bm-spinner-sm"></div>`
+        + `<div class="bm-slots-placeholder">${_t({ ru: 'Загружаем расписание…', el: 'Φόρτωση διαθεσιμότητας…', en: 'Loading availability…' })}</div></div>`;
+      return;
+    }
+    if (_slotsError) {
+      el.innerHTML = `<div class="bm-slots-error">${_t({ ru: 'Не удалось загрузить расписание', el: 'Αποτυχία φόρτωσης διαθεσιμότητας', en: "Couldn't load availability" })}</div>`
+        + `<button class="bm-continue-btn" onclick="BookingModal._retryLoadSlots()">${_t({ ru: 'Попробовать снова', el: 'Δοκιμάστε ξανά', en: 'Try again' })}</button>`;
+      return;
+    }
+    const dates = _listDates();
+    const tgl = _el('bmViewToggle');
+    if (tgl) tgl.hidden = !dates.length;
+    if (!dates.length) {
+      el.innerHTML = `<div class="bm-slots-empty">${_esc(_t(SCH.empty))}</div>
+        <div class="bm-date-empty-actions">
+          <a class="bm-wa-btn" href="https://wa.me/35795642888" target="_blank" rel="noopener">${_esc(_t(SCH.wa))}</a>
+          <a class="bm-link-btn" href="/schedule">${_esc(_t(SCH.schedule))}</a>
+        </div>`;
+      return;
+    }
+    if (!_listShown) _listShown = LIST_PAGE;
+    const shown = dates.slice(0, _listShown);
+    let html = `<p class="bm-date-hint">${_esc(_t(SCH.list_hint))}</p><ul class="bm-date-rows">`;
+    for (const x of shown) {
+      const label = _listDateLabel(x.date);
+      html += `<li class="bm-date-row${_selectedDate === x.date ? ' bm-date-row--sel' : ''}">
+          <span class="bm-date-label">${_esc(label)}</span>
+          <span class="bm-date-times">`
+        + x.times.map(t => {
+            const sel = _selectedDate === x.date && _selectedSlot === t;
+            const aria = _t(SCH.time_aria).replace('{d}', label).replace('{t}', t.slice(0, 5));
+            return `<button type="button" class="bm-slot bm-time-pill${sel ? ' bm-slot-selected' : ''}" aria-label="${_esc(aria)}"
+              onclick="BookingModal._pickListSlot('${x.date}','${t}')">${t.slice(0, 5)}</button>`;
+          }).join('')
+        + `</span></li>`;
+    }
+    html += `</ul>`;
+    if (dates.length > shown.length) {
+      html += `<button type="button" class="bm-more-dates" onclick="BookingModal._moreDates()">${_esc(_t(SCH.more))}</button>`;
+    }
+    el.innerHTML = html;
+  }
+
+  // One tap: date + time chosen → confirm (or the sign-in gate).
+  function _pickListSlot(dateStr, time) {
+    _selectedDate = dateStr;
+    _selectedSlot = time;
+    _goToConfirm();
+  }
+
+  function _moreDates() {
+    _listShown += LIST_PAGE;
+    _renderDateList();
+  }
+
+  function _toggleView() {
+    _viewMode = _viewMode === 'calendar' ? 'list' : 'calendar';
+    if (_viewMode === 'calendar') {
+      // Open the grid on the chosen date's month, or on the first month with slots.
+      const ref = _selectedDate || _futureSlotDates()[0];
+      if (ref) { const d = new Date(ref + 'T00:00:00'); _currentMonth = new Date(d.getFullYear(), d.getMonth(), 1); }
+    }
+    const body = _el('bookingModalBody');
+    if (body) _renderSchedule(body);
+    const t = _el('bmViewToggle');
+    if (t) t.focus({ preventScroll: true });
   }
 
   function _renderCalendar() {
@@ -548,6 +690,7 @@ const BookingModal = (() => {
     if (!_slotsError && _loadedFrom && _loadedTo && from >= _loadedFrom && to <= _loadedTo) {
       _renderCalendar();
       _refreshSlotsPanel();
+      _renderDateList();
       return;
     }
 
@@ -618,6 +761,7 @@ const BookingModal = (() => {
 
     _renderCalendar();
     _refreshSlotsPanel();
+    _renderDateList();
   }
 
   // Renders the right-hand panel based on the current availability state.
@@ -1137,7 +1281,7 @@ const BookingModal = (() => {
     const locale = lang === 'ru' ? 'ru-RU' : lang === 'el' ? 'el-GR' : 'en-GB';
     const dateStr = d.toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
     const ev = _calEvent(service);
-    const calIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+    const calIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 
     body.innerHTML = `
       <div class="bm-success">
@@ -1768,7 +1912,7 @@ const BookingModal = (() => {
     return false;
   }
 
-  return { open, close, resumePendingBooking, _pickService, _filterServices, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs, _focusLogin,
+  return { open, close, resumePendingBooking, _pickService, _filterServices, _pickDate, _pickSlot, _prevMonth, _nextMonth, _retryLoadSlots, _jumpToFirstAvailable, _pickListSlot, _moreDates, _toggleView, _toggleDesc, _goBack, _goToServices, _goToSchedule, _goToScheduleOrServices, _goToConfirm, _submitBooking, _switchAuthTab, _bmLogin, _bmRegister, _bmGoogleSignIn, _showForgot, _bmForgot, _downloadIcs, _focusLogin,
            _savePendingForRedirect: _savePendingBooking, _rerender };
 })();
 

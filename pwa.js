@@ -41,11 +41,11 @@
   // Иконки: одна сетка 24×24, линия 1.75, скругления; лотос строго симметричен относительно x = 12.
   var SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">';
   var ICONS = {
-    schedule: SVG + '<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01"/></svg>',
+    schedule: SVG + '<rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M8 2.75v3.5M16 2.75v3.5M3.5 9.5h17M8.5 13.5h.01M12 13.5h.01M15.5 13.5h.01M8.5 17h.01M12 17h.01"/></svg>',
     classes: SVG + '<circle cx="12" cy="5" r="2.25"/><path d="M8.25 15.25V13a3.75 3.75 0 0 1 7.5 0v2.25M3.5 18.25c2.1-1.85 5.1-2.85 8.5-2.85s6.4 1 8.5 2.85c-2.1 1.4-5.1 2.25-8.5 2.25s-6.4-.85-8.5-2.25z"/></svg>',
     pricing: SVG + '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.25h18M7 14.5h4"/></svg>',
-    vibes: SVG + '<path d="M12 4.5c1.9 2 2.9 4.2 2.9 6.6s-1 4.5-2.9 6.4c-1.9-1.9-2.9-4-2.9-6.4s1-4.6 2.9-6.6z"/><path d="M12 17.5c-1.2-3-3.6-5.3-7.2-6.2-.3 3.7 2.4 6.2 7.2 6.2zM12 17.5c1.2-3 3.6-5.3 7.2-6.2.3 3.7-2.4 6.2-7.2 6.2zM7.5 20.5h9"/></svg>',
-    profile: SVG + '<circle cx="12" cy="8.5" r="3.75"/><path d="M4.75 20c1.2-3.6 3.9-5.5 7.25-5.5s6.05 1.9 7.25 5.5"/></svg>'
+    vibes: SVG + '<path d="M12 4.5C9.4 7.8 8.8 12.2 12 19.5c3.2-7.3 2.6-11.7 0-15Z"/><path d="M12 19.5c-4.6-.3-8-3.4-8.5-8.2 3.2-.3 5.8 1.2 7.3 3.9"/><path d="M12 19.5c4.6-.3 8-3.4 8.5-8.2-3.2-.3-5.8 1.2-7.3 3.9"/></svg>',
+    profile: SVG + '<circle cx="12" cy="8.25" r="3.75"/><path d="M4.5 20c1.1-3.5 3.9-5.25 7.5-5.25s6.4 1.75 7.5 5.25"/></svg>'
   };
   var TABS = [
     { id: 'schedule', href: '/schedule', key: 'pwa_tab_schedule', fb: 'Schedule' },

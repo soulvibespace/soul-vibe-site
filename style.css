@@ -631,7 +631,7 @@ button { cursor: pointer; background: none; border: none; }
   background: var(--color-primary-light);
   color: var(--color-primary);
   border-radius: var(--radius-lg);
-  padding: 5px;
+  padding: 7px;
 }
 .space-feature-svg svg { width: 100%; height: auto; }
 .space-feature strong { display: block; font-weight: 600; font-size: var(--text-sm); color: var(--color-text); margin-bottom: 2px; }
@@ -2166,6 +2166,38 @@ button { cursor: pointer; background: none; border: none; }
 }
 .bm-continue-btn:hover { opacity: 0.9; }
 
+/* ── Step 2: compact list of available dates (default) ── */
+.bm-dates-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.bm-dates-head .bm-calendar-title { margin-bottom: 0; }
+.bm-view-toggle {
+  flex-shrink: 0; background: none; border: 1.5px solid rgba(107,79,160,0.3); border-radius: 999px;
+  padding: 6px 12px; font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--color-primary, #6B4FA0);
+  cursor: pointer; white-space: nowrap;
+}
+.bm-view-toggle:hover { background: rgba(107,79,160,0.06); }
+.bm-view-toggle[hidden] { display: none; }
+.bm-date-hint { margin: 0 0 10px; font-size: 0.82rem; color: #666; }
+.bm-date-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.bm-date-row {
+  display: grid; grid-template-columns: 7.5rem 1fr; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid rgba(107,79,160,0.12);
+}
+.bm-date-row:last-child { border-bottom: none; }
+.bm-date-label { font-weight: 600; font-size: 0.92rem; color: #1a1a1a; }
+.bm-date-times { display: flex; flex-wrap: wrap; gap: 8px; }
+.bm-time-pill { min-width: 64px; min-height: 38px; padding: 6px 14px; border-radius: 999px; font-size: 0.9rem; }
+.bm-more-dates {
+  display: block; width: 100%; margin-top: 12px; padding: 11px; border-radius: 10px;
+  border: 1.5px dashed rgba(107,79,160,0.35); background: #fff; color: var(--color-primary, #6B4FA0);
+  font: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+}
+.bm-more-dates:hover { background: rgba(107,79,160,0.05); }
+.bm-date-empty-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 12px; }
+.bm-date-empty-actions .bm-wa-btn { margin: 0; }
+@media (max-width: 340px) {
+  .bm-date-row { grid-template-columns: 1fr; gap: 6px; }
+}
+
 /* ── Confirm ── */
 .bm-confirm-header {
   display: flex;
@@ -3132,7 +3164,7 @@ a.bm-confirm-btn:hover { color: #fff; }
   color: var(--color-text-muted, #6f6a61); font-family: var(--font-body); font-size: 11px; font-weight: 500; line-height: 1.2;
   letter-spacing: 0; -webkit-tap-highlight-color: transparent;
 }
-.svs-tab svg { flex: 0 0 auto; width: 24px; height: 24px; }
+.svs-tab svg { flex: 0 0 auto; width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .svs-tab-label { display: block; max-width: 100%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: clip; }
 .svs-tab.is-active { color: var(--color-primary, #6B4FA0); font-weight: 600; }
 .svs-tab:focus-visible { outline: 2px solid var(--color-primary, #6B4FA0); outline-offset: -4px; border-radius: 12px; }
@@ -3289,7 +3321,7 @@ html.svs-sheet-open, html.svs-sheet-open body { overflow: hidden; }
 }
 .svs-step-body { min-width: 0; padding-top: 3px; }
 .svs-step-body p { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--color-text, #27231b); }
-.svs-pi { display: inline-block; width: 1.25em; height: 1.25em; margin: -0.2em 2px 0; vertical-align: -0.28em; fill: none; stroke: var(--color-primary, #6B4FA0); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.svs-pi { display: inline-block; width: 1.25em; height: 1.25em; margin: -0.2em 2px 0; vertical-align: -0.28em; fill: none; stroke: var(--color-primary, #6B4FA0); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 .svs-step-ic .svs-pi { margin: 0 6px 0 0; }
 .svs-pi circle[r="1.4"] { fill: var(--color-primary, #6B4FA0); stroke: none; }
 .svs-copy {

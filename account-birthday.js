@@ -39,7 +39,7 @@ function renderBirthday() {
   var h = '';
   if (d.birth_date) {
     h += '<div class="bday-set"><span class="bday-icon" aria-hidden="true">'
-       + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3M12 8v3M17 8v3"/><path d="M7 4h.01M12 4h.01M17 4h.01"/></svg>'
+       + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3M12 8v3M17 8v3"/><path d="M7 4h.01M12 4h.01M17 4h.01"/></svg>'
        + '</span><span class="bday-date">' + escHtml(bdayFormat(d.birth_date)) + '</span></div>';
     if (_bdayUi.msg) h += '<p class="bday-msg" role="status">' + escHtml(_bdayUi.msg) + '</p>';
     h += '<p class="bday-note">' + escHtml(vt('bday_bonus_hint', 'On your birthday you get 10 bonus VIBES as a gift — automatically, once a year.')) + '</p>';
