@@ -6,7 +6,7 @@ require('fs').mkdirSync(SH,{recursive:true});
 const pages=['/','/about','/classes','/schedule','/pricing','/vibes','/gift-certificates','/rental','/reviews','/contact','/account','/privacy','/terms'];
 const EXP=['/classes','/schedule','/pricing','/vibes','/gift-certificates','/about','/rental','/contact'];
 const EXP_RU=['Занятия','Расписание','Цены','VIBES','Сертификаты','О нас','Аренда и коворкинг','Контакты'];
-const EXP_MOB=['/schedule','/classes','/pricing','/vibes','/gift-certificates','/about','/rental','/reviews','/contact'];
+const EXP_MOB=['/schedule','/classes','/pricing','/vibes','/gift-certificates','/about','/rental','/reviews','/contact','/contact#faq'];
 const nm=p=>p==='/'?'home':p.slice(1);
 const R=[]; const ok=(n,c,x='')=>R.push(`${c?'PASS':'FAIL'} ${n} ${x}`);
 (async()=>{const b=await chromium.launch(); const errs=[];
@@ -33,7 +33,7 @@ const R=[]; const ok=(n,c,x='')=>R.push(`${c?'PASS':'FAIL'} ${n} ${x}`);
     lists.actions=lists.actions||r.actions; ok(`${tag} same right side`, r.actions===lists.actions, r.actions);
     await p.screenshot({path:SH+`hdr-ru-1366-${nm(pg)}.png`,clip:{x:0,y:0,width:w,height:110}});
    } else {
-    ok(`${tag} mobile nav: 4 main + 5 studio`, JSON.stringify(r.mob.map(x=>x[0]))===JSON.stringify(EXP_MOB), JSON.stringify(r.mob.map(x=>x[0])));
+    ok(`${tag} mobile nav: 4 main + 6 studio`, JSON.stringify(r.mob.map(x=>x[0]))===JSON.stringify(EXP_MOB), JSON.stringify(r.mob.map(x=>x[0])));
     lists.mob=lists.mob||JSON.stringify(r.mob.map(x=>x[0])); ok(`${tag} mobile nav identical`, JSON.stringify(r.mob.map(x=>x[0]))===lists.mob);
     await p.click('#mobileMenuBtn'); await p.waitForTimeout(450);
     await p.screenshot({path:SH+`menu-ru-375-${nm(pg)}.png`});

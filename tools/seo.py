@@ -12,6 +12,8 @@
     часами, соцсетями и каталогом цен (Class Pass / Starter Pack / разовое) из SVS_PRICES;
     WebSite; WebPage текущей страницы. Адреса — от --base (как в meta.py).
   * старые JSON-LD страниц (about, vibes): адрес DEFAULT_BASE меняется на --base.
+  * FAQPage: если на странице есть блок <section id="faq"> с <details class="faq-item">
+    (contact.html), вопросы и ответы (EN) попадают в JSON-LD прямо из разметки — разойтись не могут.
   * <meta name="robots" content="noindex"> на служебных страницах (NOINDEX).
   * подключает /analytics.js в <head> всех страниц (GA4 + Consent Mode v2,
     включается только когда в analytics.js указан ID).
@@ -105,6 +107,24 @@ def offers(base):
     return {'@type': 'OfferCatalog', 'name': 'Class Passes and classes', 'itemListElement': items}
 
 
+FAQ_SECTION_RE = re.compile(r'<section[^>]*\bid="faq"[^>]*>(.*?)</section>', re.S)
+FAQ_ITEM_RE = re.compile(r'<details class="faq-item"[^>]*>\s*<summary><span[^>]*>(.*?)</span>.*?</summary>\s*'
+                         r'<div class="faq-a"[^>]*>(.*?)</div>', re.S)
+
+
+def plain(fragment):
+    text = re.sub(r'<[^>]+>', '', fragment)
+    return re.sub(r'\s+', ' ', meta.html.unescape(text)).strip()
+
+
+def faq_items(src):
+    """[(вопрос, ответ)] из блока #faq страницы (тексты EN по умолчанию, теги убраны)."""
+    m = FAQ_SECTION_RE.search(src)
+    if not m:
+        return []
+    return [(plain(q), plain(a)) for q, a in FAQ_ITEM_RE.findall(m.group(1))]
+
+
 def graph(fname, src, base):
     studio_id = base + '/#studio'
     url = base + meta.page_path(fname)
@@ -142,6 +162,12 @@ def graph(fname, src, base):
          'description': meta.html.unescape(d.group(1)) if d else '',
          'inLanguage': 'en', 'isPartOf': {'@id': base + '/#website'}, 'about': {'@id': studio_id}},
     ]
+    faq = faq_items(src)
+    if faq:
+        page = nodes[-1]
+        page['@type'] = ['WebPage', 'FAQPage']
+        page['mainEntity'] = [{'@type': 'Question', 'name': q,
+                               'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in faq]
     return {'@context': 'https://schema.org', '@graph': nodes}
 
 
@@ -237,6 +263,21 @@ def check(d, base=meta.DEFAULT_BASE):
             bad.append(f'{f}: нет noindex')
         if f not in NOINDEX and START not in src:
             bad.append(f'{f}: нет JSON-LD студии')
+        faq = faq_items(src)
+        if 'class="faq-item"' in src:
+            pages = []
+            for m in LD_RE.finditer(src):
+                try:
+                    pages += [n for n in json.loads(m.group(2)).get('@graph', []) if 'FAQPage' in (n.get('@type') or [])]
+                except ValueError:
+                    pass
+            got = [(x['name'], x['acceptedAnswer']['text']) for p in pages for x in p.get('mainEntity', [])]
+            if not faq:
+                bad.append(f'{f}: блок #faq без вопросов')
+            elif got != faq:
+                bad.append(f'{f}: FAQPage в JSON-LD не совпадает с блоком #faq ({len(got)} из {len(faq)})')
+            elif any(prices.TOKEN.search(q + a) or '{{' in q + a for q, a in got):
+                bad.append(f'{f}: в FAQPage остался токен %%…%% или {{{{…}}}}')
     for name in ('robots.txt', 'sitemap.xml', 'llms.txt'):
         p = os.path.join(d, name)
         if not os.path.exists(p):

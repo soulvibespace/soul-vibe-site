@@ -246,7 +246,7 @@ t('мобильное меню: две группы, без «Мой кабин�
   const h = read('tools/header.html');
   const mob = h.slice(h.indexOf('id="mobileNav"'));
   const hrefs = [...mob.matchAll(/class="mobile-nav-link" data-i18n="([a-z_]+)"/g)].map((m) => m[1]);
-  assert.deepStrictEqual(hrefs, ['nav_schedule', 'nav_classes', 'nav_passes', 'nav_vibes', 'footer_gift', 'nav_about', 'nav_rent', 'nav_reviews', 'nav_contact']);
+  assert.deepStrictEqual(hrefs, ['nav_schedule', 'nav_classes', 'nav_passes', 'nav_vibes', 'footer_gift', 'nav_about', 'nav_rent', 'nav_reviews', 'nav_contact', 'nav_faq']);
   assert.ok(!mob.includes('nav_account'));
   assert.ok(mob.includes('mobile-nav-group--main') && mob.includes('data-i18n="nav_group_studio"'));
   const social = mob.slice(mob.indexOf('mobile-nav-social'));
