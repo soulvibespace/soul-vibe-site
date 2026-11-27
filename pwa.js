@@ -38,16 +38,20 @@
     return W.navigator.standalone === true;
   }
 
+  // Иконки: одна сетка 24×24, линия 1.75, скругления; лотос строго симметричен относительно x = 12.
+  var SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">';
   var ICONS = {
-    schedule: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M8 2.75v3.5M16 2.75v3.5M3.5 9.5h17M8 13.5h2M14 13.5h2M8 17h2"/></svg>',
-    bookings: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h8M6.5 3h11A1.5 1.5 0 0 1 19 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3z"/><path d="M8.5 11.5l2.2 2.2 4.8-4.7M8.5 17h7"/></svg>',
-    vibes: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.3-1.8-7.5-5.3-7.5-9.3 0-.6.1-1.2.2-1.7 2.7.2 5.5 1.7 7.3 4.2 1.8-2.5 4.6-4 7.3-4.2.1.5.2 1.1.2 1.7 0 4-3.2 7.5-7.5 9.3z"/><path d="M12 13.7c-1-2.4-1-5.6 0-9.2 1 3.6 1 6.8 0 9.2z"/></svg>',
-    profile: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.1-3.6 4-5.5 7.5-5.5s6.4 1.9 7.5 5.5"/></svg>'
+    schedule: SVG + '<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01"/></svg>',
+    classes: SVG + '<circle cx="12" cy="5" r="2.25"/><path d="M8.25 15.25V13a3.75 3.75 0 0 1 7.5 0v2.25M3.5 18.25c2.1-1.85 5.1-2.85 8.5-2.85s6.4 1 8.5 2.85c-2.1 1.4-5.1 2.25-8.5 2.25s-6.4-.85-8.5-2.25z"/></svg>',
+    pricing: SVG + '<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.25h18M7 14.5h4"/></svg>',
+    vibes: SVG + '<path d="M12 4.5c1.9 2 2.9 4.2 2.9 6.6s-1 4.5-2.9 6.4c-1.9-1.9-2.9-4-2.9-6.4s1-4.6 2.9-6.6z"/><path d="M12 17.5c-1.2-3-3.6-5.3-7.2-6.2-.3 3.7 2.4 6.2 7.2 6.2zM12 17.5c1.2-3 3.6-5.3 7.2-6.2.3 3.7-2.4 6.2-7.2 6.2zM7.5 20.5h9"/></svg>',
+    profile: SVG + '<circle cx="12" cy="8.5" r="3.75"/><path d="M4.75 20c1.2-3.6 3.9-5.5 7.25-5.5s6.05 1.9 7.25 5.5"/></svg>'
   };
   var TABS = [
     { id: 'schedule', href: '/schedule', key: 'pwa_tab_schedule', fb: 'Schedule' },
-    { id: 'bookings', href: '/account#bookings', key: 'pwa_tab_bookings', fb: 'My bookings' },
-    { id: 'vibes', href: '/account#vibes', key: 'pwa_tab_vibes', fb: 'VIBES' },
+    { id: 'classes', href: '/classes', key: 'pwa_tab_classes', fb: 'Classes' },
+    { id: 'pricing', href: '/pricing', key: 'pwa_tab_passes', fb: 'Passes' },
+    { id: 'vibes', href: '/vibes', key: 'pwa_tab_vibes', fb: 'VIBES' },
     { id: 'profile', href: '/account', key: 'pwa_tab_profile', fb: 'Profile' }
   ];
 
@@ -57,8 +61,7 @@
 
   function activeTab() {
     var p = path();
-    if (p === '/schedule') return 'schedule';
-    if (p === '/account') return location.hash === '#bookings' ? 'bookings' : location.hash === '#vibes' ? 'vibes' : 'profile';
+    for (var i = 0; i < TABS.length; i++) if (p === TABS[i].href) return TABS[i].id;
     return '';
   }
 
@@ -71,7 +74,7 @@
       if (tab.id === cur) { a.classList.add('is-active'); a.setAttribute('aria-current', 'page'); }
       else { a.classList.remove('is-active'); a.removeAttribute('aria-current'); }
     });
-    nav.setAttribute('aria-label', t('pwa_tabs_label', 'App menu'));
+    nav.setAttribute('aria-label', t('pwa_tabs_label', 'Quick menu'));
   }
 
   // /account#vibes и #bookings: прокрутка к разделу (раздел VIBES появляется после загрузки).
@@ -87,9 +90,13 @@
     })();
   }
 
+  // Нижнее меню: на всех страницах, кроме оплаты, входа и админки. Видно только на ширине ≤ 900px (style.css).
+  function tabsAllowed() { return !/^\/(payment|auth-callback|admin)(\/|$)/.test(path()); }
+
   function mountTabs() {
-    if (D.querySelector('.svs-tabbar')) return;
-    D.documentElement.classList.add('svs-standalone');
+    if (D.querySelector('.svs-tabbar') || !tabsAllowed()) return;
+    D.documentElement.classList.add('svs-tabs');
+    if (standalone()) D.documentElement.classList.add('svs-standalone');
     var nav = D.createElement('nav');
     nav.className = 'svs-tabbar';
     nav.innerHTML = TABS.map(function (tab) {
@@ -387,9 +394,9 @@
     var nav = D.getElementById('mobileNav');
     if (nav && !nav.querySelector('.svs-install-link')) {
       var a = D.createElement('a');
-      a.href = '#install-app'; a.className = 'mobile-nav-link svs-install-link'; a.textContent = label;
-      var acc = nav.querySelector('a[href$="/account"]');
-      nav.insertBefore(a, acc ? acc.nextSibling : null);
+      a.href = '#install-app'; a.className = 'mobile-nav-install svs-install-link'; a.textContent = label;
+      var soc = nav.querySelector('.mobile-nav-social');
+      nav.insertBefore(a, soc ? soc.nextSibling : null);
       a.addEventListener('click', function (e) {
         e.preventDefault();
         nav.classList.remove('is-open'); nav.setAttribute('aria-hidden', 'true');
@@ -418,8 +425,59 @@
     if (D.getElementById('svsInstallHint')) renderHint();
   }
 
+  // ── 4. WhatsApp: «Связаться с администратором» ──────────────────────────────
+  // Круглая кнопка справа внизу; на телефоне — над нижним меню. Прячется, пока открыто
+  // окно (запись, вход, инструкция установки), мобильное меню или плашка cookie.
+  var WA_NUMBER = '35795642888';
+  var WA_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M20.5 11.75a8.5 8.5 0 0 1-12.4 7.55L3.5 20.5l1.25-4.4A8.5 8.5 0 1 1 20.5 11.75z"/>' +
+    '<path fill="currentColor" d="M9.1 7.9c.2-.35.45-.4.75-.4h.5c.2 0 .4.1.5.35l.75 1.75c.1.25.05.5-.1.65l-.6.65c-.15.15-.15.35-.05.5.65 1.1 1.55 2 2.65 2.6.15.1.35.1.5-.05l.65-.6c.15-.15.4-.2.65-.1l1.7.75c.25.1.35.3.35.5v.5c0 .3-.05.55-.4.75-.55.3-1.25.45-1.95.35-3-.45-5.7-3.15-6.1-6.15-.1-.7.05-1.4.35-1.95z"/></svg>';
+  function waAllowed() { return !/^\/(auth-callback|admin)(\/|$)/.test(path()); }
+  function waHref() { return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(t('wa_text', 'Hello! I am writing from the Soul Vibe Space website and have a question.')); }
+  // Что-то открыто поверх страницы — кнопку убираем.
+  function waBlocked() {
+    var nav = D.getElementById('mobileNav');
+    return !!((nav && nav.classList.contains('is-open')) ||
+      D.documentElement.classList.contains('svs-sheet-open') ||
+      D.getElementById('svsInstallPop') || D.getElementById('svsInstallSheet') ||
+      (D.body && D.body.style && D.body.style.overflow === 'hidden') ||
+      cookieBannerVisible());
+  }
+  function waPaint(a) {
+    a.href = waHref();
+    var label = t('wa_aria', 'Chat with us on WhatsApp');
+    a.setAttribute('aria-label', label);
+    a.setAttribute('title', label);
+    var tip = a.querySelector('.svs-wa-tip'); if (tip) tip.textContent = t('wa_tip', 'Chat with us');
+  }
+  function waSync() {
+    var a = D.getElementById('svsWa'); if (!a) return;
+    var hide = waBlocked();
+    a.classList.toggle('is-hidden', hide);
+    if (hide) a.setAttribute('tabindex', '-1'); else a.removeAttribute('tabindex');
+  }
+  function mountWa() {
+    if (!waAllowed() || D.getElementById('svsWa') || !D.body) return;
+    var a = D.createElement('a');
+    a.id = 'svsWa'; a.className = 'svs-wa'; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = WA_ICON + '<span class="svs-wa-tip" aria-hidden="true"></span>';
+    waPaint(a);
+    D.body.appendChild(a);
+    waSync();
+    if (W.MutationObserver) {
+      var mo = new MutationObserver(waSync);
+      mo.observe(D.body, { childList: true, attributes: true, attributeFilter: ['style', 'class'] });
+      mo.observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
+      var nav = D.getElementById('mobileNav');
+      if (nav) mo.observe(nav, { attributes: true, attributeFilter: ['class'] });
+    }
+    W.addEventListener('svs:consent', function () { waSync(); if (W.requestAnimationFrame) W.requestAnimationFrame(waSync); });
+    W.addEventListener('svs:langchange', function () { waPaint(a); });
+  }
+
   function init() {
-    if (standalone()) { mountTabs(); scrollToHash(); return; }
+    mountTabs();
+    mountWa();
+    if (standalone()) { scrollToHash(); return; }
     mountLinks();
     W.addEventListener('svs:langchange', relabel);
     if (path() === '/account') {
@@ -433,6 +491,6 @@
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 
   // Для тестов (node tests/pwa.test.js)
-  W.SVS_PWA = { standalone: standalone, activeTab: activeTab, isIOS: isIOS, isIOSSafari: isIOSSafari, installMode: installMode,
+  W.SVS_PWA = { standalone: standalone, activeTab: activeTab, tabsAllowed: tabsAllowed, tabs: TABS, waAllowed: waAllowed, waHref: waHref, waBlocked: waBlocked, isIOS: isIOS, isIOSSafari: isIOSSafari, installMode: installMode,
     popupAllowed: popupAllowed, cookieBannerVisible: cookieBannerVisible, openSheet: openSheet, showPopup: showPopup, steps: steps };
 })();

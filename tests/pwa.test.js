@@ -54,7 +54,8 @@ try { global.navigator = { language: 'en' }; } catch (_) { /* Node 21+ */ }
 global.CustomEvent = function () {};
 require('vm').runInThisContext(read('i18n.js') + '\n;globalThis.__T = SVS_TRANSLATIONS;');
 const T = globalThis.__T;
-const KEYS = ['pwa_tabs_label', 'pwa_tab_schedule', 'pwa_tab_bookings', 'pwa_tab_vibes', 'pwa_tab_profile',
+const KEYS = ['pwa_tabs_label', 'pwa_tab_schedule', 'pwa_tab_classes', 'pwa_tab_passes', 'pwa_tab_vibes', 'pwa_tab_profile',
+  'nav_passes', 'nav_group_studio', 'wa_tip', 'wa_aria', 'wa_text',
   'pwa_install_title', 'pwa_install_text', 'pwa_install_btn', 'pwa_install_close', 'pwa_ios_title', 'pwa_ios_steps',
   'pwa_offline_title', 'pwa_offline_text', 'pwa_offline_retry',
   'pwa_pop_text', 'pwa_how_btn', 'pwa_footer_link', 'pwa_sheet_title_ios', 'pwa_sheet_title_android', 'pwa_sheet_lead',
@@ -75,7 +76,7 @@ t('тексты приложения есть на RU/EN/EL', () => {
   assert.ok(T.ru.pwa_ios_s1.includes('{share}') && T.ru.pwa_ios_s2.includes('{add}') && T.ru.pwa_and_s1.includes('{menu}'));
 });
 t('pwa.js использует только существующие ключи', () => {
-  const used = [...read('pwa.js').matchAll(/'(pwa_[a-z_]+)'/g)].map((m) => m[1]);
+  const used = [...read('pwa.js').matchAll(/'((?:pwa|wa)_[a-z_]+)'/g)].map((m) => m[1]);
   assert.ok(used.length > 5);
   for (const k of used) assert.ok(T.en[k], k);
 });
@@ -93,7 +94,7 @@ const UA = {
 };
 class El {
   constructor(tag) { this.tagName = tag.toUpperCase(); this.children = []; this.attrs = {}; this.parentNode = null; this.id = ''; this.innerHTML = ''; this.style = {};
-    const set = new Set(); this.classList = { add: (c) => set.add(c), remove: (c) => set.delete(c), contains: (c) => set.has(c) }; this.listeners = {}; }
+    const set = new Set(); this.classList = { add: (c) => set.add(c), remove: (c) => set.delete(c), contains: (c) => set.has(c), toggle: (c, f) => (f ? set.add(c) : set.delete(c), f) }; this.listeners = {}; }
   setAttribute(k, v) { this.attrs[k] = String(v); } getAttribute(k) { return this.attrs[k]; } removeAttribute(k) { delete this.attrs[k]; }
   appendChild(c) { c.parentNode = this; this.children.push(c); return c; }
   insertBefore(c) { return this.appendChild(c); }
@@ -178,5 +179,79 @@ t('инструкция: три шага, «Скопировать ссылку�
   assert.ok(other.includes('data-act="copy"') && other.includes('Safari'));
   const a = browser({ ua: UA.android }); a.P.openSheet('android');
   assert.ok(a.D.getElementById('svsInstallSheet').innerHTML.includes('r="1.4"'), 'значок меню ⋮');
+});
+t('нижнее меню: 5 вкладок, подписи Виктории', () => {
+  const tabs = JSON.parse(JSON.stringify(browser({}).P.tabs)).map((x) => [x.href, T.ru[x.key], T.en[x.key], T.el[x.key]]);
+  assert.deepStrictEqual(tabs, [
+    ['/schedule', 'Расписание', 'Schedule', 'Πρόγραμμα'],
+    ['/classes', 'Занятия', 'Classes', 'Μαθήματα'],
+    ['/pricing', 'Абонементы', 'Passes', 'Πάσα'],
+    ['/vibes', 'VIBES', 'VIBES', 'VIBES'],
+    ['/account', 'Профиль', 'Profile', 'Προφίλ']]);
+  const b = browser({ path: '/ru/pricing' });
+  assert.strictEqual(b.P.activeTab(), 'pricing');
+  assert.strictEqual(browser({ path: '/account' }).P.activeTab(), 'profile');
+  assert.strictEqual(browser({ path: '/about' }).P.activeTab(), '');
+});
+t('нижнее меню: в обычном браузере и в приложении, кроме оплаты, входа и админки', () => {
+  for (const o of [{}, { standalone: true }, { ua: UA.android }]) {
+    const b = browser(Object.assign({ path: '/' }, o));
+    assert.ok(b.D.documentElement.classList.contains('svs-tabs'), JSON.stringify(o));
+    assert.ok(b.body.children.some((c) => c.className === 'svs-tabbar'), 'меню на странице');
+    assert.strictEqual(b.D.documentElement.classList.contains('svs-standalone'), !!o.standalone);
+  }
+  for (const p of ['/payment', '/auth-callback', '/admin', '/admin/bookings', '/ru/payment']) {
+    const b = browser({ path: p });
+    assert.ok(!b.P.tabsAllowed() && !b.D.documentElement.classList.contains('svs-tabs'), p);
+    assert.ok(!b.body.children.some((c) => c.className === 'svs-tabbar'), p);
+  }
+  const css = read('style.css');
+  assert.ok(/@media \(max-width: 900px\) \{\s*html\.svs-tabs \{ --svs-tabbar-h/.test(css), 'меню только до 900px');
+  assert.ok(css.includes('grid-template-columns: repeat(5, minmax(0, 1fr))'));
+  assert.ok(/\.svs-tab \{[^}]*min-height: 54px/.test(css));
+  assert.ok(css.includes('html.svs-tabs body { padding-bottom: var(--svs-tabbar-full); }'));
+  assert.ok(css.includes('html.svs-tabs #svs-cookie-banner { bottom: var(--svs-tabbar-full) !important; }'));
+  assert.ok(css.includes('html.svs-tabs .svs-pop { bottom: calc(var(--svs-tabbar-full) + 10px); }'));
+  for (const m of read('pwa.js').matchAll(/<svg[^>]*>/g)) if (/stroke-width/.test(m[0])) assert.ok(/stroke-width="1\.75"/.test(m[0]), m[0]);
+});
+t('WhatsApp: ссылка, новая вкладка, подпись, скрыт на /admin и /auth-callback', () => {
+  const b = browser({ path: '/' });
+  const a = b.D.getElementById('svsWa');
+  assert.ok(a, 'кнопка есть');
+  assert.strictEqual(a.target, '_blank'); assert.strictEqual(a.rel, 'noopener');
+  assert.ok(a.href.startsWith('https://wa.me/35795642888?text='), a.href);
+  assert.ok(decodeURIComponent(a.href.split('text=')[1]).includes('Soul Vibe Space website'));
+  for (const l of ['en', 'ru', 'el']) assert.ok(T[l].wa_text.includes('Soul Vibe Space'), l);
+  assert.strictEqual(a.getAttribute('aria-label'), T.en.wa_aria);
+  assert.strictEqual(T.ru.wa_tip, 'Написать администратору');
+  assert.strictEqual(T.en.wa_tip, 'Chat with us');
+  assert.strictEqual(T.el.wa_tip, 'Επικοινωνία στο WhatsApp');
+  for (const p of ['/admin', '/admin/x', '/auth-callback', '/el/auth-callback']) assert.ok(!browser({ path: p }).D.getElementById('svsWa'), p);
+  assert.ok(browser({ path: '/payment' }).D.getElementById('svsWa'), '/payment — кнопка остаётся');
+});
+t('WhatsApp прячется при окне, меню, cookie и всплывашке установки', () => {
+  const b = browser({ path: '/about' });
+  assert.ok(!b.P.waBlocked());
+  const cookie = new El('div'); cookie.id = 'svs-cookie-banner'; b.body.appendChild(cookie);
+  assert.ok(b.P.waBlocked(), 'cookie'); cookie.remove();
+  b.body.style.overflow = 'hidden'; assert.ok(b.P.waBlocked(), 'модальное окно'); b.body.style.overflow = '';
+  b.D.documentElement.classList.add('svs-sheet-open'); assert.ok(b.P.waBlocked(), 'инструкция'); b.D.documentElement.classList.remove('svs-sheet-open');
+  const nav = new El('div'); nav.id = 'mobileNav'; nav.classList.add('is-open'); b.body.appendChild(nav);
+  assert.ok(b.P.waBlocked(), 'мобильное меню'); nav.classList.remove('is-open');
+  assert.ok(!b.P.waBlocked());
+  b.fire('svs:consent');
+  assert.ok(!b.D.getElementById('svsWa').classList.contains('is-hidden'));
+});
+t('мобильное меню: две группы, без «Мой кабинет», соцсети одним рядом', () => {
+  const h = read('tools/header.html');
+  const mob = h.slice(h.indexOf('id="mobileNav"'));
+  const hrefs = [...mob.matchAll(/class="mobile-nav-link" data-i18n="([a-z_]+)"/g)].map((m) => m[1]);
+  assert.deepStrictEqual(hrefs, ['nav_schedule', 'nav_classes', 'nav_passes', 'nav_vibes', 'footer_gift', 'nav_about', 'nav_rent', 'nav_reviews', 'nav_contact']);
+  assert.ok(!mob.includes('nav_account'));
+  assert.ok(mob.includes('mobile-nav-group--main') && mob.includes('data-i18n="nav_group_studio"'));
+  const social = mob.slice(mob.indexOf('mobile-nav-social'));
+  assert.deepStrictEqual([...social.matchAll(/aria-label="([A-Za-z]+)"/g)].map((m) => m[1]), ['Instagram', 'TikTok', 'WhatsApp']);
+  assert.strictEqual(T.ru.nav_passes, 'Абонементы'); assert.strictEqual(T.ru.nav_group_studio, 'О студии');
+  assert.strictEqual(T.en.nav_group_studio, 'Studio'); assert.strictEqual(T.el.nav_group_studio, 'Στούντιο');
 });
 console.log(`${n} проверок пройдено`);

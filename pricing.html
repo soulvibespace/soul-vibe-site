@@ -542,18 +542,25 @@
     </div>
 
     <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
-      <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
-      <a aria-current="page" href="/pricing" class="mobile-nav-link active" data-i18n="nav_pricing">Pricing</a>
-      <a href="/vibes" class="mobile-nav-link" data-i18n="nav_vibes">VIBES</a>
-      <a href="/gift-certificates" class="mobile-nav-link" data-i18n="nav_gift">Gift Certificates</a>
-      <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
-      <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental &amp; Coworking</a>
-      <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
-      <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
-      <a href="/account" class="mobile-nav-link" data-i18n="nav_account">My Account</a>
-      <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.tiktok.com/@soul.vibe.space.y" class="mobile-nav-link mobile-nav-link--ext" target="_blank" rel="noopener">TikTok</a>
+      <nav class="mobile-nav-group mobile-nav-group--main" aria-label="Menu">
+        <a href="/schedule" class="mobile-nav-link" data-i18n="nav_schedule">Schedule</a>
+        <a href="/classes" class="mobile-nav-link" data-i18n="nav_classes">Classes</a>
+        <a aria-current="page" href="/pricing" class="mobile-nav-link active" data-i18n="nav_passes">Class Passes</a>
+        <a href="/vibes" class="mobile-nav-link" data-i18n="nav_vibes">VIBES</a>
+      </nav>
+      <p class="mobile-nav-label" id="mobileNavStudio" data-i18n="nav_group_studio">Studio</p>
+      <nav class="mobile-nav-group mobile-nav-group--studio" aria-labelledby="mobileNavStudio">
+        <a href="/gift-certificates" class="mobile-nav-link" data-i18n="footer_gift">Gift Certificates</a>
+        <a href="/about" class="mobile-nav-link" data-i18n="nav_about">About</a>
+        <a href="/rental" class="mobile-nav-link" data-i18n="nav_rent">Rental &amp; Coworking</a>
+        <a href="/reviews" class="mobile-nav-link" data-i18n="nav_reviews">Reviews</a>
+        <a href="/contact" class="mobile-nav-link" data-i18n="nav_contact">Contact</a>
+      </nav>
+      <div class="mobile-nav-social">
+        <a href="https://www.instagram.com/soul.vibe.space_cyprus" class="mobile-nav-pill" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.25" cy="6.75" r="0.6" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a>
+        <a href="https://www.tiktok.com/@soul.vibe.space.y" class="mobile-nav-pill" target="_blank" rel="noopener" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg><span>TikTok</span></a>
+        <a href="https://wa.me/35795642888" class="mobile-nav-pill" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.75a8.5 8.5 0 0 1-12.4 7.55L3.5 20.5l1.25-4.4A8.5 8.5 0 1 1 20.5 11.75z"/></svg><span>WhatsApp</span></a>
+      </div>
     </div>
   </header>
 

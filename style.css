@@ -3103,34 +3103,113 @@ a.bm-confirm-btn:hover { color: #fff; }
 @media (max-width: 600px) { .svs-ec-form input { font-size: 16px; } .svs-ec-form .svs-ec-code { font-size: 1.5rem; } }
 
 /* ═══════════════════════════════════════════════════════════════
-   APP (PWA, #104 / #105) — только в установленном приложении
-   html.svs-standalone ставит pwa.js, когда сайт открыт с экрана телефона.
+   НИЖНЕЕ МЕНЮ (5 вкладок) — на телефоне (≤ 900px) и в браузере, и в приложении.
+   html.svs-tabs ставит pwa.js (кроме /payment, /auth-callback, /admin).
    ═══════════════════════════════════════════════════════════════ */
 .svs-tabbar { display: none; }
-html.svs-standalone { --svs-tabbar-h: 64px; }
-html.svs-standalone body { padding-bottom: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px)); }
-html.svs-standalone .svs-tabbar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 95;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  height: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px));
-  padding: 0 4px env(safe-area-inset-bottom, 0px);
-  background: color-mix(in oklab, var(--color-surface, #fff) 94%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid var(--color-divider, #e7e3dc);
+@media (max-width: 900px) {
+  html.svs-tabs { --svs-tabbar-h: 58px; --svs-tabbar-full: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px)); }
+  html.svs-tabs body { padding-bottom: var(--svs-tabbar-full); }
+  html.svs-tabs .svs-tabbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 95;
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    min-height: var(--svs-tabbar-full);
+    padding: 2px 2px env(safe-area-inset-bottom, 0px);
+    background: color-mix(in oklab, var(--color-surface, #fff) 94%, transparent);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--color-divider, #e7e3dc);
+    box-shadow: 0 -4px 18px rgba(39, 35, 27, .05);
+  }
+  /* Нижнее меню заменяет плавающую кнопку записи; баннер cookies и всплывашка установки — над меню. */
+  html.svs-tabs .float-book { display: none !important; }
+  html.svs-tabs #svs-cookie-banner { bottom: var(--svs-tabbar-full) !important; }
+  html.svs-tabs .svs-pop { bottom: calc(var(--svs-tabbar-full) + 10px); }
+  html.svs-tabs .bk-toast { bottom: calc(var(--svs-tabbar-full) + 14px) !important; }
 }
 .svs-tab {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-  min-width: 0; padding: 6px 2px; text-decoration: none;
-  color: var(--color-text-muted, #6f6a61); font-family: var(--font-body); font-size: 11px; font-weight: 500; line-height: 1.15;
-  -webkit-tap-highlight-color: transparent;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  min-width: 0; min-height: 54px; padding: 6px 1px 5px; text-decoration: none;
+  color: var(--color-text-muted, #6f6a61); font-family: var(--font-body); font-size: 11px; font-weight: 500; line-height: 1.2;
+  letter-spacing: 0; -webkit-tap-highlight-color: transparent;
 }
-.svs-tab svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.svs-tab-label { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+.svs-tab svg { flex: 0 0 auto; width: 24px; height: 24px; }
+.svs-tab-label { display: block; max-width: 100%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: clip; }
 .svs-tab.is-active { color: var(--color-primary, #6B4FA0); font-weight: 600; }
 .svs-tab:focus-visible { outline: 2px solid var(--color-primary, #6B4FA0); outline-offset: -4px; border-radius: 12px; }
-/* В приложении нижнее меню заменяет плавающую кнопку записи; баннер cookies — над меню. */
-html.svs-standalone .float-book { display: none !important; }
-html.svs-standalone #svs-cookie-banner { bottom: calc(var(--svs-tabbar-h) + env(safe-area-inset-bottom, 0px)) !important; }
+@media (max-width: 370px) { .svs-tab { font-size: 10.5px; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   WHATSAPP — «Связаться с администратором» (pwa.js, #svsWa)
+   ═══════════════════════════════════════════════════════════════ */
+.svs-wa {
+  position: fixed; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 96;
+  display: flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25D366; color: #fff; text-decoration: none;
+  box-shadow: 0 8px 22px rgba(18, 140, 70, .32), 0 2px 6px rgba(39, 35, 27, .12);
+  transition: transform .2s ease, opacity .2s ease, visibility .2s, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.svs-wa svg { width: 30px; height: 30px; }
+.svs-wa:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(18, 140, 70, .38), 0 2px 6px rgba(39, 35, 27, .12); }
+.svs-wa:focus-visible { outline: 3px solid var(--color-primary, #6B4FA0); outline-offset: 3px; }
+.svs-wa.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(.8); }
+.svs-wa-tip {
+  position: absolute; right: calc(100% + 12px); top: 50%; transform: translate(6px, -50%);
+  padding: 7px 12px; border-radius: 10px; white-space: nowrap;
+  background: #2f2a45; color: #fff; font-family: var(--font-body); font-size: .85rem; font-weight: 500; line-height: 1.2;
+  opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+@media (hover: hover) and (min-width: 901px) {
+  .svs-wa:hover .svs-wa-tip, .svs-wa:focus-visible .svs-wa-tip { opacity: 1; visibility: visible; transform: translate(0, -50%); }
+}
+@media (max-width: 900px) {
+  .svs-wa { right: 14px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 48px; height: 48px; }
+  .svs-wa svg { width: 26px; height: 26px; }
+  .svs-wa-tip { display: none; }
+  html.svs-tabs .svs-wa { bottom: calc(var(--svs-tabbar-h) + 16px + env(safe-area-inset-bottom, 0px)); }
+  /* Последняя строка подвала не уходит под кнопку WhatsApp. */
+  body:has(#svsWa) .footer { padding-bottom: 64px; }
+}
+@media (prefers-reduced-motion: reduce) { .svs-wa, .svs-wa-tip { transition: none; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   МОБИЛЬНОЕ МЕНЮ: две группы, подпись «О студии», ряд соцсетей
+   ═══════════════════════════════════════════════════════════════ */
+.mobile-nav-group { display: flex; flex-direction: column; }
+/* Меню длиннее экрана (iPhone SE и т. п.) — прокручивается внутри, шапка остаётся на месте. */
+.mobile-nav.is-open { max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; }
+@media (max-width: 900px) {
+  html.svs-tabs .mobile-nav.is-open { max-height: calc(100vh - 84px - var(--svs-tabbar-full)); max-height: calc(100dvh - 84px - var(--svs-tabbar-full)); }
+}
+.mobile-nav-group .mobile-nav-link:last-child { border-bottom: none; }
+.mobile-nav .mobile-nav-group--main .mobile-nav-link { font-size: 1.125rem; font-weight: 600; color: var(--color-text, #27231b); }
+.mobile-nav .mobile-nav-group--main .mobile-nav-link[aria-current="page"] { color: var(--color-primary, #6B4FA0); }
+.mobile-nav-label {
+  margin: 0; padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--color-divider, #e7e3dc);
+  font-family: var(--font-body); font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--color-text-muted, #7a7570);
+}
+.mobile-nav .mobile-nav-group--studio .mobile-nav-link { font-size: 1rem; }
+.mobile-nav-social {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0; padding-top: var(--space-4, 16px);
+  border-top: 1px solid var(--color-divider, #e7e3dc);
+}
+.mobile-nav-pill {
+  flex: 1 1 0; min-width: 0; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 0 10px; border-radius: 999px; border: 1px solid var(--color-divider, #e0dbd3);
+  background: var(--color-surface, #fff); color: var(--color-text, #27231b); text-decoration: none;
+  font-family: var(--font-body); font-size: .85rem; font-weight: 500; white-space: nowrap;
+}
+.mobile-nav-pill svg { flex: 0 0 auto; }
+.mobile-nav-pill:hover { color: var(--color-primary, #6B4FA0); border-color: var(--color-primary, #6B4FA0); }
+.mobile-nav-install {
+  display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 10px;
+  border-radius: 999px; border: 1px solid var(--color-primary, #6B4FA0); color: var(--color-primary, #6B4FA0);
+  font-family: var(--font-body); font-size: .9rem; font-weight: 600; text-decoration: none;
+}
+.mobile-nav-install:hover { background: color-mix(in oklab, var(--color-primary, #6B4FA0) 8%, transparent); }
 
 /* Подсказка «Установить приложение» (/account) */
 .svs-ih {
