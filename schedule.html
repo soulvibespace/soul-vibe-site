@@ -231,7 +231,7 @@
     }
 
     /* ── Class card ── */
-    .class-card {
+    .slot-card {
       display: grid;
       grid-template-columns: 72px 1fr auto;
       gap: 0 16px;
@@ -243,7 +243,7 @@
       transition: border-color .2s, box-shadow .2s, transform .15s;
       cursor: default;
     }
-    .class-card:hover {
+    .slot-card:hover {
       border-color: var(--accent);
       box-shadow: 0 4px 20px rgba(110,72,170,.10);
       transform: translateY(-1px);
@@ -409,19 +409,32 @@
 
     /* ── Mobile ── */
     @media (max-width: 600px) {
-      .class-card {
-        grid-template-columns: 60px 1fr;
+      /* time | title + teacher + badge
+         ────────────────────────────────
+         price (wraps)        [ Book ]   — CTA row spans the full card width */
+      .slot-card {
+        grid-template-columns: 56px minmax(0, 1fr);
         grid-template-rows: auto auto;
+        gap: 0 14px;
+        padding: 14px;
+        max-width: 100%;
       }
+      .card-time { align-items: flex-start; justify-content: flex-start; padding-top: 2px; }
       .card-cta {
-        grid-column: 2;
+        grid-column: 1 / -1;
         grid-row: 2;
         flex-direction: row;
         align-items: center;
-        justify-content: flex-start;
-        margin-top: 8px;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px dashed var(--border);
       }
-      .card-name { font-size: .92rem; }
+      .card-cta .card-price { flex: 1 1 auto; min-width: 0; }
+      .card-cta .card-book-btn { flex: 0 0 auto; padding: 0 20px; }
+      .card-name { font-size: .95rem; }
       .filter-label { display: none; }
       .schedule-filters { gap: 8px; }
     }
@@ -435,7 +448,8 @@
     }
     .price-hint:hover { text-decoration-thickness: 2px; }
     @media (max-width: 600px) {
-      .card-price.drop-in { flex-direction: row; align-items: baseline; gap: 6px; flex-wrap: wrap; text-align: left; }
+      .card-price.drop-in { flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; }
+      .card-price.drop-in .price-dropin, .card-price.drop-in .price-hint { white-space: normal; }
     }
 
     /* ── View toggle (Week / Month) ── */
@@ -597,6 +611,79 @@
       .week-label { min-width: 0; flex: 1; font-size: .85rem; }
       .week-today-btn { flex-shrink: 0; }
     }
+
+    /* ── Upcoming view: quick-jump date strip ── */
+    .date-strip {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 2px 0 6px;
+      margin: -6px 0 22px;
+    }
+    .date-strip[hidden] { display: none; }
+    .week-nav[hidden] { display: none; }
+    .date-strip::-webkit-scrollbar { display: none; }
+    .date-chip {
+      flex-shrink: 0;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 52px;
+      min-height: 52px;
+      padding: 6px 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      text-decoration: none;
+      line-height: 1.1;
+      cursor: pointer;
+      transition: border-color .18s, background .18s, color .18s;
+    }
+    .date-chip:hover, .date-chip:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+    .date-chip.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .date-chip-dow { font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+    .date-chip-num { font-size: 1.02rem; font-weight: 700; }
+    .date-chip-mon { font-size: .62rem; font-weight: 600; text-transform: lowercase; opacity: .8; }
+    .date-chip.is-today { border-color: var(--accent); color: var(--accent); }
+    .date-chip.is-today.is-active { color: #fff; }
+    .schedule-day { scroll-margin-top: calc(var(--header-h, 76px) + 76px); }
+    .day-count {
+      margin-left: auto;
+      font-family: var(--font-sans);
+      font-size: .74rem;
+      color: var(--text-secondary);
+    }
+
+    /* Horizontal-scroll rows (category pills, date strip): soft fade on the
+       side that still has hidden items, so it is clear the row scrolls. */
+    .scroll-fade-r { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); }
+    .scroll-fade-l { -webkit-mask-image: linear-gradient(90deg, transparent, #000 36px); mask-image: linear-gradient(90deg, transparent, #000 36px); }
+    .scroll-fade-l.scroll-fade-r { -webkit-mask-image: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent); }
+
+    /* Empty state with "Reset filters" */
+    .schedule-reset-btn {
+      margin-top: 16px;
+      font-family: var(--font-sans);
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      min-height: 44px;
+      padding: 0 22px;
+      border-radius: 22px;
+      border: 1.5px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background .18s, color .18s;
+    }
+    .schedule-reset-btn:hover { background: var(--accent); color: #fff; }
+    .mcal-empty-note .schedule-reset-btn { margin: 10px auto 0; display: block; }
 </style>  <link rel="stylesheet" href="/compact.css" />
 </head>
 <body>
@@ -680,14 +767,14 @@
       <h1 class="page-title" data-i18n="schedule_title">Weekly Classes</h1>
       <p class="page-subtitle" data-i18n="schedule_subtitle">Real-time from our studio — updated automatically.</p>
 
-      <!-- View toggle: Week / Month -->
+      <!-- View toggle: Upcoming (next 30 days, default) / Calendar (month grid) -->
       <div class="schedule-view-toggle" role="group" data-i18n-aria="schedule_view_aria" aria-label="Schedule view">
-        <button type="button" class="schedule-view-btn active" data-schedule-view="week" aria-pressed="true" data-i18n="schedule_view_week">Week</button>
-        <button type="button" class="schedule-view-btn" data-schedule-view="month" aria-pressed="false" data-i18n="schedule_view_month">Month</button>
+        <button type="button" class="schedule-view-btn active" data-schedule-view="upcoming" aria-pressed="true" data-i18n="schedule_view_upcoming">Upcoming</button>
+        <button type="button" class="schedule-view-btn" data-schedule-view="month" aria-pressed="false" data-i18n="schedule_view_calendar">Calendar</button>
       </div>
 
-      <!-- Week navigation -->
-      <div class="week-nav">
+      <!-- Month navigation (Calendar view only) -->
+      <div class="week-nav" id="calNav" hidden>
         <div class="week-nav-arrows">
           <button class="week-arrow" id="weekPrev" aria-label="Previous week">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -721,6 +808,9 @@
 
       <!-- Result count -->
       <p class="schedule-meta" id="scheduleMeta"></p>
+
+      <!-- Quick jump to active dates (Upcoming view only) -->
+      <nav class="date-strip" id="dateStrip" data-i18n-aria="schedule_jump_aria" aria-label="Jump to date" hidden></nav>
 
       <!-- Grid -->
       <div class="schedule-grid" id="scheduleGrid">
@@ -933,7 +1023,9 @@
     // SimplyBook rejects/times out on long ranges (~31 days max), so the month
     // view is fetched in short chunks — same approach as the booking calendar.
     const CHUNK_DAYS = 21;
-    const VIEW_KEY = 'svs_schedule_view';
+    // v2: the default view changed to «Upcoming» — old saved 'week'/'month' choices are ignored.
+    const VIEW_KEY = 'svs_schedule_view_v2';
+    const UPCOMING_DAYS = 30;
 
     // ── Date helpers ─────────────────────────────────────────────
     // All calendar maths works on 'YYYY-MM-DD' strings backed by UTC-midnight
@@ -1005,8 +1097,7 @@
     };
 
     // ── State ────────────────────────────────────────────────────
-    let _view        = 'week'; // 'week' | 'month'
-    let _weekOffset  = 0;      // 0 = current week
+    let _view        = 'upcoming'; // 'upcoming' (next 30 days) | 'month' (calendar)
     let _monthOffset = 0;      // 0 = current month
     let _selectedDay = '';     // month view: selected ISO date
     let _activeCat   = '';     // '' = all
@@ -1027,16 +1118,18 @@
     const catPills   = document.getElementById('catPills');
     const instSelect = document.getElementById('instructorSelect');
     const prevBtn    = document.getElementById('weekPrev');
+    const calNav     = document.getElementById('calNav');
+    const dateStrip  = document.getElementById('dateStrip');
     const nextBtn    = document.getElementById('weekNext');
     const viewBtns   = document.querySelectorAll('[data-schedule-view]');
 
-    // ── Initial view: ?view= / #month  →  saved choice  →  week ──
+    // ── Initial view: ?view= / #calendar  →  saved choice  →  upcoming ──
     (function initView() {
       let v = '';
       try { v = new URLSearchParams(location.search).get('view') || ''; } catch {}
-      if (!v && /month/.test(location.hash)) v = 'month';
+      if (!v && /month|calendar/.test(location.hash)) v = 'month';
       if (!v) { try { v = localStorage.getItem(VIEW_KEY) || ''; } catch {} }
-      _view = v === 'month' ? 'month' : 'week';
+      _view = (v === 'month' || v === 'calendar') ? 'month' : 'upcoming';
     })();
 
     // ── Ranges ───────────────────────────────────────────────────
@@ -1046,9 +1139,8 @@
         const from = monthStartISO(today, _monthOffset);
         return { from, to: monthEndISO(from) };
       }
-      // Week always runs Monday → Sunday (studio time).
-      const from = addDaysISO(weekStartISO(today), _weekOffset * 7);
-      return { from, to: addDaysISO(from, 6) };
+      // Upcoming: today + the next 29 days (studio time).
+      return { from: today, to: addDaysISO(today, UPCOMING_DAYS - 1) };
     }
 
     function updateNavLabel() {
@@ -1061,8 +1153,8 @@
         const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
         weekLabel.textContent = `${f.getUTCDate()} ${months[f.getUTCMonth()]} – ${e.getUTCDate()} ${months[e.getUTCMonth()]} ${e.getUTCFullYear()}`;
       }
-      prevBtn.setAttribute('aria-label', t(_view === 'month' ? 'schedule_prev_month' : 'schedule_prev_week'));
-      nextBtn.setAttribute('aria-label', t(_view === 'month' ? 'schedule_next_month' : 'schedule_next_week'));
+      prevBtn.setAttribute('aria-label', t('schedule_prev_month'));
+      nextBtn.setAttribute('aria-label', t('schedule_next_month'));
     }
 
     function updateViewToggle() {
@@ -1072,6 +1164,8 @@
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       grid.classList.toggle('is-month', _view === 'month');
+      if (calNav) calNav.hidden = _view !== 'month';
+      if (dateStrip && _view === 'month') { dateStrip.hidden = true; dateStrip.innerHTML = ''; }
     }
 
     // ── Fetch with retry (handles Render cold start ~20s) ───────
@@ -1217,6 +1311,7 @@
         btn.addEventListener('click', () => { _activeCat = cat.key; updateCatPills(); render(); });
         catPills.appendChild(btn);
       }
+      requestAnimationFrame(() => updateScrollFade(catPills));
     }
 
     function updateCatPills() {
@@ -1263,42 +1358,69 @@
       const lang  = _lang();
       const slots = filteredSlots();
 
-      const countLabel = {
-        en: n => `${n} class${n !== 1 ? 'es' : ''} found`,
-        ru: n => {
-          const m10 = n % 10, m100 = n % 100;
-          const w = (m10 === 1 && m100 !== 11) ? 'занятие'
-            : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 'занятия' : 'занятий';
-          return `Найдено: ${n} ${w}`;
-        },
-        el: n => `${n} μαθήματα`,
-      };
-      meta.textContent = (countLabel[lang] || countLabel.en)(slots.length);
-
-      if (_view === 'month') renderMonth(slots, lang);
-      else renderWeek(slots, lang);
+      if (_view === 'month') {
+        meta.textContent = foundLabel(slots.length, 'schedule_found_month');
+        renderMonth(slots, lang);
+      } else {
+        // Upcoming agenda: only classes that have not started yet
+        const today = todayISO();
+        const upcoming = slots.filter(s => !isPastSlot(s, today));
+        meta.textContent = foundLabel(upcoming.length, 'schedule_found_30d');
+        renderUpcoming(upcoming, lang);
+      }
     }
 
-    function renderEmpty(title, hint) {
+    // «Найдено: 5 занятий в ближайшие 30 дней» — plural forms per language
+    function foundLabel(n, key) {
+      const lang = _lang();
+      let form = 'many';
+      if (lang === 'ru') {
+        const m10 = n % 10, m100 = n % 100;
+        form = (m10 === 1 && m100 !== 11) ? 'one' : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? 'few' : 'many';
+      } else {
+        form = n === 1 ? 'one' : 'many';
+      }
+      return t(`${key}_${form}`).replace('{n}', n).replace('{days}', UPCOMING_DAYS);
+    }
+
+    function filtersActive() { return !!(_activeCat || _activeUnit); }
+    function resetFilters() {
+      _activeCat = '';
+      _activeUnit = '';
+      instSelect.value = '';
+      updateCatPills();
+      render();
+    }
+    function resetBtnHtml() {
+      return `<button type="button" class="schedule-reset-btn" data-reset-filters>${escapeHtml(t('schedule_reset_filters'))}</button>`;
+    }
+    function bindResetButtons(root) {
+      (root || grid).querySelectorAll('[data-reset-filters]').forEach(b => b.addEventListener('click', resetFilters));
+    }
+
+    function renderEmpty(title, hint, withReset) {
       grid.innerHTML = `
         <div class="schedule-empty">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <p>${title}</p>
-          <small>${hint}</small>
+          ${hint ? `<small>${hint}</small>` : ''}
+          ${withReset ? `<div>${resetBtnHtml()}</div>` : ''}
         </div>`;
+      bindResetButtons(grid);
     }
 
-    function dayBlockHtml(date, daySlots, lang, today) {
+    function dayBlockHtml(date, daySlots, lang, today, withId) {
       const d = parseISO(date);
       const dayName = (DAY_NAMES[lang] || DAY_NAMES.en)[dowMon0(date)];
       const dateStr = `${d.getUTCDate()} ${(MONTH_NAMES[lang] || MONTH_NAMES.en)[d.getUTCMonth()]}`;
       const isToday = date === today;
       return `
-        <div class="schedule-day">
+        <div class="schedule-day" ${withId ? `id="d-${date}" data-day="${date}"` : ''}>
           <div class="schedule-day-header">
             <span class="day-name">${dayName}</span>
             <span class="day-date">${dateStr}</span>
             ${isToday ? `<span class="day-today-badge">${{en:'Today',ru:'Сегодня',el:'Σήμερα'}[lang] || 'Today'}</span>` : ''}
+            ${withId && daySlots.length ? `<span class="day-count">${escapeHtml(countLabelShort(lang)(daySlots.length))}</span>` : ''}
           </div>
           <div class="day-slots">
             ${daySlots.length
@@ -1308,20 +1430,63 @@
         </div>`;
     }
 
-    function renderWeek(slots, lang) {
+    // Upcoming agenda: next 30 days, grouped by date, empty days skipped entirely.
+    function renderUpcoming(slots, lang) {
       const today = todayISO();
       if (!slots.length) {
-        renderEmpty(
-          { en: 'No classes this week', ru: 'На этой неделе занятий нет', el: 'Δεν υπάρχουν μαθήματα' }[lang] || 'No classes this week',
-          { en: 'Try changing the filters or pick another week', ru: 'Попробуйте сменить фильтр или выбрать другую неделю', el: 'Δοκιμάστε άλλα φίλτρα' }[lang] || ''
-        );
+        dateStrip.hidden = true;
+        dateStrip.innerHTML = '';
+        if (filtersActive()) renderEmpty(t('schedule_empty_filtered'), t('schedule_empty_filtered_hint'), true);
+        else renderEmpty(t('schedule_empty_30d'), t('schedule_empty_30d_hint'), false);
         return;
       }
       const byDate = groupByDate(slots);
-      grid.innerHTML = Object.keys(byDate).sort()
-        .map(date => dayBlockHtml(date, byDate[date], lang, today)).join('');
+      const dates = Object.keys(byDate).sort();
+      grid.innerHTML = dates.map(date => dayBlockHtml(date, byDate[date], lang, today, true)).join('');
       bindBookButtons(grid);
+      renderDateStrip(dates, lang, today);
     }
+
+    function renderDateStrip(dates, lang, today) {
+      const dows = DAY_SHORT[lang] || DAY_SHORT.en;
+      const months = MONTH_NAMES[lang] || MONTH_NAMES.en;
+      let prevMonth = -1;
+      dateStrip.innerHTML = dates.map(d => {
+        const dt = parseISO(d);
+        const m = dt.getUTCMonth();
+        const showMon = m !== prevMonth;
+        prevMonth = m;
+        const full = `${(DAY_NAMES[lang] || DAY_NAMES.en)[dowMon0(d)]}, ${dt.getUTCDate()} ${months[m]}`;
+        return `<a class="date-chip${d === today ? ' is-today' : ''}" href="#d-${d}" data-jump="${d}" aria-label="${escapeHtml(full + (d === today ? " — " + t("schedule_today") : ""))}">
+            <span class="date-chip-dow">${dows[dowMon0(d)]}</span>
+            <span class="date-chip-num">${dt.getUTCDate()}</span>
+            ${showMon ? `<span class="date-chip-mon">${months[m]}</span>` : ''}
+          </a>`;
+      }).join('');
+      dateStrip.hidden = false;
+      dateStrip.querySelectorAll('[data-jump]').forEach(a => a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const el = document.getElementById('d-' + a.dataset.jump);
+        if (!el) return;
+        dateStrip.querySelectorAll('.date-chip').forEach(c => c.classList.toggle('is-active', c === a));
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }));
+      dateStrip.scrollLeft = 0;
+      updateScrollFade(dateStrip);
+    }
+
+    // Fade the side of a horizontal row that still has hidden items
+    function updateScrollFade(el) {
+      if (!el) return;
+      const max = el.scrollWidth - el.clientWidth;
+      el.classList.toggle('scroll-fade-r', max > 2 && el.scrollLeft < max - 2);
+      el.classList.toggle('scroll-fade-l', max > 2 && el.scrollLeft > 2);
+    }
+    [catPills, dateStrip].forEach(el => {
+      if (!el) return;
+      el.addEventListener('scroll', () => updateScrollFade(el), { passive: true });
+    });
+    window.addEventListener('resize', () => { updateScrollFade(catPills); updateScrollFade(dateStrip); });
 
     function renderMonth(slots, lang) {
       const today = todayISO();
@@ -1389,7 +1554,7 @@
           <div class="mcal-heads" role="row">${heads}</div>
           <div class="mcal-body">${cells}</div>
         </div>
-        ${hasAny ? '' : `<p class="mcal-empty-note">${t('schedule_no_classes_month')}</p>`}
+        ${hasAny ? '' : `<div class="mcal-empty-note"><p>${t(filtersActive() ? 'schedule_empty_filtered' : 'schedule_no_classes_month')}</p>${filtersActive() ? resetBtnHtml() : ''}</div>`}
         <div class="mcal-daylist" id="mcalDayList" aria-live="polite">
           ${dayBlockHtml(_selectedDay, byDate[_selectedDay] || [], lang, today)}
         </div>`;
@@ -1415,6 +1580,7 @@
         });
       });
       bindBookButtons(grid.querySelector('#mcalDayList'));
+      bindResetButtons(grid);
     }
 
     function countLabelShort(lang) {
@@ -1507,7 +1673,7 @@
         : { en: 'Book', ru: 'Записаться', el: 'Κράτηση' }[lang];
 
       return `
-        <div class="class-card">
+        <div class="slot-card">
           <div class="card-time">
             <span class="card-time-start">${timeStart}</span>
             ${timeEnd ? `<span class="card-time-end">${timeEnd}</span>` : ''}
@@ -1559,14 +1725,13 @@
 
     // ── Event listeners ──────────────────────────────────────────
     function shift(delta) {
-      if (_view === 'month') _monthOffset += delta; else _weekOffset += delta;
+      _monthOffset += delta;
       updateNavLabel();
       fetchSchedule();
     }
     prevBtn.addEventListener('click', () => shift(-1));
     nextBtn.addEventListener('click', () => shift(1));
     document.getElementById('weekToday').addEventListener('click', () => {
-      _weekOffset = 0;
       _monthOffset = 0;
       _selectedDay = todayISO();
       updateNavLabel();
@@ -1574,21 +1739,9 @@
     });
 
     viewBtns.forEach(btn => btn.addEventListener('click', () => {
-      const v = btn.dataset.scheduleView === 'month' ? 'month' : 'week';
+      const v = btn.dataset.scheduleView === 'month' ? 'month' : 'upcoming';
       if (v === _view) return;
-      // Keep the user roughly where they were when switching views.
-      const today = todayISO();
-      if (v === 'month') {
-        const { from } = currentRange(); // current week's Monday
-        const ref = (_weekOffset === 0) ? today : from;
-        const tm = parseISO(today), rm = parseISO(ref);
-        _monthOffset = (rm.getUTCFullYear() - tm.getUTCFullYear()) * 12 + (rm.getUTCMonth() - tm.getUTCMonth());
-        _selectedDay = ref;
-      } else {
-        const ref = _selectedDay || currentRange().from;
-        const diff = (parseISO(weekStartISO(ref)) - parseISO(weekStartISO(today))) / 86400000;
-        _weekOffset = Math.round(diff / 7);
-      }
+      if (v === 'month') { _monthOffset = 0; _selectedDay = todayISO(); }
       _view = v;
       try { localStorage.setItem(VIEW_KEY, v); } catch {}
       updateViewToggle();
